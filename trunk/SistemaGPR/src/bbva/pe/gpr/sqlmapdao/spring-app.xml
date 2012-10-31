@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">      
+   
+	<context:annotation-config />
+	<context:component-scan base-package="bbva.pe.gpr"/>
+	<!-- DataSource -->
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+  		<property name="jndiName" value="java:comp/env/jdbc/Ora_BGPR" /> 
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<!-- Sql Map Client -->
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation"><value>classpath:bbva/pe/gpr/sqlmapdao/sql-map-config.xml</value></property>
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<!-- Services 
+	<bean id="catalogoService" class="bbva.pe.gpr.serviceImpl.CatalogoServiceImpl" /> -->
+	<!-- Fin Services -->
+
+	<!-- Actions Classes    
+	<bean name="/login" class="bbva.pe.gpr.action.LoginAction">
+		<property name="catalogoService" ref="catalogoService" />
+	</bean> --> 
+	<!-- Fin Actions Classes -->
+	
+<!-- ==============================================================================================================================================-->
+<!-- ================================== Service Classes DAOS																				===============================================-->
+<!-- ==============================================================================================================================================-->
+	  <bean id="bancaDAO" class="bbva.pe.gpr.daoImpl.BancaDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
+  	<bean id="multitablaDetalleDAO" class="bbva.pe.gpr.daoImpl.MultitablaDetalleDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>	
+  	<bean id="solicitudDetalleDAO" class="bbva.pe.gpr.daoImpl.SolicitudDetalleDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
+		<bean id="analisisDAO" class="bbva.pe.gpr.daoImpl.AnalisisDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean> 
+  	<bean id="asignacionDAO" class="bbva.pe.gpr.daoImpl.AsignacionDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean> 
+  	<bean id="solicitudOperacionDAO" class="bbva.pe.gpr.daoImpl.SolicitudOperacionDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean> 
+  	<bean id="solicitudMensajeDAO" class="bbva.pe.gpr.daoImpl.SolicitudMensajeDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean> 
+  	<bean id="productoDAO" class="bbva.pe.gpr.daoImpl.ProductoDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean> 	
+  	<bean id="oficinaDAO" class="bbva.pe.gpr.daoImpl.OficinaDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>  	
+  	<bean id="territorioDAO" class="bbva.pe.gpr.daoImpl.TerritorioDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
+  	<bean id="multitablaDAO" class="bbva.pe.gpr.daoImpl.MultitablaDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
+  	<bean id="usuarioDAO" class="bbva.pe.gpr.daoImpl.UsuarioDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
+  	<bean id="dictamenDAO" class="bbva.pe.gpr.daoImpl.DictamenDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
+	  <bean id="solicitudesDAO" class="bbva.pe.gpr.daoImpl.SolicitudesDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean> 	
+  	<bean id="garantiaDetalleDAO" class="bbva.pe.gpr.daoImpl.GarantiaDetalleDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>	
+  	<bean id="funcionDAO" class="bbva.pe.gpr.daoImpl.FuncionDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean> 	
+  	<bean id="rolDAO" class="bbva.pe.gpr.daoImpl.RolDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
+  	<bean id="UsuarioRolDAO" class="bbva.pe.gpr.daoImpl.UsuarioRolDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
+  	<bean id="funcionRolDAO" class="bbva.pe.gpr.daoImpl.FuncionRolDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
+  	<bean id="menuDAO" class="bbva.pe.gpr.daoImpl.MenuDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
+  	<bean id="menuRolDAO" class="bbva.pe.gpr.daoImpl.MenuRolDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
+<!-- =============================================================================================================================================-->
+<!-- ================================== Service Classes Implementations of BusinessObjects Services ===============================================-->
+<!-- ==============================================================================================================================================-->
+	<bean id="catalogoServiceImpl" class="bbva.pe.gpr.serviceImpl.CatalogoServiceImpl">
+			<constructor-arg index="0" ref="bancaDAO"></constructor-arg>
+			<constructor-arg index="1" ref="productoDAO"></constructor-arg>
+			<constructor-arg index="2" ref="oficinaDAO"></constructor-arg>
+			<constructor-arg index="3" ref="territorioDAO"></constructor-arg>
+			<constructor-arg index="4" ref="multitablaDAO"></constructor-arg>
+			<constructor-arg index="5" ref="multitablaDetalleDAO"></constructor-arg>
+			<constructor-arg index="6" ref="usuarioDAO"></constructor-arg>
+	</bean>
+	<bean id="seguridadServiceImpl" class="bbva.pe.gpr.serviceImpl.SeguridadServiceImpl">
+			<constructor-arg index="0" ref="funcionDAO"></constructor-arg>
+			<constructor-arg index="1" ref="rolDAO"></constructor-arg>
+			<constructor-arg index="2" ref="UsuarioRolDAO"></constructor-arg>
+			<constructor-arg index="3" ref="funcionRolDAO"></constructor-arg>
+			<constructor-arg index="4" ref="menuDAO"></constructor-arg>
+			<constructor-arg index="5" ref="menuRolDAO"></constructor-arg>
+	</bean>
+	<bean id="analisisServiceImpl" class="bbva.pe.gpr.serviceImpl.AnalisisServiceImpl">
+			<constructor-arg index="0" ref="analisisDAO"></constructor-arg>
+			<constructor-arg index="1" ref="solicitudOperacionDAO"></constructor-arg>
+			<constructor-arg index="2" ref="solicitudMensajeDAO"></constructor-arg>
+			<constructor-arg index="3" ref="multitablaDetalleDAO"></constructor-arg>
+	</bean>
+	<bean id="asignacionServiceImpl" class="bbva.pe.gpr.serviceImpl.AsignacionServiceImpl">
+			<constructor-arg index="0" ref="asignacionDAO"></constructor-arg>
+			<constructor-arg index="1" ref="solicitudOperacionDAO"></constructor-arg>
+			<constructor-arg index="2" ref="solicitudMensajeDAO"></constructor-arg>
+			<constructor-arg index="3" ref="multitablaDetalleDAO"></constructor-arg>
+	</bean>
+	
+	<bean id="dictaminarServiceImpl" class="bbva.pe.gpr.serviceImpl.DictaminarServiceImpl">
+			<constructor-arg index="0" ref="dictamenDAO"></constructor-arg>
+			<constructor-arg index="1" ref="solicitudOperacionDAO"></constructor-arg>
+			<constructor-arg index="2" ref="solicitudMensajeDAO"></constructor-arg>
+			<constructor-arg index="3" ref="multitablaDetalleDAO"></constructor-arg>
+	</bean>
+	<bean id="solicitudServiceImpl" class="bbva.pe.gpr.serviceImpl.SolicitudServiceImpl">
+			<constructor-arg index="0" ref="solicitudesDAO"></constructor-arg>
+			<constructor-arg index="1" ref="solicitudDetalleDAO"></constructor-arg>
+			<constructor-arg index="2" ref="solicitudOperacionDAO"></constructor-arg>
+			<constructor-arg index="3" ref="solicitudMensajeDAO"></constructor-arg>
+			<constructor-arg index="4" ref="usuarioDAO"></constructor-arg>
+			<constructor-arg index="5" ref="bancaDAO"></constructor-arg>
+			<constructor-arg index="6" ref="asignacionDAO"></constructor-arg>
+			<constructor-arg index="7" ref="multitablaDetalleDAO"></constructor-arg>
+	</bean>
+	<bean id="multitablaDetalleServiceImpl" class="bbva.pe.gpr.serviceImpl.MultitablaDetalleServiceImpl">
+			<constructor-arg index="0" ref="multitablaDetalleDAO"></constructor-arg>
+	</bean>
+	<bean id="controlServiceImpl" class="bbva.pe.gpr.serviceImpl.ControlServiceImpl">
+			<constructor-arg index="0" ref="multitablaDetalleDAO"></constructor-arg>
+			<constructor-arg index="1" ref="solicitudDetalleDAO"></constructor-arg>
+	</bean>
+<!-- ===========================================================================================================================================-->
+<!-- ============================================ Transactional Services at Business Objects Level        ======================================-->
+<!-- ===========================================================================================================================================-->
+	<bean id="catalogoService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+				<property name="transactionManager"><ref bean="transactionManager" /></property>
+				<property name="target"><ref bean="catalogoServiceImpl" /></property>
+				<property name="transactionAttributes">
+					<props>
+						<prop key="select*">PROPAGATION_REQUIRED,readOnly</prop>
+						<prop key="*">PROPAGATION_REQUIRED</prop>
+					</props>
+				</property>
+	</bean>
+	<bean id="solicitudService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+				<property name="transactionManager"><ref bean="transactionManager" /></property>
+				<property name="target"><ref bean="solicitudServiceImpl" /></property>
+				<property name="transactionAttributes">
+					<props>
+						<prop key="select*">PROPAGATION_REQUIRED,readOnly</prop>
+						<prop key="*">PROPAGATION_REQUIRED</prop>
+					</props>
+				</property>
+	</bean>
+	<bean id="analisisService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+				<property name="transactionManager"><ref bean="transactionManager" /></property>
+				<property name="target"><ref bean="analisisServiceImpl" /></property>
+				<property name="transactionAttributes">
+					<props>
+						<prop key="select*">PROPAGATION_REQUIRED,readOnly</prop>
+						<prop key="*">PROPAGATION_REQUIRED</prop>
+					</props>
+				</property>
+	</bean>
+	<bean id="asignacionService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+				<property name="transactionManager"><ref bean="transactionManager" /></property>
+				<property name="target"><ref bean="asignacionServiceImpl" /></property>
+				<property name="transactionAttributes">
+					<props>
+						<prop key="select*">PROPAGATION_REQUIRED,readOnly</prop>
+						<prop key="*">PROPAGATION_REQUIRED</prop>
+					</props>
+				</property>
+	</bean>
+	<bean id="dictaminarService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+				<property name="transactionManager"><ref bean="transactionManager" /></property>
+				<property name="target"><ref bean="dictaminarServiceImpl" /></property>
+				<property name="transactionAttributes">
+					<props>
+						<prop key="select*">PROPAGATION_REQUIRED,readOnly</prop>
+						<prop key="*">PROPAGATION_REQUIRED</prop>
+					</props>
+				</property>
+	</bean>
+	<bean id="multitablaDetalleService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+				<property name="transactionManager"><ref bean="transactionManager" /></property>
+				<property name="target"><ref bean="multitablaDetalleServiceImpl" /></property>
+				<property name="transactionAttributes">
+					<props>
+						<prop key="select*">PROPAGATION_REQUIRED,readOnly</prop>
+						<prop key="*">PROPAGATION_REQUIRED</prop>
+					</props>
+				</property>
+	</bean>
+	<bean id="seguridadService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+				<property name="transactionManager"><ref bean="transactionManager" /></property>
+				<property name="target"><ref bean="seguridadServiceImpl" /></property>
+				<property name="transactionAttributes">
+					<props>
+						<prop key="select*">PROPAGATION_REQUIRED,readOnly</prop>
+						<prop key="*">PROPAGATION_REQUIRED</prop>
+					</props>
+				</property>
+	</bean>
+	<bean id="controlService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+				<property name="transactionManager"><ref bean="transactionManager" /></property>
+				<property name="target"><ref bean="controlServiceImpl" /></property>
+				<property name="transactionAttributes">
+					<props>
+						<prop key="select*">PROPAGATION_REQUIRED,readOnly</prop>
+						<prop key="*">PROPAGATION_REQUIRED</prop>
+					</props>
+				</property>
+	</bean>
+</beans>

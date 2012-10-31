@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+  <settings useStatementNamespaces="true" />
+ 		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_ANALISIS_SqlMap.xml"/>
+		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_ASIGNACIONES_SqlMap.xml"/>
+		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_BANCAS_SqlMap.xml"/>
+		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_CONFIGURACIONES_SqlMap.xml"/>
+		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_DICTAMENES_SqlMap.xml"/>
+	<!-- 	<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_EVALUADOR_DICTAMINADOR_SqlMap.xml"/>  -->
+	<!-- 	<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_FUNCION_ROL_SqlMap.xml"/>  -->
+		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_FUNCIONES_SqlMap.xml"/>
+		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_GARANTIAS_SqlMap.xml"/>
+		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_LOGS_SqlMap.xml"/>
+		<!-- 	<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_MENU_ROL_SqlMap.xml"/> -->
+		<!--<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_MENU_SqlMap.xml"/> -->
+		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_MULTITABLA_SqlMap.xml"/>
+		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_OFICINAS_SqlMap.xml"/>
+	<!-- 		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_PROD_BASE_CATALOGO_SqlMap.xml"/>  -->
+<!-- 		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_PROD_BASE_SqlMap.xml"/> -->
+<!-- 		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_PROD_GARANTIA_SqlMap.xml"/> -->
+		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_PRODUCTOS_SqlMap.xml"/>
+<!-- 		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_RIESGO_CLIENTE_SqlMap.xml"/> -->
+		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_ROLES_SqlMap.xml"/>
+<!-- 		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_SOLICITUD_DETALLE_SqlMap.xml"/> -->
+		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_SOLICITUDES_SqlMap.xml"/>
+		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_SOLICITUD_OPERACIONES_SqlMap.xml"/>
+		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_SOLICITUD_MENSAJES_SqlMap.xml"/>
+<!-- 		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_TERRITORIOS_SqlMap.xml"/> -->
+<!-- 		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_USUARIO_TERRITORIO_SqlMap.xml"/> -->
+		<sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_MULTITABLA_DETALLE_SqlMap.xml"/>
+	    <sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_USUARIOS_SqlMap.xml"/>
+	    <sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_SOLICITUD_DETALLES_SqlMap.xml"/>
+	    <sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_GARANTIA_DETALLES_SqlMap.xml" />
+	    
+</sqlMapConfig>

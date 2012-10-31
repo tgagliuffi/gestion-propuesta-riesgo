@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 1.0//EN" "dwr10.dtd">
+<dwr>
+	<allow>  
+		<create creator="new" javascript="JDate">
+      		<param name="class" value="java.util.Date"/>
+    	</create>  
+		<create creator="new" javascript="IngresoSolicitudAction">
+			<param name="class" value="bbva.pe.gpr.action.IngresoSolicitudAction"/>
+		</create>
+		<create creator="new" javascript="BusquedaSolicitudAction">
+      		<param name="class" value="bbva.pe.gpr.action.BusquedaSolicitudAction"/>
+    	</create>
+		<create creator="new" javascript="ProductoAction">
+      		<param name="class" value="bbva.pe.gpr.action.ProductoAction"/>
+    	</create>
+    	  
+		<convert converter="bean" match="bbva.pe.gpr.bean.Producto"/>
+		<convert converter="bean" match="bbva.pe.gpr.bean.SolicitudDetalle"/>
+		<convert converter="bean" match="bbva.pe.gpr.bean.Solicitud"/>
+  		<convert converter="bean" match="bbva.pe.gpr.bean.Parametro"/>
+		 
+    
+  	<!-- Definición de Beans -->
+  	
+	</allow>
+</dwr>
