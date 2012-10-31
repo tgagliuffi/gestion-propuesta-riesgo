@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<form-beans>
+		<form-bean name="loginForm" type="bbva.pe.gpr.form.LoginForm" />
+		<form-bean name="solicitudForm" type="bbva.pe.gpr.form.SolicitudForm" />
+		<form-bean name="condicionClienteForm" type="bbva.pe.gpr.form.CondicionClienteForm" />
+		<form-bean name="asignarOficinaForm" type="bbva.pe.gpr.form.AsignarOficinaForm" />
+		<form-bean name="ProductoForm"	type="bbva.pe.gpr.form.ProductoForm"></form-bean>
+	
+	</form-beans>
+
+	<global-exceptions></global-exceptions>
+	<global-forwards></global-forwards>
+
+	<action-mappings>
+		<action name="loginForm" path="/login" type="bbva.pe.gpr.action.LoginAction" 
+			parameter="method" validate="true" input="/index.jsp">
+			<forward name="success" path="/menuPrincipal.jsp"/>
+			<forward name="failure" path="/sinAcceso.jsp" />
+		</action>
+	    <action name="solicitudForm" path="/ingresoSolicitud" type="bbva.pe.gpr.action.IngresoSolicitudAction" 
+			parameter="method" validate="true" scope="session" input="/index.jsp">
+			<forward name="show" path="/ingreso_solicitud.jsp"/>
+			<forward name="success" path="/ingreso_solicitud.jsp"/>			
+		</action>
+		<action name="condicionClienteForm" path="/condicionCliente" type="bbva.pe.gpr.action.CondicionClienteAction"
+			parameter="method" validate="true" input="/index.jsp">
+            <forward name="condicionCliente" path="/condicion_cliente.jsp" />  
+		</action>
+		<action name="asignarOficinaForm" path="/asignarOficina" type="bbva.pe.gpr.action.AsignarOficinaAction"
+			parameter="method" validate="true" input="/index.jsp">
+            <forward name="asignarOficina" path="/asignar_oficina.jsp" /> 
+<!--             <forward name="prueba" path="/pruebaGrid.jsp" />   -->
+		</action>
+		<action name="solicitudForm" path="/busquedaSolicitudAction" type="bbva.pe.gpr.action.BusquedaSolicitudAction" 
+			parameter="method" validate="true">
+			<forward name="success" path="/consulta_solicitud.jsp"/>
+			<forward name="failure" path="/sinAcceso.jsp" />
+		</action>
+		<action name="ProductoForm" path="/productForm" scope="session" type="bbva.pe.gpr.action.ProductoAction" parameter="method" input="/ingreso_solicitud.jsp">
+			<forward name="ingresoSolicitud" path="/ingreso_solicitud.jsp"></forward>
+		</action>
+		
+	</action-mappings>
+
+	<message-resources parameter="MessageResource"></message-resources>
+
+	
+</struts-config>
