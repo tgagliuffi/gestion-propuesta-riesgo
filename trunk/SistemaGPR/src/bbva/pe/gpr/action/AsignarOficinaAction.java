@@ -1,123 +1,182 @@
 package bbva.pe.gpr.action;
 
-import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
 import bbva.pe.gpr.bean.Banca;
+import bbva.pe.gpr.bean.Oficina;
 import bbva.pe.gpr.bean.Rol;
+import bbva.pe.gpr.bean.Territorio;
 import bbva.pe.gpr.bean.Usuario;
+import bbva.pe.gpr.bean.UsuarioOficina;
 import bbva.pe.gpr.context.Context;
 import bbva.pe.gpr.form.AsignarOficinaForm;
 import bbva.pe.gpr.service.CatalogoService;
-import bbva.pe.gpr.service.SeguridadService;
 import bbva.pe.gpr.util.Constant;
-import bbva.pe.gpr.util.JSONArray;
-import bbva.pe.gpr.util.JSONObject;
-
 
 public class AsignarOficinaAction extends DispatchAction {
-
-	
+	private static Logger logger = Logger.getLogger(AsignarOficinaAction.class);
 	private CatalogoService catalogoService; 
-	private SeguridadService seguridadService;
+	//private SeguridadService seguridadService;
 	
 	public AsignarOficinaAction() {
 		catalogoService = (CatalogoService)Context.getInstance().getBean("catalogoService");
-		seguridadService = (SeguridadService)Context.getInstance().getBean("seguridadService");
+		//seguridadService = (SeguridadService)Context.getInstance().getBean("seguridadService");
 	}
 	
 	public ActionForward listarAsignarOficina(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Banca banca = new Banca();
+		Rol rolBean = new Rol();
 		banca.setEstado(Constant.ESTADO_ACTIVO);
-		try{
-			Rol rolBean = new Rol();
-			rolBean.setEstado(Constant.ESTADO_ACTIVO);
+		rolBean.setEstado(Constant.ESTADO_ACTIVO);
+		try {
 		request.setAttribute("getLstBanca", catalogoService.getLstBancaByCriteria(banca));
-		request.setAttribute("getLstRoles", seguridadService.getLstRolesByCriteria(rolBean));
+		request.setAttribute("getLstRoles", catalogoService.getLstRolesByCriteria(rolBean));
 		}catch (Exception e) {
-		 System.out.print("Error "+e.getLocalizedMessage());
+			System.out.print("Error " + e.getLocalizedMessage());
+			logger.error("AsignarOficinaAction.listarAsignarOficina", e);
 		}
 		return mapping.findForward("asignarOficina");
 	}
 	
-	public void busquedaUsuario(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		response.setCharacterEncoding("UTF-8");
-		PrintWriter out = response.getWriter();
-		String page=request.getParameter("page");
-		String rows=request.getParameter("rows");
-		JSONObject jsonObjectRoot=new JSONObject();
-		JSONArray jsonArray= new JSONArray();
-		String valor="";
-		AsignarOficinaForm manteParamForm =(AsignarOficinaForm)form;
-		Usuario user= new Usuario();
-	    
-		if(manteParamForm.getApeMaterno()!=null && manteParamForm.getApeMaterno()!="" ){
-			user.setApellidoMaterno("%"+manteParamForm.getApeMaterno()+"%");
+	public ActionForward listarTerritoriOficina(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Territorio territorio = new Territorio();
+		territorio.setEstado(Constant.ESTADO_ACTIVO);
+		String codUsuario= request.getParameter("codUsuario1");
+		Usuario user = new Usuario();
+		user.setCodigoUsuario(codUsuario);
+		user.setEstado("1");
+		try {
+		List<Usuario> getLstUser = catalogoService.getLstUsuario(user);
+	    AsignarOficinaForm asignarOficinaForm= new AsignarOficinaForm();
+		asignarOficinaForm.setCodAsignar(getLstUser.get(0).getCodigoUsuario());
+		asignarOficinaForm.setNombreUsuario(getLstUser.get(0).getNombres());
+		request.setAttribute("getUsuario",asignarOficinaForm);
+		request.setAttribute("getLstTerritorio",catalogoService.getLstTerritorioByCriteria(territorio));
+		}catch (Exception e) {
+			System.out.print("Error " + e.getLocalizedMessage());
 		}
-		if(manteParamForm.getApePaterno()!=null && manteParamForm.getApePaterno()!="" ){
-			user.setApellidoPaterno("%"+manteParamForm.getApePaterno()+"%");
-		}
-		if(manteParamForm.getNombreUsuario()!=null && manteParamForm.getNombreUsuario()!="" ){
-			 user.setNombre("%"+manteParamForm.getNombreUsuario()+"%");
-		}
-		if(manteParamForm.getCodUsuario()!=null && manteParamForm.getCodUsuario()!="" ){
-		    user.setCodUsuario("%"+manteParamForm.getCodUsuario()+"%");
-		}
-		if(manteParamForm.getBancaUsuario()!=null && manteParamForm.getBancaUsuario()!="" ){
-		    user.setGenero("%"+manteParamForm.getBancaUsuario()+"%");
-		}
-		if(manteParamForm.getCargoUsuario()==null || manteParamForm.getCargoUsuario().equals("")){
-			valor="-1";
-		}else{
-			valor=manteParamForm.getCargoUsuario();
-		}
-	 	BigDecimal codRol=new BigDecimal(valor);
-		user.setCodRol(codRol);
-	    user.setEstado(Constant.ESTADO_ACTIVO);
-	    try{
-			int i=0;
-			List<Usuario> getLstUser=catalogoService.getLstUsuario(user);
-			int totalPages = 0;
-            int totalCount = getLstUser.size();
-            if (totalCount > 0) {
-                if (totalCount % Integer.parseInt(rows) == 0) {
-                    totalPages = totalCount / Integer.parseInt(rows);
-                } else {
-                    totalPages = (totalCount / Integer.parseInt(rows)) + 1;
-                }
-            } else {
-                totalPages = 0;
-            }
-		for(Usuario users:getLstUser){
-		    JSONArray jsonArray2= new JSONArray();
-		    JSONObject jsonObject=new JSONObject();
-		    jsonArray2.put(users.getCodUsuario());
-		    jsonArray2.put(users.getNombre()+" "+users.getApellidoMaterno());
-		    jsonArray2.put(users.getGenero());
-		    jsonArray2.put(users.getCodCargo());
-		    jsonObject.put("id",i++);
-		    jsonObject.put("cell",jsonArray2);	
-			jsonArray.put(jsonObject);
-	   }
-	    jsonObjectRoot.put("page",page);
-		jsonObjectRoot.put("total",totalPages);
-		jsonObjectRoot.put("records",getLstUser.size());
-		jsonObjectRoot.put("rows", jsonArray);
-	}catch (Exception e) {
-		jsonObjectRoot.put("success", false);
-		jsonObjectRoot.put("message", e.getCause());
+		return mapping.findForward("parametriaEvaluador");
 	}
-		out.print(jsonObjectRoot.toString());
-		out.flush();
-		out.close();
+	
+	public List<Usuario> consultarAjax(String codUsuario,String nombreUsuario ,String codBanca,Long codRol) {
+		Usuario user = new Usuario();
+		user.setEstado("1");
+
+		try {
+			 if(codUsuario!=null && codUsuario !=""){
+			 user.setCodigoUsuario("%"+codUsuario+"%");
+			 }
+			 if(codUsuario!=null ){
+			 user.setCodigoUsuario("%"+codUsuario+"%");
+			 }
+			 if(nombreUsuario!=null && nombreUsuario !=""){
+			 user.setNombres("%"+nombreUsuario+"%");
+			 }
+			 if(nombreUsuario!=null){
+			 user.setNombres("%"+nombreUsuario+"%");
+			 }
+			 if(codBanca!=null && codBanca !=""){
+			 user.setCodUsuarioCreacion("%"+codBanca+"%");
+			 }
+			user.setIdUsuario(codRol);
+		    List<Usuario> getLstUser = catalogoService.getLstUsuario(user);
+			return getLstUser;
+			 } catch (Exception e) {
+			return new ArrayList<Usuario>();
+	}
 }
+	public List<Oficina> consultarOficinaAjax(BigDecimal valor) {
+		try {
+			Oficina oficina = new Oficina();
+			oficina.setEstado(Constant.ESTADO_ACTIVO);
+			oficina.setCodTerritorio(valor);
+			List<Oficina> getLstOficina = catalogoService.getLstOficinaByCriteria(oficina);
+			return getLstOficina;
+		    } catch (Exception e) 
+		    {
+			System.out.print(""+e.getMessage());
+		    	return new ArrayList<Oficina>();
+		}
+	}
+	
+	public List<UsuarioOficina> consultarOficinaAsignadaAjax(String user) {
+		try {
+			Usuario usuario= new Usuario();
+			usuario.setEstado("1");
+			usuario.setCodigoUsuario(user);
+			List<UsuarioOficina> getLstOficinaAsignada=catalogoService.getLstOficinaAsignada(usuario);
+			return getLstOficinaAsignada;
+		    } catch (Exception e){
+			System.out.print(""+e.getMessage());
+		    return new ArrayList<UsuarioOficina>();
+		}
+	}
+	public List<Territorio> consultarTerritorioAjax() {
+		try {
+			Territorio territorio = new Territorio();
+			territorio.setEstado(Constant.ESTADO_ACTIVO);
+			List<Territorio> getLstOficinaAsignada=catalogoService.getLstTerritorioByCriteria(territorio);
+			return getLstOficinaAsignada;
+		    } catch (Exception e){
+			System.out.print(""+e.getMessage());
+		    return new ArrayList<Territorio>();
+		}
+	}
+	
+	public String saveAsignarOficinaAjax(String codOficina, String codigoUsuario){
+		try {
+			UsuarioOficina oficinaAsignada= new UsuarioOficina();
+			oficinaAsignada.setCod_oficina(codOficina);
+			oficinaAsignada.setCod_usuario(codigoUsuario);
+			oficinaAsignada.setEstado(Constant.ESTADO_ACTIVO);
+			
+			if(catalogoService.getValidarUsuario(codigoUsuario).equals("1")){
+			return "Oficina";				
+			}else{
+				catalogoService.saveOficinaAsignada(oficinaAsignada);						
+				return "No existe";
+			}
+		} catch (Exception e) {
+			System.out.print(""+e.getMessage());
+			System.out.print(""+e.getCause());
+		   return e.getMessage();
+		}
+
+	}
+	
+	public String eliminarOficinaAsignadaAjax(String codOficina){
+		try {
+			StringTokenizer st = new StringTokenizer(codOficina, "**");
+			String concatIds = "";
+			while (st.hasMoreTokens()) {
+				String elemento = st.nextToken();
+				StringTokenizer stComas = new StringTokenizer(elemento, "-");
+				while (stComas.hasMoreTokens()) {
+					stComas.nextToken();
+					if(stComas.hasMoreTokens()){
+						String id = stComas.nextToken();
+						concatIds = concatIds + ","+id+",";
+					}
+				}					
+			}
+			concatIds = concatIds.substring(0, concatIds.length()-1);
+			catalogoService.deleteOficinaAsignada(concatIds);
+			return "Eliminado";
+		} catch (Exception e) {
+			System.out.print(""+e.getLocalizedMessage());
+		   return e.getLocalizedMessage();
+		}
+	}	
 }

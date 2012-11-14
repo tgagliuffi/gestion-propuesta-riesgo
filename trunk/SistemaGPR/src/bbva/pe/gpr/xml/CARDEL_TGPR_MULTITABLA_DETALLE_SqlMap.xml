@@ -119,6 +119,7 @@
                 number_valor !=0                AND 
                 estado !=0
  </select>
+ 
  <update id="updatedCondicionCliente" parameterClass="bbva.pe.gpr.bean.MultitablaDetalle" >
     update CARDEL.TGPR_MULTITABLA_DETALLE  set
         NUMBER_VALOR = #numberValor:DECIMAL#
@@ -126,9 +127,15 @@
   </update>
  
   <select id="getLstMultitabla" resultMap="ibatorgenerated_BaseResultMap" parameterClass="string" >
-    select COD_ELEMENTO, COD_MULTITABLA, STR_VALOR, NUMBER_VALOR, STR_VALOR2, STR_VALOR3, ESTADO
-    from CARDEL.TGPR_MULTITABLA_DETALLE
-    where COD_MULTITABLA = #codMultitabla:VARCHAR#
+    SELECT COD_ELEMENTO, COD_MULTITABLA, STR_VALOR, NUMBER_VALOR, STR_VALOR2, STR_VALOR3, ESTADO
+    FROM CARDEL.TGPR_MULTITABLA_DETALLE
+    where COD_MULTITABLA = #codMultitabla:VARCHAR# AND  ESTADO!=0 
+  </select>
+  
+  <select id="getLstMultitablaMensaje" resultMap="ibatorgenerated_BaseResultMap" parameterClass="string" >
+    SELECT COD_ELEMENTO, COD_MULTITABLA, STR_VALOR, NUMBER_VALOR, STR_VALOR2, STR_VALOR3, ESTADO
+    FROM CARDEL.TGPR_MULTITABLA_DETALLE
+    where COD_MULTITABLA = #codMultitabla:VARCHAR# AND  NUMBER_VALOR!=0 AND ESTADO!=0 
   </select>
 
 </sqlMap>

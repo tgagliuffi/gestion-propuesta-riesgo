@@ -2,13 +2,14 @@ package bbva.pe.gpr.daoImpl;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import bbva.pe.gpr.bean.Asignacion;
 import bbva.pe.gpr.bean.AsignacionKey;
 import bbva.pe.gpr.dao.AsignacionDAO;
-
-import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 public class AsignacionDAOImpl extends SqlMapClientDaoSupport implements AsignacionDAO {
 
@@ -20,30 +21,33 @@ public class AsignacionDAOImpl extends SqlMapClientDaoSupport implements Asignac
      * 									METODOS AUTOGENERADOS
      ######################################################################################################*/
 
-    public int deleteByPrimaryKey(AsignacionKey key) {
+    public int deleteByPrimaryKey(AsignacionKey key)throws Exception {
         int rows = getSqlMapClientTemplate().delete("CARDEL_TGPR_ASIGNACIONES.ibatorgenerated_deleteByPrimaryKey", key);
         return rows;
     }
 
-    public Long insert(Asignacion record) {
+    public Long insert(Asignacion record)throws Exception {
       return   (Long)getSqlMapClientTemplate().insert("CARDEL_TGPR_ASIGNACIONES.ibatorgenerated_insert", record);
     }
-
-    public void insertSelective(Asignacion record) {
+    
+    public void insertAsignacion(Asignacion record)throws Exception {
+       getSqlMapClientTemplate().insert("CARDEL_TGPR_ASIGNACIONES.ibatorgenerated_insert", record);
+    }
+    public void insertSelective(Asignacion record)throws Exception {
     	getSqlMapClientTemplate().insert("CARDEL_TGPR_ASIGNACIONES.ibatorgenerated_insertSelective", record);
     	
     }
 
-    public Asignacion selectByPrimaryKey(AsignacionKey key) {
+    public Asignacion selectByPrimaryKey(AsignacionKey key)throws Exception {
         return (Asignacion)getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_ASIGNACIONES.ibatorgenerated_selectByPrimaryKey", key);
     }
 
-    public int updateByPrimaryKeySelective(Asignacion record) {
+    public int updateByPrimaryKeySelective(Asignacion record)throws Exception {
         int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_ASIGNACIONES.ibatorgenerated_updateByPrimaryKeySelective", record);
         return rows;
     }
 
-    public int updateByPrimaryKey(Asignacion record) {
+    public int updateByPrimaryKey(Asignacion record)throws Exception {
         int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_ASIGNACIONES.ibatorgenerated_updateByPrimaryKey", record);
         return rows;
     }
@@ -52,7 +56,7 @@ public class AsignacionDAOImpl extends SqlMapClientDaoSupport implements Asignac
      * 									METODOS DE NEGOCIO
      ######################################################################################################*/
     
-    public String obtenerUsuarioPorBalance(BigDecimal codBanca, BigDecimal codRol){
+    public String obtenerUsuarioPorBalance(BigDecimal codBanca, BigDecimal codRol)throws Exception{
     	Map<String,Object> map =  new HashMap<String,Object>();
     	map.put("result","");
     	map.put("pCOD_BANCA",codBanca);
@@ -61,6 +65,10 @@ public class AsignacionDAOImpl extends SqlMapClientDaoSupport implements Asignac
     	return (String) map.get("result");
     }
     
+    @SuppressWarnings("unchecked")
+	public List<Asignacion> getLstAsignaciones(Asignacion record)throws Exception{
+    	return (List<Asignacion>) getSqlMapClientTemplate().queryForList("CARDEL_TGPR_ASIGNACIONES.getLstAsignaciones", record);	
+    }
  
     
     

@@ -15,4 +15,5 @@ public interface GarantiaDetalleDAO {
     int updateByPrimaryKeySelective(GarantiaDetalle record);
     int updateByPrimaryKey(GarantiaDetalle record);
 	HashMap<String,BigDecimal> getlstProdGaranDeta(SolicitudDetalle bean);
+	GarantiaDetalle garantiaDetalle(String codGarantia);
 }

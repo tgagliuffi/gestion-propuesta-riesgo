@@ -47,4 +47,8 @@ public class GarantiaDAOImpl extends SqlMapClientDaoSupport implements GarantiaD
 //	public HashMap<String, String> getlstProdGaranDeta(SolicitudDetalle bean) {
 //		return (HashMap<String, String>)getSqlMapClientTemplate().queryForList("CARDEL_TGPR_PRODUCTOS.getlstProdGaranDeta",bean).get(0);
 //	}
+
+	public Garantia getProductoGarantia(String idProducto) {
+		return (Garantia)getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_GARANTIAS.getProductoGarantia", idProducto);
+	}
 }

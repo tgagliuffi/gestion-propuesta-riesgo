@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="CARDEL_TGPR_TERRITORIOS" >
+  <resultMap id="ibatorgenerated_BaseResultMap" class="bbva.pe.gpr.bean.Territorio" >
+    <result column="COD_TERRITORIO" property="codTerritorio" jdbcType="DECIMAL" />
+    <result column="NOMBRE" property="nombre" jdbcType="VARCHAR" />
+    <result column="ESTADO" property="estado" jdbcType="VARCHAR" />
+    <result column="DETALLE" property="detalle" jdbcType="DECIMAL" />
+  </resultMap>
+  
+   <select id="getLstTerritorioByCriteria" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.Territorio" >
+   		SELECT * FROM CARDEL.TGPR_TERRITORIOS WHERE
+    	( #codTerritorio:DECIMAL# IS NULL OR #codTerritorio:DECIMAL#=-1  OR COD_TERRITORIO=#codTerritorio:DECIMAL#) AND
+	    ( #nombre:VARCHAR# IS NULL OR #nombre:VARCHAR#='' OR NOMBRE = UPPER(#nombre:VARCHAR#)) AND
+	    ( #detalle:VARCHAR# IS NULL OR #detalle:VARCHAR#='' OR DETALLE = #detalle:VARCHAR#) AND
+	    ( #estado:DECIMAL# IS NULL OR #estado:DECIMAL#=-1 OR ESTADO=#estado:DECIMAL#)	   
+  </select>
+</sqlMap>

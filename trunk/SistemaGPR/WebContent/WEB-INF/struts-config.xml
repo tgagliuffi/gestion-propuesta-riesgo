@@ -8,9 +8,11 @@
 	<form-beans>
 		<form-bean name="loginForm" type="bbva.pe.gpr.form.LoginForm" />
 		<form-bean name="solicitudForm" type="bbva.pe.gpr.form.SolicitudForm" />
+		<form-bean name="solicitudMantenimientoForm" type="bbva.pe.gpr.form.SolicitudMantenimientoForm" />
 		<form-bean name="condicionClienteForm" type="bbva.pe.gpr.form.CondicionClienteForm" />
 		<form-bean name="asignarOficinaForm" type="bbva.pe.gpr.form.AsignarOficinaForm" />
 		<form-bean name="ProductoForm"	type="bbva.pe.gpr.form.ProductoForm"></form-bean>
+		<form-bean name="usuarioForm"	type="bbva.pe.gpr.form.UsuarioForm"></form-bean>
 	
 	</form-beans>
 
@@ -34,21 +36,45 @@
 		</action>
 		<action name="asignarOficinaForm" path="/asignarOficina" type="bbva.pe.gpr.action.AsignarOficinaAction"
 			parameter="method" validate="true" input="/index.jsp">
-            <forward name="asignarOficina" path="/asignar_oficina.jsp" /> 
-<!--             <forward name="prueba" path="/pruebaGrid.jsp" />   -->
-		</action>
+   			<forward name="asignarOficina" path="/asignar_oficina.jsp" /> 
+            <forward name="parametriaEvaluador" path="/parametria_evaluador.jsp" />		
+            </action>
 		<action name="solicitudForm" path="/busquedaSolicitudAction" type="bbva.pe.gpr.action.BusquedaSolicitudAction" 
 			parameter="method" validate="true">
 			<forward name="success" path="/consulta_solicitud.jsp"/>
 			<forward name="failure" path="/sinAcceso.jsp" />
+			<forward name="detalle" path="/detalle_solicitud.jsp"/>
 		</action>
-		<action name="ProductoForm" path="/productForm" scope="session" type="bbva.pe.gpr.action.ProductoAction" parameter="method" input="/ingreso_solicitud.jsp">
+		
+		<action name="solicitudMantenimientoForm" path="/solicitudMantenimientoAction" type="bbva.pe.gpr.action.SolicitudMantenimientoAction" 
+			parameter="method" validate="true">
+			<forward name="success" path="/ingreso_solicitud.jsp"/>	
+		</action>
+		
+		<action name="usuarioForm" path="/usuarioAction" type="bbva.pe.gpr.action.UsuarioAction" 
+			parameter="method" validate="true">
+			<forward name="parametriaUsuario" path="/parametria_usuario.jsp"/>
+			<forward name="configuracionUsuario" path="/configuracion_usuario.jsp"/>
+			<forward name="asignarRol" path="/asignar_roles.jsp"/>
+			<forward name="asignarFunciones" path="/asignar_funciones.jsp"/>
+		</action>
+		
+		<action name="ProductoForm" path="/solicitudForm" scope="session" type="bbva.pe.gpr.action.ProductoAction" 
+			parameter="method" input="/ingreso_solicitud.jsp">
 			<forward name="ingresoSolicitud" path="/ingreso_solicitud.jsp"></forward>
+		</action>
+
+		<action path="/bandejaEvaluador" type="bbva.pe.gpr.action.BandejaEvaluacionAction" 
+			parameter="method" input="/bandeja_evaluador.jsp">
+			<forward name="bandeja" path="/bandeja_evaluador.jsp"></forward>
+		</action>
+		
+		<action path="/dictamen" type="bbva.pe.gpr.action.DictamenAction" parameter="method" input="/analisis_dictamen.jsp">
+			<forward name="bandeja" path="/bandeja_evaluador.jsp"></forward>
+			<forward name="atender" path="/analisis_dictamen.jsp"></forward>
 		</action>
 		
 	</action-mappings>
 
-	<message-resources parameter="MessageResource"></message-resources>
-
-	
+	<message-resources parameter="MessageResource"></message-resources>	
 </struts-config>

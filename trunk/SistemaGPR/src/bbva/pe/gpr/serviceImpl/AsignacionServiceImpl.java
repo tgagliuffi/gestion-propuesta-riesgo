@@ -1,6 +1,7 @@
 package bbva.pe.gpr.serviceImpl;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import bbva.pe.gpr.bean.Asignacion;
 import bbva.pe.gpr.bean.MultitablaDetalle;
@@ -81,11 +82,9 @@ public class AsignacionServiceImpl  implements AsignacionService {
 		return solicitudMensajeBean;
 	}
 
-    
+	public List<Asignacion> getLstAsignaciones(Asignacion record)throws Exception{
+		return asignacionDAO.getLstAsignaciones(record);
+	}
   
-
-    
-    
-    
-    
+  
 }

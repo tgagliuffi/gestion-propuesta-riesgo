@@ -11,6 +11,8 @@ public class Analisis extends AnalisisKey {
 	private String codCentral;
 	private String codUsuario;
 	private String strMensaje;
+	private String desMutlProceso;
+	private String desMultMotivo;
 	
 	
 	public String getCodMutlProceso() {
@@ -61,6 +63,16 @@ public class Analisis extends AnalisisKey {
 	public void setStrMensaje(String strMensaje) {
 		this.strMensaje = strMensaje;
 	}
-	
-    
+	public String getDesMutlProceso() {
+		return desMutlProceso;
+	}
+	public void setDesMutlProceso(String desMutlProceso) {
+		this.desMutlProceso = desMutlProceso;
+	}
+	public String getDesMultMotivo() {
+		return desMultMotivo;
+	}
+	public void setDesMultMotivo(String desMultMotivo) {
+		this.desMultMotivo = desMultMotivo;
+	}
 }

@@ -226,4 +226,70 @@ color: #D8000C;
 background-color: #FFBABA;
 /*background-image: url('/IIGETWeb/images/mensajes/error.png');*/
 
+
+}
+
+.fontText {
+	color: #004E98;
+	font-family: Verdana, Arial;
+	font-size: 10.5px;
+	font-weight: normal;
+}
+
+.txt-titulo {
+	color:#004E98;
+	font-family: Verdana, Arial;
+	font-size: 11px;
+	font-weight: normal;
+	font-weight: bold;
+}
+
+.mensaje {
+	BORDER-RIGHT: #d7e8f0 2px solid;
+	PADDING-RIGHT: 5px;
+	BORDER-TOP: #d7e8f0 2px solid;
+	PADDING-LEFT: 5px;
+	FONT-SIZE: 11px;
+	BACKGROUND: #f5f8fa;
+	PADDING-BOTTOM: 5px;
+	BORDER-LEFT: #d7e8f0 2px solid;
+	COLOR: #000;
+	LINE-HEIGHT: 14px;
+	PADDING-TOP: 5px;
+	BORDER-BOTTOM: #d7e8f0 2px solid;
+	FONT-FAMILY: Verdana, Arial, sans-serif;
+	background-color: #83c0e2;
+}
+.content {
+    width: 100%;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 10px;
+    padding-top: 10px;   
+    padding-bottom: 10px;
+    background-color: steelblue;
+    width: 97%;
+}
+
+.left {
+    padding-left: 10px;
+    padding-top: 10px;
+    margin-left: 57px;
+    float: left;
+    position: relative;
+    width: 45%;
+    height: auto;
+}
+
+.right {
+    padding-top: 10px;
+    padding-left: 10px;
+    margin-left: 10px;
+    position: relative;
+    float: left;
+    width: 45%;
+    height: auto;
 }

@@ -14,7 +14,7 @@ public class Constant {
 	
 	public static final BigDecimal ESTADO_ACTIVO = new BigDecimal(1);
 	public static final BigDecimal ESTADO_INACTIVO = new BigDecimal(0);
-	
+
 	public static final String TABLA_NATURALEZA = "T004";
 	public static final String TABLA_MONEDA = "T005"; 
 	public static final String TABLA_BUREAU = "T008";
@@ -24,6 +24,11 @@ public class Constant {
 	public static final String TABLA_INELEGIBLES = "T012";
 	public static final String TABLA_ESTADOS_SOLCITUD = "T015";
 	public static final String TABLA_CONFIGURACIONES = "T016";
+	public static final String TABLA_TIPOS = "T017";
+	public static final String TABLA_DICTAMEN = "T014";
+	public static final String TABLA_MOTIVO = "T002";
+	public static final String TABLA_PROACTIVIDAD = "T013";
+	public static final String TABLA_NIVEL_APROBACION = "T018";
 	
 	public static final String VALOR_ENCONTRADO = "VALOR NO ENCONTRADO";
 
@@ -35,17 +40,33 @@ public class Constant {
 	public static final int INACTIVO = 0;
 	
 	public static final String ESPACIO = " ";
-	public static final String VACIO = " ";
+	public static final String STR_VACIO = "";
 	public static final String FEMENINO = "M";
 	public static final String MASCULINO = "H";
+	public static final String RESET_MONTO = "00.00";
+	public static final String RESET_COMBO = "-1";
 	
-	public static final String GUION = "-";
-	public static final String SIMBOLO_PORCENTAJE = "%";
+	public static final String CHAR_GUION = "-";
+	public static final String CHAR_PORCENTAJE = "%";
+	public static final String CHAR_CONCAT = "\\|";
 	
 	public static final String MSJ_ERROR = "0";
 	public static final String MSJ_ALERT = "-1";
 	public static final String MSJ_OK = "1";
 	
 	public static final String NOMBRE_LOG = "LOG_APP_GPR.LOG";
+	
+	public static final String ESTADO_SOLICITUD_RECHAZADO = "RECHAZADO";
+	public static final String ESTADO_SOLICITUD_PENDIENTE = "PENDIENTE";
+	public static final String ESTADO_SOLICITUD_ASIGNADO = "ASIGNADO";
+	public static final String ESTADO_SOLICITUD_EVALUADO = "EVALUADO";
+	public static final String ESTADO_SOLICITUD_DICTAMINADO = "DICTAMINADO";
+	
+	public static final String PRIORIDAD_BAJA = "BAJA";
+	public static final String PRIORIDAD_NORMAL = "NORMAL";
+	public static final String PRIORIDAD_ALTA = "ALTA";
+	
+	
+	
 	
 }

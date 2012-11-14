@@ -10,6 +10,15 @@
     <result column="VIGENCIA" property="vigencia" jdbcType="TIMESTAMP" />
     <result column="ESTADO" property="estado" jdbcType="DECIMAL" />
   </resultMap>
+  <resultMap id="resultMapCampania" class="bbva.pe.gpr.bean.Campania" >
+    <result column="COD_CAMPANIA" property="codCampania" jdbcType="DECIMAL" />
+    <result column="NOMBRE" property="nombre" jdbcType="VARCHAR" />
+    <result column="DESCRIPCION" property="descripcion" jdbcType="VARCHAR" />
+    <result column="FECHA_INI_VIGENCIA" property="fechaIniVigencia" jdbcType="DATE" />
+    <result column="FECHA_FIN_VIGENCIA" property="fechaFinVigencia" jdbcType="DATE" />
+    <result column="ESTADO" property="estado" jdbcType="DECIMAL" /> 
+  </resultMap>
+  
   <select id="ibatorgenerated_selectByPrimaryKey" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.Producto" >
     select COD_PRODUCTO, DESCRIPCION, COD_BANCA, COD_PRODUCTO_BASE, FECHA_CREACION, VIGENCIA, ESTADO
     from CARDEL.TGPR_PRODUCTOS
@@ -112,14 +121,26 @@
     where COD_PRODUCTO = #codProducto:DECIMAL#
   </update>
   
-  <select id="getLstProducto" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.Producto" >
+  <select id="getLstProductoByCriteria" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.Producto" >
     select COD_PRODUCTO, DESCRIPCION, COD_BANCA, COD_PRODUCTO_BASE, FECHA_CREACION, VIGENCIA, ESTADO
     from CARDEL.TGPR_PRODUCTOS
     where
     ( #codProducto:DECIMAL# IS NULL OR COD_PRODUCTO = #codProducto:DECIMAL#) AND
     ( #codBanca:DECIMAL# IS NULL OR COD_BANCA = #codBanca:DECIMAL#) AND
     ( #descripcion:VARCHAR# IS NULL OR DESCRIPCION = UPPER(#descripcion:VARCHAR#)) AND
-    ESTADO = 1
+    ( #estado:DECIMAL# IS NULL OR ESTADO = #estado:DECIMAL#)
+  </select>
+  
+   <select id="getlstCampaniaByCriteria" resultMap="resultMapCampania" parameterClass="bbva.pe.gpr.bean.Campania" >
+    select COD_CAMPANIA, NOMBRE, DESCRIPCION, FECHA_INI_VIGENCIA, FECHA_FIN_VIGENCIA, ESTADO
+    from CARDEL.TGPR_CAMPANIAS
+    where
+    ( #codCampania:DECIMAL# IS NULL OR COD_CAMPANIA = #codCampania:DECIMAL#) AND
+    ( #nombre:VARCHAR# IS NULL OR NOMBRE = UPPER(#nombre:VARCHAR#)) AND
+    ( #descripcion:VARCHAR# IS NULL OR DESCRIPCION = UPPER(#descripcion:VARCHAR#)) AND
+    ( #fechaRegistro:DATE# IS NULL OR (#fechaRegistro:DATE# BETWEEN FECHA_INI_VIGENCIA AND  FECHA_FIN_VIGENCIA)) AND
+    ( #estado:DECIMAL# IS NULL OR ESTADO = #estado:DECIMAL#)
+    
   </select>
   
 </sqlMap>

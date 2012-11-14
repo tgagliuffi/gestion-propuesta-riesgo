@@ -14,8 +14,29 @@ public class AsignarOficinaForm  extends ActionForm{
     private String nombreUsuario;
     private String apeMaterno;
     private String apePaterno;
-    
-   public String getCodUsuario() {
+    private String idTerritorio;
+    private String codAsignar;
+    private String codOficinas;
+  
+    public String getCodOficinas() {
+		return codOficinas;
+	}
+	public void setCodOficinas(String codOficinas) {
+		this.codOficinas = codOficinas;
+	}
+	public String getCodAsignar() {
+		return codAsignar;
+	}
+	public void setCodAsignar(String codAsignar) {
+		this.codAsignar = codAsignar;
+	}
+	public String getIdTerritorio() {
+		return idTerritorio;
+	}
+	public void setIdTerritorio(String idTerritorio) {
+		this.idTerritorio = idTerritorio;
+	}
+	public String getCodUsuario() {
 		return codUsuario;
 	}
 	public void setCodUsuario(String codUsuario) {
@@ -51,6 +72,4 @@ public class AsignarOficinaForm  extends ActionForm{
 	public void setApePaterno(String apePaterno) {
 		this.apePaterno = apePaterno;
 	}
-    
-
 }

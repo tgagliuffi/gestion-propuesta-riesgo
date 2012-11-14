@@ -2,6 +2,8 @@ package bbva.pe.gpr.form;
 
 import org.apache.struts.action.ActionForm;
 
+import bbva.pe.gpr.util.Constant;
+
 public class ProductoForm extends ActionForm{
 	
 	private static final long serialVersionUID = 1L;
@@ -17,6 +19,8 @@ public class ProductoForm extends ActionForm{
 	private String valBanca;
 	private String valMoneda;
 	private String valMontoTotal;
+	private String codProdBase;
+	private String mtoGarantizado;
 	
 	public ProductoForm() {
 		codProducto = "";
@@ -25,12 +29,14 @@ public class ProductoForm extends ActionForm{
 		codPreEvaluador = "";
 		campania = "";
 		tipo = "";
-		monto = "";
+		monto = Constant.RESET_MONTO;
 		plazo = "";
 		garantia = "";
 		valBanca = "";
 		valMoneda = "";
 		valMontoTotal = "";
+		codProdBase="";
+		mtoGarantizado=Constant.RESET_MONTO;
 	}
 
 	public String getCodProducto() {
@@ -128,4 +134,21 @@ public class ProductoForm extends ActionForm{
 	public void setValMontoTotal(String valMontoTotal) {
 		this.valMontoTotal = valMontoTotal;
 	}
+
+	public String getCodProdBase() {
+		return codProdBase;
+	}
+
+	public void setCodProdBase(String codProdBase) {
+		this.codProdBase = codProdBase;
+	}
+
+	public String getMtoGarantizado() {
+		return mtoGarantizado;
+	}
+
+	public void setMtoGarantizado(String mtoGarantizado) {
+		this.mtoGarantizado = mtoGarantizado;
+	}
+	
 }

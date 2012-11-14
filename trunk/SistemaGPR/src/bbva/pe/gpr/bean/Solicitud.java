@@ -8,6 +8,7 @@ public class Solicitud {
     
     private Long nroSolicitud;
     private Date fechaIngreso;
+    private String strFechaIngreso;
     private String codCentral;
     private String desMultTipoPersona;
     private String desSolicitante;
@@ -16,8 +17,10 @@ public class Solicitud {
     private BigDecimal riesgoActual;
     private BigDecimal riesgoTotal;
     private String desBanca;
-    private String codOficina;
-    private String desOficina; 
+    private String oficinaAltaCod;
+    private String oficinaAltaNom;
+    private BigDecimal otroRiesgo;
+     
     private String hdnCodigo;
     
     private String codMultTipoPersona;
@@ -28,8 +31,8 @@ public class Solicitud {
     private String empleadorNom;
     private String ejecutivoCtaCod;
     private String ejecutivoCtaNom;
-    private String oficinaAltaCod;
-    private String oficinaAltaNom;
+    private String codOficina;
+    private String desOficina;
     private String gerenciaTerritorialCod;
     private String gerenciaTerritorialNom;    
     private BigDecimal codBanca;
@@ -57,9 +60,18 @@ public class Solicitud {
     private Date fechaIngresoFin;
     private String codEstadoMult;
     private String desEstadoMult;
+    private String estadoSolicitud;
+    
     private Asignacion asignacionBean;
     private List<SolicitudDetalle> lstSolicitudDetalle;
+    private CondicionCliente condicionCliente;
     
+	private String relevPublica1;
+	private String relevPublica2;
+	private String relevPublica3;
+	private String relevPublica4;
+	private String relevPublica5;
+	
 	public Long getNroSolicitud() {
 		return nroSolicitud;
 	}
@@ -71,6 +83,12 @@ public class Solicitud {
 	}
 	public void setFechaIngreso(Date fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
+	}
+	public String getStrFechaIngreso() {
+		return strFechaIngreso;
+	}
+	public void setStrFechaIngreso(String strFechaIngreso) {
+		this.strFechaIngreso = strFechaIngreso;
 	}
 	public String getCodCentral() {
 		return codCentral;
@@ -120,17 +138,17 @@ public class Solicitud {
 	public void setDesBanca(String desBanca) {
 		this.desBanca = desBanca;
 	}
-	public String getCodOficina() {
-		return codOficina;
+	public String getOficinaAltaCod() {
+		return oficinaAltaCod;
 	}
-	public void setCodOficina(String codOficina) {
-		this.codOficina = codOficina;
+	public void setOficinaAltaCod(String oficinaAltaCod) {
+		this.oficinaAltaCod = oficinaAltaCod;
 	}
-	public String getDesOficina() {
-		return desOficina;
+	public String getOficinaAltaNom() {
+		return oficinaAltaNom;
 	}
-	public void setDesOficina(String desOficina) {
-		this.desOficina = desOficina;
+	public void setOficinaAltaNom(String oficinaAltaNom) {
+		this.oficinaAltaNom = oficinaAltaNom;
 	}
 	public String getHdnCodigo() {
 		return hdnCodigo;
@@ -186,17 +204,17 @@ public class Solicitud {
 	public void setEjecutivoCtaNom(String ejecutivoCtaNom) {
 		this.ejecutivoCtaNom = ejecutivoCtaNom;
 	}
-	public String getOficinaAltaCod() {
-		return oficinaAltaCod;
+	public String getCodOficina() {
+		return codOficina;
 	}
-	public void setOficinaAltaCod(String oficinaAltaCod) {
-		this.oficinaAltaCod = oficinaAltaCod;
+	public void setCodOficina(String codOficina) {
+		this.codOficina = codOficina;
 	}
-	public String getOficinaAltaNom() {
-		return oficinaAltaNom;
+	public String getDesOficina() {
+		return desOficina;
 	}
-	public void setOficinaAltaNom(String oficinaAltaNom) {
-		this.oficinaAltaNom = oficinaAltaNom;
+	public void setDesOficina(String desOficina) {
+		this.desOficina = desOficina;
 	}
 	public String getGerenciaTerritorialCod() {
 		return gerenciaTerritorialCod;
@@ -342,18 +360,6 @@ public class Solicitud {
 	public void setFechaIngresoFin(Date fechaIngresoFin) {
 		this.fechaIngresoFin = fechaIngresoFin;
 	}
-	public Asignacion getAsignacionBean() {
-		return asignacionBean;
-	}
-	public void setAsignacionBean(Asignacion asignacionBean) {
-		this.asignacionBean = asignacionBean;
-	}
-	public List<SolicitudDetalle> getLstSolicitudDetalle() {
-		return lstSolicitudDetalle;
-	}
-	public void setLstSolicitudDetalle(List<SolicitudDetalle> lstSolicitudDetalle) {
-		this.lstSolicitudDetalle = lstSolicitudDetalle;
-	}
 	public String getCodEstadoMult() {
 		return codEstadoMult;
 	}
@@ -366,8 +372,68 @@ public class Solicitud {
 	public void setDesEstadoMult(String desEstadoMult) {
 		this.desEstadoMult = desEstadoMult;
 	}
-	
-	
+	public String getEstadoSolicitud() {
+		return estadoSolicitud;
+	}
+	public void setEstadoSolicitud(String estadoSolicitud) {
+		this.estadoSolicitud = estadoSolicitud;
+	}
+	public Asignacion getAsignacionBean() {
+		return asignacionBean;
+	}
+	public void setAsignacionBean(Asignacion asignacionBean) {
+		this.asignacionBean = asignacionBean;
+	}
+	public List<SolicitudDetalle> getLstSolicitudDetalle() {
+		return lstSolicitudDetalle;
+	}
+	public void setLstSolicitudDetalle(List<SolicitudDetalle> lstSolicitudDetalle) {
+		this.lstSolicitudDetalle = lstSolicitudDetalle;
+	}
+	public CondicionCliente getCondicionCliente() {
+		return condicionCliente;
+	}
+	public void setCondicionCliente(CondicionCliente condicionCliente) {
+		this.condicionCliente = condicionCliente;
+	}
+	public String getRelevPublica1() {
+		return relevPublica1;
+	}
+	public void setRelevPublica1(String relevPublica1) {
+		this.relevPublica1 = relevPublica1;
+	}
+	public String getRelevPublica2() {
+		return relevPublica2;
+	}
+	public void setRelevPublica2(String relevPublica2) {
+		this.relevPublica2 = relevPublica2;
+	}
+	public String getRelevPublica3() {
+		return relevPublica3;
+	}
+	public void setRelevPublica3(String relevPublica3) {
+		this.relevPublica3 = relevPublica3;
+	}
+	public String getRelevPublica4() {
+		return relevPublica4;
+	}
+	public void setRelevPublica4(String relevPublica4) {
+		this.relevPublica4 = relevPublica4;
+	}
+	public String getRelevPublica5() {
+		return relevPublica5;
+	}
+	public void setRelevPublica5(String relevPublica5) {
+		this.relevPublica5 = relevPublica5;
+	}
+	public BigDecimal getOtroRiesgo() {
+		return otroRiesgo;
+	}
+	public void setOtroRiesgo(BigDecimal otroRiesgo) {
+		this.otroRiesgo = otroRiesgo;
+	}
 	
     
+	
+	
 }

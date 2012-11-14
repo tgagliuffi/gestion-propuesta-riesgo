@@ -5,4 +5,5 @@ import bbva.pe.gpr.bean.Dictamen;
 
 public interface DictaminarService {
 	Long dictaminarSolicitud(Dictamen dictamenBean) throws Exception;
+	Dictamen findForNroSolictud(Dictamen d) throws Exception;
 }

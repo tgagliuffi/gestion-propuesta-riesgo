@@ -50,6 +50,7 @@ public class SolicitudDetalleDAOImpl extends SqlMapClientDaoSupport implements S
 
 	@SuppressWarnings("unchecked")
 	public List<SolicitudDetalle> getListSolicitudDetalleForId(Solicitud idsolicitud) {
-		 return (List<SolicitudDetalle>) getSqlMapClientTemplate().queryForList("CARDEL_TGPR_SOLICITUD_DETALLES.getListSolicitudForId",idsolicitud);
+		 return (List<SolicitudDetalle>) getSqlMapClientTemplate().queryForList("CARDEL_TGPR_SOLICITUD_DETALLES.getDetalleSolicitudForNroSolicitud",idsolicitud);
 	}
+
 }

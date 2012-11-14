@@ -3,6 +3,8 @@ package bbva.pe.gpr.serviceImpl;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import bbva.pe.gpr.bean.Asignacion;
 import bbva.pe.gpr.bean.Banca;
 import bbva.pe.gpr.bean.MultitablaDetalle;
@@ -21,6 +23,7 @@ import bbva.pe.gpr.dao.SolicitudesDAO;
 import bbva.pe.gpr.dao.UsuarioDAO;
 import bbva.pe.gpr.service.SolicitudService;
 import bbva.pe.gpr.util.Constant;
+import bbva.pe.gpr.util.UtilGpr;
 
 import com.grupobbva.bc.per.tele.ldap.comunes.IILDPeExcepcion;
 import com.grupobbva.bc.per.tele.ldap.serializable.IILDPeUsuario;
@@ -62,10 +65,11 @@ public class SolicitudServiceImpl implements SolicitudService{
 	public Long registraSolicitud(Solicitud solicitudBean, 
 										List<SolicitudDetalle> getLstSolicitudDetalle
 										) throws Exception{
-		
+		Long nroSolicitud=new Long(0);
 		//TODO: VALIDAR MTO DELEGACION DE GERENTE OFICINA
-		
-		Long nroSolicitud = solicitudesDAO.insert(solicitudBean);
+		if(getLstSolicitudDetalle.size()>0){
+			solicitudBean.setPrioridad(Constant.PRIORIDAD_NORMAL);
+		nroSolicitud = solicitudesDAO.insert(solicitudBean);
 		//TODO: INSERTANDO CABECERA DE SOLICITUD
 
 		if(nroSolicitud !=null){
@@ -83,9 +87,8 @@ public class SolicitudServiceImpl implements SolicitudService{
 			if(solicitudBean.getStrMensaje()!=null){
 				solicitudMensajeDAO.insert(seteaMensajeBean(solicitudBean));	
 			}
-			
 		}
-		
+		}
 		return nroSolicitud;
 		
 	}
@@ -98,12 +101,13 @@ public class SolicitudServiceImpl implements SolicitudService{
 		solicitudOperacionBean.setCodCentral(solicitudBean.getCodCentral());
 		if(multDetalleBean != null){
 			solicitudOperacionBean.setCodMultOperacion(multDetalleBean.getStrValor());
-			solicitudOperacionBean.setDesOperacion(multDetalleBean.getStrValor2());				
+			solicitudOperacionBean.setDesOperacion(multDetalleBean.getStrValor2());	
+			solicitudOperacionBean.setNroSolicitud(solicitudBean.getNroSolicitud());
+			solicitudOperacionBean.setEstado(new BigDecimal(1));
+			solicitudOperacionDAO.insert(solicitudOperacionBean);
 		}
 		
-		solicitudOperacionBean.setNroSolicitud(solicitudBean.getNroSolicitud());
-		solicitudOperacionBean.setEstado(new BigDecimal(1));
-		solicitudOperacionDAO.insert(solicitudOperacionBean);
+		
 	}
 	public int updateDictaminaEnOficina(Solicitud solicitudBean){
 		solicitudBean.setLugarDictamina(Constant.DICTAMINA_OFICINA);
@@ -123,8 +127,12 @@ public class SolicitudServiceImpl implements SolicitudService{
 				//retorn usuario con menor carga
 				
 				codUsuario = asignacionDAO.obtenerUsuarioPorBalance(solicitudBean.getCodBanca(), new BigDecimal(1));
+				
 				if(codUsuario.equals("0")){
 					return -1;
+				}else {
+					
+					solicitudBean.setEstadoSolicitud(Constant.ESTADO_SOLICITUD_ASIGNADO);
 				}
 				usuarioBean = usuarioDAO.selectByPrimaryKey(codUsuario);			
 			}else{
@@ -138,12 +146,13 @@ public class SolicitudServiceImpl implements SolicitudService{
 			
 			asignacionBean.setCodCentral(solicitudBean.getCodCentral());
 			asignacionBean.setNroSolicitud(solicitudBean.getNroSolicitud());
-			asignacionBean.setCodUsuario(usuarioBean.getCodUsuario());
-			asignacionBean.setNombre(usuarioBean.getNombre() + " " + usuarioBean.getApellidoPaterno() + " " + usuarioBean.getApellidoMaterno());
+			asignacionBean.setCodUsuario(usuarioBean.getCodigoUsuario());
+			asignacionBean.setNombre(usuarioBean.getNombres());
 			asignacionBean.setDependiente("N");
 			asignacionBean.setCodUsuarioAsigno("APP-GPR");
 			
-			asignacionDAO.insert(asignacionBean);
+			asignacionDAO.insertAsignacion(asignacionBean);
+			solicitudesDAO.updateByPrimaryKeySelective(solicitudBean);
 			
 			return 1;
 		}
@@ -173,9 +182,20 @@ public class SolicitudServiceImpl implements SolicitudService{
 		return solicitudBean;
 	}
 	
-	public int asignarPrioridadSolicitud(Solicitud solicitudBean, 
-							   int tipoUpdate) throws Exception{
+	public int asignarPrioridadSolicitud(String nroSolicitud, 
+			String value) throws Exception{
 	int result = 0; 	
+	Solicitud solicitudBean = new Solicitud();
+	
+	solicitudBean.setNroSolicitud(new Long(nroSolicitud));
+		if(value.equals("1")){
+			solicitudBean.setPrioridad(Constant.PRIORIDAD_ALTA);
+		}else if(value.equals("2")){
+			solicitudBean.setPrioridad(Constant.PRIORIDAD_NORMAL);
+		}else{
+			solicitudBean.setPrioridad(Constant.PRIORIDAD_BAJA);
+		}
+	
 		if(solicitudesDAO.updateByPrimaryKeySelective(solicitudBean)>0){
 			//TODO: INSERTANDO OPERACION
 			ingresaSolicitudOperacion(solicitudBean, Constant.TABLA_PROCESO, Constant.MULT_PROCESO_PRIORIZAR);
@@ -187,10 +207,11 @@ public class SolicitudServiceImpl implements SolicitudService{
 		}
 		return result;
 	}
-	
-	
-	public int anularSolicitud(Solicitud solicitudBean) throws Exception{
+		
+	public int anularSolicitud(String nroSolicitud) throws Exception{
 		int result = 0; 	
+		Solicitud solicitudBean = new Solicitud();
+		solicitudBean.setNroSolicitud(new Long(nroSolicitud));
 		solicitudBean.setEstado(Constant.ESTADO_INACTIVO);
 		if(solicitudesDAO.updateByPrimaryKeySelective(solicitudBean)>0){
 			//TODO: INSERTANDO OPERACION
@@ -219,5 +240,116 @@ public class SolicitudServiceImpl implements SolicitudService{
 		return solicitudesDAO.getLstSolicitudes(solicitudBean);
 	}
 	
+	public List<SolicitudDetalle> getListSolicitudDetalleForId(Solicitud idsolicitud) throws Exception {
+		return solicitudDetalleDAO.getListSolicitudDetalleForId(idsolicitud);
+	}
+	public String changeMtoTotalRowAjax(String value, String pMtoGarantia, HttpServletRequest oRequest)throws Exception{
+		BigDecimal bigValue = new BigDecimal(0);
+		BigDecimal bigMtoGarantia = new BigDecimal(0);
+		BigDecimal bigMtoTotalRow = new BigDecimal(0);
+		if(value!=null && !value.equals(Constant.STR_VACIO)){
+			bigValue = new BigDecimal(value);
+		}if(pMtoGarantia!=null && !pMtoGarantia.equals(Constant.STR_VACIO)){
+			bigMtoGarantia = new BigDecimal(pMtoGarantia);
+		}
+		bigMtoTotalRow = bigValue.add(bigMtoGarantia);
+		return UtilGpr.roundUp(bigMtoTotalRow.toString(), 2);
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public String changeMtoTotalAjax(String value, HttpServletRequest oRequest)throws Exception{
+		BigDecimal bigMtoTotalProd = new BigDecimal(0);
+		String rpta=Constant.RESET_MONTO;
+		if(oRequest.getSession().getAttribute("lstDetalleProdSession")!=null){
+			List<SolicitudDetalle> lstSolicitudDetalle = (List<SolicitudDetalle>)oRequest.getSession().getAttribute("lstDetalleProdSession");
+			for(int i=0; i<lstSolicitudDetalle.size(); i++){
+				 SolicitudDetalle bean = lstSolicitudDetalle.get(i);
+				 bigMtoTotalProd=bigMtoTotalProd.add(bean.getMtoProducto());
+				
+			}
+		}
+		bigMtoTotalProd=bigMtoTotalProd.add(new BigDecimal(value));
+		rpta = UtilGpr.roundUp(bigMtoTotalProd.toString(), 2);
+		
+		return rpta;
+	}
+	public String changeRiesgoTotalAjax(String pdeudaDirecta, 
+										String pdeudaIndirecta, 
+										String pdeudaCastigo, 
+										String pdeudaSisFinanciero, 
+										String pOtroRiesgo, 
+										String pRiesgoGrupal, 
+										String pMtoTotalProd,
+										HttpServletRequest oRequest)throws Exception{
+		BigDecimal bigRiesgoTotal = new BigDecimal(0);
+		if(pdeudaDirecta!=null && !pdeudaDirecta.equals(Constant.STR_VACIO)){
+			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pdeudaDirecta));
+		}if(pdeudaIndirecta!=null && !pdeudaIndirecta.equals(Constant.STR_VACIO)){
+			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pdeudaIndirecta));
+		}if(pdeudaCastigo!=null && !pdeudaCastigo.equals(Constant.STR_VACIO)){
+			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pdeudaCastigo));
+		}if(pdeudaSisFinanciero!=null && ! pdeudaSisFinanciero.equals(Constant.STR_VACIO)){
+			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pdeudaSisFinanciero));
+		}if(pOtroRiesgo!=null && ! pOtroRiesgo.equals(Constant.STR_VACIO)){
+			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pOtroRiesgo));
+		}if(pRiesgoGrupal!=null && ! pRiesgoGrupal.equals(Constant.STR_VACIO)){
+			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pRiesgoGrupal));
+		}if(pMtoTotalProd!=null && ! pMtoTotalProd.equals(Constant.STR_VACIO)){
+			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pMtoTotalProd));
+		}			
+		 return UtilGpr.roundUp(bigRiesgoTotal.toString(), 2);
+	}		
+
+	@SuppressWarnings("unchecked")
+	public String changeOtroRiesgoAjax(String value, HttpServletRequest oRequest)throws Exception{
+		BigDecimal bigOtroRiesgo = new BigDecimal(0);
+		if(oRequest.getSession().getAttribute("lstDetalleProdSession")!=null){
+			List<SolicitudDetalle> lstSolicitudDetalle = ((List<SolicitudDetalle>)oRequest.getSession().getAttribute("lstDetalleProdSession"));
+				for(int i=0; i<lstSolicitudDetalle.size(); i++){
+					 SolicitudDetalle bean = lstSolicitudDetalle.get(i);
+					 bigOtroRiesgo=bigOtroRiesgo.add(bean.getMtoGarantia());
+				}
+			}
+			if(value!=null && ! value.equals(Constant.STR_VACIO)){
+				bigOtroRiesgo=bigOtroRiesgo.add(new BigDecimal(value));
+			}		 
+			return UtilGpr.roundUp(bigOtroRiesgo.toString(), 2);
+	}
+
+	public String  changeRiesgoActualAjax(String pdeudaDirecta, 
+										  String pdeudaIndirecta, 
+										  String pdeudaCastigo, 
+										  String pdeudaSisFinanciero, 
+										  String pOtroRiesgo, 
+										  String value, 
+										  HttpServletRequest oRequest)throws Exception{
+		BigDecimal bigRiesgoActual = new BigDecimal(0);
+		if(pdeudaDirecta!=null && !pdeudaDirecta.equals(Constant.STR_VACIO)){
+			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(pdeudaDirecta));
+		}if(pdeudaIndirecta!=null && !pdeudaIndirecta.equals(Constant.STR_VACIO)){
+			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(pdeudaIndirecta));
+		}if(pdeudaCastigo!=null && !pdeudaCastigo.equals(Constant.STR_VACIO)){
+			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(pdeudaCastigo));
+		}if(pdeudaSisFinanciero!=null && ! pdeudaSisFinanciero.equals(Constant.STR_VACIO)){
+			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(pdeudaSisFinanciero));
+		}if(pOtroRiesgo!=null && ! pOtroRiesgo.equals(Constant.STR_VACIO)){
+			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(pOtroRiesgo));
+		}if(value!=null && ! value.equals(Constant.STR_VACIO)){
+			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(value));
+		}			
+		 return UtilGpr.roundUp(bigRiesgoActual.toString(), 2);
+	}
+	
+	 public int actualizarSolicitud(Solicitud solicitudBean) throws Exception
+	  {
+		  return solicitudesDAO.updateByPrimaryKeySelective(solicitudBean);
+	  }
+	 
+	 public int priorizarSolicitud(Solicitud solicitudBean) throws Exception
+	  {
+		  return solicitudesDAO.updateByPrimaryKeySelective(solicitudBean);
+	  }
+	 
 
 }

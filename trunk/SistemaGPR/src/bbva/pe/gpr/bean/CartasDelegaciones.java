@@ -1,6 +1,7 @@
 package bbva.pe.gpr.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class CartasDelegaciones implements Serializable {
 
@@ -8,8 +9,8 @@ public class CartasDelegaciones implements Serializable {
 	private String rating;
 	private int porcentaje;
 	private int plazos;
-	private int montos;
-	private String conGarantia;
+	private BigDecimal montos;
+	private BigDecimal conGarantia;
 	
 	public int getPlazos() {
 		return plazos;
@@ -17,13 +18,13 @@ public class CartasDelegaciones implements Serializable {
 	public void setPlazos(int plazos) {
 		this.plazos = plazos;
 	}
-	public int getMontos() {
+	public BigDecimal getMontos() {
 		return montos;
 	}
-	public void setMontos(int montos) {
+	public void setMontos(BigDecimal montos) {
 		this.montos = montos;
 	}	
-	private int montoPivot;
+	private BigDecimal montoPivot;
 
 	public int getPorcentaje() {
 		return porcentaje;
@@ -31,10 +32,10 @@ public class CartasDelegaciones implements Serializable {
 	public void setPorcentaje(int porcentaje) {
 		this.porcentaje = porcentaje;
 	}	
-	public int getMontoPivot() {
+	public BigDecimal getMontoPivot() {
 		return montoPivot;
 	}
-	public void setMontoPivot(int montoPivot) {
+	public void setMontoPivot(BigDecimal montoPivot) {
 		this.montoPivot = montoPivot;
 	}	
 	public String getRating() {
@@ -43,10 +44,11 @@ public class CartasDelegaciones implements Serializable {
 	public void setRating(String rating) {
 		this.rating = rating;
 	}
-	public String getConGarantia() {
+	public BigDecimal getConGarantia() {
 		return conGarantia;
 	}
-	public void setConGarantia(String conGarantia) {
+	public void setConGarantia(BigDecimal conGarantia) {
 		this.conGarantia = conGarantia;
 	}
+
 }

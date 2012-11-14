@@ -25,6 +25,8 @@
 	<script src="<%=request.getContextPath()%>/js/i18n/grid.locale-es.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/util/formatters.js" type="text/javascript"></script>
+	
+	<script type='text/javascript' src='<%= request.getContextPath()%>/script.js'></script>
 
 <script type="text/javascript">
 
@@ -75,6 +77,7 @@ var myDataModel = [ {name : 'codProducto',			index : 'codProducto', 			width : V
                     {name : 'plazo',				index : 'plazo', 				width : VAL_WIDTH.XLSMALL, 	editable:true,	edittype:'text', 	editoptions: {size:10, maxlength: 6,  style: 'text-align: right'}, editrules: {required: true, integer: true, minValue: 0, maxValue: 999999}, align : 'center'},
                     {name : 'garantia',				index : 'garantia', 			width : VAL_WIDTH.SMALL, 	editable:true,	edittype:'text', 	editoptions: {size:10, maxlength: 255}, editrules: {required: true}, align : 'center'}
                    ];
+
 
 function setEventsValidationProducto(){
     jQuery("select[name=desProducto]").bind("change",function (evnt){
@@ -418,7 +421,7 @@ function showBodyForm(){
 	<table width="740px" height="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
-			<font face="Arial Narrow" size="3" color="#000080"><b>Código Central</b></font>&nbsp;
+			<font class="fontText"><b>Código Central</b></font>&nbsp;
 			<input type="text" name="codigoCentral" class="cajaTexto" id="codigoCentral" size="10" maxlength="8">
 			&nbsp;<a href="javascript:showBodyForm();"><img src="imagenes/lupa.gif" border="0" height="18"></a>
 		</td>
@@ -428,36 +431,36 @@ function showBodyForm(){
 	
 	<fieldset style="width: 830px">
    	<legend>
-   	<font face="Arial Narrow" size="3" color="#000080">
+   	<font class="fontText">
    	Datos del Cliente
    	</font></legend>
 	<table>	
 	<tr>
 		<td colspan="2" valign="middle">
-        	<font face="Arial Narrow" size="3" color="#000080"><b>Nro. Solicitud</b></font>&nbsp;
+        	<font class="fontText"><b>Nro. Solicitud</b></font>&nbsp;
 			<input type="text" name="nroSolicitud" class="cajaTexto" id="nroSolicitud" size="19" maxlength="19">&nbsp;
 			
-			<font face="Arial Narrow" size="3" color="#000080"><b>Tipo Persona *</b></font>&nbsp;
+			<font class="fontText"><b>Tipo Persona *</b></font>&nbsp;
 			<input type="text" name="tipoPersona" class="cajaTexto" id="tipoPersona" size="10" maxlength="8">&nbsp;
 			
-			<font face="Arial Narrow" size="3" color="#000080"><b>Ruc / DNI *</b></font>&nbsp;
+			<font class="fontText"><b>Ruc / DNI *</b></font>&nbsp;
 			<input type="text" name="rucDni" class="cajaTexto" id="rucDni" size="27" maxlength="27">
        </td>
     </tr>
     <tr>
        <td colspan="2" valign="middle">
-       		<font face="Arial Narrow" size="3" color="#000080"><b>Razon Social / Apellidos y Nombres *</b></font>&nbsp;
+       		<font class="fontText"><b>Razon Social / Apellidos y Nombres *</b></font>&nbsp;
 			<input type="text" name="razonSocial" class="cajaTexto" id="razonSocial" size="76" maxlength="76">
        </td>
 	</tr>
 	<tr>
        <td align="left" valign="middle">
-       		<font face="Arial Narrow" size="3" color="#000080"><b>Oficina Principal *</b></font>&nbsp;
+       		<font class="fontText"><b>Oficina Principal *</b></font>&nbsp;
 			<input type="text" name="codOficina" class="cajaTexto" id="codOficina" size="10" maxlength="10">
 			<input type="text" name="desOficina" class="cajaTexto" id="desOficina" size="20" maxlength="20">&nbsp;&nbsp;
 	   </td>
 	   <td align="right" valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Gestor *</b></font>&nbsp;
+			<font class="fontText"><b>Gestor *</b></font>&nbsp;
 			<input type="text" name="codGestor" class="cajaTexto" id="codGestor" size="10" maxlength="10">
 			<input type="text" name="desGestor" class="cajaTexto" id="desGestor" size="20" maxlength="20">
        </td>
@@ -465,7 +468,7 @@ function showBodyForm(){
 	<tr>
 	   <td align="left">&nbsp;</td>
        <td align="right" valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Empleador *</b></font>&nbsp;
+			<font class="fontText"><b>Empleador *</b></font>&nbsp;
 			<input type="text" name="codEmpleador" class="cajaTexto" id="codEmpleador" size="10" maxlength="10">
 			<input type="text" name="desEmpleador" class="cajaTexto" id="desEmpleador" size="20" maxlength="20">
        </td>
@@ -475,26 +478,26 @@ function showBodyForm(){
 	
 	<fieldset style="width: 830px">
    	<legend>
-   	<font face="Arial Narrow" size="3" color="#000080">
+   	<font class="fontText">
    	Datos de la Oficina y Ejecutivo
    	</font></legend>
 	<table>	
 	<tr>
        <td align="left" valign="middle">
-       		<font face="Arial Narrow" size="3" color="#000080"><b>Ejecutivo de Cuenta *</b></font>
+       		<font class="fontText"><b>Ejecutivo de Cuenta *</b></font>
        </td>
        <td align="left" valign="middle">
 			<input type="text" name="codCuentaEjecutivo" class="cajaTexto" id="codCuentaEjecutivo" size="10" maxlength="10">
 			<input type="text" name="desCuentaEjecutivo" class="cajaTexto" id="desCuentaEjecutivo" size="20" maxlength="20">
 	   </td>
 	   <td align="right" valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Fecha de Ingreso Oficina *</b></font>&nbsp;
+			<font class="fontText"><b>Fecha de Ingreso Oficina *</b></font>&nbsp;
 			<input type="text" name="fechaIngresoOfic" class="cajaTexto" id="fechaIngresoOfic" size="20" maxlength="20">
        </td>
 	</tr>
 	<tr>
        <td align="left" valign="middle">
-       		<font face="Arial Narrow" size="3" color="#000080"><b>Oficina de Alta *</b></font>
+       		<font class="fontText"><b>Oficina de Alta *</b></font>
        </td>
        <td align="left" valign="middle">
 			<input type="text" name="codOficinaAlta" class="cajaTexto" id="codOficinaAlta" size="10" maxlength="10">
@@ -504,7 +507,7 @@ function showBodyForm(){
 	</tr>
 	<tr>
        <td align="left" valign="middle">
-       		<font face="Arial Narrow" size="3" color="#000080"><b>Gerencia Territorial *</b></font>
+       		<font class="fontText"><b>Gerencia Territorial *</b></font>
        </td>
        <td align="left" valign="middle">
 			<input type="text" name="codGerenciaTerrit" class="cajaTexto" id="codGerenciaTerrit" size="10" maxlength="10">
@@ -518,13 +521,13 @@ function showBodyForm(){
 	<div style="overflow: scroll;"></div>
 		<fieldset style="width: 1100px">
    	<legend>
-   	<font face="Arial Narrow" size="3" color="#000080">
+   	<font class="fontText">
    	Datos del Producto
    	</font></legend>
 	<table style="width: 740px">	
 	<tr>
        <td align="left" valign="middle">
-       		<font face="Arial Narrow" size="3" color="#000080"><b>Banca</b></font>&nbsp;       
+       		<font class="fontText"><b>Banca</b></font>&nbsp;       
 	   		<select id="bancaCliente" name="bancaCliente" onchange="changeBankListProducts(this);">
 				<option value="-1">-- Seleccionar Banca --</option>
 				<option value="BP">Banca Personas</option>
@@ -534,14 +537,14 @@ function showBodyForm(){
 			</select>
 	   </td>
 	   <td align="center" valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Moneda</b></font>&nbsp;       
+			<font class="fontText"><b>Moneda</b></font>&nbsp;       
 	   		<select id="tipoMoneda" name="tipoMoneda">
 				<option value="SL">SOLES</option>
 				<option value="DL">DÓLARES</option>
 			</select>
        </td>
        <td align="right" valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Monto total</b></font>&nbsp;
+			<font class="fontText"><b>Monto total</b></font>&nbsp;
 	   		<input type="text" name="montoTotal" class="cajaTexto" id="montoTotal" size="20" maxlength="20">
        </td>
 	</tr>
@@ -557,7 +560,7 @@ function showBodyForm(){
 	</fieldset>
 	<fieldset style="width: 1000px">
    	<legend>
-   	<font face="Arial Narrow" size="3" color="#000080">
+   	<font class="fontText">
    	Datos de Riesgo del Cliente
    	</font></legend>
    	
@@ -568,7 +571,7 @@ function showBodyForm(){
 	<table>	
 	<tr>
 		<td valign="middle">
-        	<font face="Arial Narrow" size="3" color="#000080"><b>Rating / Scorating / Scoring *</b></font>
+        	<font class="fontText"><b>Rating / Scorating / Scoring *</b></font>
         </td>
         <td valign="middle">
 			<input type="text" name="rating" class="cajaTexto" id="rating" size="19" maxlength="19">
@@ -576,7 +579,7 @@ function showBodyForm(){
     </tr>
     <tr>
        <td valign="middle">
-       		<font face="Arial Narrow" size="3" color="#000080"><b>Clasificación del Cliente *</b></font>
+       		<font class="fontText"><b>Clasificación del Cliente *</b></font>
        </td>
        <td valign="middle">
 			<input type="text" name="clasifCliente" class="cajaTexto" id="clasifCliente" size="19" maxlength="19">
@@ -589,7 +592,7 @@ function showBodyForm(){
 	<table>	
 	<tr>
 		<td valign="middle">
-        	<font face="Arial Narrow" size="3" color="#000080"><b>Relevancia Pública *</b></font><br/>
+        	<font class="fontText"><b>Relevancia Pública *</b></font><br/>
 			<input type="text" name="relevPublica1" class="cajaTexto" id="relevPublica1" size="19" maxlength="19"><br/>
 			<input type="text" name="relevPublica2" class="cajaTexto" id="relevPublica2" size="19" maxlength="19"><br/>
 			<input type="text" name="relevPublica3" class="cajaTexto" id="relevPublica3" size="19" maxlength="19"><br/>
@@ -604,7 +607,7 @@ function showBodyForm(){
 	<table>	
 	<tr>
 		<td valign="middle">
-        	<font face="Arial Narrow" size="3" color="#000080"><b>Deuda Directa *</b></font>
+        	<font class="fontText"><b>Deuda Directa *</b></font>
         </td>
         <td valign="middle">
 			<input type="text" name="deudaDirecta" class="cajaTexto" id="deudaDirecta" size="19" maxlength="19">
@@ -612,7 +615,7 @@ function showBodyForm(){
 	</tr>
 	<tr>
 		<td valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Deuda Indirecta *</b></font>
+			<font class="fontText"><b>Deuda Indirecta *</b></font>
 		</td>
 		<td valign="middle">
 			<input type="text" name="deudaIndirecta" class="cajaTexto" id="deudaIndirecta" size="19" maxlength="19">
@@ -620,7 +623,7 @@ function showBodyForm(){
 	</tr>
 	<tr>
 		<td valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Deuda Castigo *</b></font>
+			<font class="fontText"><b>Deuda Castigo *</b></font>
 		</td>
 		<td valign="middle">
 			<input type="text" name="deudaCastigo" class="cajaTexto" id="deudaCastigo" size="19" maxlength="19">
@@ -628,7 +631,7 @@ function showBodyForm(){
 	</tr>
 	<tr>
 		<td valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Deuda en el Sistema Financiero *</b></font>
+			<font class="fontText"><b>Deuda en el Sistema Financiero *</b></font>
 		</td>
 		<td valign="middle">
 			<input type="text" name="deudaSF" class="cajaTexto" id="deudaSF" size="19" maxlength="19">
@@ -641,34 +644,34 @@ function showBodyForm(){
 	<table>	
 	<tr>
 		<td valign="middle">
-        	<font face="Arial Narrow" size="3" color="#000080"><b>Otros Riesgos</b></font>
+        	<font class="fontText"><b>Otros Riesgos</b></font>
         </td>
         <td valign="middle">
-			<input type="text" name="otrosRiesgos" class="cajaTexto" id="otrosRiesgos" size="19" maxlength="19">
+			<input type="text" name="otrosRiesgos" class="cajaTexto" id="otrosRiesgos" size="19" maxlength="19" onkeypress="ingresoNumeros(event);">
 		</td>
 	</tr>
 	<tr>
 		<td valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Riesgo Grupal</b></font>
+			<font class="fontText"><b>Riesgo Grupal</b></font>
 		</td>
 		<td valign="middle">
-			<input type="text" name="riesgoGrupal" class="cajaTexto" id="riesgoGrupal" size="19" maxlength="19">
-		</td>
-	</tr>
-	<tr>
-		<td valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Riesgo Actual</b></font>
-		</td>
-		<td valign="middle">
-			<input type="text" name="riesgoActual" class="cajaTexto" id="riesgoActual" size="19" maxlength="19">
+			<input type="text" name="riesgoGrupal" class="cajaTexto" id="riesgoGrupal" size="19" maxlength="19" onkeypress="ingresoNumeros(event);">
 		</td>
 	</tr>
 	<tr>
 		<td valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Riesgo Total</b></font>
+			<font class="fontText"><b>Riesgo Actual</b></font>
 		</td>
 		<td valign="middle">
-			<input type="text" name="riesgoTotal" class="cajaTexto" id="riesgoTotal" size="19" maxlength="19">
+			<input type="text" name="riesgoActual" class="cajaTexto" id="riesgoActual" size="19" maxlength="19" onkeypress="ingresoNumeros(event);">
+		</td>
+	</tr>
+	<tr>
+		<td valign="middle">
+			<font class="fontText"><b>Riesgo Total</b></font>
+		</td>
+		<td valign="middle">
+			<input type="text" name="riesgoTotal" class="cajaTexto" id="riesgoTotal" size="19" maxlength="19" onkeypress="ingresoNumeros(event);">
        </td>
     </tr>
 	</table>

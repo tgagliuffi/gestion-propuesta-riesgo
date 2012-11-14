@@ -172,7 +172,7 @@ function mostrarTablaSolicitud(data){
 	<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Cargo</b></font>&nbsp;
+			<font class="fontText"><b>Cargo</b></font>&nbsp;
 			<select id="cargoEvaluador" name="cargoEvaluador">
 				<option value="GT">Gerente</option>
 				<option value="RS">Responsable</option>			
@@ -191,32 +191,32 @@ function mostrarTablaSolicitud(data){
 	<table style="width: 800px" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Código Central</b></font>
+			<font class="fontText"><b>Código Central</b></font>
 		</td>
 		<td valign="middle">
 			<input type="text" name="codigoCentral" class="cajaTexto" id="codigoCentral" size="10" maxlength="8">
 		</td>
 		<td valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Número Solicitud</b></font>
+			<font class="fontText"><b>Número Solicitud</b></font>
 		</td>
 		<td valign="middle">
 			<input type="text" name="numSolicitud" class="cajaTexto" id="numSolicitud" size="10" maxlength="8">
 		</td>
 		<td align="right" valign="middle">
 			<input type="checkbox" name="stFueraRango" class="cajaTexto" id="stFueraRango">&nbsp;
-			<font face="Arial Narrow" size="3" color="#000080"><b>Solicitudes Fuera de Rango</b></font>			
+			<font class="fontText"><b>Solicitudes Fuera de Rango</b></font>			
 		</td>
 	</tr>
 	<tr>
 		<td valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Fecha Solicitud</b></font>
+			<font class="fontText"><b>Fecha Solicitud</b></font>
 		</td>
 		<td valign="middle">
 			<input type="text" name="inifechaSolicitud" class="cajaTexto" id="inifechaSolicitud" size="10" maxlength="8">&nbsp;al&nbsp;
 			<input type="text" name="finfechaSolicitud" class="cajaTexto" id="finfechaSolicitud" size="10" maxlength="8">
 		</td>
 		<td valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Fecha de vencimiento de evaluación</b></font>
+			<font class="fontText"><b>Fecha de vencimiento de evaluación</b></font>
 		</td>
 		<td valign="middle">
 			<input type="text" name="fechaVencimiento" class="cajaTexto" id="fechaVencimiento" size="10" maxlength="8">

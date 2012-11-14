@@ -12,9 +12,7 @@
         http://www.springframework.org/schema/context/spring-context-2.5.xsd
         http://www.springframework.org/schema/tx 
         http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">      
-   
-	<context:annotation-config />
-	<context:component-scan base-package="bbva.pe.gpr"/>
+	
 	<!-- DataSource -->
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
   		<property name="jndiName" value="java:comp/env/jdbc/Ora_BGPR" /> 
@@ -106,6 +104,16 @@
   	<bean id="menuRolDAO" class="bbva.pe.gpr.daoImpl.MenuRolDAOImpl">
     	<property name="sqlMapClient" ref="sqlMapClient"/>
   	</bean>
+  	<bean id="usuarioOficinaDAO" class="bbva.pe.gpr.daoImpl.UsuarioOficinaDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
+  	<bean id="gerenteOficinaDAOImpl" class="bbva.pe.gpr.daoImpl.GerenteOficinaDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
+	<bean id="solicitudRechazadaDAOImpl" class="bbva.pe.gpr.daoImpl.SolicitudRechazadaDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
+  	
 <!-- =============================================================================================================================================-->
 <!-- ================================== Service Classes Implementations of BusinessObjects Services ===============================================-->
 <!-- ==============================================================================================================================================-->
@@ -117,6 +125,13 @@
 			<constructor-arg index="4" ref="multitablaDAO"></constructor-arg>
 			<constructor-arg index="5" ref="multitablaDetalleDAO"></constructor-arg>
 			<constructor-arg index="6" ref="usuarioDAO"></constructor-arg>
+			<constructor-arg index="7" ref="rolDAO"></constructor-arg>
+			<constructor-arg index="8" ref="usuarioOficinaDAO"></constructor-arg>
+			<constructor-arg index="9" ref="gerenteOficinaDAOImpl"></constructor-arg>
+			<constructor-arg index="10" ref="solicitudRechazadaDAOImpl"></constructor-arg>
+			<constructor-arg index="11" ref="funcionDAO"></constructor-arg>
+			
+		
 	</bean>
 	<bean id="seguridadServiceImpl" class="bbva.pe.gpr.serviceImpl.SeguridadServiceImpl">
 			<constructor-arg index="0" ref="funcionDAO"></constructor-arg>

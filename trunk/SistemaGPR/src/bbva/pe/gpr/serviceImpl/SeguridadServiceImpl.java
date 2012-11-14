@@ -1,9 +1,13 @@
 package bbva.pe.gpr.serviceImpl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import bbva.pe.gpr.bean.Funcion;
+import bbva.pe.gpr.bean.FuncionRol;
+import bbva.pe.gpr.bean.Menu;
 import bbva.pe.gpr.bean.Rol;
+import bbva.pe.gpr.bean.UsuarioRol;
 import bbva.pe.gpr.dao.FuncionDAO;
 import bbva.pe.gpr.dao.FuncionRolDAO;
 import bbva.pe.gpr.dao.MenuDAO;
@@ -11,6 +15,7 @@ import bbva.pe.gpr.dao.MenuRolDAO;
 import bbva.pe.gpr.dao.RolDAO;
 import bbva.pe.gpr.dao.UsuarioRolDAO;
 import bbva.pe.gpr.service.SeguridadService;
+import bbva.pe.gpr.util.Constant;
 
 public class SeguridadServiceImpl implements SeguridadService {
 	private FuncionDAO funcionDAO;
@@ -57,11 +62,34 @@ public class SeguridadServiceImpl implements SeguridadService {
   *##################################################################################################### */
 
   public List<Funcion> getLstFuncionByCriteria(Funcion record) throws Exception {
-		        return funcionDAO.getLstFuncionByCriteria(record);
+		return funcionDAO.getLstFuncionByCriteria(record);
   }
   public List<Rol> getLstRolesByCriteria(Rol rolBean) throws Exception{
 		return rolDAO.getLstRolesByCriteria(rolBean);
   }
-		  
-		   
+
+  public List<FuncionRol> getLstFuncionRol(FuncionRol funcionRolBean)throws Exception {
+	    return funcionRolDAO.getLstFuncionRol(funcionRolBean);
+  }
+
+  public void saveFuncionRol(FuncionRol funcionRolBean) throws Exception {
+        funcionRolDAO.saveFuncionRol(funcionRolBean);
+  }
+
+  public void saveUsuarioRol(String codUsuario, String codRoles) throws Exception {
+	  UsuarioRol usuarioRol=new UsuarioRol();
+	  String [] valores=codRoles.split(",");
+	  for(String idRoles:valores){
+	  if(!idRoles.equals("")){
+	  usuarioRol.setCodRol(new BigDecimal(idRoles));	  
+	  usuarioRol.setEstado(Constant.ESTADO_ACTIVO);
+	  usuarioRol.setCodUsuario(codUsuario);
+	  usuarioRol.setDescripcion("ingreso");	
+	  usuarioRolDAO.insertSelective(usuarioRol);
+	  }
+	 }
+  }
+  public List<Menu> getListadoMenu(String codUsuario) {
+	return  menuDAO.getLstMenuxUsuario(codUsuario);
+  }		   
 }

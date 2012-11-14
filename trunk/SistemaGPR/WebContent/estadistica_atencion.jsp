@@ -98,7 +98,7 @@ function mostrarTablaDetallado(data){
 	<table style="width: 600px" border="0" cellspacing="0" cellpadding="0">
 	<tr>
        <td align="left" valign="middle">
-       		<font face="Arial Narrow" size="3" color="#000080"><b>Banca</b></font>
+       		<font class="fontText"><b>Banca</b></font>
        </td>
        <td align="left" valign="middle">       
 	   		<select id="bancaCliente" name="bancaCliente">
@@ -110,7 +110,7 @@ function mostrarTablaDetallado(data){
 			</select>
 	   </td>
 	   <td align="left" valign="middle">
-       		<font face="Arial Narrow" size="3" color="#000080"><b>Dictaminado por</b></font>
+       		<font class="fontText"><b>Dictaminado por</b></font>
        </td>
        <td align="left" valign="middle">       
 	   		<select id="dictaminado" name="dictaminado">
@@ -120,7 +120,7 @@ function mostrarTablaDetallado(data){
 	</tr>
 	<tr>
        <td align="left" valign="middle">
-       		<font face="Arial Narrow" size="3" color="#000080"><b>Territorio</b></font>
+       		<font class="fontText"><b>Territorio</b></font>
        </td>
        <td align="left" colspan="3" valign="middle">
 			<input type="text" name="codTerritorio" class="cajaTexto" id="codTerritorio" size="10" maxlength="10">
@@ -129,7 +129,7 @@ function mostrarTablaDetallado(data){
 	</tr>
 	<tr>
        <td align="left" valign="middle">
-       		<font face="Arial Narrow" size="3" color="#000080"><b>Oficina</b></font>
+       		<font class="fontText"><b>Oficina</b></font>
        </td>
        <td align="left" colspan="3" valign="middle">
 			<input type="text" name="codOficina" class="cajaTexto" id="codOficina" size="10" maxlength="10">
@@ -139,7 +139,7 @@ function mostrarTablaDetallado(data){
 	
 	<tr>
 		<td align="left" valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Fecha Solicitud</b></font>
+			<font class="fontText"><b>Fecha Solicitud</b></font>
 		</td>
 		<td align="left" valign="middle">
 			<input type="text" name="inifechaSolicitud" class="cajaTexto" id="inifechaSolicitud" size="14" maxlength="14">&nbsp;al&nbsp;
@@ -153,7 +153,7 @@ function mostrarTablaDetallado(data){
 	
 	<fieldset style="width: 950px">
    	<legend>
-   	<font face="Arial Narrow" size="3" color="#000080">
+   	<font class="fontText">
    	Detallado
    	</font></legend>
 

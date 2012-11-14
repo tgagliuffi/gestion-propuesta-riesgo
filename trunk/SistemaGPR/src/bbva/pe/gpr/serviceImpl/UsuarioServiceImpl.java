@@ -1,6 +1,5 @@
 package bbva.pe.gpr.serviceImpl;
 
-import java.util.HashMap;
 import java.util.List;
 
 import bbva.pe.gpr.bean.Usuario;
@@ -53,11 +52,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return usuarioDao.getLstUsuarios(usuarioBean);
 	}
 
-	public int getAsignarOficina(HashMap<String, String> record) throws Exception {
-		return usuarioDao.getAsignarOficina(record);
-	}
-
-	public List<Usuario> getLstUsuarioALL() throws Exception {
-		return usuarioDao.getLstUsuarioAll();
+	public int getAsignarOficina(Usuario record) throws Exception {
+		return usuarioDao.updateOficinaAsignada(record);
 	}
 }

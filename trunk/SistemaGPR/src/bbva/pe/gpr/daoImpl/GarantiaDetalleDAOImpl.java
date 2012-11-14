@@ -48,4 +48,8 @@ public class GarantiaDetalleDAOImpl extends SqlMapClientDaoSupport implements Ga
 	public HashMap<String,BigDecimal> getlstProdGaranDeta(SolicitudDetalle bean) {
 		return (HashMap)getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_GARANTIA_DETALLES.getlstProdGaranDeta",bean);
 	}
+
+	public GarantiaDetalle garantiaDetalle(String codGarantia) {
+		return (GarantiaDetalle)getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_GARANTIA_DETALLES.getGarantiaDetalle",codGarantia);
+	}
 }

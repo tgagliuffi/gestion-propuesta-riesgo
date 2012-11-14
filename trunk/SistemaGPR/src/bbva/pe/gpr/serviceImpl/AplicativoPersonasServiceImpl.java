@@ -1,5 +1,6 @@
 package bbva.pe.gpr.serviceImpl;
 
+import bbva.pe.gpr.bean.CondicionCliente;
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.service.AplicativoPersonasService;
 import bbva.pe.gpr.util.Constant;
@@ -22,6 +23,13 @@ public class AplicativoPersonasServiceImpl implements AplicativoPersonasService{
 			solicitudBean.setGestorCod("B23");
 			solicitudBean.setGestorNom("SANDRA NIRSA ARENAS ALVAREZ");
 			
+			solicitudBean.setCondicionCliente(new CondicionCliente());
+			solicitudBean.getCondicionCliente().setBbvaa("40 CPP");
+			solicitudBean.getCondicionCliente().setBureau("G1");
+			solicitudBean.getCondicionCliente().setInelegible("INELEGIBLES");
+			solicitudBean.getCondicionCliente().setRelevPubli("SIN RELEVANCIA");
+			solicitudBean.getCondicionCliente().setSistFinan("20 DUDOSO");
+			
 			
 		}else if(codCentral.equals("20510957319")){
 			solicitudBean.setCodCentral(codCentral);
@@ -34,6 +42,12 @@ public class AplicativoPersonasServiceImpl implements AplicativoPersonasService{
 			
 			solicitudBean.setGestorCod("B23");
 			solicitudBean.setGestorNom("SANDRA NIRSA ARENAS	ALVAREZ");
+			
+			solicitudBean.getCondicionCliente().setBbvaa("40 CPP");
+			solicitudBean.getCondicionCliente().setBureau("G1");
+			solicitudBean.getCondicionCliente().setInelegible("INELEGIBLES");
+			solicitudBean.getCondicionCliente().setRelevPubli("SIN RELEVANCIA");
+			solicitudBean.getCondicionCliente().setSistFinan("20 DUDOSO");
 						
 			
 		}else{
@@ -77,9 +91,8 @@ public class AplicativoPersonasServiceImpl implements AplicativoPersonasService{
 	}
 	
 	public Solicitud invokeRelevancia(Solicitud solicitudBean){
-		String relevancias = "Inelegibles,Terrorismo,Lista negra,Alto riesgo,Lavado de dinero";	
-		relevancias = relevancias.toUpperCase();
-		solicitudBean.setArrayReelevancia(relevancias.split(","));
+		String relevancias = "404403404";	
+		solicitudBean.setReelevancia(relevancias);
 		return solicitudBean;
 	}
 
@@ -90,7 +103,7 @@ public class AplicativoPersonasServiceImpl implements AplicativoPersonasService{
 
 	
 	public Solicitud invokeScorating(Solicitud solicitudBean){
-		solicitudBean.setScorating("SCORING");
+		solicitudBean.setScorating("");
 		return solicitudBean;
 	}
 	
