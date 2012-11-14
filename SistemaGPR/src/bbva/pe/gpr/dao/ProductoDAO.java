@@ -1,10 +1,9 @@
 package bbva.pe.gpr.dao;
 
+import bbva.pe.gpr.bean.Campania;
 import bbva.pe.gpr.bean.Producto;
-import bbva.pe.gpr.bean.SolicitudDetalle;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -15,7 +14,6 @@ public interface ProductoDAO {
 	Producto selectByPrimaryKey(BigDecimal codProducto)throws Exception ;
 	int updateByPrimaryKeySelective(Producto record)throws Exception ;
 	int updateByPrimaryKey(Producto record)throws Exception ;
-	List<Producto> getLstProducto(Producto record)throws Exception ; 
-	@SuppressWarnings("rawtypes")
-	HashMap getlstProdGaranDeta(SolicitudDetalle bean)throws Exception ;
+	List<Producto> getLstProductoByCriteria(Producto record)throws Exception ; 
+	List<Campania> getlstCampaniaByCriteria(Campania campanbean);
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="CARDEL_TGPR_USUARIO_OFICINA">
+
+  <resultMap id="ibatorgenerated_BaseResultMap" class="bbva.pe.gpr.bean.UsuarioOficina" >
+    <result column="CODIGO_USUARIO" property="cod_usuario" jdbcType="VARCHAR" />
+    <result column="COD_OFICINA" property="cod_oficina" jdbcType="VARCHAR" />
+    <result column="ESTADO" property="estado" jdbcType="DECIMAL" />
+    
+  </resultMap>
+
+  <select id="getLstOficinaAsignada" resultClass="bbva.pe.gpr.bean.UsuarioOficina" parameterClass="bbva.pe.gpr.bean.Usuario">
+  		SELECT 
+  		O.NOMBRE  AS cod_usuario ,
+  		A.COD_OFICINA AS cod_oficina
+  		FROM 
+  		CARDEL.TGPR_USUARIO_OFICINAS A
+  		JOIN  CARDEL.TGPR_OFICINAS O ON A.COD_OFICINA=O.COD_OFICINA
+  		where
+	    ( #codigoUsuario:VARCHAR# IS NULL OR #codigoUsuario:VARCHAR#='1' OR A.CODIGO_USUARIO = #codigoUsuario:VARCHAR#) AND
+	    ( #estado:DECIMAL# IS NULL OR A.ESTADO = #estado:DECIMAL#)
+  </select>
+  
+  <insert id="getLstSaveAsignarOficina" parameterClass="bbva.pe.gpr.bean.UsuarioOficina">
+  	INSERT INTO CARDEL.TGPR_USUARIO_OFICINAS ( CODIGO_USUARIO, COD_OFICINA, ESTADO) VALUES
+   		(#cod_usuario#, #cod_oficina#, #estado#)
+  </insert>
+   
+ <update id="getUpdateEstado" parameterClass="string">
+		UPDATE CARDEL.TGPR_USUARIO_OFICINAS SET ESTADO = '0' 
+		WHERE COD_OFICINA = #columna#
+ </update>
+	
+ <select id="getCountOficinaAsignada" parameterClass="bbva.pe.gpr.bean.UsuarioOficina"  resultClass="string">
+    	SELECT  COUNT(*)
+		FROM    CARDEL.TGPR_OFICINA_USUARIO
+		WHERE   CODIGO_USUARIO= #cod_usuario#    AND 
+                COD_OFICINA=#cod_oficina#        AND 
+                estado !=0
+ </select>
+
+</sqlMap>

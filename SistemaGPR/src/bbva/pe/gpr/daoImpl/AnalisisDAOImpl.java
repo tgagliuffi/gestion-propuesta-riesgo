@@ -1,5 +1,7 @@
 package bbva.pe.gpr.daoImpl;
 
+import java.util.List;
+
 import bbva.pe.gpr.bean.Analisis;
 import bbva.pe.gpr.bean.AnalisisKey;
 import bbva.pe.gpr.dao.AnalisisDAO;
@@ -24,7 +26,6 @@ public class AnalisisDAOImpl extends SqlMapClientDaoSupport implements AnalisisD
 
     public void insertSelective(Analisis record) throws Exception{
     	getSqlMapClientTemplate().insert("CARDEL_TGPR_ANALISIS.ibatorgenerated_insertSelective", record);
-    	
     }
 
     public Analisis selectByPrimaryKey(AnalisisKey key) throws Exception{
@@ -41,4 +42,15 @@ public class AnalisisDAOImpl extends SqlMapClientDaoSupport implements AnalisisD
         int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_ANALISIS.ibatorgenerated_updateByPrimaryKey", record);
         return rows;
     }
+
+	@SuppressWarnings("unchecked")
+	public List<Analisis> selectByNroSolicitud(AnalisisKey key) throws Exception {
+        return (List<Analisis>) getSqlMapClientTemplate().queryForList("CARDEL_TGPR_ANALISIS.selectByNroSolicitud", key);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Analisis> selectByAnalisis(Analisis analisis) throws Exception {
+        return (List<Analisis>) getSqlMapClientTemplate().queryForList("CARDEL_TGPR_ANALISIS.selectByAnalisis", analisis);
+	}
+
 }

@@ -19,6 +19,8 @@ public class Dictamen extends DictamenKey {
 	private BigDecimal estado;
 	private String codCentral;
 	private String strMensaje;
+	private String codMultDictamen;
+	private String ctrlRating;
 	
 	public String getCodMultNivel() {
 		return codMultNivel;
@@ -116,6 +118,16 @@ public class Dictamen extends DictamenKey {
 	public void setStrMensaje(String strMensaje) {
 		this.strMensaje = strMensaje;
 	}
-	
-    
+	public String getCodMultDictamen() {
+		return codMultDictamen;
+	}
+	public void setCodMultDictamen(String codMultDictamen) {
+		this.codMultDictamen = codMultDictamen;
+	}
+	public String getCtrlRating() {
+		return ctrlRating;
+	}
+	public void setCtrlRating(String ctrlRating) {
+		this.ctrlRating = ctrlRating;
+	}
 }

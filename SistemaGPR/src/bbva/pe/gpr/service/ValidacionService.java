@@ -10,4 +10,5 @@ public interface ValidacionService {
 	public int riesgoPorRating(Solicitud solicitud);
 	public int riesgoSinRating(Solicitud solicitud);
 	public int riesgoPersonaNatural(Solicitud solicitud);
+	
 }

@@ -4,26 +4,36 @@ import java.math.BigDecimal;
 
 public class SolicitudDetalle extends SolicitudDetalleKey {
 	
+	private int indice;
 	private BigDecimal codProducto;
 	private String desProducto;
     private String codProdBase;
+    private String desProdBase;
     private String scoring;
 	private String contratoVinculado;
 	private String codPrevaluador;
-	private String desMultCampania;
+	private String desCampania;
 	private String tipo;
-	private BigDecimal monto;
-	private String desMultPlazo;
-	private String desGarantia;
+	private String desTipo;
+	private BigDecimal mtoProducto;
+	private Integer plazo;
+	private BigDecimal mtoGarantia;
 	
 	private Short estado;
 	private String codCentral;
 	private String plazoGarantia;
-	private String codMultMoneda;
-	private String codMultPlazo;
-	private String codMultCampania;
+
+
+	private BigDecimal codCampania;
 	private BigDecimal codGarantia;
+	private BigDecimal mtoTotalRow;
 	
+	public int getIndice() {
+		return indice;
+	}
+	public void setIndice(int indice) {
+		this.indice = indice;
+	}
 	public BigDecimal getCodProducto() {
 		return codProducto;
 	}
@@ -41,6 +51,12 @@ public class SolicitudDetalle extends SolicitudDetalleKey {
 	}
 	public void setCodProdBase(String codProdBase) {
 		this.codProdBase = codProdBase;
+	}
+	public String getDesProdBase() {
+		return desProdBase;
+	}
+	public void setDesProdBase(String desProdBase) {
+		this.desProdBase = desProdBase;
 	}
 	public String getScoring() {
 		return scoring;
@@ -60,11 +76,11 @@ public class SolicitudDetalle extends SolicitudDetalleKey {
 	public void setCodPrevaluador(String codPrevaluador) {
 		this.codPrevaluador = codPrevaluador;
 	}
-	public String getDesMultCampania() {
-		return desMultCampania;
+	public String getDesCampania() {
+		return desCampania;
 	}
-	public void setDesMultCampania(String desMultCampania) {
-		this.desMultCampania = desMultCampania;
+	public void setDesCampania(String desCampania) {
+		this.desCampania = desCampania;
 	}
 	public String getTipo() {
 		return tipo;
@@ -72,23 +88,29 @@ public class SolicitudDetalle extends SolicitudDetalleKey {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	public BigDecimal getMonto() {
-		return monto;
+	public String getDesTipo() {
+		return desTipo;
 	}
-	public void setMonto(BigDecimal monto) {
-		this.monto = monto;
+	public void setDesTipo(String desTipo) {
+		this.desTipo = desTipo;
 	}
-	public String getDesMultPlazo() {
-		return desMultPlazo;
+	public BigDecimal getMtoProducto() {
+		return mtoProducto;
 	}
-	public void setDesMultPlazo(String desMultPlazo) {
-		this.desMultPlazo = desMultPlazo;
+	public void setMtoProducto(BigDecimal mtoProducto) {
+		this.mtoProducto = mtoProducto;
 	}
-	public String getDesGarantia() {
-		return desGarantia;
+	public Integer getPlazo() {
+		return plazo;
 	}
-	public void setDesGarantia(String desGarantia) {
-		this.desGarantia = desGarantia;
+	public void setPlazo(Integer plazo) {
+		this.plazo = plazo;
+	}
+	public BigDecimal getMtoGarantia() {
+		return mtoGarantia;
+	}
+	public void setMtoGarantia(BigDecimal mtoGarantia) {
+		this.mtoGarantia = mtoGarantia;
 	}
 	public Short getEstado() {
 		return estado;
@@ -108,23 +130,11 @@ public class SolicitudDetalle extends SolicitudDetalleKey {
 	public void setPlazoGarantia(String plazoGarantia) {
 		this.plazoGarantia = plazoGarantia;
 	}
-	public String getCodMultMoneda() {
-		return codMultMoneda;
+	public BigDecimal getCodCampania() {
+		return codCampania;
 	}
-	public void setCodMultMoneda(String codMultMoneda) {
-		this.codMultMoneda = codMultMoneda;
-	}
-	public String getCodMultPlazo() {
-		return codMultPlazo;
-	}
-	public void setCodMultPlazo(String codMultPlazo) {
-		this.codMultPlazo = codMultPlazo;
-	}
-	public String getCodMultCampania() {
-		return codMultCampania;
-	}
-	public void setCodMultCampania(String codMultCampania) {
-		this.codMultCampania = codMultCampania;
+	public void setCodCampania(BigDecimal codCampania) {
+		this.codCampania = codCampania;
 	}
 	public BigDecimal getCodGarantia() {
 		return codGarantia;
@@ -132,8 +142,13 @@ public class SolicitudDetalle extends SolicitudDetalleKey {
 	public void setCodGarantia(BigDecimal codGarantia) {
 		this.codGarantia = codGarantia;
 	}
+	public BigDecimal getMtoTotalRow() {
+		return mtoTotalRow;
+	}
+	public void setMtoTotalRow(BigDecimal mtoTotalRow) {
+		this.mtoTotalRow = mtoTotalRow;
+	}
+	
+	
 
-    
-	
-	
 }

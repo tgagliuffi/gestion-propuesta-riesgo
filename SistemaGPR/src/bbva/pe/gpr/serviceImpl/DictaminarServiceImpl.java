@@ -18,66 +18,89 @@ public class DictaminarServiceImpl implements DictaminarService {
 	private SolicitudOperacionDAO solicitudOperacionDAO;
 	private SolicitudMensajeDAO solicitudMensajeDAO;
 	private MultitablaDetalleDAO multitablaDetalleDAO;
- 
+
 	public DictaminarServiceImpl(DictamenDAO dictamenDAO,
 			SolicitudOperacionDAO solicitudOperacionDAO,
 			SolicitudMensajeDAO solicitudMensajeDAO,
-			MultitablaDetalleDAO multitablaDetalleDAO
-			){
+			MultitablaDetalleDAO multitablaDetalleDAO) {
 		super();
-		this.dictamenDAO=dictamenDAO;
-		this.solicitudOperacionDAO=solicitudOperacionDAO;
-		this.solicitudMensajeDAO=solicitudMensajeDAO;
-		this.multitablaDetalleDAO=multitablaDetalleDAO;
+		this.dictamenDAO = dictamenDAO;
+		this.solicitudOperacionDAO = solicitudOperacionDAO;
+		this.solicitudMensajeDAO = solicitudMensajeDAO;
+		this.multitablaDetalleDAO = multitablaDetalleDAO;
 	}
-	
-	
-	public DictamenDAO getDictamenDAO() {return dictamenDAO;}
-	public void setDictamenDAO(DictamenDAO dictamenDAO){this.dictamenDAO = dictamenDAO;}
-	public SolicitudOperacionDAO getSolicitudOperacionDAO(){return solicitudOperacionDAO;}
-	public void setSolicitudOperacionDAO(SolicitudOperacionDAO solicitudOperacionDAO) {this.solicitudOperacionDAO = solicitudOperacionDAO;}
-	public SolicitudMensajeDAO getSolicitudMensajeDAO(){return solicitudMensajeDAO;}
-	public void setSolicitudMensajeDAO(SolicitudMensajeDAO solicitudMensajeDAO) {this.solicitudMensajeDAO = solicitudMensajeDAO;}
-	public MultitablaDetalleDAO getMultitablaDetalleDAO(){return multitablaDetalleDAO;}
-	public void setMultitablaDetalleDAO(MultitablaDetalleDAO multitablaDetalleDAO){this.multitablaDetalleDAO = multitablaDetalleDAO;}
-	
-	
-	public Long dictaminarSolicitud(Dictamen dictamenBean) throws Exception{
+
+	public DictamenDAO getDictamenDAO() {
+		return dictamenDAO;
+	}
+
+	public void setDictamenDAO(DictamenDAO dictamenDAO) {
+		this.dictamenDAO = dictamenDAO;
+	}
+
+	public SolicitudOperacionDAO getSolicitudOperacionDAO() {
+		return solicitudOperacionDAO;
+	}
+
+	public void setSolicitudOperacionDAO(SolicitudOperacionDAO solicitudOperacionDAO) {
+		this.solicitudOperacionDAO = solicitudOperacionDAO;
+	}
+
+	public SolicitudMensajeDAO getSolicitudMensajeDAO() {
+		return solicitudMensajeDAO;
+	}
+
+	public void setSolicitudMensajeDAO(SolicitudMensajeDAO solicitudMensajeDAO) {
+		this.solicitudMensajeDAO = solicitudMensajeDAO;
+	}
+
+	public MultitablaDetalleDAO getMultitablaDetalleDAO() {
+		return multitablaDetalleDAO;
+	}
+
+	public void setMultitablaDetalleDAO(MultitablaDetalleDAO multitablaDetalleDAO) {
+		this.multitablaDetalleDAO = multitablaDetalleDAO;
+	}
+
+	public Long dictaminarSolicitud(Dictamen dictamenBean) throws Exception {
 		Long rspt = null;
-		
-		if(dictamenDAO.insert(dictamenBean)!= null){
+
+		if (dictamenDAO.insert(dictamenBean) != null) {
 			ingresaSolicitudOperacion(dictamenBean, Constant.TABLA_PROCESO, Constant.MULT_PROCESO_DICTAMINAR);
-			if(dictamenBean.getStrMensaje()!=null){
+			if (dictamenBean.getStrMensaje() != null) {
 				solicitudMensajeDAO.insert(seteaMensajeBean(dictamenBean));
 			}
 			rspt = new Long(1);
-		}		
+		}
 		return rspt;
 	}
-	
-	public void ingresaSolicitudOperacion(Dictamen dictamenBean, String codTabla, String codProceso) throws Exception{
-		MultitablaDetalle multDetalleBean = multitablaDetalleDAO.selectByPrimaryKey(codTabla, codProceso) ;
-		
+
+	private void ingresaSolicitudOperacion(Dictamen dictamenBean, String codTabla, String codProceso) throws Exception {
+		MultitablaDetalle multDetalleBean = multitablaDetalleDAO.selectByPrimaryKey(codTabla, codProceso);
+
 		SolicitudOperacion solicitudOperacionBean = new SolicitudOperacion();
 		solicitudOperacionBean.setCodCentral(dictamenBean.getCodCentral());
-		if(multDetalleBean != null){
+		if (multDetalleBean != null) {
 			solicitudOperacionBean.setCodMultOperacion(multDetalleBean.getStrValor());
-			solicitudOperacionBean.setDesOperacion(multDetalleBean.getStrValor2());				
+			solicitudOperacionBean.setDesOperacion(multDetalleBean.getStrValor2());
 		}
-		
+
 		solicitudOperacionBean.setNroSolicitud(dictamenBean.getNroSolicitud());
 		solicitudOperacionBean.setEstado(new BigDecimal(1));
 		solicitudOperacionDAO.insert(solicitudOperacionBean);
 	}
-	
-	public SolicitudMensaje seteaMensajeBean(Dictamen dictamenBean){
+
+	public SolicitudMensaje seteaMensajeBean(Dictamen dictamenBean) {
 		SolicitudMensaje solicitudMensajeBean = new SolicitudMensaje();
 		solicitudMensajeBean.setCodCentral(dictamenBean.getCodCentral());
 		solicitudMensajeBean.setCodMensaje(new BigDecimal(1));
 		solicitudMensajeBean.setDesMensaje(dictamenBean.getStrMensaje());
-		solicitudMensajeBean.setEstado( new BigDecimal(1));
+		solicitudMensajeBean.setEstado(new BigDecimal(1));
 		solicitudMensajeBean.setNroSolicitud(dictamenBean.getNroSolicitud());
 		return solicitudMensajeBean;
 	}
 
+	public Dictamen findForNroSolictud(Dictamen d) throws Exception {
+		return dictamenDAO.findForNumeroSolicitud(d);
+	}
 }

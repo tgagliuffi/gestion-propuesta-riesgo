@@ -38,7 +38,6 @@ public class LoginAction extends DispatchAction {
         try {
         	String reg = request.getParameter("regemp");
             
-           	
     		if(request.getParameter("desa")!=null){
         		logger.info("GPR : Desarrollo = true");
         		if(loginForm.getUserName()!=null && loginForm.getPassword().equals("123")){

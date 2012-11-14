@@ -67,11 +67,12 @@ String usuario = (String)request.getSession().getAttribute("USUARIO_NOMBRE");
 			<li><a href="#tabs8"><b>Consulta de Solicitudes</b></a></li>
 			<li><a href="#tabs9"><b>Parametria Condicion Cliente</b></a></li>
 			<li><a href="#tabs10"><b>Parametria Evaluadores/Dictaminadores Oficina-Territorio</b></a></li>
+			<li><a href="#tabs11"><b>Parametria Usuarios</b></a></li>
 		
 		</ul>
 		
 		<div id="tabs1">
-			<iframe src="ingreso_solicitud.jsp" name="frameIngresoSolicitud" width="100%" scrolling="auto" frameborder="0">
+			<iframe src="ingresoSolicitud.do?method=init" name="frameIngresoSolicitud" width="100%" scrolling="auto" frameborder="0">
 			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
 		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
 		    </iframe>
@@ -92,14 +93,14 @@ String usuario = (String)request.getSession().getAttribute("USUARIO_NOMBRE");
 		</div>
 		
 		<div id="tabs4">
-			<iframe src="bandeja_evaluador.jsp" name="frameBandejaEvaluador" width="100%" scrolling="auto" frameborder="0">
+			<iframe src="bandejaEvaluador.do?method=index" name="frameBandejaEvaluador" width="100%" scrolling="auto" frameborder="0">
 			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
 		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
 		    </iframe>
 		</div>
 		
 		<div id="tabs5">
-			<iframe src="analisis_dictamen.jsp" name="frameAnalisisDictamen" width="100%" scrolling="auto" frameborder="0">
+			<iframe src="dictamen.do?method=index" name="frameAnalisisDictamen" width="100%" scrolling="auto" frameborder="0">
 			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
 		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
 		    </iframe>
@@ -120,7 +121,7 @@ String usuario = (String)request.getSession().getAttribute("USUARIO_NOMBRE");
 		</div>
 		
 		<div id="tabs8">
-			<iframe src="consulta_solicitud.jsp" name="frameConsultaSolicitud" width="100%" scrolling="auto" frameborder="0">
+			<iframe src="busquedaSolicitudAction.do?method=listarSolicitud" name="frameConsultaSolicitud" width="100%" scrolling="auto" frameborder="0">
 			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
 		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
 		    </iframe>
@@ -133,6 +134,12 @@ String usuario = (String)request.getSession().getAttribute("USUARIO_NOMBRE");
 		</div>
 		<div id="tabs10">
 			<iframe src="asignarOficina.do?method=listarAsignarOficina" name="frameAsignarOficina" width="100%" scrolling="auto" frameborder="0">
+			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
+		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
+		    </iframe>
+		</div>		
+		<div id="tabs11">
+			<iframe src="usuarioAction.do?method=listarUsuarios" name="frameAsignarOficina" width="100%" scrolling="auto" frameborder="0">
 			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
 		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
 		    </iframe>

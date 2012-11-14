@@ -16,34 +16,57 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import bbva.pe.gpr.bean.Parametro;
+import bbva.pe.gpr.bean.Campania;
+import bbva.pe.gpr.bean.Contrato;
+import bbva.pe.gpr.bean.MultitablaDetalle;
 import bbva.pe.gpr.bean.Producto;
+import bbva.pe.gpr.bean.SolicitudDetalle;
 import bbva.pe.gpr.context.Context;
 import bbva.pe.gpr.form.ProductoForm;
 import bbva.pe.gpr.service.CatalogoService;
+import bbva.pe.gpr.util.Constant;
 import bbva.pe.gpr.util.ReadProperties;
 
 public class ProductoAction extends DispatchAction{
 	private static Logger logger = Logger.getLogger(ProductoAction.class);
 	
 	CatalogoService catalogoService;
-	
+	List<SolicitudDetalle> lstSolicitudDetalle = new ArrayList<SolicitudDetalle>();
 	public ProductoAction() {
 		catalogoService  = (CatalogoService)Context.getInstance().getBean("catalogoService");
 	}
 	
 	public List<Producto> consultarAjax(BigDecimal codBanca){
 		try {
+			Producto productoBean = new Producto();
+			List<Producto> lstProducto = new ArrayList<Producto>();
+			productoBean.setCodProducto(new BigDecimal(-1));
+			productoBean.setDescripcion("-- Seleccionar un producto --");
+			lstProducto.add(productoBean);
+			
 			if(codBanca!=null && !(codBanca.compareTo(new BigDecimal(-1))==0)){
-				Producto productoBean = new Producto();
+				productoBean = new Producto();
 				productoBean.setCodBanca(codBanca);
-			return catalogoService.getLstProducto(productoBean);
+				productoBean.setEstado(Constant.ESTADO_ACTIVO);
+				lstProducto = catalogoService.getLstProductoByCriteria(productoBean);
+				return lstProducto;
 			}
 		
 		} catch (Exception e) {
 			logger.error("Exception ProductoAction.consultarAjax: " + e.getMessage());
 		} 
 		return new ArrayList<Producto>();
+	}
+	
+	public List<Campania> cargarCampaniasAjax(){
+		try {
+			Campania campaniaBean = new Campania();
+			campaniaBean.setEstado(Constant.ESTADO_ACTIVO);
+			return catalogoService.getlstCampaniaByCriteria(campaniaBean);
+		} catch (Exception e) {
+			logger.error("Exception ProductoAction.cargarCampaniasAjax: " + e.getMessage());
+		} 
+		return new ArrayList<Campania>();
 	}
 	
 	public String eliminarProductoAjax(String selecciones){
@@ -81,29 +104,24 @@ public class ProductoAction extends DispatchAction{
 		}
 	}
 	
-	@SuppressWarnings("unused")
 	public ActionForward guardarProductoAjax(ActionMapping mapping, ActionForm form,
 		HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
+		SolicitudDetalle solicitudDetalleBean = new SolicitudDetalle();
 		ProductoForm productoForm =(ProductoForm)form;
-		String codProducto = productoForm.getCodProducto();
-		String desProducto = productoForm.getDesProducto();
-		String contratoVinculado = productoForm.getContratoVinculado();
-		String codPreEvaluador = productoForm.getCodPreEvaluador();
-		String campania = productoForm.getCampania();
-		String tipo = productoForm.getTipo();
-		String monto = productoForm.getMonto();
-		String plazo = productoForm.getPlazo();
-		String garantia = productoForm.getGarantia();
-		String montoTotal = productoForm.getValMontoTotal();
-		String moneda = productoForm.getValMoneda();
-		String banca = productoForm.getValBanca();	
+		/*solicitudDetalleBean.setCodProducto(new BigDecimal(productoForm.getCodProducto()));
+		solicitudDetalleBean.setCodProdBase(productoForm.getDesProducto());
+		solicitudDetalleBean.setContratoVinculado(productoForm.getContratoVinculado());
+		solicitudDetalleBean.setCodPrevaluador(productoForm.getCodPreEvaluador());
+		solicitudDetalleBean.setCodMultCampania(productoForm.getCampania());
+		solicitudDetalleBean.setTipo(productoForm.getTipo());
+		solicitudDetalleBean.setMonto(new BigDecimal(productoForm.getMonto()));
+		solicitudDetalleBean.setCodMultPlazo(productoForm.getPlazo());
+		solicitudDetalleBean.setCodGarantia(new BigDecimal(productoForm.getGarantia()));*/
 		
-		ReadProperties readProperties = new ReadProperties();
-//		Map<String, String> mapResult = productoService.saveProduct(
-//		codProducto, desProducto, contratoVinculado, codPreEvaluador, 
-//		campania, tipo, monto, plazo, garantia);
-		
+		lstSolicitudDetalle.add(solicitudDetalleBean);
+		request.getSession().setAttribute("lstDetalleProdSession", lstSolicitudDetalle);
+		//ReadProperties readProperties = new ReadProperties();
 		Map<String, String> mapResult = new HashMap<String, String>();
 		mapResult.put("idGenerado", "1");
 		
@@ -120,7 +138,7 @@ public class ProductoAction extends DispatchAction{
 		
 		if(mapResult.get("msgError") != null) {
 			response.setStatus(500);
-			response.getWriter().write(readProperties.getProperty(mapResult.get("msgError")));
+		//	response.getWriter().write(readProperties.getProperty(mapResult.get("msgError")));
 		}else if(mapResult.get("idGenerado") != null) {
 			response.setStatus(200);
 			response.getWriter().write(mapResult.get("idGenerado"));
@@ -129,127 +147,93 @@ public class ProductoAction extends DispatchAction{
 		return null;
 	}
 	
-	public List<Parametro> cargarProductosPorBanca(String codBanca){
+	public List<Contrato> cargarContratosVincPorProducto(String codProducto){
+		Contrato  contratoBean = new Contrato();
+		List<Contrato> lstContrato = new ArrayList<Contrato>();
 		
-		Parametro bean = new Parametro();
-		List<Parametro> listParametros = new ArrayList<Parametro>();
-		
-		bean.setCodParametro("-1");
-		bean.setDesParametro("-- Seleccionar un producto --");
-		listParametros.add(bean);
+		contratoBean.setIndxContrato(-1);
+		contratoBean.setCodContrato("-- Selecione Contrato --");
+		lstContrato.add(contratoBean);
 		
 		//frk: Pasar la logica de negocio al service
-		if(codBanca.equalsIgnoreCase("BP")){
+		if(codProducto.equalsIgnoreCase("10001")){
 			for (int i = 1; i <= 3; i++) {
-				bean = new Parametro();
-				bean.setCodParametro(""+i);
-				bean.setDesParametro("Producto "+i);
-				listParametros.add(bean);
+				 contratoBean = new Contrato();
+				 contratoBean.setIndxContrato(i);
+				 contratoBean.setCodContrato("101001428767890643"+i);
+				 lstContrato.add(contratoBean);
 			}
-		}else if(codBanca.equalsIgnoreCase("BC")){
-			for (int i = 4; i <= 6; i++) {
-				bean = new Parametro();
-				bean.setCodParametro(""+i);
-				bean.setDesParametro("Producto "+i);
-				listParametros.add(bean);
+		}else if(codProducto.equalsIgnoreCase("10002")){
+			for (int i = 4; i <= 8; i++) {
+				contratoBean = new Contrato();
+				contratoBean.setIndxContrato(i);
+				contratoBean.setCodContrato("101001428767890643"+i);
+				lstContrato.add(contratoBean);
 			}
-		}else if(codBanca.equalsIgnoreCase("BM")){
-			for (int i = 7; i <= 9; i++) {
-				bean = new Parametro();
-				bean.setCodParametro(""+i);
-				bean.setDesParametro("Producto "+i);
-				listParametros.add(bean);
+		}else if(codProducto.equalsIgnoreCase("10003")){
+			for (int i = 9; i <= 13; i++) {
+				contratoBean = new Contrato();
+				contratoBean.setIndxContrato(i);
+				contratoBean.setCodContrato("101001428767890643"+i);
+				lstContrato.add(contratoBean);
 			}
-		}else if(codBanca.equalsIgnoreCase("BE")){
-			for (int i = 10; i <= 11; i++) {
-				bean = new Parametro();
-				bean.setCodParametro(""+i);
-				bean.setDesParametro("Producto "+i);
-				listParametros.add(bean);
+		}else if(codProducto.equalsIgnoreCase("10004")){
+			for (int i = 14; i <= 18; i++) {
+				contratoBean = new Contrato();
+				contratoBean.setIndxContrato(i);
+				contratoBean.setCodContrato("101001428767890643"+i);
+				lstContrato.add(contratoBean);
 			}
+		}else if(codProducto.equalsIgnoreCase("10005")){
+			for (int i = 19; i <= 10; i++) {
+				contratoBean = new Contrato();
+				contratoBean.setIndxContrato(i);
+				contratoBean.setCodContrato("101001428767890643"+i);
+				lstContrato.add(contratoBean);
+			}
+		}else{
+			lstContrato = new ArrayList<Contrato>();
+			contratoBean.setIndxContrato(-1);
+			contratoBean.setCodContrato("-- No se Encontro Contratos --");
+			lstContrato.add(contratoBean);
 		}
 		
-		return listParametros;
+		return lstContrato;
 	}
 	
-	public List<Parametro> cargarCampaniasPorProducto(String codProducto){
+	public String getScoring(String contrato){
 		
-		Parametro bean = new Parametro();
-		List<Parametro> listParametros = new ArrayList<Parametro>();
-		
-		bean.setCodParametro("-1");
-		bean.setDesParametro("-- Seleccionar una campaña --");
-		listParametros.add(bean);
-		
-		//frk: Pasar la logica de negocio al service
-		if(codProducto.equalsIgnoreCase("1")){
-			for (int i = 1; i <= 3; i++) {
-				bean = new Parametro();
-				bean.setCodParametro(""+i);
-				bean.setDesParametro("Campaña "+i);
-				listParametros.add(bean);
-			}
-		}else if(codProducto.equalsIgnoreCase("4")){
-			for (int i = 4; i <= 6; i++) {
-				bean = new Parametro();
-				bean.setCodParametro(""+i);
-				bean.setDesParametro("Campaña "+i);
-				listParametros.add(bean);
-			}
-		}else if(codProducto.equalsIgnoreCase("7")){
-			for (int i = 7; i <= 9; i++) {
-				bean = new Parametro();
-				bean.setCodParametro(""+i);
-				bean.setDesParametro("Campaña "+i);
-				listParametros.add(bean);
-			}
-		}else if(codProducto.equalsIgnoreCase("10")){
-			for (int i = 10; i <= 11; i++) {
-				bean = new Parametro();
-				bean.setCodParametro(""+i);
-				bean.setDesParametro("Campaña "+i);
-				listParametros.add(bean);
-			}
+		String strScoring;
+		if(contrato.equals("C0001")){
+			strScoring = "RECHAZADO";
+		}else if(contrato.equals("C0002")){
+			strScoring = "APROBADO";
+		}else{
+			strScoring = "DUDA";
 		}
 		
-		return listParametros;
+		return strScoring;
 	}
 	
-	public List<Parametro> cargarContratosVincPorBanca(String codBanca){
-		
-		Parametro bean = new Parametro();
-		List<Parametro> listParametros = new ArrayList<Parametro>();
-		
-		bean.setCodParametro("-1");
-		bean.setDesParametro("-- Seleccionar un contrato --");
-		listParametros.add(bean);
-		
-		//frk: Pasar la logica de negocio al service
-		if(codBanca.equalsIgnoreCase("BP")){
-			for (int i = 1; i <= 3; i++) {
-				bean = new Parametro();
-				bean.setCodParametro(""+i);
-				bean.setDesParametro("Contrato "+i);
-				listParametros.add(bean);
-			}
-		}
-		
-		return listParametros;
+	public List<MultitablaDetalle> cargarTipos(){
+		try {
+				MultitablaDetalle multitablaDetalleBean = new MultitablaDetalle();
+				multitablaDetalleBean.setEstado(Constant.ESTADO_ACTIVO);
+				return catalogoService.getLstMultitablaDetalle(Constant.TABLA_TIPOS);
+		} catch (Exception e) {
+			logger.error("Exception ProductoAction.consultarAjax: " + e.getMessage());
+		} 
+		return new ArrayList<MultitablaDetalle>();
 	}
-	
-	public List<Parametro> cargarTipos(){
-		
-		Parametro bean = new Parametro();
-		List<Parametro> listParametros = new ArrayList<Parametro>();
-		
-		//frk: Pasar la logica de negocio al service
-		for (int i = 1; i <= 3; i++) {
-			bean = new Parametro();
-			bean.setCodParametro(""+i);
-			bean.setDesParametro("Tipo "+i);
-			listParametros.add(bean);
+
+	public BigDecimal getProductoBaseAjax(BigDecimal codProducto){
+		Producto productoBean = new Producto();
+		try {
+			productoBean = catalogoService.selectProductoByPrimaryKey(codProducto);
+		} catch (Exception e) {
+			logger.error(e);
 		}
-		
-		return listParametros;
+		return productoBean.getCodProductoBase();
 	}
+
 }

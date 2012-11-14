@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="CARDEL_TRSG_GERENTE" >
+  <resultMap id="ibatorgenerated_BaseResultMap" class="bbva.pe.gpr.bean.GerenteRiesgo" >
+    <result column="ID_GERENTE" property="id_gerente" jdbcType="DECIMAL" />
+    <result column="ID_TT_TIPO_FUNCIONARIO" property="id_tt_tipo_funcionario" jdbcType="VARCHAR" />
+    <result column="COD_FUNCIONARIO_SUPERIOR" property="cod_funcionario_superior" jdbcType="VARCHAR" />
+    <result column="COD_REGISTRO" property="cod_registro" jdbcType="VARCHAR" />
+    <result column="NOMBRES" property="nombres" jdbcType="VARCHAR" />
+    <result column="AP_PATERNO" property="ap_materno" jdbcType="VARCHAR" />
+    <result column="AP_MATERNO" property="ap_paterno" jdbcType="VARCHAR" />
+    <result column="CARGO" property="cargo" jdbcType="VARCHAR" />
+    <result column="COD_OFICINA" property="cod_oficina" jdbcType="VARCHAR" />
+    <result column="NOMBRE_OFICINA" property="nombre_oficina" jdbcType="VARCHAR" />
+    <result column="CORREO" property="correo" jdbcType="VARCHAR" />
+    <result column="ID_TT_TIPO_BANCA" property="id_tt_tipo_banca" jdbcType="VARCHAR" />
+    <result column="ESTADO" property="estado" jdbcType="VARCHAR" />
+    <result column="COD_USUARIO_CREACION" property="codUsuarioCreacion" jdbcType="VARCHAR" />
+    <result column="COD_USUARIO_MODIFICACION" property="codUsuarioModificacion" jdbcType="VARCHAR" />
+    <result column="FECHA_CREACION" property="fechaCreacion" jdbcType="DATE" />
+    <result column="FECHA_MODIFICACION" property="fechaModificacion" jdbcType="DATE" />
+
+  </resultMap>
+
+ <select id="getCountUsuarioRiesgo"  resultClass="string">
+    	SELECT  COUNT(*)
+		FROM    CARDEL.TRSG_GERENTE
+		WHERE   COD_REGISTRO= #cod_registro#   AND
+                estado !=0
+ </select>
+
+ </sqlMap>

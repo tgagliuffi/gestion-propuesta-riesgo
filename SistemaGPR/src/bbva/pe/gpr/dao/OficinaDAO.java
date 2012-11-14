@@ -13,4 +13,5 @@ public interface OficinaDAO {
 	int updateByPrimaryKey(Oficina record)throws Exception ;
 	Oficina getOficinaForUsuario(String idUsuario);
 	List<Oficina> getLstOficinaxTerritorio(Oficina oficina);
+	List<Oficina> getLstOficinaByCriteria(Oficina record)throws Exception ;
 }

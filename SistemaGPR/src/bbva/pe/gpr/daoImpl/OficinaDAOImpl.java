@@ -53,4 +53,9 @@ public class OficinaDAOImpl extends SqlMapClientDaoSupport implements OficinaDAO
 	public List<Oficina> getLstOficinaxTerritorio(Oficina oficina) {
 		return (List<Oficina>)getSqlMapClientTemplate().queryForList("CARDEL_TGPR_OFICINAS.getLstOficina",oficina);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Oficina> getLstOficinaByCriteria(Oficina record) throws Exception {
+		return (List<Oficina>)getSqlMapClientTemplate().queryForList("CARDEL_TGPR_OFICINAS.getLstOficinasByCriteria",record);
+	}
 }

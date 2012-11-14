@@ -4,11 +4,16 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import bbva.pe.gpr.bean.Banca;
+import bbva.pe.gpr.bean.Campania;
+import bbva.pe.gpr.bean.Funcion;
 import bbva.pe.gpr.bean.Multitabla;
 import bbva.pe.gpr.bean.MultitablaDetalle;
 import bbva.pe.gpr.bean.MultitablaDetalleKey;
 import bbva.pe.gpr.bean.Oficina;
+import bbva.pe.gpr.bean.Solicitud;
+import bbva.pe.gpr.bean.UsuarioOficina;
 import bbva.pe.gpr.bean.Producto;
+import bbva.pe.gpr.bean.Rol;
 import bbva.pe.gpr.bean.Territorio;
 import bbva.pe.gpr.bean.Usuario;
 
@@ -36,7 +41,8 @@ public interface CatalogoService {
 	  void insertProductoSelective(Producto record)throws Exception ;
 	  Producto selectProductoByPrimaryKey(BigDecimal codProducto)throws Exception ;
 	  int updateProductoByPrimaryKeySelective(Producto record)throws Exception ;	  
-	  List<Producto> getLstProducto(Producto record)throws Exception ;
+	  List<Producto> getLstProductoByCriteria(Producto record)throws Exception;
+	  List<Campania> getlstCampaniaByCriteria(Campania campaniabean)throws Exception;
 	  
   /*#####################################################################################################
    * 
@@ -49,6 +55,7 @@ public interface CatalogoService {
 	  public Oficina selectByPrimaryKey(String codOficina)throws Exception ;
 	  public int updateByPrimaryKeySelective(Oficina record)throws Exception ;
 	  List<Oficina> getLstOficinaxTerritorio(Oficina oficina);
+	  List<Oficina> getLstOficinaByCriteria(Oficina record)throws Exception ;
   
   /*#####################################################################################################
    * 
@@ -60,6 +67,8 @@ public interface CatalogoService {
 	  public void insertTerritorioSelective(Territorio record)throws Exception ;
 	  public Territorio selectTerritorioByPrimaryKey(BigDecimal codTerritorio)throws Exception ;
 	  public int updateTerritorioByPrimaryKeySelective(Territorio record)throws Exception ;
+	  public List<Territorio> getLstTerritorioByCriteria(Territorio record)throws Exception ;
+
   
   
   /*#####################################################################################################
@@ -99,26 +108,41 @@ public interface CatalogoService {
 	  public Usuario selectUsuarioByPrimaryKey(String codUsuario)throws Exception ;    
 	  public int updateUsuarioByPrimaryKeySelective(Usuario usuarioBean)throws Exception ;	  
 	  public List<Usuario> getLstUsuario(Usuario usuarioBean)throws Exception ;
-  
+	  String getUsuarioExiste(Usuario usuarioBean)throws Exception ;
+	  int getDeleteUsuario(String codUsuario)throws Exception ;
   
   /*#####################################################################################################
    * 
    * 	                             TGPR_ROLES
    * 
    *##################################################################################################### */
-	  
+	  public  List<Rol> getLstRolesByCriteria(Rol rolBean)throws Exception;
+  /*#####################################################################################################
+   * 
+   * 	                               TGPR_OFICINA_ASIGNADA
+   *                                   
+   *##################################################################################################### */
+   
+	  List<UsuarioOficina> getLstOficinaAsignada(Usuario user)throws Exception;
+	  void saveOficinaAsignada(UsuarioOficina oficinaAsignada);
+	  void deleteOficinaAsignada(String codOficina);
+	  String getOficinaAsignadaExiste(UsuarioOficina oficinaAsignada );
   /*#####################################################################################################
    * 
    * 	
-   * 
+   *                         TGPR_GERENTE_OFICINA
    *##################################################################################################### */
-
-  
-  /*#####################################################################################################
-   * 
-   * 	
-   * 
-   *##################################################################################################### */
-
-  
+	  String  getValidarUsuario(String codUsuario);
+   /*#####################################################################################################
+	   * 
+	   * 	
+	   *                         TGPR_SOLICITUD_RECHAZADA
+	*##################################################################################################### */
+	  void insertSolicitudRechazada(Solicitud solicitud);
+	/*#####################################################################################################
+		   * 
+		   * 	
+		   *                         TGPR_FUNCIONES
+	*##################################################################################################### */
+	  public  List<Funcion> getLstFuncionByCriteria(Funcion funcionBean)throws Exception;
 }

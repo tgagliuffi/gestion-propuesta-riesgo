@@ -1,14 +1,13 @@
 package bbva.pe.gpr.daoImpl;
 
-import bbva.pe.gpr.bean.Producto;
-import bbva.pe.gpr.bean.SolicitudDetalle;
-import bbva.pe.gpr.dao.ProductoDAO;
-
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
+
+import bbva.pe.gpr.bean.Campania;
+import bbva.pe.gpr.bean.Producto;
+import bbva.pe.gpr.dao.ProductoDAO;
 
 public class ProductoDAOImpl extends SqlMapClientDaoSupport implements ProductoDAO {
 
@@ -49,13 +48,13 @@ public class ProductoDAOImpl extends SqlMapClientDaoSupport implements ProductoD
     }
 
 	@SuppressWarnings("unchecked")
-	public List<Producto> getLstProducto(Producto record) {
-		List<Producto> rpts = (List<Producto>) getSqlMapClientTemplate().queryForList("CARDEL_TGPR_PRODUCTOS.getLstProducto", record);    
+	public List<Producto> getLstProductoByCriteria(Producto record) {
+		List<Producto> rpts = (List<Producto>) getSqlMapClientTemplate().queryForList("CARDEL_TGPR_PRODUCTOS.getLstProductoByCriteria", record);    
 		return rpts;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public HashMap<String, String> getlstProdGaranDeta(SolicitudDetalle bean) {
-		return (HashMap<String, String>)getSqlMapClientTemplate().queryForList("getlstProdGaranDeta",bean).get(0);
+	public List<Campania> getlstCampaniaByCriteria(Campania campanbean) {
+		return (List<Campania>)getSqlMapClientTemplate().queryForList("CARDEL_TGPR_PRODUCTOS.getlstCampaniaByCriteria",campanbean);
 	}
 }

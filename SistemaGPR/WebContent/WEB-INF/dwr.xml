@@ -11,17 +11,48 @@
 		<create creator="new" javascript="BusquedaSolicitudAction">
       		<param name="class" value="bbva.pe.gpr.action.BusquedaSolicitudAction"/>
     	</create>
+    	<create creator="new" javascript="SolicitudMantenimientoAction">
+      		<param name="class" value="bbva.pe.gpr.action.SolicitudMantenimientoAction"/>
+    	</create>
 		<create creator="new" javascript="ProductoAction">
       		<param name="class" value="bbva.pe.gpr.action.ProductoAction"/>
     	</create>
-    	  
+    	
+    	<create creator="new" javascript="AsignarOficinaAction">
+      		<param name="class" value="bbva.pe.gpr.action.AsignarOficinaAction"/>
+    	</create>  
+	
+		<create creator="new" javascript="UsuarioAction">
+      		<param name="class" value="bbva.pe.gpr.action.UsuarioAction"/>
+    	</create>  
+	
+		<create creator="new" javascript="BandejaEvaluacionAction">
+      		<param name="class" value="bbva.pe.gpr.action.BandejaEvaluacionAction"/>
+    	</create>
+
+		<create creator="new" javascript="DictamenAction">
+      		<param name="class" value="bbva.pe.gpr.action.DictamenAction"/>
+    	</create>
+	
+		<convert converter="bean" match="bbva.pe.gpr.bean.Usuario"/>
+		<convert converter="bean" match="bbva.pe.gpr.bean.Oficina"/>
 		<convert converter="bean" match="bbva.pe.gpr.bean.Producto"/>
 		<convert converter="bean" match="bbva.pe.gpr.bean.SolicitudDetalle"/>
 		<convert converter="bean" match="bbva.pe.gpr.bean.Solicitud"/>
   		<convert converter="bean" match="bbva.pe.gpr.bean.Parametro"/>
-		 
-    
+		<convert converter="bean" match="bbva.pe.gpr.bean.UsuarioOficina"/>
+		<convert converter="bean" match="bbva.pe.gpr.bean.Territorio"/>
+		<convert converter="bean" match="com.grupobbva.bc.per.tele.ldap.serializable.IILDPeUsuario"/>
+		<convert converter="bean" match="com.grupobbva.bc.per.tele.ldap.serializable.IILDPeCargos"/>
+  		<convert converter="bean" match="bbva.pe.gpr.bean.MultitablaDetalle"/>
+  		<convert converter="bean" match="bbva.pe.gpr.bean.Campania"/>
+		<convert converter="bean" match="bbva.pe.gpr.bean.Contrato"/>
+		<convert converter="bean" match="bbva.pe.gpr.bean.Asignacion"/>
+		<convert converter="bean" match="bbva.pe.gpr.bean.Analisis"/>  
+		<convert converter="bean" match="bbva.pe.gpr.bean.Dictamen"/>
+		<convert converter="bean" match="bbva.pe.gpr.bean.Banca"/>
+		<convert converter="bean" match="bbva.pe.gpr.bean.Funcion"/>
+		<convert converter="bean" match="bbva.pe.gpr.bean.Rol"/>
   	<!-- Definición de Beans -->
-  	
 	</allow>
 </dwr>

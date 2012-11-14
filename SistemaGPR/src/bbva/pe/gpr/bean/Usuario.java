@@ -1,10 +1,71 @@
 package bbva.pe.gpr.bean;
 
-import java.math.BigDecimal;
+
+import java.util.Date;
 
 
 public class Usuario {
-    private String codUsuario;
+   
+	private Long idUsuario;
+	private String codigoUsuario;
+	private String nombres;
+	private String estado;
+	private String codUsuarioCreacion;
+	private String codUsuarioModificacion;
+	private Date   fechaCreacion;
+	private Date   fechaModificacion;
+	
+	public Long getIdUsuario() {
+		return idUsuario;
+	}
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+	public String getCodigoUsuario() {
+		return codigoUsuario;
+	}
+	public void setCodigoUsuario(String codigoUsuario) {
+		this.codigoUsuario = codigoUsuario;
+	}
+	public String getNombres() {
+		return nombres;
+	}
+	public void setNombres(String nombres) {
+		this.nombres = nombres;
+	}
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	public String getCodUsuarioCreacion() {
+		return codUsuarioCreacion;
+	}
+	public void setCodUsuarioCreacion(String codUsuarioCreacion) {
+		this.codUsuarioCreacion = codUsuarioCreacion;
+	}
+	public String getCodUsuarioModificacion() {
+		return codUsuarioModificacion;
+	}
+	public void setCodUsuarioModificacion(String codUsuarioModificacion) {
+		this.codUsuarioModificacion = codUsuarioModificacion;
+	}
+	public Date getFechaCreacion() {
+		return fechaCreacion;
+	}
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+	public Date getFechaModificacion() {
+		return fechaModificacion;
+	}
+	public void setFechaModificacion(Date fechaModificacion) {
+		this.fechaModificacion = fechaModificacion;
+	}
+	/*
+	
+	private String codUsuario;
     private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -82,6 +143,6 @@ public class Usuario {
 	public void setGenero(String genero) {
 		this.genero = genero;
 	}
-
+*/
     
 }

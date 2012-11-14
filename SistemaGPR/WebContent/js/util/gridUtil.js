@@ -2,7 +2,7 @@ var arrCuartoNivel= new Array();
 var jsonPadreSeleccion = "{idPadre:'',selectAll:'', selecciones:'', elimina:''}";
 var objPadreSeleccion = eval("(" + jsonPadreSeleccion + ")");
 var nivelSeleccion=0;
-var VAL_WIDTH = { XSMALL: 25, VSMALL: 50, LSMALL: 80, XLSMALL: 85, SMALL: 130, VMED: 170, LMED: 180, MED: 230, BMED: 280, LARGE: 350, VLARGE: 500, VL: 650};
+var VAL_WIDTH = { XSMALL: 25, VSMALL: 50, LSMALL: 80, XLSMALL: 85, SMALL: 130, VMED: 170, LMED: 180, MED: 230, BMED: 280, TMED: 320,LARGE: 350, VLARGE: 500, VL: 650};
 /**
  * Método que determina el nivel en base a los id's de las tablas que contienen los grids
  * 

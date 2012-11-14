@@ -96,4 +96,8 @@
    GARA.cod_producto=PROD.cod_producto and
    PROD.cod_producto=#codProducto:DECIMAL#
   </select>
+  <select id="getGarantiaDetalle" parameterClass="string" resultClass="bbva.pe.gpr.bean.GarantiaDetalle">
+   SELECT * FROM CARDEL.TGPR_GARANTIA_DETALLES WHERE 
+     WHERE COD_GARANTIA=#value# AND ESTADO !=0
+  </select>
 </sqlMap>

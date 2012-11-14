@@ -96,7 +96,7 @@ function mostrarTablaDetallado(data){
 	<table style="width: 400px" border="0" cellspacing="0" cellpadding="0">
 	<tr>
        <td align="left" valign="middle">
-       		<font face="Arial Narrow" size="3" color="#000080"><b>Banca</b></font>
+       		<font class="fontText"><b>Banca</b></font>
        </td>
        <td align="left" valign="middle">       
 	   		<select id="bancaCliente" name="bancaCliente">
@@ -110,7 +110,7 @@ function mostrarTablaDetallado(data){
 	</tr>
 	<tr>
 		<td align="left" valign="middle">
-			<font face="Arial Narrow" size="3" color="#000080"><b>Fecha Solicitud</b></font>
+			<font class="fontText"><b>Fecha Solicitud</b></font>
 		</td>
 		<td align="left" valign="middle">
 			<input type="text" name="inifechaSolicitud" class="cajaTexto" id="inifechaSolicitud" size="14" maxlength="14">&nbsp;al&nbsp;
@@ -124,7 +124,7 @@ function mostrarTablaDetallado(data){
 	
 	<fieldset style="width: 800px">
    	<legend>
-   	<font face="Arial Narrow" size="3" color="#000080">
+   	<font class="fontText">
    	Detallado
    	</font></legend>
 

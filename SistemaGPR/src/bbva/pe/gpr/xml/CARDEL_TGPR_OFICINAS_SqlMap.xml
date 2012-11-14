@@ -88,10 +88,13 @@
       DIRECCION = #direccion:VARCHAR#
     where COD_OFICINA = #codOficina:DECIMAL#
   </update>  
-  <select id="getLstOficina" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.Oficina" >
-    SELECT * FROM CARDEL.TGPR_OFICINAS
-    where COD_TERRITORIO = #codTerritorio:DECIMAL#
-  </select>
   
+    <select id="getLstOficinasByCriteria" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.Oficina">
+  		SELECT *
+  		FROM CARDEL.TGPR_OFICINAS
+  		where 
+	    ( #codTerritorio:DECIMAL# IS NULL OR #codTerritorio:DECIMAL#=-1 OR COD_TERRITORIO = #codTerritorio:DECIMAL#) AND
+	    ( #estado:DECIMAL# IS NULL  OR ESTADO = #estado:DECIMAL#)
+	  </select> 
   
 </sqlMap>

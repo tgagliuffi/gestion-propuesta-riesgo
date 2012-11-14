@@ -1,3 +1,4 @@
+
 package bbva.pe.gpr.daoImpl;
 
 import java.util.HashMap;
@@ -61,4 +62,9 @@ public class MultitablaDetalleDAOImpl extends SqlMapClientDaoSupport implements 
 	    int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_MULTITABLA_DETALLE.updatedCondicionCliente", record);
         return rows;
     }
+
+	@SuppressWarnings("unchecked")
+	public List<MultitablaDetalle> getLstValoresCondicion(String codMult) {
+		return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_MULTITABLA_DETALLE.getLstMultitablaMensaje", codMult);
+	}
 }

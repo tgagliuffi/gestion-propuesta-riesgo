@@ -11,31 +11,14 @@
 
 <TITLE></TITLE>
 <link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/buttonGPR.css" />
-<STYLE type=text/css>
-#mensaje {
-	BORDER-RIGHT: #d7e8f0 2px solid;
-	PADDING-RIGHT: 5px;
-	BORDER-TOP: #d7e8f0 2px solid;
-	PADDING-LEFT: 5px;
-	FONT-SIZE: 11px;
-	BACKGROUND: #f5f8fa;
-	PADDING-BOTTOM: 5px;
-	BORDER-LEFT: #d7e8f0 2px solid;
-	COLOR: #000;
-	LINE-HEIGHT: 14px;
-	PADDING-TOP: 5px;
-	BORDER-BOTTOM: #d7e8f0 2px solid;
-	FONT-FAMILY: Verdana, Arial, sans-serif;
-	background-color: #83c0e2;
-}
-</STYLE>
+	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/gpr_style.css" />
 </HEAD>
 <body style="background-image:url('imagenes/template/arg_fondo_ex.gif');">
 		<center>
    <!-- style="width: 100%;padding-top: 100px;" -->
     	
         <div id="body" style="margin-top: 200px; width: 260px;">
-        	<div id="mensaje" style="background: white">
+        	<div id="mensaje" style="background: white" class="mensaje">
         	<table width="337">
         	<tr>
         		<td style="width: 30px;padding-top: 0px;padding-bottom: 0px;"  >

@@ -1,6 +1,5 @@
 package bbva.pe.gpr.daoImpl;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
@@ -16,7 +15,7 @@ public class UsuarioDAOImpl extends SqlMapClientDaoSupport implements UsuarioDAO
 
     public int deleteByPrimaryKey(String codUsuario) {
         Usuario key = new Usuario();
-        key.setCodUsuario(codUsuario);
+        key.setCodigoUsuario(codUsuario);
         int rows = getSqlMapClientTemplate().delete("CARDEL_TGPR_USUARIOS.ibatorgenerated_deleteByPrimaryKey", key);
         return rows;
     }
@@ -27,12 +26,12 @@ public class UsuarioDAOImpl extends SqlMapClientDaoSupport implements UsuarioDAO
 
     public String insertSelective(Usuario record) {
     	Usuario usuarioBean =  (Usuario)getSqlMapClientTemplate().insert("CARDEL_TGPR_USUARIOS.ibatorgenerated_insertSelective", record);
-    	return usuarioBean.getCodUsuario();
+    	return usuarioBean.getCodigoUsuario();
     }
 
     public Usuario selectByPrimaryKey(String codUsuario) {
         Usuario key = new Usuario();
-        key.setCodUsuario(codUsuario);
+        key.setCodigoUsuario(codUsuario);
         Usuario record = (Usuario) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_USUARIOS.ibatorgenerated_selectByPrimaryKey", key);
         return record;
     }
@@ -52,13 +51,18 @@ public class UsuarioDAOImpl extends SqlMapClientDaoSupport implements UsuarioDAO
     	return  (List<Usuario>)getSqlMapClientTemplate().queryForList("CARDEL_TGPR_USUARIOS.getLstUsuarios",usuarioBean);
     }
 
-    public int getAsignarOficina(HashMap<String, String> record) {
+ 	@Override
+	public int updateOficinaAsignada(Usuario record) throws Exception {
 		int rows=getSqlMapClientTemplate().update("CARDEL_TGPR_USUARIOS.getAsignarOficina",record);
 		return rows;
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Usuario> getLstUsuarioAll() {
-		return (List<Usuario>)getSqlMapClientTemplate().queryForList("CARDEL_TGPR_USUARIOS.getLstUsuarioAll");
+	public String getUsuarioExiste(Usuario usuarioBean) {
+		return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_USUARIOS.getUsuarioExiste", usuarioBean).get(0).toString();
+	}
+
+	public int getDeleteUsuario(String codUsuario) throws Exception {
+        int rows=getSqlMapClientTemplate().update("CARDEL_TGPR_USUARIOS.getDeleteUsuario", codUsuario);
+		return 0;
 	}
 }

@@ -1,11 +1,13 @@
 package bbva.pe.gpr.daoImpl;
 
 
+import java.util.List;
+
+import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
+
 import bbva.pe.gpr.bean.Dictamen;
 import bbva.pe.gpr.bean.DictamenKey;
 import bbva.pe.gpr.dao.DictamenDAO;
-
-import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 public class DictamenDAOImpl extends SqlMapClientDaoSupport implements DictamenDAO {
 
@@ -40,4 +42,16 @@ public class DictamenDAOImpl extends SqlMapClientDaoSupport implements DictamenD
         int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_DICTAMENES.ibatorgenerated_updateByPrimaryKey", record);
         return rows;
     }
+
+    @SuppressWarnings("unchecked")
+	public Dictamen findForNumeroSolicitud(DictamenKey key) {
+		Dictamen record = null;
+        List<Dictamen> records = (List<Dictamen>) getSqlMapClientTemplate().queryForList("CARDEL_TGPR_DICTAMENES.findForNroSolicitud", key);
+        
+        if(records != null && records.size() >0) {
+        	record = records.get(0);
+        }
+        
+        return record;
+	}
 }
