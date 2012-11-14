@@ -39,16 +39,6 @@
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/dictamen/bandejaEvaluador.js"></script>
 	
 	<style>
-		* {
-			font-size: 100%; 
-			font-family: Tahoma, Lucida Grande, Lucida Sans, Arial, sans-serif !important;
-			letter-spacing: .03em !important;
-		}
-		body {
-			font-size: 10px;
-			padding-left: 5px;
-			padding-right: 5px;
-		}
 		input.cajaTexto {
 			padding-left: 3px;
 		}
@@ -60,27 +50,27 @@
 		<input type="hidden" name="monto_delegacion" id="monto_delegacion" value="${requestScope.monto_delegacion}"/>
 		<input type="hidden" name="error" id="error" value="${requestScope.error}"/>
 		<div style="background-color: #0066bb;height: 20px;line-height: 20px;">
-			<font face="Arial Narrow" size=3 color="#FFFFFF"><b style="font-size: 12px;">&nbsp;&nbsp;Módulo de Bandeja del Evaluador</b></font>
+			<font class="fontText" size=3 color="#FFFFFF"><b style="font-size: 12px;">&nbsp;&nbsp;Módulo de Bandeja del Evaluador</b></font>
 		</div>
 		<br />
 		<table class="ui-widget" style="width: 800px" border="0" cellspacing="0" cellpadding="0">
 			<tr>
-				<td valign="middle"><font face="Arial Narrow" size="3"
+				<td valign="middle"><font class="fontText" size="3"
 					color="#000080"><b>Código Central</b></font></td>
 				<td valign="middle">
 					<input type="text" name="codigoCentral" class="cajaTexto" id="codigoCentral" size="14" maxlength="14" value="${requestScope.codCliente}">
 				</td>
-				<td valign="middle"><font face="Arial Narrow" size="3"
+				<td valign="middle"><font class="fontText" size="3"
 					color="#000080"><b>Número Solicitud</b></font></td>
 				<td valign="middle"><input type="text" name="numSolicitud"
 					class="cajaTexto" id="numSolicitud" size="14" maxlength="14">
 				</td>
 				<td align="right" valign="middle"><input type="checkbox"
 					name="stFueraRango" class="cajaTexto" id="stFueraRango">&nbsp;
-					<font face="Arial Narrow" size="3" color="#000080"><b>Solicitudes Fuera de Rango</b></font></td>
+					<font class="fontText" size="3" color="#000080"><b>Solicitudes Fuera de Rango</b></font></td>
 			</tr>
 			<tr>
-				<td valign="middle"><font face="Arial Narrow" size="3"
+				<td valign="middle"><font class="fontText" size="3"
 					color="#000080"><b>Fecha Solicitud</b></font></td>
 				<td valign="middle"><input type="text" name="inifechaSolicitud"
 					class="cajaTexto" id="inifechaSolicitud" size="14" maxlength="14">&nbsp;al&nbsp;
