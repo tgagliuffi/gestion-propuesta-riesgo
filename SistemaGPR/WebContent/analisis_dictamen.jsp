@@ -39,16 +39,6 @@
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/dictamen/general.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/dictamen/dictamen.js"></script>
 	<style>
-		* {
-			font-size: 100%; 
-			font-family: Tahoma, Lucida Grande, Lucida Sans, Arial, sans-serif !important;
-			letter-spacing: .03em !important;
-		}
-		body {
-			font-size: 10px;
-			padding-left: 5px;
-			padding-right: 5px;
-		}
 		input.cajaTexto {
 			padding-left: 3px;
 		}
@@ -61,13 +51,13 @@
 		<input type="hidden" name="codAsignacion" id="codAsignacion" value="${requestScope.codAsignacion}"/>
 		<input type="hidden" name="error" id="error" value="${requestScope.error}"/>
 		<div style="background-color: #0066bb;height: 20px;line-height: 20px;">
-			<font face="Arial Narrow" size=3 color="#FFFFFF"><b style="font-size: 12px;">&nbsp;&nbsp;Módulo de Análisis y Dictamen</b></font>
+			<font class="fontText" size=3 color="#FFFFFF"><b style="font-size: 12px;">&nbsp;&nbsp;Módulo de Análisis y Dictamen</b></font>
 		</div>
 		<br />
 		<table class="ui-widget" width="800px" height="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td>
-					<font face="Arial Narrow" color="#000080"><b>Código Central</b></font>&nbsp;
+					<font class="fontText" color="#000080"><b>Código Central</b></font>&nbsp;
 					<input type="text" name="codigoCentral" class="cajaTexto" id="codigoCentral" size="10" maxlength="8">
 					&nbsp;
 					<input type="button" class="buttonGPR" id="btnBuscar" value="Buscar" onclick="window.open(obtenerContexto() + 'bandejaEvaluador.do?method=index&codCliente=' + +$('#codigoCentral').val(), '_self')" />
@@ -83,25 +73,25 @@
 			<table>
 				<tr>
 					<td colspan="4" valign="middle">
-						<font face="Arial Narrow" size="3" color="#000080"><b>Nro. Solicitud</b></font>&nbsp;
+						<font class="fontText" size="3" color="#000080"><b>Nro. Solicitud</b></font>&nbsp;
 						<input type="text" name="nroSolicitud" class="cajaTexto" id="nroSolicitud" size="19" maxlength="19" value="${requestScope.nroSolicitud}" readonly>
 						&nbsp;&nbsp;
-						<font face="Arial Narrow" size="3" color="#000080"><b>Tipo Persona *</b></font>&nbsp;
+						<font class="fontText" size="3" color="#000080"><b>Tipo Persona *</b></font>&nbsp;
 						<input type="text" name="tipoPersona" class="cajaTexto" id="tipoPersona" size="10" maxlength="8" readonly style="width: 150px;">
 						&nbsp;&nbsp;
-						<font face="Arial Narrow" size="3" color="#000080"><b>Ruc / DNI *</b></font>&nbsp;
+						<font class="fontText" size="3" color="#000080"><b>Ruc / DNI *</b></font>&nbsp;
 						<input type="text" name="rucDni" class="cajaTexto" id="rucDni" size="27" maxlength="27" readonly  style="width: 100px;">
 					</td>
 				</tr>
 				<tr>
 					<td colspan="4" valign="middle">
-						<font face="Arial Narrow" size="3" color="#000080"><b>Razon Social / Apellidos y Nombres *</b></font>&nbsp;
+						<font class="fontText" size="3" color="#000080"><b>Razon Social / Apellidos y Nombres *</b></font>&nbsp;
 						<input type="text" name="razonSocial" class="cajaTexto" id="razonSocial" size="72" maxlength="72" readonly style="width: 250px;">
 					</td>
 				</tr>
 				<tr>
 					<td align="left" valign="middle">
-						<font face="Arial Narrow" size="3" color="#000080"><b>Oficina Principal *</b></font>
+						<font class="fontText" size="3" color="#000080"><b>Oficina Principal *</b></font>
 					</td>
 					<td align="left" valign="middle">
 						<input type="text" name="codOficina" class="cajaTexto" id="codOficina" size="10" maxlength="10" readonly>
@@ -109,7 +99,7 @@
 						&nbsp;&nbsp;
 					</td>
 					<td align="left" valign="middle">
-						<font face="Arial Narrow" size="3" color="#000080"><b>Gestor *</b></font>
+						<font class="fontText" size="3" color="#000080"><b>Gestor *</b></font>
 					</td>
 					<td align="left" valign="middle">
 						<input type="text" name="codGestor" class="cajaTexto" id="codGestor" size="10" maxlength="10" readonly>
@@ -118,7 +108,7 @@
 				</tr>
 				<tr>
 					<td align="left" valign="middle">
-						<font face="Arial Narrow" size="3" color="#000080"><b>Evaluador</b></font>&nbsp;
+						<font class="fontText" size="3" color="#000080"><b>Evaluador</b></font>&nbsp;
 						<img src="imagenes/verde.png" border="0"></td>
 					<td align="left" valign="middle">
 						<input type="text" name="codEvaluador" class="cajaTexto" id="codEvaluador" size="10" maxlength="10" value="${requestScope.id_usuario}" readonly>
@@ -126,7 +116,7 @@
 						&nbsp;&nbsp;
 					</td>
 					<td align="left" valign="middle">
-						<font face="Arial Narrow" size="3" color="#000080"><b>Empleador *</b></font>
+						<font class="fontText" size="3" color="#000080"><b>Empleador *</b></font>
 					</td>
 					<td align="left" valign="middle">
 						<input type="text" name="codEmpleador" class="cajaTexto" id="codEmpleador" size="10" maxlength="10" readonly style="width: 80px;">
@@ -135,7 +125,7 @@
 				</tr>
 				<tr>
 					<td align="left" valign="middle">
-						<font face="Arial Narrow" size="3" color="#000080"><b>Jefe Inmediato</b></font>
+						<font class="fontText" size="3" color="#000080"><b>Jefe Inmediato</b></font>
 					</td>
 					<td align="left" valign="middle">
 						<input type="text" name="codJefe" class="cajaTexto" id="codJefe" size="10" maxlength="10" value="${requestScope.id_jefe}" readonly>
@@ -143,7 +133,7 @@
 						&nbsp;&nbsp;
 					</td>
 					<td align="left" valign="middle">
-						<font face="Arial Narrow" size="3" color="#000080"><b>Fecha Hoy</b></font>
+						<font class="fontText" size="3" color="#000080"><b>Fecha Hoy</b></font>
 					</td>
 					<td align="left" valign="middle">
 						<input type="text" name="fechaHoy" class="cajaTexto" id="fechaHoy" size="20" maxlength="20" readonly  style="width: 75px;">
@@ -219,13 +209,13 @@
 			    	<table style="padding: 3px; margin: 3px; width: 99%;">
 						<tr>
 							<td valign="middle">
-								<font face="Arial Narrow" size="3" color="#000080"><b>Dictamen</b></font>
+								<font class="fontText" size="3" color="#000080"><b>Dictamen</b></font>
 							</td>
 							<td align="left" valign="middle">
 								<select id="slctDictamen" name="slctDictamen" id="slctDictamen" />
 							</td>
 							<td valign="middle">
-								<font face="Arial Narrow" size="3" color="#000080"><b>Nivel Aprobación</b></font>
+								<font class="fontText" size="3" color="#000080"><b>Nivel Aprobación</b></font>
 							</td>
 							<td valign="middle">
 								<select id="slctNivAprob" name="slctNivAprob" id="slctNivAprob" />
@@ -235,7 +225,7 @@
 						</tr>
 						<tr>
 							<td valign="middle">
-								<font face="Arial Narrow" size="3" color="#000080"><b>Moneda Solicitud</b></font>
+								<font class="fontText" size="3" color="#000080"><b>Moneda Solicitud</b></font>
 							</td>
 							<td align="left" valign="middle">
 								<select id="tipoMoneda" name="tipoMoneda">
@@ -244,14 +234,14 @@
 								</select>
 							</td>
 							<td valign="middle">
-								<font face="Arial Narrow" size="3" color="#000080"><b>Riesgo Total</b></font>
+								<font class="fontText" size="3" color="#000080"><b>Riesgo Total</b></font>
 							</td>
 							<td valign="middle">
 								<input type="text" name="riesgoTotal" class="cajaTexto" id="riesgoTotal" size="15" maxlength="15">&nbsp;
 								<img src="imagenes/rojo.png" border="0">
 							</td>
 							<td valign="middle">
-								<font face="Arial Narrow" size="3" color="#000080"><b>Monto Aprobado</b></font>
+								<font class="fontText" size="3" color="#000080"><b>Monto Aprobado</b></font>
 							</td>
 							<td align="left" valign="middle">
 								<input type="text" name="montoAprobado" class="cajaTexto" id="montoAprobado" size="15" maxlength="15">
@@ -259,7 +249,7 @@
 						</tr>
 						<tr>
 							<td valign="middle">
-								<font face="Arial Narrow" size="3" color="#000080"><b>Ctrl Rating (C/O/I)</b></font>&nbsp;							
+								<font class="fontText" size="3" color="#000080"><b>Ctrl Rating (C/O/I)</b></font>&nbsp;							
 							</td>
 							<td align="left" valign="middle">
 	                            <input type="text" name="rating_dictamen" class="cajaTexto" id="rating_dictamen" size="3" maxlength="1">
@@ -268,19 +258,19 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <font face="Arial Narrow" size="3" color="#000080"><b>Cual</b></font>&nbsp;
+                                            <font class="fontText" size="3" color="#000080"><b>Cual</b></font>&nbsp;
                                             <input type="checkbox" name="montoCualitativo" id="montoCualitativo" />
                                         </td>
                                     <td>
-                                            <font face="Arial Narrow" size="3" color="#000080"><b>Cuant</b></font>&nbsp;
+                                            <font class="fontText" size="3" color="#000080"><b>Cuant</b></font>&nbsp;
                                             <input type="checkbox" name="montoCuantitativo" id="montoCuantitativo" />
                                     </td>
                                         <td>
-                                            <font face="Arial Narrow" size="3" color="#000080"><b>Icom</b></font>&nbsp;
+                                            <font class="fontText" size="3" color="#000080"><b>Icom</b></font>&nbsp;
                                             <input type="checkbox" name="montoICom" id="montoICom" />        
                                     </td>
                                         <td>
-                                            <font face="Arial Narrow" size="3" color="#000080"><b>CAlertas</b></font>&nbsp;
+                                            <font class="fontText" size="3" color="#000080"><b>CAlertas</b></font>&nbsp;
                                             <input type="checkbox" name="montoCAlerta" id="montoCAlerta" />        
                                     </td>
                                     </tr>
@@ -289,7 +279,7 @@
 						</tr>
 						<tr>
 							<td valign="middle">
-								<font face="Arial Narrow" size="3" color="#000080"><b>Proactividad</b></font>
+								<font class="fontText" size="3" color="#000080"><b>Proactividad</b></font>
 							</td>
 							<td colspan="2" align="left" valign="middle">
 								<select id="slctProactividad" style="width: 250px" name="slctProactividad">
@@ -297,7 +287,7 @@
 								</select>
 							</td>
 							<td align="right" valign="middle">
-								<font face="Arial Narrow" size="3" color="#000080"><b>Otro</b></font>&nbsp;&nbsp;
+								<font class="fontText" size="3" color="#000080"><b>Otro</b></font>&nbsp;&nbsp;
 							</td>
 							<td colspan="2" align="left" valign="middle">
 								<input type="text" name="valOtr" class="cajaTexto" id="valOtr" size="15" maxlength="15">
@@ -305,12 +295,12 @@
 						</tr>
 						<tr>
 							<td valign="middle">
-								<font face="Arial Narrow" size="3" color="#000080"><b>Ctrl Scoring (C/O/I)</b></font></td>
+								<font class="fontText" size="3" color="#000080"><b>Ctrl Scoring (C/O/I)</b></font></td>
 							<td colspan="2" align="left" valign="middle">
 								<input type="text" name="ctrlScoring_dictamen" class="cajaTexto" id="ctrlScoring_dictamen" size="3" maxlength="1">
 							</td>
 							<td colspan="2" valign="middle">
-								<font face="Arial Narrow" size="3" color="#000080">
+								<font class="fontText" size="3" color="#000080">
 									<b>Fecha Vencimiento de la Solicitud dictaminada</b>
 								</font>
 							</td>
@@ -336,7 +326,7 @@
 			        </div>
 					<table style="padding: 3px; margin: 3px; width: 99%;">
 						<tr>
-							<td align="left" valign="middle"><font face="Arial Narrow"
+							<td align="left" valign="middle"><font class="fontText"
 								size="3" color="#000080"><b>Banca</b></font>&nbsp;
 								<select id="bancaCliente" name="bancaCliente">
 									<option value="BP">Banca Personas</option>
@@ -346,14 +336,14 @@
 								</select>
 							</td>
 							<td align="center" valign="middle">
-								<font face="Arial Narrow" size="3" color="#000080"><b>Moneda</b></font>&nbsp;
+								<font class="fontText" size="3" color="#000080"><b>Moneda</b></font>&nbsp;
 								<select id="tipoMoneda" name="tipoMoneda">
 									<option value="SL">SOLES</option>
 									<option value="DL">DÓLARES</option>
 								</select>
 							</td>
 							<td align="right" valign="middle">
-								<font face="Arial Narrow" size="3" color="#000080"><b>Monto total</b></font>&nbsp;
+								<font class="fontText" size="3" color="#000080"><b>Monto total</b></font>&nbsp;
 								<input type="text" name="montoTotal" class="cajaTexto" id="montoTotal" size="20" maxlength="20">&nbsp;
 								<input type="button" class="buttonGPR" name="btnBuscar" id="btnBuscar" value="Buscar">
 							</td>
@@ -378,7 +368,7 @@
 								<table>
 									<tr>
 										<td valign="middle">
-											<font face="Arial Narrow" size="3" color="#000080"><b>Rating *</b></font>
+											<font class="fontText" size="3" color="#000080"><b>Rating *</b></font>
 										</td>
 										<td valign="middle">
 											<input type="text" name="rating" class="cajaTexto" id="rating" size="19" maxlength="19" readonly>
@@ -386,7 +376,7 @@
 									</tr>
 									<tr>
 										<td valign="middle">
-											<font face="Arial Narrow" size="3" color="#000080"><b>Scorating *</b></font>
+											<font class="fontText" size="3" color="#000080"><b>Scorating *</b></font>
 										</td>
 										<td valign="middle">
 											<input type="text" name="Scorating" class="cajaTexto" id="Scorating" size="19" maxlength="19" readonly>
@@ -394,7 +384,7 @@
 									</tr>
 									<tr>
 										<td valign="middle">
-                                        	<font face="Arial Narrow" size="3" color="#000080"><b>Clasificación del Cliente *</b></font>
+                                        	<font class="fontText" size="3" color="#000080"><b>Clasificación del Cliente *</b></font>
                                          </td>
 										<td valign="middle">
                                         	<input type="text" name="clasifCliente" class="cajaTexto" id="clasifCliente" size="19" maxlength="19" readonly>
@@ -407,7 +397,7 @@
 								<table>
 									<tr>
 										<td valign="middle">
-											<font face="Arial Narrow" size="3" color="#000080"><b>Relevancia Pública *</b></font><br />
+											<font class="fontText" size="3" color="#000080"><b>Relevancia Pública *</b></font><br />
 											<input type="text" name="relevPublica1" class="cajaTexto" id="relevPublica1" size="19" maxlength="19" readonly><br />
 											<input type="text" name="relevPublica2" class="cajaTexto" id="relevPublica2" size="19" maxlength="19" readonly><br />
 											<input type="text" name="relevPublica3" class="cajaTexto" id="relevPublica3" size="19" maxlength="19" readonly><br />
@@ -421,28 +411,28 @@
 							<td valign="top">
 								<table>
 									<tr>
-										<td valign="middle"><font face="Arial Narrow" size="3"
+										<td valign="middle"><font class="fontText" size="3"
 											color="#000080"><b>Deuda Directa *</b></font></td>
 										<td valign="middle"><input type="text" name="deudaDirecta"
 											class="cajaTexto" id="deudaDirecta" size="19" maxlength="19" readonly>
 										</td>
 									</tr>
 									<tr>
-										<td valign="middle"><font face="Arial Narrow" size="3"
+										<td valign="middle"><font class="fontText" size="3"
 											color="#000080"><b>Deuda Indirecta *</b></font></td>
 										<td valign="middle"><input type="text"
 											name="deudaIndirecta" class="cajaTexto" id="deudaIndirecta"
 											size="19" maxlength="19" readonly></td>
 									</tr>
 									<tr>
-										<td valign="middle"><font face="Arial Narrow" size="3"
+										<td valign="middle"><font class="fontText" size="3"
 											color="#000080"><b>Deuda Castigo *</b></font></td>
 										<td valign="middle"><input type="text" name="deudaCastigo"
 											class="cajaTexto" id="deudaCastigo" size="19" maxlength="19" readonly>
 										</td>
 									</tr>
 									<tr>
-										<td valign="middle"><font face="Arial Narrow" size="3"
+										<td valign="middle"><font class="fontText" size="3"
 											color="#000080"><b>Deuda en el Sistema Financiero *</b></font>
 										</td>
 										<td valign="middle"><input type="text" name="deudaSF"
@@ -455,28 +445,28 @@
 							<td valign="top">
 								<table>
 									<tr>
-										<td valign="middle"><font face="Arial Narrow" size="3"
+										<td valign="middle"><font class="fontText" size="3"
 											color="#000080"><b>Otros Riesgos</b></font></td>
 										<td valign="middle"><input type="text" name="otrosRiesgos"
 											class="cajaTexto" id="otrosRiesgos" size="19" maxlength="19" readonly>
 										</td>
 									</tr>
 									<tr>
-										<td valign="middle"><font face="Arial Narrow" size="3"
+										<td valign="middle"><font class="fontText" size="3"
 											color="#000080"><b>Riesgo Grupal</b></font></td>
 										<td valign="middle"><input type="text" name="riesgoGrupal"
 											class="cajaTexto" id="riesgoGrupal" size="19" maxlength="19" readonly>
 										</td>
 									</tr>
 									<tr>
-										<td valign="middle"><font face="Arial Narrow" size="3"
+										<td valign="middle"><font class="fontText" size="3"
 											color="#000080"><b>Riesgo Actual</b></font></td>
 										<td valign="middle"><input type="text" name="riesgoActual"
 											class="cajaTexto" id="riesgoActual" size="19" maxlength="19" readonly>
 										</td>
 									</tr>
 									<tr>
-										<td valign="middle"><font face="Arial Narrow" size="3"
+										<td valign="middle"><font class="fontText" size="3"
 											color="#000080"><b>Riesgo Total</b></font></td>
 										<td valign="middle"><input type="text" name="riesgoTotal1"
 											class="cajaTexto" id="riesgoTotal1" size="19" maxlength="19" readonly>
@@ -496,20 +486,20 @@
 					<table style="padding: 3px; margin: 3px; width: 99%;">
 						<tr>
 							<td align="left" valign="middle">
-								<font face="Arial Narrow" size="3" color="#000080"><b>Ejecutivo de Cuenta *</b></font>
+								<font class="fontText" size="3" color="#000080"><b>Ejecutivo de Cuenta *</b></font>
 							</td>
 							<td align="left" valign="middle">
 								<input readonly type="text" name="codCuentaEjecutivo" class="cajaTexto" id="codCuentaEjecutivo" size="10" maxlength="10">
 								<input readonly type="text" name="desCuentaEjecutivo" class="cajaTexto" id="desCuentaEjecutivo" size="20" maxlength="20" style="width: 250px;">
 							</td>
 							<td align="right" valign="middle">
-								<font face="Arial Narrow" size="3" color="#000080"><b>Fecha de Ingreso Oficina *</b></font>&nbsp;
+								<font class="fontText" size="3" color="#000080"><b>Fecha de Ingreso Oficina *</b></font>&nbsp;
 								<input readonly style="width: 85px;" type="text" name="fechaIngresoOfic" class="cajaTexto" id="fechaIngresoOfic" size="20" maxlength="20">
 							</td>
 						</tr>
 						<tr>
 							<td align="left" valign="middle">
-								<font face="Arial Narrow" size="3" color="#000080"><b>Oficina de Alta *</b></font>
+								<font class="fontText" size="3" color="#000080"><b>Oficina de Alta *</b></font>
 							</td>
 							<td align="left" valign="middle">
 								<input readonly type="text" name="codOficinaAlta" class="cajaTexto" id="codOficinaAlta" size="10" maxlength="10">
@@ -520,7 +510,7 @@
 						</tr>
 						<tr>
 							<td align="left" valign="middle">
-								<font face="Arial Narrow" size="3" color="#000080"><b>Gerencia Territorial *</b></font>
+								<font class="fontText" size="3" color="#000080"><b>Gerencia Territorial *</b></font>
 							</td>
 							<td align="left" valign="middle">
 								<input readonly type="text" name="codGerenciaTerrit" class="cajaTexto" id="codGerenciaTerrit" size="10" maxlength="10">
