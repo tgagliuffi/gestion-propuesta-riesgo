@@ -15,6 +15,7 @@ List<MultitablaDetalle> usuarioBureau = (List<MultitablaDetalle>)request.getAttr
 List<MultitablaDetalle> usuarioSiFinan = (List<MultitablaDetalle>)request.getAttribute("multitablaDetalleSFinan");
 List<MultitablaDetalle> usuarioRelPub = (List<MultitablaDetalle>)request.getAttribute("multitablaDetalleRelePubl");
 List<MultitablaDetalle> usuarioInele = (List<MultitablaDetalle>)request.getAttribute("multitablaDetalleInele");
+
 %>
 
 <head>
@@ -76,13 +77,15 @@ function save_condicion(){
   			<font class="fontText">
    			<b>Bureau</b>
    			</font></legend>
-   			<%if(!usuarioBureau.isEmpty()) {%>
+   			<%if(!usuarioBureau.isEmpty() && usuarioBureau!=null) {%>
     			<% for(int i=0;i<usuarioBureau.size();i++) {%>
+	            <% if(usuarioBureau.get(i).getNumberValor()!=null) {%>
     			    <% if(usuarioBureau.get(i).getNumberValor().intValue()==1) {%>
      				<input type="checkbox" name="checkCliente" id="<%= usuarioBureau.get(i).getCodElemento() %>" class="cajaTexto" size="10" checked="checked"><%=usuarioBureau.get(i).getStrValor()%><br>
 				    <% } else {%>
 				    <input type="checkbox" name="checkCliente" class="cajaTexto" id="<%= usuarioBureau.get(i).getCodElemento() %>"><%=usuarioBureau.get(i).getStrValor()%><br>
 				    <%}   %>     				
+				<% }%>
 				<% }%>
 				<%}%> 
 		   <br/>
@@ -99,13 +102,15 @@ function save_condicion(){
   			<font class="fontText">
    				<b>Clasificacion BBVA</b>
    			</font></legend>
-			<%if(!usuarioBureau.isEmpty()) {%>
+			<%if(!usuarioBbva.isEmpty() && usuarioBbva!=null) {%>
 				<% for(int i=0;i<usuarioBbva.size();i++) {%>
+	            <% if(usuarioBbva.get(i).getNumberValor()!=null) {%>
     			    <% if(usuarioBbva.get(i).getNumberValor().intValue()==1) {%>
      				<input type="checkbox" name="checkCliente" class="cajaTexto" id="<%= usuarioBbva.get(i).getCodElemento() %>" checked="checked"><%=usuarioBbva.get(i).getStrValor()%><br>
 				    <% } else {%>
 				    <input type="checkbox" name="checkCliente" class="cajaTexto" id="<%= usuarioBbva.get(i).getCodElemento() %>" ><%=usuarioBbva.get(i).getStrValor()%><br>
 				    <%}   %>     				
+				<% }%>
 				<% }%>
 				<%} %>
 	<br/>
@@ -123,13 +128,15 @@ function save_condicion(){
   			<font class="fontText">
    				<b>Clasificacion S. Financiero</b>
    			</font></legend>
-	    	<%if(!usuarioBureau.isEmpty()) {%>
+	    	<%if(!usuarioSiFinan.isEmpty() && usuarioSiFinan!=null) {%>
 	            <% for(int i=0;i<usuarioSiFinan.size();i++) {%>
+    			<% if(usuarioSiFinan.get(i).getNumberValor()!=null) {%>
     			    <% if(usuarioSiFinan.get(i).getNumberValor().intValue()==1) {%>
      				<input type="checkbox" name="checkCliente" class="cajaTexto" id="<%= usuarioSiFinan.get(i).getCodElemento() %>" checked="checked"><%=usuarioSiFinan.get(i).getStrValor()%><br>
 				    <% } else {%>
 				    <input type="checkbox" name="checkCliente" class="cajaTexto" id="<%= usuarioSiFinan.get(i).getCodElemento() %>"><%=usuarioSiFinan.get(i).getStrValor()%><br>
 				    <%}   %>     				
+				<% }%>
 				<% }%>
 				<% }%>
 	<br/>
@@ -148,14 +155,16 @@ function save_condicion(){
   			<font class="fontText">
    				<b>Relevancia Publica</b>
    			</font></legend>
-	    	<%if(!usuarioBureau.isEmpty()) {%>
+	    	<%if(!usuarioRelPub.isEmpty() && usuarioRelPub != null ) {%>
 	            <% for(int i=0;i<usuarioRelPub.size();i++) {%>
-    			    <% if(usuarioRelPub.get(i).getNumberValor().intValue()==1) {%>
+   			<% if(usuarioRelPub.get(i).getNumberValor()!=null) {%>
+	               <% if(usuarioRelPub.get(i).getNumberValor().intValue()==1) {%>
      				<input type="checkbox" name="checkCliente" class="cajaTexto" id="<%= usuarioRelPub.get(i).getCodElemento() %>" checked="checked"><%=usuarioRelPub.get(i).getStrValor()%><br>
 				    <% } else {%>
 				    <input type="checkbox" name="checkCliente" class="cajaTexto" id="<%= usuarioRelPub.get(i).getCodElemento() %>"><%=usuarioRelPub.get(i).getStrValor()%><br>
 				    <%}   %>     				
 				<% }%>
+				<% }%>				
 				<% }%>
 	<br/>
 	</fieldset>
@@ -173,8 +182,9 @@ function save_condicion(){
   			<font class="fontText">
    				<b>Inelegibles</b>
    			</font></legend>
-	    	<%if(!usuarioBureau.isEmpty()) {%>
+	    	<%if(!usuarioInele.isEmpty() && usuarioInele!=null) {%>
 	            <% for(int i=0;i<usuarioInele.size();i++) {%>
+    			<% if(usuarioInele.get(i).getNumberValor()!=null) {%>	    
     			    <% if(usuarioInele.get(i).getNumberValor().intValue()==1) {%>
      				<input type="checkbox" name="checkCliente" class="cajaTexto" id="<%= usuarioInele.get(i).getCodElemento() %>" checked="checked"><%=usuarioInele.get(i).getStrValor()%><br>
 				    <% } else {%>
@@ -182,7 +192,7 @@ function save_condicion(){
 				    <%}   %>     				
 				<% }%>
 				<% }%>
-
+<% }%>
 	<br/>
 	</fieldset>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -198,7 +208,7 @@ function save_condicion(){
 	<table>
 	<tr>
 	<td >
-	<a href="javascript:save_condicion();" class="buttonGPR">GRABAR</a>
+		<a href="javascript:save_condicion();" class="buttonGPR">GRABAR</a>
 	</td>
     </tr>
     </table>
