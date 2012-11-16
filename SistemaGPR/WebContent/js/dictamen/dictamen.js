@@ -60,7 +60,7 @@ optionSolicitudDetalle = {
 		, {name: "codPrevaluador"	, index: "codPrevaluador"	, width: 130}
 		, {name: "desMultCampania"	, index: "desMultCampania"	, width: 150}
 		, {name: "tipo"				, index: "tipo"				, width: 90}
-		, {name: "monto"			, index: "monto"			, width: 100, align: 'right',}
+		, {name: "monto"			, index: "monto"			, width: 100, align: 'right'}
 		, {name: "desMultPlazo"		, index: "desMultPlazo"		, width: 150}
 		, {name: "codDtSolicitud"	, index: "codDtSolicitud"	, width: 1, hidden: true}
 		, {name: "nroSolicitud"		, index: "nroSolicitud"		, width: 1, hidden: true}
