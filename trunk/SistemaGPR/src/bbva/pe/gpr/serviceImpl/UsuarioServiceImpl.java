@@ -1,5 +1,6 @@
 package bbva.pe.gpr.serviceImpl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import bbva.pe.gpr.bean.Usuario;
@@ -54,5 +55,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	public int getAsignarOficina(Usuario record) throws Exception {
 		return usuarioDao.updateOficinaAsignada(record);
+	}
+	
+	public List<Usuario> getLstUsuariosRiesgo(String codRol) throws Exception {
+		Usuario usuarioBean =  new Usuario();
+		if(!codRol.equals("-1") && codRol!=null){
+			usuarioBean.setCodRol(new BigDecimal(codRol));
+		}else{
+			usuarioBean.setCodRol(new BigDecimal(-1));
+		}
+		return usuarioDao.getLstUsuariosRiesgo(usuarioBean);
 	}
 }

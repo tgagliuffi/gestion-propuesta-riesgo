@@ -15,5 +15,6 @@ public interface UsuarioDAO {
 	int updateOficinaAsignada(Usuario record)throws Exception ;
 	String getUsuarioExiste(Usuario usuarioBean)throws Exception ;
 	int getDeleteUsuario(String codUsuario)throws Exception ;
+	List<Usuario> getLstUsuariosRiesgo(Usuario usuarioBean) throws Exception ;
 	
 }

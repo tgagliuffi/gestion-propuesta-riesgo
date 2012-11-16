@@ -1,6 +1,7 @@
 package bbva.pe.gpr.bean;
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -14,6 +15,11 @@ public class Usuario {
 	private String codUsuarioModificacion;
 	private Date   fechaCreacion;
 	private Date   fechaModificacion;
+	private String concatRoles;
+	private BigDecimal mtoMaxDelegacion;
+	private Long cantidad;
+	private String dependiente;
+	private BigDecimal codRol;
 	
 	public Long getIdUsuario() {
 		return idUsuario;
@@ -63,43 +69,29 @@ public class Usuario {
 	public void setFechaModificacion(Date fechaModificacion) {
 		this.fechaModificacion = fechaModificacion;
 	}
-	/*
-	
-	private String codUsuario;
-    private String nombre;
-    private String apellidoPaterno;
-    private String apellidoMaterno;
-    private BigDecimal codRol;
-    private BigDecimal mtoDelegacion;
-    private BigDecimal estado;
-    private String codOficina;
-    private String codOficinaAsignada;
-    private String codCargo;
-    private String genero;
-    
-	public String getCodUsuario() {
-		return codUsuario;
+	public String getConcatRoles() {
+		return concatRoles;
 	}
-	public void setCodUsuario(String codUsuario) {
-		this.codUsuario = codUsuario;
+	public void setConcatRoles(String concatRoles) {
+		this.concatRoles = concatRoles;
 	}
-	public String getNombre() {
-		return nombre;
+	public BigDecimal getMtoMaxDelegacion() {
+		return mtoMaxDelegacion;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setMtoMaxDelegacion(BigDecimal mtoMaxDelegacion) {
+		this.mtoMaxDelegacion = mtoMaxDelegacion;
 	}
-	public String getApellidoPaterno() {
-		return apellidoPaterno;
+	public Long getCantidad() {
+		return cantidad;
 	}
-	public void setApellidoPaterno(String apellidoPaterno) {
-		this.apellidoPaterno = apellidoPaterno;
+	public void setCantidad(Long cantidad) {
+		this.cantidad = cantidad;
 	}
-	public String getApellidoMaterno() {
-		return apellidoMaterno;
+	public String getDependiente() {
+		return dependiente;
 	}
-	public void setApellidoMaterno(String apellidoMaterno) {
-		this.apellidoMaterno = apellidoMaterno;
+	public void setDependiente(String dependiente) {
+		this.dependiente = dependiente;
 	}
 	public BigDecimal getCodRol() {
 		return codRol;
@@ -107,42 +99,5 @@ public class Usuario {
 	public void setCodRol(BigDecimal codRol) {
 		this.codRol = codRol;
 	}
-	public BigDecimal getMtoDelegacion() {
-		return mtoDelegacion;
-	}
-	public void setMtoDelegacion(BigDecimal mtoDelegacion) {
-		this.mtoDelegacion = mtoDelegacion;
-	}
-	public BigDecimal getEstado() {
-		return estado;
-	}
-	public void setEstado(BigDecimal estado) {
-		this.estado = estado;
-	}
-	public String getCodOficina() {
-		return codOficina;
-	}
-	public void setCodOficina(String codOficina) {
-		this.codOficina = codOficina;
-	}
-	public String getCodOficinaAsignada() {
-		return codOficinaAsignada;
-	}
-	public void setCodOficinaAsignada(String codOficinaAsignada) {
-		this.codOficinaAsignada = codOficinaAsignada;
-	}
-	public String getCodCargo() {
-		return codCargo;
-	}
-	public void setCodCargo(String codCargo) {
-		this.codCargo = codCargo;
-	}
-	public String getGenero() {
-		return genero;
-	}
-	public void setGenero(String genero) {
-		this.genero = genero;
-	}
-*/
-    
+
 }

@@ -14,4 +14,5 @@ public interface UsuarioService {
 	int updateByPrimaryKey(Usuario record)throws Exception ;
 	List<Usuario> getLstUsuarios(Usuario usuarioBean)throws Exception ;
 	int getAsignarOficina(Usuario record)throws Exception ;
+	public List<Usuario> getLstUsuariosRiesgo(String codRol)throws Exception  ;
 }
