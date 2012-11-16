@@ -13,7 +13,7 @@
 		<form-bean name="asignarOficinaForm" type="bbva.pe.gpr.form.AsignarOficinaForm" />
 		<form-bean name="ProductoForm"	type="bbva.pe.gpr.form.ProductoForm"></form-bean>
 		<form-bean name="usuarioForm"	type="bbva.pe.gpr.form.UsuarioForm"></form-bean>
-	
+		<form-bean name="asigacionForm" type="bbva.pe.gpr.form.AsignacionForm"></form-bean>
 	</form-beans>
 
 	<global-exceptions></global-exceptions>
@@ -74,6 +74,10 @@
 			<forward name="atender" path="/analisis_dictamen.jsp"></forward>
 		</action>
 		
+		<action name="asigacionForm" path="/asignacionAction" type="bbva.pe.gpr.action.AsignacionAction" 
+			parameter="method" input="/asignacion_individual.jsp">
+			<forward name="success" path="/asignacion_individual.jsp"></forward>
+		</action>
 	</action-mappings>
 
 	<message-resources parameter="MessageResource"></message-resources>	

@@ -16,12 +16,14 @@
 	display:inline-block;
 	color:#ffffff;
 	font-family:Tahoma;
-	font-size:9px;
+	font-size:8px;
 	font-weight:normal;
 	padding:3px 30px;
 	text-decoration:none;
 	text-shadow:1px 1px 0px #1570cd;
 	border: 1px solid #696;
+	text-transform: uppercase;
+	font-weight: bold;
 	/*
 	padding: 4px 0;
 	text-align: center; width: 200px;

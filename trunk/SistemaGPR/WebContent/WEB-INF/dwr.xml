@@ -33,6 +33,10 @@
 		<create creator="new" javascript="DictamenAction">
       		<param name="class" value="bbva.pe.gpr.action.DictamenAction"/>
     	</create>
+    	
+    	<create creator="new" javascript="AsignacionAction">
+      		<param name="class" value="bbva.pe.gpr.action.AsignacionAction"/>
+    	</create>
 	
 		<convert converter="bean" match="bbva.pe.gpr.bean.Usuario"/>
 		<convert converter="bean" match="bbva.pe.gpr.bean.Oficina"/>
