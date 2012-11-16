@@ -1,5 +1,7 @@
 package bbva.pe.gpr.action;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,10 +11,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import bbva.pe.gpr.bean.Menu;
 import bbva.pe.gpr.bean.Usuario;
 import bbva.pe.gpr.context.Context;
 import bbva.pe.gpr.form.LoginForm;
 import bbva.pe.gpr.service.CatalogoService;
+import bbva.pe.gpr.service.SeguridadService;
 import bbva.pe.gpr.util.Constant;
 import bbva.pe.gpr.util.UtilDate;
 
@@ -22,9 +26,11 @@ import com.grupobbva.bc.per.tele.seguridad.ServiciosSeguridadBbva;
 public class LoginAction extends DispatchAction {
 	private static Logger logger = Logger.getLogger(LoginAction.class);
 	private CatalogoService catalogoService;
+	private SeguridadService seguridadService;
 	
 	public LoginAction() {
 		catalogoService = (CatalogoService)Context.getInstance().getBean("catalogoService");
+		seguridadService = (SeguridadService)Context.getInstance().getBean("seguridadService");
 	}
 	
 	public ActionForward validarUsuario(ActionMapping mapping, ActionForm form,
@@ -61,7 +67,8 @@ public class LoginAction extends DispatchAction {
 	 		}else{ 
 				Usuario operador = null;
 				operador = catalogoService.selectUsuarioByPrimaryKey(reg);
-				if(operador!=null){
+				 List<Menu> getListadoMenu=seguridadService.getListadoMenu(reg);
+				if(operador!=null && getListadoMenu !=null){
 					String saludo = null;
 					saludo = (usuario.getSexo().equals(Constant.FEMENINO)?"Bienvenida : ":"Bienvenido : ");
 					request.getSession(true).setAttribute("USUARIO_SESION", usuario);
@@ -70,6 +77,8 @@ public class LoginAction extends DispatchAction {
 		        	request.getSession(true).setAttribute("FECHA_ACTUAL","HOY DÍA ES : "+ UtilDate.fechaActual());
 		        	target = "success";
     		        //TODO: FALTA PERFILAR USUARIO
+		        	
+		              request.setAttribute("getLstMenu",getListadoMenu);
     		    }else{
 					request.getSession(true).setAttribute("STR_MENSAJE", "Usuario sin Privliegios.");
 					target = "failure";
