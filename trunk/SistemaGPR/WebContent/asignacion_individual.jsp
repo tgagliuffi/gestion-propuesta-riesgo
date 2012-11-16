@@ -41,7 +41,7 @@ $(function() {
 var myColNamesEval  = ['','Registro', 'Nombres', 'Cargo', 'Cantidad', 'Monto delegado', 'Dependiente'];
 var myDataModelEval = [ 
                   
-					{name : 's',		label : 'codigoUsuario', 		width: 50, formatter:radio},
+					{name : 'codigoUsuario',		index : 'codigoUsuario',  			width : VAL_WIDTH.VSMALL,    formatter:formatoRadio ,align:'center'},
                     {name : 'codigoUsuario',		index : 'codigoUsuario', 			width : VAL_WIDTH.SMALL		},
                     {name : 'nombres',				index : 'nombres',					width : VAL_WIDTH.SMALL		},
                     {name : 'concatRoles',			index : 'concatRoles', 				width : VAL_WIDTH.SMALL		},
@@ -68,10 +68,15 @@ var myDataModelSol =
                     {name : 'estado',					index : 'estado', 				width : VAL_WIDTH.XLSMALL,  	formatter: estadoFormat, sortable: false, align:'center'}
                
  ];
-function radio(value, options, rowObject){
-	   var radioHtml = '<input type="radio" value=' + value + ' name="radioid" />';
-	   return radioHtml;
-	}
+	
+function formatoRadio(cellvalue, options, rowObject){
+    var radio ="<input type=\"radio\" onclick=\"mostrarMensaje('"+cellvalue+"');\" name=\"radioButton\" />";
+	return	radio;
+}
+
+function mostrarMensaje(valor){	
+	alert(valor);
+}
 
 function estadoFormat(cellvalue, options, rowObject)
 {	
