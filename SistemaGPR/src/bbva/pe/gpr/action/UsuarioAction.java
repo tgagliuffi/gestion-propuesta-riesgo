@@ -91,6 +91,7 @@ public class UsuarioAction  extends DispatchAction{
 		return mapping.findForward("configuracionUsuario");
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Vector<IILDPeUsuario> consultarSubordinados(String codUsuario) throws IILDPeExcepcion {
 		Vector<IILDPeUsuario> usuario = null;
 		usuario=com.grupobbva.bc.per.tele.ldap.directorio.IILDPeGestorUsuarios.buscarSubordinados(codUsuario);
