@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
 <%@ page   import="bbva.pe.gpr.bean.Usuario"%>
+<%@page import="bbva.pe.gpr.bean.*"%>
+<%@ page import="java.util.List"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,6 +30,7 @@ $(function() {
 });
 <%
 String usuario = (String)request.getSession().getAttribute("USUARIO_NOMBRE");
+List<Menu> getLstMenu =(List<Menu>)request.getAttribute("getLstMenu");
 %>
 </script>
 </head>
@@ -53,100 +56,28 @@ String usuario = (String)request.getSession().getAttribute("USUARIO_NOMBRE");
 	</tr>
 	</table>
 </form>
-
+<%if(getLstMenu != null && !getLstMenu.isEmpty()){ %>
+	
 <div class="demo">
 	<div id="tabs">
 		<ul>		
-			<li><a href="#tabs1"><b>Ingreso de la Solicitud</b></a></li> 
-			<li><a href="#tabs2"><b>Asignación Individual</b></a></li>
-			<li><a href="#tabs3"><b>Asignación Prioridad</b></a></li>
-			<li><a href="#tabs4"><b>Bandeja del Evaluador</b></a></li>
-			<li><a href="#tabs5"><b>Análisis y Dictamen</b></a></li>
-			<li><a href="#tabs6"><b>Estadísticas de Asignaciones</b></a></li>
-			<li><a href="#tabs7"><b>Estadísticas de Atención de Solicitudes</b></a></li>
-			<li><a href="#tabs8"><b>Consulta de Solicitudes</b></a></li>
-			<li><a href="#tabs9"><b>Parametria Condicion Cliente</b></a></li>
-			<li><a href="#tabs10"><b>Parametria Evaluadores/Dictaminadores Oficina-Territorio</b></a></li>
-			<li><a href="#tabs11"><b>Parametria Usuarios</b></a></li>
-		
+			<%for(int i=0;i<getLstMenu.size();i++){	%>
+				<li><a href="#tabs<%=i+1%>"><b><%=getLstMenu.get(i).getDescripcion()%></b></a></li>
+				<%}%>
 		</ul>
-		
-		<div id="tabs1">
-			<iframe src="ingresoSolicitud.do?method=init" name="frameIngresoSolicitud" width="100%" scrolling="auto" frameborder="0">
-			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
-		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
-		    </iframe>
-		</div> 
-		
-		<div id="tabs2">
-			<iframe src="asignacion_individual.jsp" name="frameAsignacionIndividual" width="100%" scrolling="auto" frameborder="0">
-			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
-		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
-		    </iframe>
-		</div>
-		
-		<div id="tabs3">
-			<iframe src="asignacion_prioridad.jsp" name="frameAsignacionPrioridad" width="100%" scrolling="auto" frameborder="0">
-			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
-		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
-		    </iframe>
-		</div>
-		
-		<div id="tabs4">
-			<iframe src="bandejaEvaluador.do?method=index" name="frameBandejaEvaluador" width="100%" scrolling="auto" frameborder="0">
-			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
-		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
-		    </iframe>
-		</div>
-		
-		<div id="tabs5">
-			<iframe src="dictamen.do?method=index" name="frameAnalisisDictamen" width="100%" scrolling="auto" frameborder="0">
-			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
-		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
-		    </iframe>
-		</div>
-		
-		<div id="tabs6">
-			<iframe src="estadistica_asignacion.jsp" name="frameEstadicticaAsignacion" width="100%" scrolling="auto" frameborder="0">
-			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
-		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
-		    </iframe>
-		</div>
-		
-		<div id="tabs7">
-			<iframe src="estadistica_atencion.jsp" name="frameEstadisticaAtencion" width="100%" scrolling="auto" frameborder="0">
-			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
-		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
-		    </iframe>
-		</div>
-		
-		<div id="tabs8">
-			<iframe src="busquedaSolicitudAction.do?method=listarSolicitud" name="frameConsultaSolicitud" width="100%" scrolling="auto" frameborder="0">
-			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
-		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
-		    </iframe>
-		</div>
-		<div id="tabs9">
-			<iframe src="condicionCliente.do?method=listarCondicion" name="frameCondicionCliente" width="100%" scrolling="auto" frameborder="0">
-			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
-		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
-		    </iframe>
-		</div>
-		<div id="tabs10">
-			<iframe src="asignarOficina.do?method=listarAsignarOficina" name="frameAsignarOficina" width="100%" scrolling="auto" frameborder="0">
-			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
-		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
-		    </iframe>
-		</div>		
-		<div id="tabs11">
-			<iframe src="usuarioAction.do?method=listarUsuarios" name="frameAsignarOficina" width="100%" scrolling="auto" frameborder="0">
-			  <!-- frk: En el caso que exista algun problema en el momento de cargar el iframe: -->
-		      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
-		    </iframe>
-		</div>		
+		<%for(int i=0;i<getLstMenu.size();i++){
+				String url = getLstMenu.get(i).getLink();
+				String desIframe = getLstMenu.get(i).getDescripcion();
+				%>			
+				<div id="tabs<%=i+1%>">
+					<iframe src="<%=url%>" name="<%=desIframe%>" width="100%" scrolling="auto" frameborder="0">
+				      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
+				    </iframe>
+				</div>
+			<%}%>
 	</div>
 </div>
-
+<%}%>
 </body>
 <script type="text/javascript">
 

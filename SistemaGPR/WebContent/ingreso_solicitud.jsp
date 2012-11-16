@@ -772,7 +772,7 @@ var nroSolicitud = formulario.mantener.value;
 	<br/>
 	
 	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 860px;margin: 3px;">
-	<div  align="center" class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
 	<label>Datos del Cliente</label>
 	</div>
 	<table>	
@@ -857,12 +857,11 @@ var nroSolicitud = formulario.mantener.value;
 	</tr>
 	</table>
 	</div>
-	
-	<fieldset style="width: 860px; margin-top:10px;">
-   	<legend>
-   	<font class="txt-titulo">
-   	Datos de la Oficina y Ejecutivo
-   	</font></legend>
+
+   	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 860px;margin: 3px;">
+	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+	<label>Datos de la Oficina y Ejecutivo</label>
+	</div>
 	<table>	
 	<tr>
        <td align="left" valign="middle">
@@ -924,22 +923,16 @@ var nroSolicitud = formulario.mantener.value;
 	   <td align="right" valign="middle">&nbsp;</td>
 	</tr>
 	</table>
-	</fieldset>
+	</div>
 	<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-	<fieldset style="width:1260px; margin-top:10px;">
-   	<legend>
-   	<font class="txt-titulo">
-   	Datos del Producto
-   	</font></legend>
+	
 		<table id="listProductsDetalle" class="grid" width="1300px;">
-		</table></fieldset>
+		</table>
 	<%}else{%>
-	<fieldset style="width:1260px; margin-top:10px;">
-   	<legend>
-   	<font class="txt-titulo">
-   	Datos del Producto
-   	</font></legend>
-	<table style="width: 1260px;">	
+	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1280px;margin: 3px;">
+	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+	<label>Datos drl Producto</label></div>
+	<table style="width: 1280px;">	
 	<tr>
        <td align="left" valign="middle">
        <font class="fontText">Banca</font>&nbsp;
@@ -981,14 +974,12 @@ var nroSolicitud = formulario.mantener.value;
 	<br/><br/>
 	<table id="listProducts" class="grid" width="1300px;">
 	</table>
-	</fieldset>
+	</div>
 		<%}%>
-	<fieldset style="width: 1200px; margin-top: 10px;" >
-   	<legend>
-   	<font class="txt-titulo">
-   	Datos de Riesgo del Cliente
-   	</font></legend>
-   	
+	
+   	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1260px;margin: 3px;">
+	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+	<label>Datos de Riesgo del Cliente</label></div>
    	<table>
    	<tr>
    	
@@ -1191,7 +1182,7 @@ var nroSolicitud = formulario.mantener.value;
 	
 	</tr>
 	</table>
-	</fieldset>
+	</div>
 </html:form>
 
 </body>
