@@ -1,85 +1,97 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
 <sqlMap namespace="CARDEL_TGPR_USUARIOS" >
-<resultMap id="ibatorgenerated_BaseResultMap" class="bbva.pe.gpr.bean.Usuario" >
-<result column="ID_USUARIO" property="idUsuario" jdbcType="NUMBER" />
-<result column="CODIGO_USUARIO" property="codigoUsuario" jdbcType="VARCHAR" />
-<result column="NOMBRES" property="nombres" jdbcType="VARCHAR" />
-<result column="ESTADO" property="estado" jdbcType="VARCHAR" />
-<result column="COD_USUARIO_CREACION" property="codUsuarioCreacion" jdbcType="VARCHAR" />
-<result column="COD_USUARIO_MODIFICACION" property="codUsuarioModificacion" jdbcType="VARCHAR" />
-<result column="FECHA_CREACION" property="fechaCreacion" jdbcType="DATE" />
-<result column="FECHA_MODIFICACION" property="fechaModificacion" jdbcType="DATE" />
-</resultMap>
-
-<select id="ibatorgenerated_selectByPrimaryKey" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.Usuario" >
-select ID_USUARIO, CODIGO_USUARIO, NOMBRES, ESTADO, COD_USUARIO_CREACION, COD_USUARIO_MODIFICACION, FECHA_CREACION, FECHA_MODIFICACION
-from CARDEL.TCARDEL_USUARIO
-where CODIGO_USUARIO = #codigoUsuario:VARCHAR#
-</select>
-
-<delete id="ibatorgenerated_deleteByPrimaryKey" parameterClass="bbva.pe.gpr.bean.Usuario" >
-delete from CARDEL.TCARDEL_USUARIO
-where CODIGO_USUARIO = #codigoUsuario:VARCHAR#
-</delete>
-
-<insert id="ibatorgenerated_insert" parameterClass="bbva.pe.gpr.bean.Usuario" >
-insert into CARDEL.TCARDEL_USUARIO (ID_USUARIO, CODIGO_USUARIO, NOMBRES, ESTADO, COD_USUARIO_CREACION, COD_USUARIO_MODIFICACION, FECHA_CREACION, FECHA_MODIFICACION)
-values (#idUsuario:NUMBER#,#codigoUsuario:VARCHAR#, #nombres:VARCHAR#, #estado:VARCHAR#,
-#codUsuarioCreacion:VARCHAR#, #codUsuarioModificacion:VARCHAR#, #fechaCreacion:DATE#, #fechaModificacion:DATE#)
-</insert>
-
-
-<update id="ibatorgenerated_updateByPrimaryKey" parameterClass="bbva.pe.gpr.bean.Usuario" >
-update CARDEL.TCARDEL_USUARIO
-set
-NOMBRES = #nombres:VARCHAR#,
-ESTADO = #estado:VARCHAR#,
-COD_USUARIO_CREACION = #codUsuarioCreacion:VARCHAR#,
-COD_USUARIO_MODIFICACION = #codUsuarioModificacion:VARCHAR#,
-FECHA_CREACION = #fechaCreacion:DATE#,
-FECHA_MODIFICACIO = #fechaModificacion:DATE#
-where CODIGO_USUARIO = #codigoUsuario:VARCHAR#
-</update>
-
-<select id="getLstUsuarios" resultClass="bbva.pe.gpr.bean.Usuario" parameterClass="bbva.pe.gpr.bean.Usuario" >
-     SELECT DISTINCT
- 		U.CODIGO_USUARIO AS codigoUsuario, 
-		U.NOMBRES AS nombres, 
-		BS.descripcion AS codUsuarioCreacion,
-		UR.DESCRIPCION AS codUsuarioModificacion
-	FROM 
- 		CARDEL.TCARDEL_USUARIO U 
- 		JOIN CARDEL.TGPR_USUARIO_SUBANCAS US ON US.COD_USUARIO=U.CODIGO_USUARIO 
- 		JOIN CARDEL.TGPR_BANCA_SUB BS ON BS.COD_SUBANCA=US.COD_SUBANCA
- 		JOIN CARDEL.TGPR_BANCAS B ON B.COD_BANCA=BS.COD_BANCA 
- 		JOIN CARDEL.TGPR_USUARIO_ROLES  UR ON UR.COD_USUARIO=U.CODIGO_USUARIO
-    WHERE
-		( #codigoUsuario:VARCHAR# IS NULL OR #codigoUsuario:VARCHAR#='' OR U.CODIGO_USUARIO like UPPER(#codigoUsuario:VARCHAR#) ) AND
-		( #nombres:VARCHAR# IS NULL OR #nombres:VARCHAR#='' OR U.NOMBRES like UPPER(#nombres:VARCHAR#)) AND
-		( #codUsuarioCreacion:VARCHAR# IS NULL OR #codUsuarioCreacion:VARCHAR#='' OR BS.COD_BANCA like UPPER(#codUsuarioCreacion:VARCHAR#)) AND
-		( #idUsuario:VARCHAR# IS NULL OR #idUsuario:VARCHAR#='' OR UR.COD_ROL like UPPER(#idUsuario:VARCHAR#)) AND
-		( #estado:DECIMAL# IS NULL OR U.ESTADO=#estado:DECIMAL#)
-
-</select>
-
-<!-- <update id="getAsignarOficina" parameterClass="bbva.pe.gpr.bean.Usuario" > -->
-<!-- UPDATE CARDEL.CARDEL_TCARDEL_USUARIO -->
-<!-- SET COD_OFICINA_ASIGNADA = #codOficinaAsignada:CHAR#, -->
-<!-- WHERE CODIGO_USUARIO = #codigoUsuario:VARCHAR# -->
-<!-- </update> -->
-
-<select id="getUsuarioExiste" resultClass="string" parameterClass="bbva.pe.gpr.bean.Usuario">
-	SELECT  COUNT(*)
-	FROM    CARDEL.TCARDEL_USUARIO
-	WHERE  
-	CODIGO_USUARIO = #codigoUsuario:VARCHAR# AND 
-	( #estado:VARCHAR# IS NULL OR ESTADO=#estado:VARCHAR#)
-</select>
-
-<update id="getDeleteUsuario" parameterClass="string">
-	update CARDEL.TCARDEL_USUARIO
-	set ESTADO='0'
-	where CODIGO_USUARIO = #codigoUsuario:VARCHAR#
-</update>
+	<resultMap id="ibatorgenerated_BaseResultMap" class="bbva.pe.gpr.bean.Usuario" >
+		<result column="ID_USUARIO" property="idUsuario" jdbcType="NUMBER" />
+		<result column="CODIGO_USUARIO" property="codigoUsuario" jdbcType="VARCHAR" />
+		<result column="NOMBRES" property="nombres" jdbcType="VARCHAR" />
+		<result column="ESTADO" property="estado" jdbcType="VARCHAR" />
+		<result column="COD_USUARIO_CREACION" property="codUsuarioCreacion" jdbcType="VARCHAR" />
+		<result column="COD_USUARIO_MODIFICACION" property="codUsuarioModificacion" jdbcType="VARCHAR" />
+		<result column="FECHA_CREACION" property="fechaCreacion" jdbcType="DATE" />
+		<result column="FECHA_MODIFICACION" property="fechaModificacion" jdbcType="DATE" />
+	</resultMap>	
+	<resultMap id="lstUsuarioRiesgosResultMap" class="bbva.pe.gpr.bean.Usuario" >
+		<result column="ID_USUARIO" property="idUsuario" jdbcType="NUMBER" />
+		<result column="CODIGO_USUARIO" property="codigoUsuario" jdbcType="VARCHAR" />
+		<result column="NOMBRES" property="nombres" jdbcType="VARCHAR" />
+		<result column="CONCAT_ROLES" property="concatRoles" jdbcType="VARCHAR" />
+		<result column="MTO_MAX_DELAGACION" property="mtoMaxDelegacion" jdbcType="NUMBER" />
+		<result column="CANTIDAD" property="cantidad" jdbcType="NUMBER" />
+		<result column="DEPENDIENTE" property="dependiente" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="ibatorgenerated_selectByPrimaryKey" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.Usuario" >
+		select ID_USUARIO, CODIGO_USUARIO, NOMBRES, ESTADO, COD_USUARIO_CREACION, COD_USUARIO_MODIFICACION, FECHA_CREACION, FECHA_MODIFICACION
+		from CARDEL.TCARDEL_USUARIO
+		where CODIGO_USUARIO = #codigoUsuario:VARCHAR#
+	</select>
+	<delete id="ibatorgenerated_deleteByPrimaryKey" parameterClass="bbva.pe.gpr.bean.Usuario" >
+		delete from CARDEL.TCARDEL_USUARIO
+		where CODIGO_USUARIO = #codigoUsuario:VARCHAR#
+	</delete>
+	<insert id="ibatorgenerated_insert" parameterClass="bbva.pe.gpr.bean.Usuario" >
+		insert into CARDEL.TCARDEL_USUARIO (ID_USUARIO, CODIGO_USUARIO, NOMBRES, ESTADO, COD_USUARIO_CREACION, COD_USUARIO_MODIFICACION, FECHA_CREACION, FECHA_MODIFICACION)
+		values (#idUsuario:NUMBER#,#codigoUsuario:VARCHAR#, #nombres:VARCHAR#, #estado:VARCHAR#,
+		#codUsuarioCreacion:VARCHAR#, #codUsuarioModificacion:VARCHAR#, #fechaCreacion:DATE#, #fechaModificacion:DATE#)
+	</insert>
+	<update id="ibatorgenerated_updateByPrimaryKey" parameterClass="bbva.pe.gpr.bean.Usuario" >
+		update CARDEL.TCARDEL_USUARIO
+		set
+		NOMBRES = #nombres:VARCHAR#,
+		ESTADO = #estado:VARCHAR#,
+		COD_USUARIO_CREACION = #codUsuarioCreacion:VARCHAR#,
+		COD_USUARIO_MODIFICACION = #codUsuarioModificacion:VARCHAR#,
+		FECHA_CREACION = #fechaCreacion:DATE#,
+		FECHA_MODIFICACIO = #fechaModificacion:DATE#
+		where CODIGO_USUARIO = #codigoUsuario:VARCHAR#
+	</update>
+	<select id="getLstUsuarios" resultClass="bbva.pe.gpr.bean.Usuario" parameterClass="bbva.pe.gpr.bean.Usuario" >
+	     SELECT DISTINCT
+	 		U.CODIGO_USUARIO AS codigoUsuario, 
+			U.NOMBRES AS nombres, 
+			BS.descripcion AS codUsuarioCreacion,
+			UR.DESCRIPCION AS codUsuarioModificacion
+		FROM 
+	 		CARDEL.TCARDEL_USUARIO U 
+	 		JOIN CARDEL.TGPR_USUARIO_SUBANCAS US ON US.COD_USUARIO=U.CODIGO_USUARIO 
+	 		JOIN CARDEL.TGPR_BANCA_SUB BS ON BS.COD_SUBANCA=US.COD_SUBANCA
+	 		JOIN CARDEL.TGPR_BANCAS B ON B.COD_BANCA=BS.COD_BANCA 
+	 		JOIN CARDEL.TGPR_USUARIO_ROLES  UR ON UR.COD_USUARIO=U.CODIGO_USUARIO
+	    WHERE
+			( #codigoUsuario:VARCHAR# IS NULL OR #codigoUsuario:VARCHAR#='' OR U.CODIGO_USUARIO like UPPER(#codigoUsuario:VARCHAR#) ) AND
+			( #nombres:VARCHAR# IS NULL OR #nombres:VARCHAR#='' OR U.NOMBRES like UPPER(#nombres:VARCHAR#)) AND
+			( #codUsuarioCreacion:VARCHAR# IS NULL OR #codUsuarioCreacion:VARCHAR#='' OR BS.COD_BANCA like UPPER(#codUsuarioCreacion:VARCHAR#)) AND
+			( #idUsuario:VARCHAR# IS NULL OR #idUsuario:VARCHAR#='' OR UR.COD_ROL like UPPER(#idUsuario:VARCHAR#)) AND
+			( #estado:DECIMAL# IS NULL OR U.ESTADO=#estado:DECIMAL#)
+	
+	</select>
+	<select id="getUsuarioExiste" resultClass="string" parameterClass="bbva.pe.gpr.bean.Usuario">
+			SELECT  COUNT(*)
+			FROM    CARDEL.TCARDEL_USUARIO
+			WHERE  
+			CODIGO_USUARIO = #codigoUsuario:VARCHAR# AND 
+			( #estado:VARCHAR# IS NULL OR ESTADO=#estado:VARCHAR#)
+	</select>
+	<update id="getDeleteUsuario" parameterClass="string">
+			update CARDEL.TCARDEL_USUARIO
+			set ESTADO='0'
+			where CODIGO_USUARIO = #codigoUsuario:VARCHAR#
+	</update>
+	<update id="getLstUsuariosPorBanca" parameterClass="string">
+			update CARDEL.TCARDEL_USUARIO
+			set ESTADO='0'
+			where CODIGO_USUARIO = #codigoUsuario:VARCHAR#
+	</update>
+	<select id="getLstUsuariosRiesgo" resultMap="lstUsuarioRiesgosResultMap" parameterClass="bbva.pe.gpr.bean.Usuario" >
+	 	SELECT U.ID_USUARIO, 
+      		U.CODIGO_USUARIO,
+     	 	U.NOMBRES,
+      	    'CARGO' CONCAT_ROLES ,  
+		    CARDEL.FN_RSG_MONTOMAXIMO_X_USUARIO(U.CODIGO_USUARIO) MTO_MAX_DELAGACION, 
+		    (SELECT COUNT(*) FROM CARDEL.TGPR_ASIGNACIONES A, CARDEL.TGPR_SOLICITUDES S WHERE A.NRO_SOLICITUD=S.NRO_SOLICITUD 
+		    AND S.ESTADO_SOLICITUD='PENDIENTE' AND A.COD_USUARIO=U.CODIGO_USUARIO) CANTIDAD,
+		    'SI' DEPENDIENTE 
+		 FROM CARDEL.TCARDEL_USUARIO U WHERE
+		      (SELECT COUNT(*) FROM CARDEL.TCARDEL_GERENTE G WHERE G.COD_REGISTRO= U.CODIGO_USUARIO AND G.ESTADO !=0) = 0 
+	 </select>
 </sqlMap>

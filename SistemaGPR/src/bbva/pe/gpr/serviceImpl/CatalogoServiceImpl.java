@@ -358,20 +358,28 @@ public class CatalogoServiceImpl implements CatalogoService{
     	  int rows=usuarioDAO.getDeleteUsuario(codUsuario);
     	  return rows;
       };
-	 /*#####################################################################################################
-	   *  
-	   *                TGPR_ROLES	
-	   * 
-	   *##################################################################################################### */
+      public List<Usuario> getLstUsuariosRiesgo(String codRol) throws Exception {
+  		Usuario usuarioBean = null;
+  		if(!codRol.equals("-1") && codRol!=null){
+  			usuarioBean = new Usuario();
+  			usuarioBean.setCodRol(new BigDecimal(codRol));
+  		}
+  		return usuarioDAO.getLstUsuariosRiesgo(usuarioBean);
+  		}
+ /*#####################################################################################################
+   *  
+   *                TGPR_ROLES	
+   * 
+   *##################################################################################################### */
 
 	 public List<Rol> getLstRolesByCriteria(Rol rolBean) throws Exception {
 		return rolDAO.getLstRolesByCriteria(rolBean);
 	 }
-	 /*#####################################################################################################
-	   *  
-	   *                TGPR_OFICINA_ASIGNADA
-	   * 
-	   *##################################################################################################### */
+ /*#####################################################################################################
+   *  
+   *                TGPR_OFICINA_ASIGNADA
+   * 
+   *##################################################################################################### */
 
 	public List<UsuarioOficina> getLstOficinaAsignada(Usuario user)throws Exception {
 		return usuarioOficinaDAO.getLstOficinaAsignada(user);

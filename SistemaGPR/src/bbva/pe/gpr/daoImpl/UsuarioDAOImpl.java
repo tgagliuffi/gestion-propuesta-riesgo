@@ -63,6 +63,11 @@ public class UsuarioDAOImpl extends SqlMapClientDaoSupport implements UsuarioDAO
 
 	public int getDeleteUsuario(String codUsuario) throws Exception {
         int rows=getSqlMapClientTemplate().update("CARDEL_TGPR_USUARIOS.getDeleteUsuario", codUsuario);
-		return 0;
+		return rows;
+	}
+	
+	 @SuppressWarnings("unchecked")
+	public List<Usuario> getLstUsuariosRiesgo(Usuario usuarioBean)throws Exception {
+	    	return  (List<Usuario>)getSqlMapClientTemplate().queryForList("CARDEL_TGPR_USUARIOS.getLstUsuariosRiesgo",usuarioBean);
 	}
 }
