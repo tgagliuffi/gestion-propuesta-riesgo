@@ -91,5 +91,8 @@ public class SeguridadServiceImpl implements SeguridadService {
   }
   public List<Menu> getListadoMenu(String codUsuario) {
 	return  menuDAO.getLstMenuxUsuario(codUsuario);
-  }		   
+  }
+  public List<Funcion> getLstRolFuncionesxUsuario(String codUsuario) throws Exception {
+		return funcionRolDAO.getLstRolFuncionesUsuario(codUsuario);
+	  }  
 }
