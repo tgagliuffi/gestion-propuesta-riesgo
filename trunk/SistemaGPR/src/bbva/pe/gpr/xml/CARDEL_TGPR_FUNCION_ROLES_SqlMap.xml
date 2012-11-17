@@ -93,4 +93,16 @@
   	INSERT INTO CARDEL.TGPR_FUNCION_ROLES (COD_FUNCION, COD_ROL, ESTADO) VALUES
    		(#codFuncion#, #codRol#, #estado#)
   </insert>
+   <select id="getRolesFuncionxUsuario" resultClass="bbva.pe.gpr.bean.Funcion" parameterClass="string">
+ 	 SELECT DISTINCT
+  		F.COD_FUNCION  AS codFuncion,
+  		F.NOMBRE  AS nombre
+ 		FROM
+		TCARDEL_USUARIO U
+		JOIN TGPR_USUARIO_ROLES UR ON U.CODIGO_USUARIO=UR.COD_USUARIO
+		JOIN TGPR_ROLES R ON UR.COD_ROL=R.COD_ROL
+		JOIN TGPR_FUNCION_ROLES FR ON R.COD_ROL=FR.COD_ROL
+		JOIN TGPR_FUNCIONES F ON FR.COD_FUNCION=F.COD_FUNCION WHERE U.CODIGO_USUARIO=#value#
+  </select>
+  
   </sqlMap>
