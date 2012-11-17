@@ -63,7 +63,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 	}
 	public String validaGrupoPersona(String tipoPersona, String numDocumento, String rating){
 		String rpta=Constant.STR_VACIO;
-		if(tipoPersona.equals(Constant.TABLA_NATURALEZA+Constant.PERSONA_JURIDICA)){
+		if(tipoPersona.equals(Constant.TABLA_NATURALEZA+Constant.CHAR_GUION+Constant.PERSONA_JURIDICA)){
 			if(rating!=null && rating.equals(Constant.STR_VACIO)){
 				rpta = Constant.GRUPO_CON_RATING;
 			}else{
@@ -71,7 +71,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 			}
 			
 		}
-		if(tipoPersona.equals(Constant.TABLA_NATURALEZA+Constant.PERSONA_NATURAL)){
+		if(tipoPersona.equals(Constant.TABLA_NATURALEZA+Constant.CHAR_GUION+Constant.PERSONA_NATURAL)){
 			if(numDocumento.length()==8){
 				rpta = Constant.GRUPO_PER_NATUAL;
 			}
