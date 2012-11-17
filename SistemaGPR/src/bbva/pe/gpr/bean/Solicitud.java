@@ -72,6 +72,8 @@ public class Solicitud {
 	private String relevPublica4;
 	private String relevPublica5;
 	
+	private String grupoPersona;
+	
 	public Long getNroSolicitud() {
 		return nroSolicitud;
 	}
@@ -432,8 +434,11 @@ public class Solicitud {
 	public void setOtroRiesgo(BigDecimal otroRiesgo) {
 		this.otroRiesgo = otroRiesgo;
 	}
-	
-    
-	
-	
+	public String getGrupoPersona() {
+		return grupoPersona;
+	}
+	public void setGrupoPersona(String grupoPersona) {
+		this.grupoPersona = grupoPersona;
+	}
+
 }

@@ -3,7 +3,7 @@ package bbva.pe.gpr.bean;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Asignacion extends AsignacionKey {
+public class Asignacion extends AsignacionKey{
 	private String nombre;
 	private BigDecimal codRol;
 	private String dependiente;
@@ -25,6 +25,9 @@ public class Asignacion extends AsignacionKey {
 	private String codMoneda; // Aumentar
 	private String strFechaAsignacion;
 	private Date fechaIngreso;
+	
+	private String estadoAsignacion;
+	
 	
 	public String getNombre() {
 		return nombre;
@@ -177,5 +180,14 @@ public class Asignacion extends AsignacionKey {
 	public void setFechaIngreso(Date fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
 	}
+
+	public String getEstadoAsignacion() {
+		return estadoAsignacion;
+	}
+
+	public void setEstadoAsignacion(String estadoAsignacion) {
+		this.estadoAsignacion = estadoAsignacion;
+	}
+	
 	
 }

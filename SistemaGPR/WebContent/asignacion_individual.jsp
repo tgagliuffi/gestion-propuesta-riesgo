@@ -32,6 +32,16 @@
 	<script src="<%=request.getContextPath()%>/js/util.gpr.js" type="text/javascript"></script>
 	
 <script type="text/javascript">
+function ocultarElementByID(id,tiempo){
+	setTimeout("document.getElementById('"+id+"')!=null?document.getElementById('"+id+"').style.display='none':document.getElementById('"+id+"');", tiempo);
+}
+	ocultarElementByID('divError',4000);
+	ocultarElementByID('divAlerta',10000);
+	ocultarElementByID('divExito',10000);
+	
+var rutaContexto1 = location.pathname;
+var rutaContexto2 = "<%=request.getContextPath()%>";
+var rutaContexto  = rutaContexto1.substr(0, rutaContexto1.indexOf(rutaContexto2)) + rutaContexto2;
 $(function() {
     $( "#fechaIngresoIni").datepicker({dateFormat: 'dd/mm/yy'});
     $( "#fechaIngresoFin").datepicker({dateFormat: 'dd/mm/yy'});
@@ -75,7 +85,8 @@ function formatoRadio(cellvalue, options, rowObject){
 }
 
 function mostrarMensaje(valor){	
-	alert(valor);
+	var formulario = document.getElementById('asigacionForm');
+	formulario.hdnRegistro.value= valor;
 }
 
 function estadoFormat(cellvalue, options, rowObject)
@@ -195,20 +206,22 @@ function mostrarTablaSolicitud(data){
 }
 
 function grabarAsiganciones(){
+	var formulario = document.getElementById('asigacionForm');
 	var selecciones = buscarSelecciones('listSolicitud');
-	var ids = $("#listEvaluador").jqGrid('getCol', 'codigoUsuario', true);
-   	for (var i = 0; i < ids.length; i++) {
-         if (ids[i].id != '') {
-            var idx = $("#listEvaluador").jqGrid('getCell', ids[i].id, 'codigoUsuario');alert(idx);
-        }
-    }
-   	
+	
 	if (selecciones.length == 0){
 		alert ("No ha seleccionado ningún registro para la actualización masiva de prioridades.");
 		return false;
 	}else{
-		var arrayCod = selecciones.split('**');
+		var arrayCod = selecciones.split('**1-');
+		formulario.hdnArreglo.value= arrayCod;
+		formulario.action = rutaContexto+'/asignacionAction.do?method=grabarAsignaciones';
+		formulario.submit();
+		
 	}
+	consultarEvaluador();
+	consultarSolicitud();
+	
 }
 
 </script>
@@ -217,12 +230,37 @@ function grabarAsiganciones(){
 <body onload="consultarEvaluador();consultarSolicitud();">
 
 <html:form styleId="asigacionForm" method="post" action="asignacionAction.do?method=init">
- 
+ 	<input type="hidden" id="hdnArreglo" name="hdnArreglo" value=''></input>
+ 	 	<input type="hidden" id="hdnRegistro" name="hdnRegistro" value=''></input>
+ 	 	
 	<div style="background-color: #0066bb;">
 		<font face="Arial Narrow" size=3 color="#FFFFFF">&nbsp;Módulo de Asignación Individual</font>
 	</div>
 
 	<br/>
+		<table width="1200px" height="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+	<tr>	
+			<td>  
+			<logic:present name="indMensaje">
+				<c:if test="${indMensaje=='1'}"> 
+				<div id="divExito" style="text-align: center;">
+				<html:text property="outputExito"  styleId="outputExito" styleClass="outputExito" style="width:100%;" value="${strMensaje}"></html:text>
+				</div>
+				</c:if>
+				<c:if test="${indMensaje=='-1'}"> 
+				<div id="divAlerta" style="text-align: center;">
+				<html:text property="outputAlerta" styleClass="outputAlerta" styleId="outputAlerta" style="width:100%;" value="${strMensaje}"></html:text>
+				</div>
+				</c:if>
+				<c:if test="${indMensaje=='0'}"> 
+				<div id="divError" style="text-align: center;">
+				<html:text property="outputError" styleClass="outputError" styleId="outputError" style="width:100%;" value="${strMensaje}"></html:text>				
+				</div>
+				</c:if>
+				</logic:present>
+			</td>
+	</tr>
+	</table>
 	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1000px;margin: 3px; padding: 5px;">
 	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
 	<label>Usuarios</label></div>

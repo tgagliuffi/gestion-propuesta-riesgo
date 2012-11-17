@@ -134,7 +134,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 		solicitudBean.setCodMultMoneda(solicitudForm.getCodMultMoneda());
 		solicitudForm.setFlagPopUP(Constant.STR_VACIO);
 		MultitablaDetalle multDetalleMoneda = catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_MONEDA, solicitudForm.getCodMultMoneda());
-		solicitudBean.setDesMultMoneda((multDetalleMoneda!=null?multDetalleMoneda.getStrValor():Constant.VALOR_ENCONTRADO));				
+		solicitudBean.setDesMultMoneda((multDetalleMoneda!=null?multDetalleMoneda.getStrValor():Constant.VALOR_NO_ENCONTRADO));				
 		solicitudBean.setCodMultMoneda(multDetalleMoneda.getCodMultitabla()!=null?multDetalleMoneda.getCodMultitabla()+Constant.CHAR_GUION+multDetalleMoneda.getCodElemento():null);
 		
 		
@@ -148,8 +148,13 @@ public class IngresoSolicitudAction extends DispatchAction {
 				strMensaje = "Debe debe guardar por lo menos un producto.";	
 		
 			}else{
+				MultitablaDetalle multitablaDetalleBean = null;
+				multitablaDetalleBean = catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_ESTADOS_SOLCITUD, Constant.ESTADO_SOLICITUD_PENDIENTE);
 			if(solicitudForm.getCondicion().equals("ER")){
-				solicitudBean.setEstadoSolicitud(Constant.ESTADO_SOLICITUD_PENDIENTE);
+				if(multitablaDetalleBean!=null){
+					solicitudBean.setEstadoSolicitud(Constant.ESTADO_SOLICITUD_PENDIENTE);
+			}
+			
 				nroSolicitud = solicitudService.registraSolicitud(solicitudBean, lstSolicitudDetalle);
 				if(nroSolicitud != new Long(0)){
 					
@@ -251,7 +256,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 				
 				solicitudForm.setCodCentral(solicitudForm.getCodCentral());
 				solicitudForm.setHdnCodCentral(solicitudForm.getCodCentral());
-				solicitudForm.setDesMultTipoPersona((multDetallePersona!=null?multDetallePersona.getStrValor():Constant.VALOR_ENCONTRADO));				
+				solicitudForm.setDesMultTipoPersona((multDetallePersona!=null?multDetallePersona.getStrValor():Constant.VALOR_NO_ENCONTRADO));				
 				solicitudForm.setCodMultTipoPersona(multDetallePersona.getCodMultitabla()!=null?multDetallePersona.getCodMultitabla()+Constant.CHAR_GUION+multDetallePersona.getCodElemento():null);
 				solicitudForm.setNumeroDocumento(solicitudBean.getNumeroDocumento());
 				solicitudForm.setDesSolicitante(solicitudBean.getDesSolicitante());								

@@ -243,9 +243,7 @@ function getMonto(value, call){
 		if(document.getElementsByName('mtoTotal')[0]!='undefined')
 		{pMtoTotalProd = document.getElementsByName('mtoTotal')[0].value;}
 
-
-	
-	if(call==1){
+if(call==1){
 		IngresoSolicitudAction.changeMtoTotalRowAjax(value, pMtoGarantia, function(msg){
 			document.getElementsByName("mtoTotalRow")[0].value = msg;
 			pMtoTotalProd=msg;
@@ -714,7 +712,7 @@ var nroSolicitud = formulario.mantener.value;
 	<%}%>
 	<br/>
 	<table width="1200px" height="100%" border="0" cellspacing="0" cellpadding="0" align="center">
-		<tr>	
+	<tr>	
 		<td>  <%if(indMensaje != null){ //error%>
 				<%if(indMensaje.equals("1")){//error%>
 				<div id="divExito" style="text-align: center;">

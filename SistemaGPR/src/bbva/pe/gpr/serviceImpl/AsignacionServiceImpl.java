@@ -5,12 +5,16 @@ import java.util.List;
 
 import bbva.pe.gpr.bean.Asignacion;
 import bbva.pe.gpr.bean.MultitablaDetalle;
+import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.SolicitudMensaje;
 import bbva.pe.gpr.bean.SolicitudOperacion;
+import bbva.pe.gpr.bean.Usuario;
 import bbva.pe.gpr.dao.AsignacionDAO;
 import bbva.pe.gpr.dao.MultitablaDetalleDAO;
 import bbva.pe.gpr.dao.SolicitudMensajeDAO;
 import bbva.pe.gpr.dao.SolicitudOperacionDAO;
+import bbva.pe.gpr.dao.SolicitudesDAO;
+import bbva.pe.gpr.dao.UsuarioDAO;
 import bbva.pe.gpr.service.AsignacionService;
 import bbva.pe.gpr.util.Constant;
 
@@ -20,16 +24,22 @@ public class AsignacionServiceImpl  implements AsignacionService {
 	private SolicitudOperacionDAO solicitudOperacionDAO;
 	private SolicitudMensajeDAO solicitudMensajeDAO;
 	private MultitablaDetalleDAO multitablaDetalleDAO;
+	private SolicitudesDAO solicitudesDAO;
+	private UsuarioDAO usuarioDAO;
  
 	public AsignacionServiceImpl(AsignacionDAO asignacionDAO,
 			SolicitudOperacionDAO solicitudOperacionDAO,
 			SolicitudMensajeDAO solicitudMensajeDAO,
-			MultitablaDetalleDAO multitablaDetalleDAO){
+			MultitablaDetalleDAO multitablaDetalleDAO,
+			SolicitudesDAO solicitudDAO,
+			UsuarioDAO usuarioDAO){
 		super();
 		this.asignacionDAO=asignacionDAO;
 		this.solicitudOperacionDAO=solicitudOperacionDAO;
 		this.solicitudMensajeDAO=solicitudMensajeDAO;
 		this.multitablaDetalleDAO=multitablaDetalleDAO;
+		this.solicitudesDAO=solicitudDAO;
+		this.usuarioDAO=usuarioDAO;
 	}
 	
 	
@@ -54,6 +64,44 @@ public class AsignacionServiceImpl  implements AsignacionService {
     		}
     		result = 1;
     	}
+    	return result;
+    }
+    
+    public int asignarSolicitudMasiva(String arraySolitcitudes, String registro, String codUsuarioAsigno)throws Exception{
+    	int result = 0; 
+    	Asignacion asignacionBean = null;
+    	Solicitud solicitudBean = null;
+    	arraySolitcitudes = arraySolitcitudes.substring(1, arraySolitcitudes.length());
+    	String[] arregloSol = arraySolitcitudes.split(",");
+    	MultitablaDetalle multitablaDetalleBean = null;
+		multitablaDetalleBean = multitablaDetalleDAO.selectByPrimaryKey(Constant.TABLA_ESTADOS_SOLCITUD, Constant.ESTADO_SOLICITUD_ASIGNADO);
+		
+    	for (int i=0; i< arregloSol.length; i++){
+    		solicitudBean = new Solicitud();
+    		solicitudBean.setAsignacionBean(new Asignacion());
+    		solicitudBean = solicitudesDAO.selectByPrimaryKey(new Long(arregloSol[i]));
+    		Usuario usuarioBean = usuarioDAO.selectByPrimaryKey(registro);
+    		asignacionBean = new Asignacion();
+    		asignacionBean.setCodCentral(solicitudBean.getCodCentral());
+    		asignacionBean.setCodUsuario(registro);
+    		asignacionBean.setCodUsuarioAsigno(codUsuarioAsigno);
+    		asignacionBean.setDependiente("SI");
+    		asignacionBean.setEstado(Constant.ESTADO_ACTIVO);
+    		asignacionBean.setNombre(usuarioBean.getNombres());
+    		asignacionBean.setNroSolicitud(solicitudBean.getNroSolicitud());
+    		asignacionBean.setPrioridad(solicitudBean.getPrioridad());
+    		asignacionBean.setEstadoAsignacion(multitablaDetalleBean.getStrValor());
+    		//asignacionBean.setMtoDelegacionMax(mtoDelegacionMax)
+    		if(asignacionDAO.insert(asignacionBean)!=null){
+        		ingresaSolicitudOperacion(asignacionBean, Constant.TABLA_PROCESO, Constant.MULT_PROCESO_ASIGNAR);
+        		solicitudBean.setEstadoSolicitud(multitablaDetalleBean.getStrValor());
+				solicitudesDAO.updateByPrimaryKeySelective(solicitudBean);
+        		if(asignacionBean.getStrMensaje()!=null){
+        			solicitudMensajeDAO.insert(seteaMensajeBean(asignacionBean));
+        		}result = 1;
+        	}
+    	}
+    	
     	return result;
     }
     

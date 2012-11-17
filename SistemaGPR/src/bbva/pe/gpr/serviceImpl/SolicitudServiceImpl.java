@@ -61,6 +61,30 @@ public class SolicitudServiceImpl implements SolicitudService{
 		this.multitablaDetalleDAO=multitablaDetalleDAO;
 		// TODO Auto-generated constructor stub
 	}
+	public String validaGrupoPersona(String tipoPersona, String numDocumento, String rating){
+		String rpta=Constant.STR_VACIO;
+		if(tipoPersona.equals(Constant.TABLA_NATURALEZA+Constant.PERSONA_JURIDICA)){
+			if(rating!=null && rating.equals(Constant.STR_VACIO)){
+				rpta = Constant.GRUPO_CON_RATING;
+			}else{
+				rpta = Constant.GRUPO_SIN_RATING;
+			}
+			
+		}
+		if(tipoPersona.equals(Constant.TABLA_NATURALEZA+Constant.PERSONA_NATURAL)){
+			if(numDocumento.length()==8){
+				rpta = Constant.GRUPO_PER_NATUAL;
+			}
+			if(numDocumento.length()==11){
+				if(rating!=null && rating.equals(Constant.STR_VACIO)){
+					rpta = Constant.GRUPO_CON_RATING;
+				}else{
+					rpta = Constant.GRUPO_SIN_RATING;
+				}
+			}
+		}
+		return rpta;
+	}
 	
 	public Long registraSolicitud(Solicitud solicitudBean, 
 										List<SolicitudDetalle> getLstSolicitudDetalle
@@ -69,6 +93,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 		//TODO: VALIDAR MTO DELEGACION DE GERENTE OFICINA
 		if(getLstSolicitudDetalle.size()>0){
 			solicitudBean.setPrioridad(Constant.PRIORIDAD_NORMAL);
+			solicitudBean.setGrupoPersona(validaGrupoPersona(solicitudBean.getCodMultTipoPersona(), solicitudBean.getNumeroDocumento(), solicitudBean.getRating()));
 		nroSolicitud = solicitudesDAO.insert(solicitudBean);
 		//TODO: INSERTANDO CABECERA DE SOLICITUD
 
