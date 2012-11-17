@@ -30,10 +30,9 @@ public class Constant {
 	public static final String TABLA_PROACTIVIDAD = "T013";
 	public static final String TABLA_NIVEL_APROBACION = "T018";
 	
-	public static final String VALOR_ENCONTRADO = "VALOR NO ENCONTRADO";
+	public static final String VALOR_NO_ENCONTRADO = "VALOR NO ENCONTRADO";
 
 	public static final String USUARIO_APP = "USUARIO";
-	public static final String PERSONA_NATURAL = "N";
 	public static final int DICTAMINA_OFICINA = 1;
 	
 	public static final int ACTIVO = 1;
@@ -56,16 +55,24 @@ public class Constant {
 	
 	public static final String NOMBRE_LOG = "LOG_APP_GPR.LOG";
 	
-	public static final String ESTADO_SOLICITUD_RECHAZADO = "RECHAZADO";
-	public static final String ESTADO_SOLICITUD_PENDIENTE = "PENDIENTE";
-	public static final String ESTADO_SOLICITUD_ASIGNADO = "ASIGNADO";
-	public static final String ESTADO_SOLICITUD_EVALUADO = "EVALUADO";
-	public static final String ESTADO_SOLICITUD_DICTAMINADO = "DICTAMINADO";
+	public static final String ESTADO_SOLICITUD_PENDIENTE = "15001";
+	public static final String ESTADO_SOLICITUD_RECHAZADO = "15002";
+
+	public static final String ESTADO_SOLICITUD_ASIGNADO = "15003";
+	public static final String ESTADO_SOLICITUD_EVALUANDO = "15004";
+	public static final String ESTADO_SOLICITUD_DICTAMINADO = "15005";
+	public static final String ESTADO_SOLICITUD_ANULADO = "15006";
 	
 	public static final String PRIORIDAD_BAJA = "BAJA";
 	public static final String PRIORIDAD_NORMAL = "NORMAL";
 	public static final String PRIORIDAD_ALTA = "ALTA";
 	
+	public static final String PERSONA_JURIDICA = "JURIDICA";
+	public static final String PERSONA_NATURAL = "NATURAL ";
+	
+	public static final String GRUPO_PER_NATUAL = "1";
+	public static final String GRUPO_CON_RATING = "2";
+	public static final String GRUPO_SIN_RATING = "3";
 	
 	
 	

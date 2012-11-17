@@ -13,8 +13,8 @@ public class AplicativoPersonasServiceImpl implements AplicativoPersonasService{
 		
 		if(codCentral.equals("42809680")){
 			solicitudBean.setCodCentral(codCentral);
-			solicitudBean.setDesSolicitante("RICHAR DE LOS REYES PRINCIPE");
-			solicitudBean.setCodMultTipoPersona("N");
+			solicitudBean.setDesSolicitante("RICHARD DE LOS REYES PRINCIPE");
+			solicitudBean.setCodMultTipoPersona("NATURAL");
 			solicitudBean.setNumeroDocumento("42809680");
 			
 			solicitudBean.setCodOficina("0120");
@@ -34,7 +34,7 @@ public class AplicativoPersonasServiceImpl implements AplicativoPersonasService{
 		}else if(codCentral.equals("20510957319")){
 			solicitudBean.setCodCentral(codCentral);
 			solicitudBean.setDesSolicitante("ANYPSA PERU S.A");
-			solicitudBean.setCodMultTipoPersona("F");
+			solicitudBean.setCodMultTipoPersona("JURIDICA");
 			solicitudBean.setNumeroDocumento("44444444");
 			
 			solicitudBean.setCodOficina("0120");

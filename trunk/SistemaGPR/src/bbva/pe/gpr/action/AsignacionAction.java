@@ -12,10 +12,14 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import com.grupobbva.bc.per.tele.ldap.serializable.IILDPeUsuario;
+
 import bbva.pe.gpr.bean.Rol;
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.Usuario;
 import bbva.pe.gpr.context.Context;
+import bbva.pe.gpr.form.AsignacionForm;
+import bbva.pe.gpr.service.AsignacionService;
 import bbva.pe.gpr.service.CatalogoService;
 import bbva.pe.gpr.service.SeguridadService;
 import bbva.pe.gpr.service.SolicitudService;
@@ -27,12 +31,14 @@ public class AsignacionAction extends DispatchAction {
 	SolicitudService solicitudService;
 	CatalogoService catalogoService;
 	SeguridadService seguridadService;
+	AsignacionService asignacionService;
 	
 	
 	public AsignacionAction() {
 		solicitudService=(SolicitudService)Context.getInstance().getBean("solicitudService");
 		catalogoService=(CatalogoService)Context.getInstance().getBean("catalogoService");
 	    seguridadService=(SeguridadService)Context.getInstance().getBean("seguridadService");
+	    asignacionService = (AsignacionService)Context.getInstance().getBean("asignacionService");
 	  
 	}
 	
@@ -74,6 +80,24 @@ public class AsignacionAction extends DispatchAction {
 		}
 	return new  ArrayList<Solicitud>();
 	}
-		
+	
+	public ActionForward grabarAsignaciones(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		AsignacionForm asignacionForm = (AsignacionForm)form;
+		IILDPeUsuario bean = (IILDPeUsuario)request.getSession().getAttribute("USUARIO_SESION");
+		String codUsuarioAsigno = bean.getUID();
+		String indMensaje=null;
+		String strMensaje=null;
+		if(asignacionService.asignarSolicitudMasiva(asignacionForm.getHdnArreglo(), asignacionForm.getHdnRegistro(), codUsuarioAsigno)>0){
+			indMensaje = Constant.MSJ_OK;
+			strMensaje = "Se registro exitosamente las asignaciones";
+		}else{
+			indMensaje = Constant.MSJ_ERROR;
+			strMensaje = "Sucedio un error en el registro.";
+		}
+		request.setAttribute("indMensaje", indMensaje);
+		request.setAttribute("strMensaje", strMensaje);
+		return mapping.findForward("success");
+				
+	}
 
 }

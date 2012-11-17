@@ -8,6 +8,13 @@ public class AsignacionForm extends ActionForm {
 	private  String codRol;
 	private String codCentral;
 	private String nroProducto;
+	private String hdnArreglo;
+	private String hdnRegistro;
+	private String fueraRango;
+	private String fechaIngresoIni;
+	private String fechaIngresoFin;
+	private String fechaVencimiento;
+	
 
 	public String getCodRol() {
 		return codRol;
@@ -31,6 +38,54 @@ public class AsignacionForm extends ActionForm {
 
 	public void setNroProducto(String nroProducto) {
 		this.nroProducto = nroProducto;
+	}
+
+	public String getHdnArreglo() {
+		return hdnArreglo;
+	}
+
+	public void setHdnArreglo(String hdnArreglo) {
+		this.hdnArreglo = hdnArreglo;
+	}
+
+	public String getHdnRegistro() {
+		return hdnRegistro;
+	}
+
+	public void setHdnRegistro(String hdnRegistro) {
+		this.hdnRegistro = hdnRegistro;
+	}
+
+	public String getFueraRango() {
+		return fueraRango;
+	}
+
+	public void setFueraRango(String fueraRango) {
+		this.fueraRango = fueraRango;
+	}
+
+	public String getFechaIngresoIni() {
+		return fechaIngresoIni;
+	}
+
+	public void setFechaIngresoIni(String fechaIngresoIni) {
+		this.fechaIngresoIni = fechaIngresoIni;
+	}
+
+	public String getFechaIngresoFin() {
+		return fechaIngresoFin;
+	}
+
+	public void setFechaIngresoFin(String fechaIngresoFin) {
+		this.fechaIngresoFin = fechaIngresoFin;
+	}
+
+	public String getFechaVencimiento() {
+		return fechaVencimiento;
+	}
+
+	public void setFechaVencimiento(String fechaVencimiento) {
+		this.fechaVencimiento = fechaVencimiento;
 	}
 	
 	

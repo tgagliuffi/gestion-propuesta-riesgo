@@ -1,16 +1,15 @@
 package bbva.pe.gpr.bean;
 
-import java.math.BigDecimal;
 
 public class AsignacionKey {
-    private BigDecimal codAsignacion;
+    private Long codAsignacion;
     private String codUsuario;
     private Long nroSolicitud;
     
-	public BigDecimal getCodAsignacion() {
+	public Long getCodAsignacion() {
 		return codAsignacion;
 	}
-	public void setCodAsignacion(BigDecimal codAsignacion) {
+	public void setCodAsignacion(Long codAsignacion) {
 		this.codAsignacion = codAsignacion;
 	}
 	public String getCodUsuario() {
