@@ -201,7 +201,7 @@ function registroMasivo(){
 	</fieldset>
 	<br>
 			<a href="javascript:consultarUsuario();" class="buttonGPR">BUSCAR</a>
-			<a href="javascript:nuevoUsuario();" class="buttonGPR">NUEVO</a>
+<!-- 			<a href="javascript:nuevoUsuario();" class="buttonGPR">NUEVO</a> -->
 			<a href="javascript:limpiarConsultarUsuario();" class="buttonGPR">LIMPIAR</a>
 	<br/>
 	<br>
