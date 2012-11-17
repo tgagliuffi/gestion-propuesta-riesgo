@@ -13,4 +13,12 @@ public class GerenteOficinaDAOImpl extends SqlMapClientDaoSupport implements Ger
 	public String getValidarUsuario(String codUsuario) {
 		return getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getValidarUsuario", codUsuario).get(0).toString();
 	}
+
+	public String getJefeInmediatoOficina(String codUsuario) {
+		return getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getJefeInmediatoOficina", codUsuario).get(0).toString();
+	}
+
+	public String getJefeInmediatoRiesgo(String codUsuario) {
+		return getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getJefeInmediatoRiesgo",codUsuario).get(0).toString();
+	}
 }
