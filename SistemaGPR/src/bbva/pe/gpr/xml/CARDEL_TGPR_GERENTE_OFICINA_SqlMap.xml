@@ -29,4 +29,16 @@
                 estado !=0
  </select>
 
+ <select id="getJefeInmediatoOficina" resultClass="string" parameterClass="string">
+		SELECT  cod_funcionario_superior 
+		FROM 	CARDEL.TCARDEL_GERENTE 
+		WHERE   COD_REGISTRO=#value#
+ </select>
+ 
+<select id="getJefeInmediatoRiesgo" resultClass="string" parameterClass="string">
+		SELECT  cod_funcionario_superior 
+		FROM 	CARDEL.TRSG_GERENTE 
+		WHERE   COD_REGISTRO=#value#
+ </select>
+ 
  </sqlMap>
