@@ -2,6 +2,7 @@ package bbva.pe.gpr.daoImpl;
 
 import java.util.List;
 
+import bbva.pe.gpr.bean.Funcion;
 import bbva.pe.gpr.bean.FuncionRol;
 import bbva.pe.gpr.bean.FuncionRolKey;
 import bbva.pe.gpr.dao.FuncionRolDAO;
@@ -48,5 +49,10 @@ public class FuncionRolDAOImpl extends SqlMapClientDaoSupport implements Funcion
 
 	public void saveFuncionRol(FuncionRol funcionRolBean) throws Exception {
      getSqlMapClientTemplate().insert("CARDEL_TGPR_FUNCION_ROLES.getLstSaveFuncionRoles", funcionRolBean);		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Funcion> getLstRolFuncionesUsuario(String codUsuario)throws Exception {
+		return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_FUNCION_ROLES.getRolesFuncionxUsuario", codUsuario);
 	}
 }
