@@ -133,7 +133,9 @@ public interface CatalogoService {
    * 	
    *                         TGPR_GERENTE_OFICINA
    *##################################################################################################### */
-	  String  getValidarUsuario(String codUsuario);
+	  String getValidarUsuario(String codUsuario);
+	  String getJefeInmediatoOficina(String codUsuario);
+	  String getJefeInmediatoRiesgo(String codUsuario);
    /*#####################################################################################################
 	   * 
 	   * 	

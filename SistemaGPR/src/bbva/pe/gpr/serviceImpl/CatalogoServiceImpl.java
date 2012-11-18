@@ -425,4 +425,12 @@ public class CatalogoServiceImpl implements CatalogoService{
 	 public  List<Funcion> getLstFuncionByCriteria(Funcion funcionBean) throws Exception{ 
 		 return funcionDAO.getLstFuncionByCriteria(funcionBean);
 	 }
+
+	public String getJefeInmediatoOficina(String codUsuario) {
+		return gerenteOficinaDAO.getJefeInmediatoOficina(codUsuario);
+	}
+
+	public String getJefeInmediatoRiesgo(String codUsuario) {
+		return gerenteOficinaDAO.getJefeInmediatoRiesgo(codUsuario);
+	}
 }

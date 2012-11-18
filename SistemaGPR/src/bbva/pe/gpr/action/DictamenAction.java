@@ -83,11 +83,14 @@ public class DictamenAction extends DispatchAction {
 						imagen = "verde";
 					}
 					
-					jefe = com.grupobbva.bc.per.tele.ldap.directorio.IILDPeUsuario.recuperarUsuario(usuario.getUIDJefe());
+					jefe = obtenerJefeSuperior(usuario.getUID());
 					
 					request.setAttribute("imagen", imagen);
-					request.setAttribute("id_jefe", jefe.getUID());
-					request.setAttribute("nombre_jefe", jefe.getApellido1() + Constant.ESPACIO + jefe.getApellido2() + Constant.ESPACIO + jefe.getNombre());
+					
+					if(jefe != null) {
+						request.setAttribute("id_jefe", jefe.getUID());
+						request.setAttribute("nombre_jefe", jefe.getApellido1() + Constant.ESPACIO + jefe.getApellido2() + Constant.ESPACIO + jefe.getNombre());
+					}
 					
 					Delegacion delegacion = controlService.getDelegacion(usuario.getUID());
 					request.setAttribute("monto_delegacion", delegacion.getMontoMaximo());
@@ -111,6 +114,26 @@ public class DictamenAction extends DispatchAction {
 		return mapping.findForward("atender");
 	}
 
+	private IILDPeUsuario obtenerJefeSuperior(String uid) {
+		IILDPeUsuario jefe = null;
+		String guid;
+		try {
+			guid = catalogoService.getJefeInmediatoOficina(uid);
+			
+			if(guid != null && guid.length() > 0) {
+				jefe = com.grupobbva.bc.per.tele.ldap.directorio.IILDPeUsuario.recuperarUsuario(guid);
+			} else {
+				guid = catalogoService.getJefeInmediatoRiesgo(uid);
+				if(guid != null && guid.length() > 0) {
+					jefe = com.grupobbva.bc.per.tele.ldap.directorio.IILDPeUsuario.recuperarUsuario(guid);
+				}
+			}
+		} catch(Exception e) {
+			logger.error("", e);
+		}
+		return jefe;
+	}
+	
 	private Solicitud obtenerSolicitud(Long nroSolicitud) {
 		List<Solicitud> listaSolicitud = null;
 		Solicitud s = new Solicitud();
@@ -158,23 +181,6 @@ public class DictamenAction extends DispatchAction {
 				s = obtenerSolicitud(uid.getNroSolicitud());
 				
 				if(s != null) {
-					// TODO: Solo para test
-					s = appPersonasService.invokeClient(s.getCodCentral());
-					s = appPersonasService.invokePE7CRUCE(s);
-					s = appPersonasService.invokeGerenciaTerritorial(s);
-					s = appPersonasService.invokeRelevancia(s);
-					s = appPersonasService.invokeClasificacionCliente(s);
-					s.setNroSolicitud(uid.getNroSolicitud());
-					// TODO: Solo para test
-					
-					if(s.getCodMultTipoPersona().equals(Constant.PERSONA_NATURAL)){
-						s = appPersonasService.invokeScorating(s);
-					}else{
-						s = appPersonasService.invokeRating(s);
-					}
-					
-					s = appRCCService.invokeDeudaSisFinanciero(s);
-					s = appRCDService.invokeDedudasRCD(s);
 					listSolicitudDetalle = solicitudService.getListSolicitudDetalleForId(s);
 					
 					d = new Dictamen();
@@ -206,12 +212,6 @@ public class DictamenAction extends DispatchAction {
 		}
 
 		return map;
-	}
-
-	public Map<String, Object> buscarAnalisis() {
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		return map;		
 	}
 	
 	public Map<String, Object> agregarAnalisis(Analisis row) {
