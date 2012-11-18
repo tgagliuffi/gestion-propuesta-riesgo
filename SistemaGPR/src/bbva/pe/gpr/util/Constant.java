@@ -74,6 +74,8 @@ public class Constant {
 	public static final String GRUPO_CON_RATING = "2";
 	public static final String GRUPO_SIN_RATING = "3";
 	
-	
+	public static final BigDecimal EVALUADOR = BigDecimal.ONE ;
+	public static final BigDecimal DICTAMINADOR = BigDecimal.valueOf(2);
+	public static final BigDecimal RESPONSABLE = BigDecimal.valueOf(3);
 	
 }

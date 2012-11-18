@@ -14,6 +14,6 @@ public interface SeguridadService {
 	 void saveFuncionRol(FuncionRol funcionRolBean) throws Exception;
 	 void saveUsuarioRol(String codUsuario, String codRoles)throws Exception;
 	 List<Menu> getListadoMenu(String codUsuario);
-	 List<Funcion> getLstRolFuncionesxUsuario(String codUsuario)throws Exception;
-
+	 List<Funcion> getLstRolFuncionesxUsuario(String codUsuario) throws Exception;
+	 Funcion getNivelDictamen(String codUsuario) throws Exception;
 }

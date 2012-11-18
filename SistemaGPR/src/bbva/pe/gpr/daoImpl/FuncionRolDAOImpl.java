@@ -55,4 +55,9 @@ public class FuncionRolDAOImpl extends SqlMapClientDaoSupport implements Funcion
 	public List<Funcion> getLstRolFuncionesUsuario(String codUsuario)throws Exception {
 		return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_FUNCION_ROLES.getRolesFuncionxUsuario", codUsuario);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Funcion> getNivelDictamen(String codUsuario)throws Exception {
+		return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_FUNCION_ROLES.getNivelDictamen", codUsuario);
+	}
 }

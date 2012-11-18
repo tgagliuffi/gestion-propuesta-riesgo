@@ -74,6 +74,11 @@
 			<forward name="atender" path="/analisis_dictamen.jsp"></forward>
 		</action>
 		
+		<action path="/estadisticas" type="bbva.pe.gpr.action.EstadisticaAction" parameter="method" input="/estadistica_asignacion.jsp">
+			<forward name="asignacion" path="/estadistica_asignacion.jsp"></forward>
+			<forward name="atencio" path="/estadistica_atencion.jsp"></forward>
+		</action>
+		
 		<action name="asigacionForm" path="/asignacionAction" type="bbva.pe.gpr.action.AsignacionAction" 
 			parameter="method" input="/asignacion_individual.jsp">
 			<forward name="success" path="/asignacion_individual.jsp"></forward>

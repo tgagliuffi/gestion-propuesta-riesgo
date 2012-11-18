@@ -50,7 +50,7 @@
 		<input type="hidden" name="monto_delegacion" id="monto_delegacion" value="${requestScope.monto_delegacion}"/>
 		<input type="hidden" name="error" id="error" value="${requestScope.error}"/>
 		<div style="background-color: #0066bb;height: 20px;line-height: 20px;">
-			<font class="fontText" size=3 color="#FFFFFF"><b style="font-size: 12px;">&nbsp;&nbsp;Módulo de Bandeja del Evaluador</b></font>
+			<font face="Arial Narrow" size=3 color="#FFFFFF"><b style="font-size: 12px;">&nbsp;&nbsp;Módulo de Bandeja del Evaluador</b></font>
 		</div>
 		<br />
 		<table class="ui-widget" style="width: 800px" border="0" cellspacing="0" cellpadding="0">

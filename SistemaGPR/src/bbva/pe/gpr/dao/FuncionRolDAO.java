@@ -13,8 +13,8 @@ public interface FuncionRolDAO {
      FuncionRol selectByPrimaryKey(FuncionRolKey key);
      int updateByPrimaryKeySelective(FuncionRol record);
      int updateByPrimaryKey(FuncionRol record);
-     List<FuncionRol> getLstFuncionRol(FuncionRol funcionRolBean)throws Exception ;
-     void saveFuncionRol (FuncionRol funcionRolBean)throws Exception ;
-     List<Funcion> getLstRolFuncionesUsuario(String codUsuario)throws Exception;
-
+     List<FuncionRol> getLstFuncionRol(FuncionRol funcionRolBean) throws Exception ;
+     void saveFuncionRol (FuncionRol funcionRolBean) throws Exception ;
+     List<Funcion> getLstRolFuncionesUsuario(String codUsuario) throws Exception;
+     List<Funcion> getNivelDictamen(String codUsuario)throws Exception;
 }
