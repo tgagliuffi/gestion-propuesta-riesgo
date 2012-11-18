@@ -31,11 +31,31 @@
 	<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/util/formatters.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/script.js" type="text/javascript"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/dictamen/dictamen.js"></script>	
 	
 <script type="text/javascript">
+
+optionDialog = {
+	width: 420,
+	autoOpen: false,
+    modal: true,
+    buttons: {
+        "Aceptar": function() {
+        	console.log($(this).attr("id"));
+        	$(this).dialog("close");
+        },
+        "Cancelar": function() {
+        	console.log($(this).attr("id"));
+        	$(this).dialog("close");
+        }
+    },
+    close: function() {
+    	console.log($(this).attr("id"));
+    }
+}; 
+	
 $(function() {
-    $( "#fechaIngreso" ).datepicker({dateFormat: 'dd/mm/yy'});
+    $("#fechaIngreso").datepicker({dateFormat: 'dd/mm/yy'});
+    $("#dialog-form").dialog(optionDialog);
 });
 function ocultarElementByID(id,tiempo){
 	setTimeout("document.getElementById('"+id+"')!=null?document.getElementById('"+id+"').style.display='none':document.getElementById('"+id+"');", tiempo);
@@ -1180,14 +1200,9 @@ var nroSolicitud = formulario.mantener.value;
 		<input type="button"   id="btnCondiciones"  class="buttonGPR" value="Añadir Observacion" onclick="llamarPopup();">&nbsp;
 		<div id="dialog-form" title="Observacion" style="width: 400px">
 		<form>
-			<div class="ui-widget ui-widget-content ui-corner-all" style="margin: 2px;">
-				<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
-		            <label>&nbsp;&nbsp;&nbsp;Observacion</label>
-		        </div>
-		        <center>
-		        	<textarea id="textGarantia" rows="10" cols="40" style="width: 380px; height: 140px;"></textarea>
-		        </center>
-		    </div>
+	        <center>
+	        	<textarea id="textGarantia" rows="10" cols="40" style="width: 390px; height: 140px;"></textarea>
+	        </center>
 		</form>
 	</div>
 	</tr>
