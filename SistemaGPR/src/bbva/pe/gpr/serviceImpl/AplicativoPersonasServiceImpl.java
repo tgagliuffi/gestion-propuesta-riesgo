@@ -11,9 +11,9 @@ public class AplicativoPersonasServiceImpl implements AplicativoPersonasService{
 	public Solicitud  invokeClient(String codCentral){
 		Solicitud solicitudBean = new Solicitud();
 		
-		if(codCentral.equals("42809680")){
+		if(codCentral.substring(0, 1).equalsIgnoreCase("4")){
 			solicitudBean.setCodCentral(codCentral);
-			solicitudBean.setDesSolicitante("RICHARD DE LOS REYES PRINCIPE");
+			solicitudBean.setDesSolicitante("PERSONA " + codCentral);
 			solicitudBean.setCodMultTipoPersona("NATURAL");
 			solicitudBean.setNumeroDocumento("42809680");
 			
@@ -31,9 +31,9 @@ public class AplicativoPersonasServiceImpl implements AplicativoPersonasService{
 			solicitudBean.getCondicionCliente().setSistFinan("20 DUDOSO");
 			
 			
-		}else if(codCentral.equals("20510957319")){
+		}else if(codCentral.substring(0, 1).equalsIgnoreCase("2")){
 			solicitudBean.setCodCentral(codCentral);
-			solicitudBean.setDesSolicitante("ANYPSA PERU S.A");
+			solicitudBean.setDesSolicitante("EMPRESA" + codCentral);
 			solicitudBean.setCodMultTipoPersona("JURIDICA");
 			solicitudBean.setNumeroDocumento("44444444");
 			
@@ -71,7 +71,7 @@ public class AplicativoPersonasServiceImpl implements AplicativoPersonasService{
 	}
 	
 	public Solicitud invokePE7CRUCE(Solicitud solicitudBean){
-		String rucEmpleador = (solicitudBean.getCodCentral().equals("42809680")?"10447691839":null);
+		String rucEmpleador = (solicitudBean.getCodCentral().substring(0, 1).equalsIgnoreCase("4")? "10447691839": null);
 		if(rucEmpleador!=null){
 			solicitudBean.setEmpleadorCod(rucEmpleador);
 			solicitudBean.setEmpleadorNom(invokepPE2C5200(rucEmpleador));
@@ -108,7 +108,7 @@ public class AplicativoPersonasServiceImpl implements AplicativoPersonasService{
 	}
 	
 	public Solicitud invokeRating(Solicitud solicitudBean){
-		solicitudBean.setRating("RATING");
+		solicitudBean.setRating("C");
 		return solicitudBean;
 	}
 

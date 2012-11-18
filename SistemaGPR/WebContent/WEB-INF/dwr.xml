@@ -38,6 +38,10 @@
       		<param name="class" value="bbva.pe.gpr.action.AsignacionAction"/>
     	</create>
 	
+		<create creator="new" javascript="EstadisticaAction">
+      		<param name="class" value="bbva.pe.gpr.action.EstadisticaAction"/>
+    	</create>
+	
 		<convert converter="bean" match="bbva.pe.gpr.bean.Usuario"/>
 		<convert converter="bean" match="bbva.pe.gpr.bean.Oficina"/>
 		<convert converter="bean" match="bbva.pe.gpr.bean.Producto"/>
@@ -57,6 +61,7 @@
 		<convert converter="bean" match="bbva.pe.gpr.bean.Banca"/>
 		<convert converter="bean" match="bbva.pe.gpr.bean.Funcion"/>
 		<convert converter="bean" match="bbva.pe.gpr.bean.Rol"/>
+		<convert converter="bean" match="bbva.pe.gpr.bean.Estadistica"/>
   	<!-- Definición de Beans -->
 	</allow>
 </dwr>

@@ -113,6 +113,9 @@
 	<bean id="solicitudRechazadaDAOImpl" class="bbva.pe.gpr.daoImpl.SolicitudRechazadaDAOImpl">
     	<property name="sqlMapClient" ref="sqlMapClient"/>
   	</bean>
+  	<bean id="estadisticaDAO" class="bbva.pe.gpr.daoImpl.EstadisticaDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
   	
 <!-- =============================================================================================================================================-->
 <!-- ================================== Service Classes Implementations of BusinessObjects Services ===============================================-->
@@ -177,6 +180,10 @@
 	<bean id="controlServiceImpl" class="bbva.pe.gpr.serviceImpl.ControlServiceImpl">
 			<constructor-arg index="0" ref="multitablaDetalleDAO"></constructor-arg>
 			<constructor-arg index="1" ref="solicitudDetalleDAO"></constructor-arg>
+	</bean>
+	
+	<bean id="estadisticaServiceImpl" class="bbva.pe.gpr.serviceImpl.EstadisticaServiceImpl">
+			<constructor-arg index="0" ref="estadisticaDAO"></constructor-arg>
 	</bean>
 <!-- ===========================================================================================================================================-->
 <!-- ============================================ Transactional Services at Business Objects Level        ======================================-->
@@ -261,4 +268,14 @@
 					</props>
 				</property>
 	</bean>
+	<bean id="estadisticaService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+				<property name="transactionManager"><ref bean="transactionManager" /></property>
+				<property name="target"><ref bean="estadisticaServiceImpl" /></property>
+				<property name="transactionAttributes">
+					<props>
+						<prop key="select*">PROPAGATION_REQUIRED,readOnly</prop>
+						<prop key="*">PROPAGATION_REQUIRED</prop>
+					</props>
+				</property>
+	</bean>	
 </beans>
