@@ -142,6 +142,7 @@ validaScoring = function(){
 
 buscarSolicitud = function(){
 	if($("#id_usuario").val() == "-1" || $("#monto_delegacion").val() == "-1") {
+		$("#formAnalisisDictamen").css({"display": "none"});
 		alert($("#error").val());
 		return;
 	}
@@ -191,7 +192,8 @@ buscarSolicitud = function(){
 
 			$("#codCuentaEjecutivo").val(s.ejecutivoCtaCod);
 			$("#desCuentaEjecutivo").val(s.ejecutivoCtaNom);
-			$("#fechaIngresoOfic").val(formaterDate(s.fechaIngreso));
+			// $("#fechaIngresoOfic").val(formaterDate(s.fechaIngreso));
+			$("#fechaIngresoOfic").val(s.strFechaAsignacion);
 			$("#codOficinaAlta").val(s.oficinaAltaCod);
 			$("#desOficinaAlta").val(s.oficinaAltaNom);
 			$("#codGerenciaTerrit").val(s.gerenciaTerritorialCod);
@@ -220,44 +222,30 @@ habilitarBotonAnalisis = function(show){
 	$("#textMensaje").attr("readonly", show);
 };
 
+optionDialog = {
+	width: 420,
+	autoOpen: false,
+    modal: true,
+    buttons: {
+        "Aceptar": function() {
+        	console.log($(this).attr("id"));
+        	$(this).dialog("close");
+        },
+        "Cancelar": function() {
+        	console.log($(this).attr("id"));
+        	$(this).dialog("close");
+        }
+    },
+    close: function() {
+    	console.log($(this).attr("id"));
+    }
+}; 
+
 $(function(){
 	$("#tabsDictamen").tabs();
-	$("dialog-mensaje").dialog({
-		width: 420,
-		autoOpen: false,
-        modal: true,
-        buttons: {
-            "Aceptar": function() {
-            	console.log($(this).attr("id"));
-            	$(this).dialog("close");
-            },
-            "Cancelar": function() {
-            	console.log($(this).attr("id"));
-            	$(this).dialog("close");
-            }
-        },
-        close: function() {
-        	console.log($(this).attr("id"));
-        }
-    });
-	$("#dialog-form").dialog({
-		width: 420,
-		autoOpen: false,
-        modal: true,
-        buttons: {
-            "Aceptar": function() {
-            	console.log($(this).attr("id"));
-            	$(this).dialog("close");
-            },
-            "Cancelar": function() {
-            	console.log($(this).attr("id"));
-            	$(this).dialog("close");
-            }
-        },
-        close: function() {
-        	console.log($(this).attr("id"));
-        }
-    });
+	$("#dialog-scoring").dialog(optionDialog);
+	$("#dialog-mensaje").dialog(optionDialog);
+	$("#dialog-form").dialog(optionDialog);
 });
 
 $(document).ready(function(){
@@ -295,6 +283,10 @@ $(document).ready(function(){
 	
 	$("#btnCondiciones").bind("click", function() {
         $( "#dialog-form" ).dialog( "open" );
+    });
+	
+	$("#btnCondicionesScoring").bind("click", function() {
+        $( "#dialog-scoring" ).dialog( "open" );
     });
 	
 	$("#btnEliminarAnalisis").bind("click", function(){

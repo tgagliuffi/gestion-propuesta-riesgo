@@ -29,7 +29,8 @@ var
 		, {name : 'fechaIngresoFin', index : 'fechaIngresoFin', width : VAL_WIDTH.XLSMALL , hidden : true}
 		, {name : 'flagFueraRango', index : 'flagFueraRango', width : VAL_WIDTH.XLSMALL, hidden : true}
 		, {name : 'strMensaje', index : 'strMensaje', width : VAL_WIDTH.XLSMALL, hidden : true}
-		, {name : 'fechaAsignacion', index : 'fechaAsignacion', width : 90, formatter:'date', formatoptions: {srcformat:"Y-m-d", newformat:"d-M-Y"}, align: 'center'}
+		// , {name : 'fechaAsignacion', index : 'fechaAsignacion', width : 90, formatter:'date', formatoptions: {srcformat:"Y-m-d", newformat:"d-M-Y"}, align: 'center'}
+		, {name : 'strFechaAsignacion', index : 'strFechaAsignacion', width : 90, align: 'center'}
 		, {name : 'nroSolicitud', index : 'nroSolicitud', width : 90, align: 'center'}
 		, {name : 'codCentral', index : 'codCentral', width : 90, align: 'center'}
 		, {name : 'nombre', index : 'nombre', width : 250}

@@ -22,6 +22,7 @@ import bbva.pe.gpr.bean.Asignacion;
 import bbva.pe.gpr.bean.Banca;
 import bbva.pe.gpr.bean.Delegacion;
 import bbva.pe.gpr.bean.Dictamen;
+import bbva.pe.gpr.bean.Funcion;
 import bbva.pe.gpr.bean.MultitablaDetalle;
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.SolicitudDetalle;
@@ -30,6 +31,7 @@ import bbva.pe.gpr.service.AnalisiService;
 import bbva.pe.gpr.service.CatalogoService;
 import bbva.pe.gpr.service.ControlService;
 import bbva.pe.gpr.service.DictaminarService;
+import bbva.pe.gpr.service.SeguridadService;
 import bbva.pe.gpr.service.SolicitudService;
 import bbva.pe.gpr.serviceImpl.AplicativoPersonasServiceImpl;
 import bbva.pe.gpr.serviceImpl.AplicativoRCCServiceImpl;
@@ -47,6 +49,7 @@ public class DictamenAction extends DispatchAction {
 	private ControlService controlService;
 	private CatalogoService catalogoService;
 	private DictaminarService dictaminarService;
+	private SeguridadService seguridadService;
 	private AplicativoPersonasServiceImpl appPersonasService;
 	private AplicativoRCDServiceImpl appRCDService;
 	private AplicativoRCCServiceImpl appRCCService;
@@ -57,6 +60,7 @@ public class DictamenAction extends DispatchAction {
 		dictaminarService = (DictaminarService) Context.getInstance().getBean("dictaminarService");
 		solicitudService = (SolicitudService) Context.getInstance().getBean("solicitudService");
 		catalogoService = (CatalogoService) Context.getInstance().getBean("catalogoService");
+		seguridadService = (SeguridadService) Context.getInstance().getBean("seguridadService");
 		
 		appPersonasService = new AplicativoPersonasServiceImpl();
 		appRCDService = new AplicativoRCDServiceImpl();
@@ -65,21 +69,34 @@ public class DictamenAction extends DispatchAction {
 
 	public ActionForward index(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
+		String imagen = "rojo";
 		IILDPeUsuario jefe;
 		IILDPeUsuario usuario = (IILDPeUsuario) request.getSession().getAttribute("USUARIO_SESION");
 		if (usuario != null) {
 			request.setAttribute("id_usuario", usuario.getUID());
 			request.setAttribute("nombre_usuario", usuario.getApellido1() + Constant.ESPACIO + usuario.getApellido2() + Constant.ESPACIO + usuario.getNombre());
 			try {
-				jefe = com.grupobbva.bc.per.tele.ldap.directorio.IILDPeUsuario.recuperarUsuario(usuario.getUIDJefe());
+				Funcion nivel = seguridadService.getNivelDictamen(usuario.getUID());
 				
-				request.setAttribute("id_jefe", jefe.getUID());
-				request.setAttribute("nombre_jefe", jefe.getApellido1() + Constant.ESPACIO + jefe.getApellido2() + Constant.ESPACIO + jefe.getNombre());
-				
-				Delegacion delegacion = controlService.getDelegacion(usuario.getUID());
-				request.setAttribute("monto_delegacion", delegacion.getMontoMaximo());
-				request.setAttribute("nroSolicitud", request.getParameter("nroSolicitud"));
-				request.setAttribute("codAsignacion", request.getParameter("codAsignacion"));
+				if(nivel != null) {
+					if(Constant.EVALUADOR.compareTo(nivel.getCodFuncion()) != 0) {
+						imagen = "verde";
+					}
+					
+					jefe = com.grupobbva.bc.per.tele.ldap.directorio.IILDPeUsuario.recuperarUsuario(usuario.getUIDJefe());
+					
+					request.setAttribute("imagen", imagen);
+					request.setAttribute("id_jefe", jefe.getUID());
+					request.setAttribute("nombre_jefe", jefe.getApellido1() + Constant.ESPACIO + jefe.getApellido2() + Constant.ESPACIO + jefe.getNombre());
+					
+					Delegacion delegacion = controlService.getDelegacion(usuario.getUID());
+					request.setAttribute("monto_delegacion", delegacion.getMontoMaximo());
+					request.setAttribute("nroSolicitud", request.getParameter("nroSolicitud"));
+					request.setAttribute("codAsignacion", request.getParameter("codAsignacion"));
+				} else {
+					request.setAttribute("error", "No tiene el perfil de evaluador o dictaminador.");
+					request.setAttribute("monto_delegacion", "-1");
+				}
 			} catch (Exception e) {
 				logger.error("", e);
 				request.setAttribute("error", e.getMessage());

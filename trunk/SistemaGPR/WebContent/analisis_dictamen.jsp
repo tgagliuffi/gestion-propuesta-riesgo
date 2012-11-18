@@ -45,13 +45,13 @@
 	</style>
 </head>
 <body>
-	<form name="formAnalisisDictamen" method="post">
+	<form id="formAnalisisDictamen" name="formAnalisisDictamen" method="post">
 		<input type="hidden" name="id_usuario" id="id_usuario" value="${requestScope.id_usuario}"/>
 		<input type="hidden" name="monto_delegacion" id="monto_delegacion" value="${requestScope.monto_delegacion}"/>
 		<input type="hidden" name="codAsignacion" id="codAsignacion" value="${requestScope.codAsignacion}"/>
 		<input type="hidden" name="error" id="error" value="${requestScope.error}"/>
 		<div style="background-color: #0066bb;height: 20px;line-height: 20px;">
-			<font class="fontText" size=3 color="#FFFFFF"><b style="font-size: 12px;">&nbsp;&nbsp;Módulo de Análisis y Dictamen</b></font>
+			<font face="Arial Narrow" size=3 color="#FFFFFF"><b style="font-size: 12px;">&nbsp;&nbsp;Módulo de Análisis y Dictamen</b></font>
 		</div>
 		<br />
 		<table class="ui-widget" width="800px" height="100%" border="0" cellspacing="0" cellpadding="0">
@@ -109,7 +109,7 @@
 				<tr>
 					<td align="left" valign="middle">
 						<font class="fontText" size="3" color="#000080"><b>Evaluador</b></font>&nbsp;
-						<img src="imagenes/verde.png" border="0"></td>
+						<img src="imagenes/${requestScope.imagen}.png" border="0"></td>
 					<td align="left" valign="middle">
 						<input type="text" name="codEvaluador" class="cajaTexto" id="codEvaluador" size="10" maxlength="10" value="${requestScope.id_usuario}" readonly>
 						<input type="text" name="desEvaluador" class="cajaTexto" id="desEvaluador" size="20" maxlength="20" value="${requestScope.nombre_usuario}" readonly style="width: 250px;">
@@ -313,7 +313,8 @@
 						<tr>
 							<td colspan="5" valign="middle">
 								<input type="button" class="buttonGPR" name="btnDictaminar" id="btnDictaminar" value="Dictaminar / Dictamen Superior">
-								<input type="button" class="buttonGPR" name="btnCondiciones" id="btnCondiciones" value="Condiciones">
+								<input type="button" class="buttonGPR" name="btnCondiciones" id="btnCondiciones" value="Condiciones Adicionales">
+								<input type="button" class="buttonGPR" name="btnCondicionesScoring" id="btnCondicionesScoring" value="Condiciones del Scoring">
 							</td>
 						</tr>
 					</table>
@@ -542,7 +543,7 @@
 		</div>
 	</form>
 	
-	<div id="dialog-form" title="Condiciones de Aprobación" style="width: 400px">
+	<div id="dialog-form" title="Condiciones Adicionales" style="width: 400px">
 		<form>
 			<div class="ui-widget ui-widget-content ui-corner-all" style="margin: 2px;">
 				<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
@@ -563,11 +564,26 @@
 				<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
 		            <label>&nbsp;&nbsp;&nbsp;Garantia</label>
 		        </div>
-		        <textarea id="textGarantia" rows="10" cols="40" style="width: 390px; height: 150px;" readonly></textarea>
+		        <center>
+		        	<textarea id="textGarantia" rows="10" cols="40" style="width: 380px; height: 140px;"></textarea>
+		        </center>
 		    </div>
-			<div class="ui-widget ui-widget-content ui-corner-all" style="margin: 2px;">
+		    <div class="ui-widget ui-widget-content ui-corner-all" style="margin: 2px;">
 				<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
 		            <label>&nbsp;&nbsp;&nbsp;Condicionantes</label>
+		        </div>
+		        <center>
+		        	<textarea id="textCondicionantes" rows="10" cols="40" style="width: 380px; height: 140px;"></textarea>
+		        </center>
+		    </div>
+		</form>
+	</div>
+
+	<div id="dialog-scoring" title="Condiciones del Scoring" style="width: 400px">
+		<form>
+			<div class="ui-widget ui-widget-content ui-corner-all" style="margin: 2px;">
+				<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+		            <label>&nbsp;&nbsp;&nbsp;Condiciones del Scoring</label>
 		        </div>
 		        <table id="listCondiciones" style="padding: 3px; margin: 3px; width: 99%;">
 					<tr><td><input type="checkbox"/>&nbsp;Condicion 1</td></tr>
@@ -578,7 +594,7 @@
 		</form>
 	</div>
 
-<div id="dialog-mensaje" title="Solicitud: Mensaje" style="width: 410px">
+	<div id="dialog-mensaje" title="Solicitud: Mensaje" style="width: 410px">
 		<form>
 			<div class="ui-widget ui-widget-content ui-corner-all" style="margin: 2px;">
 				<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
