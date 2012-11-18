@@ -389,7 +389,16 @@ $(document).ready(function(){
 		};
 		console.log(dictamen);
 		DictamenAction.dictaminar(dictamen, function(data){
-			alert(data.error);
+			if(data.type == -2) {
+				if(confirm(data.plazo)){
+					alert("Dictamen Superior");
+				}
+			} else {
+				if(data.warn != null || data.warn != undefined) {
+					alert(data.warn);
+				}
+				alert(data.error);
+			}
 		});
 	});
 	
