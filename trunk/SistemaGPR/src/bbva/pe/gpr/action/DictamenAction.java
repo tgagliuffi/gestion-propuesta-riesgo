@@ -271,7 +271,7 @@ public class DictamenAction extends DispatchAction {
 		String plazo;
 		try {
 			s = obtenerSolicitud(row.getNroSolicitud());
-			if(solicitudService.updateDictaminaEnOficina(s) == 0) {
+			if(solicitudService.updateDictaminaEnOficina(s) != 0) {
 				if(s != null) {
 					sd = solicitudService.getListSolicitudDetalleForId(s);
 					
@@ -293,6 +293,7 @@ public class DictamenAction extends DispatchAction {
 				
 				if(dictaminarService.dictaminarSolicitud(row) != null) {
 					map.put("status", true);
+					map.put("type", 1);
 					map.put("error", "Dictamen registrado correctamente.");
 				}	
 			} else  {
