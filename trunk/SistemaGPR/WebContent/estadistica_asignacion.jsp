@@ -14,77 +14,32 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/buttonGPR.css" />
 
 	<!-- frk: incluir estos archivos cuando se quiera implementar el componente calendario y demas funciones jquery -->
-	<script src="<%=request.getContextPath()%>/js/jquery-1.7.1.js" type="text/javascript"></script>	
-	<script src="<%=request.getContextPath()%>/js/jquery-ui.js" type="text/javascript"></script>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/engine.js'></script>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/util.js'></script>
+	<script type="text/javascript" src='<%=request.getContextPath()%>/dwr/interface/JDate.js'></script>
+	<script type="text/javascript" src='<%=request.getContextPath()%>/dwr/interface/EstadisticaAction.js'></script>
 	
-	<script src="<%=request.getContextPath()%>/js/util/gridUtil.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/i18n/grid.locale-es.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-
-$(function() {
-    $( "#inifechaSolicitud" ).datepicker({dateFormat: 'dd/mm/yy'});
-    $( "#finfechaSolicitud" ).datepicker({dateFormat: 'dd/mm/yy'});
-});
-
-var myColNamesSol  = ['','Banca', 'Total', 'Asignadas', 'Por Asignar', 'Anuladas', 'Priorizadas', 'Fuera de Rango'];
-var myDataModelSol = [ {name : 'codigo',				width : VAL_WIDTH.SMALL, hidden : true	},
-                    {name : 'banca',			index : 'banca', 			width : VAL_WIDTH.LMED		},
-                    {name : 'total',			index : 'total',			width : VAL_WIDTH.XLSMALL	},
-                    {name : 'cantAsignada',		index : 'cantAsignada', 	width : VAL_WIDTH.XLSMALL	},
-                    {name : 'cantPorAsig',		index : 'cantPorAsig', 		width : VAL_WIDTH.XLSMALL	},
-                    {name : 'cantAnula',		index : 'cantAnula', 		width : VAL_WIDTH.XLSMALL	},
-                    {name : 'priorizada',		index : 'priorizada', 		width : VAL_WIDTH.XLSMALL	},
-                    {name : 'fueraRango',		index : 'fueraRango', 		width : VAL_WIDTH.XLSMALL	}
-                   ];
-
-function consultarDetallado(){
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.7.1.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-ui.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/util/gridUtil.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/i18n/grid.locale-es.js"></script>
+	<%-- <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js"></script> --%>
 	
-	jQuery("#listDetallado").GridUnload();
-	/* ProductoAction.consultarAjax(function(data){
-		mostrarTablaDetallado(data);
-	}); */
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/01_jquery.layout.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/02_grid.locale-es.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/03_ui.multiselect.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/04_jquery.jqGrid.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/05_jquery.tablednd.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/06_jquery.contextmenu.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/07_grid.addons.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/08_grid.postext.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/09_grid.setcolumns.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/10_jquery.searchFilter.js"></script>
 	
-	var dataTable = [
-	{"codigo":"1", "banca":"Banca Empresas", "total":"30,000", "cantAsignada":"30,000", "cantPorAsig":"30,000", "cantAnula":"30,000", "priorizada":"30,000", "fueraRango":"Si"},
-	{"codigo":"2", "banca":"Banca Personas", "total":"50,000", "cantAsignada":"30,000", "cantPorAsig":"30,000", "cantAnula":"30,000", "priorizada":"45,000", "fueraRango":"No"},
-	{"codigo":"3", "banca":"Banca Pymes", "total":"70,000", "cantAsignada":"30,000", "cantPorAsig":"30,000", "cantAnula":"30,000", "priorizada":"47,000", "fueraRango":"No"}
-	];
-	
-	mostrarTablaDetallado(dataTable);
-}
-
-function mostrarTablaDetallado(data){
-	
-	$('body').append('<div id="paginador_listDetallado" class="grid"></div>'); 
-	var paginador = "paginador_listDetallado";
-	
-	jQuery("#listDetallado").jqGrid(
-	{
-		beforeSelectRow: function(){},
-		data 	 	: data,
-		datatype 	: "local",
-		height   	: "100%",
-		weight 	 	: 1000,
-		colNames 	: myColNamesSol,
-		colModel 	: myDataModelSol,
-		rowList 	: [5,10,15,20,25],
-		rowNum 		: 15, 
-		pager 		: paginador,
-		viewrecords : true,
-		multiselect : true,			
-		subGrid    	: false,
-		footerrow  	: false,
-		loadComplete :
-           function (data) {}
-	});
-}
-
-</script>
-	
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/dictamen/general.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/dictamen/estadisticaAsignacion.js"></script>
 </head>
-<body onload="consultarDetallado();">
+<body>
 
 <form name="formEstadicticaAsignacion" method="post">
 
@@ -128,9 +83,10 @@ function mostrarTablaDetallado(data){
    	Detallado
    	</font></legend>
 
-		<table id="listDetallado" class="grid">
-		</table>
-		
+	<div id="panel_listDetallado">
+		<div id="paginador_listDetallado"></div>
+		<table id="listDetallado"></table>
+	</div>
 	</fieldset>
 	
 </form>

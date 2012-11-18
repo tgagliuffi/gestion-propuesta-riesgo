@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="CARDEL_TGPR_ESTADISTICAS" >
+	<resultMap id="mapAsignacion" class="bbva.pe.gpr.bean.Estadistica" >
+		<result column="COD_BANCA" property="codBanca" jdbcType="DECIMAL" />
+		<result column="DES_BANCA" property="desBanca" jdbcType="VARCHAR" />
+		<result column="DES_ESTADO_SOLICITUD" property="desEstadoSolicitud" jdbcType="VARCHAR" />
+		<result column="NRO_SOLICITUDES" property="nroSolicitudes" jdbcType="DECIMAL" />
+		<result column="PRIORIZADAS" property="priorizadas" jdbcType="DECIMAL" />
+		<result column="FUERA_DE_RANGO" property="fueraDeRango" jdbcType="DECIMAL" />
+	</resultMap>
+	<select id="selectAsignacion" resultMap="mapAsignacion" parameterClass="bbva.pe.gpr.bean.Estadistica" >
+		<![CDATA[
+			SELECT COD_BANCA, DES_BANCA, DES_ESTADO_SOLICITUD, COUNT(1) NRO_SOLICITUDES, 0 PRIORIZADAS, 0 FUERA_DE_RANGO
+			FROM CARDEL.VDELGPR_STATUS_SOLICITUD
+			WHERE FECHA_INGRESO >= #fechaInicio:DATE# AND FECHA_INGRESO <= #fechaFin:DATE#
+			GROUP BY COD_BANCA, DES_BANCA, DES_ESTADO_SOLICITUD
+			ORDER BY COD_BANCA, DES_BANCA, DES_ESTADO_SOLICITUD
+		]]>
+	</select>
+	<select id="selectCabeceraAsignacion" resultClass="bbva.pe.gpr.bean.Estadistica" parameterClass="bbva.pe.gpr.bean.Estadistica" >
+		<![CDATA[
+			SELECT DES_ESTADO_SOLICITUD as desEstadoSolicitud
+			FROM ( 
+			  SELECT DES_ESTADO_SOLICITUD 
+			  FROM CARDEL.VDELGPR_STATUS_SOLICITUD
+			  WHERE FECHA_INGRESO >= #fechaInicio:DATE# AND FECHA_INGRESO <= #fechaFin:DATE#
+			  GROUP BY DES_ESTADO_SOLICITUD
+			  ORDER BY DES_ESTADO_SOLICITUD
+			) A
+			UNION ALL SELECT 'PRIORIZADAS' FROM SYS.DUAL
+			UNION ALL SELECT 'FUERA DE RANGO' FROM SYS.DUAL
+		]]>
+	</select>
+</sqlMap>
