@@ -77,19 +77,21 @@
 	</tr>
 	</table>
 	
-	<fieldset style="width: 800px">
-   	<legend>
-   	<font class="fontText">
-   	Detallado
-   	</font></legend>
-
-	<div id="panel_listDetallado">
-		<div id="paginador_listDetallado"></div>
-		<table id="listDetallado"></table>
+	<div id="tabsDictamen" style="width: 900px;">
+		<ul>
+			<li><a href="#tabs-1">Graficas</a></li>
+			<li><a href="#tabs-2">Detalle</a></li>
+		</ul>
+		<div id="tabs-1">
+			
+		</div>
+		<div id="tabs-2" style="margin: 3px; padding: 3px;">
+			<div id="panel_listDetallado">
+				<div id="paginador_listDetallado"></div>
+				<table id="listDetallado"></table>
+			</div>
+		</div>
 	</div>
-	</fieldset>
-	
 </form>
-
 </body>
 </html>

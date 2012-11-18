@@ -2,8 +2,11 @@ package bbva.pe.gpr.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -72,24 +75,41 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 		List<Estadistica> listEstadistica;
 		List<Estadistica> listCabEstadistica;
 		Map<String, Object> item;
+		Map<String, Map<String, Object>> position = new HashMap<String, Map<String,Object>>();
 		
 		try {		
 			listEstadistica = estadisticaDAO.selectAsignacion(filtro);
 			listCabEstadistica = estadisticaDAO.selectCabeceraAsignacion(filtro);
 			
 			for(Estadistica e : listEstadistica) {
-				item = new HashMap<String, Object>();
-				item.put("desBanca", e.getDesBanca());
 				
+				if(position.containsKey(e.getDesBanca())) {
+					item = position.get(e.getDesBanca());
+				} else {
+					item = new HashMap<String, Object>();
+					item.put("desBanca", e.getDesBanca());
+				}
+
 				for(Estadistica c : listCabEstadistica) {
 					if(c.getDesEstadoSolicitud().equalsIgnoreCase(e.getDesEstadoSolicitud())) {
 						item.put("s_" + c.getDesEstadoSolicitud().replaceAll(" ", "").toLowerCase(), e.getNroSolicitudes());
 					} else {
-						item.put("s_" + c.getDesEstadoSolicitud().replaceAll(" ", "").toLowerCase(), 0);
+						if(!item.containsKey("s_" + c.getDesEstadoSolicitud().replaceAll(" ", "").toLowerCase())) {
+							item.put("s_" + c.getDesEstadoSolicitud().replaceAll(" ", "").toLowerCase(), 0);
+						}
 					}
 				}
 				
-				result.add(item);
+				position.put(e.getDesBanca(), item);
+			}
+			
+			Set<Entry<String, Map<String, Object>>> set = position.entrySet();
+			Iterator<Entry<String, Map<String, Object>>> items = set.iterator();
+			Entry<String, Map<String, Object>> entry;
+			
+			while(items.hasNext()) {
+				entry = items.next();
+				result.add(entry.getValue());
 			}
 			
 		} catch (Exception e) {

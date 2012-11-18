@@ -4,11 +4,12 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import bbva.pe.gpr.dao.GerenteOficinaDAO;
 
-public class GerenteOficinaDAOImpl extends SqlMapClientDaoSupport implements GerenteOficinaDAO{
+public class GerenteOficinaDAOImpl extends SqlMapClientDaoSupport implements
+		GerenteOficinaDAO {
 
-	 public GerenteOficinaDAOImpl() {
-	        super();
-	    }
+	public GerenteOficinaDAOImpl() {
+		super();
+	}
 
 	public String getValidarUsuario(String codUsuario) {
 		return getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getValidarUsuario", codUsuario).get(0).toString();
@@ -19,6 +20,6 @@ public class GerenteOficinaDAOImpl extends SqlMapClientDaoSupport implements Ger
 	}
 
 	public String getJefeInmediatoRiesgo(String codUsuario) {
-		return getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getJefeInmediatoRiesgo",codUsuario).get(0).toString();
+		return getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getJefeInmediatoRiesgo", codUsuario).get(0).toString();
 	}
 }
