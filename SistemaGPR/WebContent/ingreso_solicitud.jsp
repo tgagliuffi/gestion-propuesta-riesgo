@@ -31,7 +31,7 @@
 	<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/util/formatters.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/script.js" type="text/javascript"></script>
-		<script src="<%=request.getContextPath()%>/js/util.gpr.js" type="text/javascript"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/dictamen/dictamen.js"></script>	
 	
 <script type="text/javascript">
 $(function() {
@@ -1176,12 +1176,28 @@ var nroSolicitud = formulario.mantener.value;
 	</tr>
 	<tr>
 		<td><input type="button" class="buttonGPR"  name="btnGuardar" id="btnGuardar" onclick="guardarSolicitud();" value="Guardar Solicitud">&nbsp;
-		<input type="button" class="buttonGPR"  name="btnReset" id="btnReset" onclick='limpiaForm($("#formSolicitudIngreso"));' value="Limpiar Solicitud">&nbsp;</td>
-	
+		<input type="button" class="buttonGPR"  name="btnReset" id="btnReset" onclick='limpiaForm($("#formSolicitudIngreso"));' value="Limpiar Solicitud">&nbsp;
+		<input type="button"   id="btnCondiciones"  class="buttonGPR" value="Añadir Observacion" onclick="llamarPopup();">&nbsp;
+		<div id="dialog-form" title="Observacion" style="width: 400px">
+		<form>
+			<div class="ui-widget ui-widget-content ui-corner-all" style="margin: 2px;">
+				<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+		            <label>&nbsp;&nbsp;&nbsp;Observacion</label>
+		        </div>
+		        <center>
+		        	<textarea id="textGarantia" rows="10" cols="40" style="width: 380px; height: 140px;"></textarea>
+		        </center>
+		    </div>
+		</form>
+	</div>
 	</tr>
 	</table>
-	</div>
+	
 </html:form>
-
+<script type="text/javascript">
+function llamarPopup(){
+	$( "#dialog-form" ).dialog( "open" );
+}
+</script>
 </body>
 </html>
