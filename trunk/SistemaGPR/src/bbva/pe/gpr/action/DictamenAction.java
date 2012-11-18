@@ -111,9 +111,42 @@ public class DictamenAction extends DispatchAction {
 		return mapping.findForward("atender");
 	}
 
+	private Solicitud obtenerSolicitud(Long nroSolicitud) {
+		List<Solicitud> listaSolicitud = null;
+		Solicitud s = new Solicitud();
+		s.setNroSolicitud(nroSolicitud);
+		try {
+			listaSolicitud = solicitudService.getLstSolicitudes(s);
+			if (listaSolicitud != null && listaSolicitud.size() > 0) {					
+				s = listaSolicitud.get(0);
+				
+				// TODO: Solo para test
+				s = appPersonasService.invokeClient(s.getCodCentral());
+				s = appPersonasService.invokePE7CRUCE(s);
+				s = appPersonasService.invokeGerenciaTerritorial(s);
+				s = appPersonasService.invokeRelevancia(s);
+				s = appPersonasService.invokeClasificacionCliente(s);
+				s.setNroSolicitud(nroSolicitud);
+				// TODO: Solo para test
+				
+				if(s.getCodMultTipoPersona().equals(Constant.PERSONA_NATURAL)){
+					s = appPersonasService.invokeScorating(s);
+				}else{
+					s = appPersonasService.invokeRating(s);
+				}
+				
+				s = appRCCService.invokeDeudaSisFinanciero(s);
+				s = appRCDService.invokeDedudasRCD(s);
+			}
+		} catch (Exception e) {
+			logger.error("", e);
+			s = null;
+		}
+		return s;
+	}
+	
 	public Map<String, Object> buscarSolicitud(Asignacion uid) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<Solicitud> listaSolicitud = null;
 		List<SolicitudDetalle> listSolicitudDetalle = null;
 		List<Analisis> listAnalisis = null;
 		Solicitud s = null;
@@ -121,13 +154,10 @@ public class DictamenAction extends DispatchAction {
 		Analisis a = null;
 		
 		if (uid != null && uid.getNroSolicitud() != null) {
-			s = new Solicitud();
-			s.setNroSolicitud(uid.getNroSolicitud());
-			try {
-				listaSolicitud = solicitudService.getLstSolicitudes(s);
-				if (listaSolicitud != null && listaSolicitud.size() > 0) {					
-					s = listaSolicitud.get(0);
-					
+			try {		
+				s = obtenerSolicitud(uid.getNroSolicitud());
+				
+				if(s != null) {
 					// TODO: Solo para test
 					s = appPersonasService.invokeClient(s.getCodCentral());
 					s = appPersonasService.invokePE7CRUCE(s);
@@ -235,14 +265,45 @@ public class DictamenAction extends DispatchAction {
 
 	public Map<String, Object> dictaminar(Dictamen row) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		List<SolicitudDetalle> sd = null;
+		Solicitud s;
+		String condicion;
+		String plazo;
 		try {
-			if(dictaminarService.dictaminarSolicitud(row) != null) {
-				map.put("status", true);
-				map.put("error", "Dictamen registrado correctamente.");
+			s = obtenerSolicitud(row.getNroSolicitud());
+			if(solicitudService.updateDictaminaEnOficina(s) == 0) {
+				if(s != null) {
+					sd = solicitudService.getListSolicitudDetalleForId(s);
+					
+					if(controlService.condicionCliente(s) != 1) {
+						condicion = controlService.mensajeCondicionCliente(s);
+						map.put("warn", condicion);
+					}
+					
+					if(sd != null && sd.size() > 0) {
+						if(controlService.validacionMontosPlazos(sd) != 1) {
+							plazo = "El cliente no cumple con la validaci\u00F3n de montos y plazos. Ud. no pude dictaminar esta solicitud, \u00BF Desea enviarlo para su dictamen a un superior \u003F";
+							map.put("status", false);
+							map.put("type", -2);
+							map.put("error", plazo);
+							return map;
+						}
+					}
+				}
+				
+				if(dictaminarService.dictaminarSolicitud(row) != null) {
+					map.put("status", true);
+					map.put("error", "Dictamen registrado correctamente.");
+				}	
+			} else  {
+				map.put("status", false);
+				map.put("type", -1);
+				map.put("error", "No se pudo actualizar la solicitud.");
 			}
 		} catch (Exception e) {
 			logger.error("", e);
 			map.put("status", false);
+			map.put("type", -1);
 			map.put("error", e.getMessage());
 		}
 		return map;

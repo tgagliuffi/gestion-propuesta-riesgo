@@ -282,11 +282,11 @@ $(document).ready(function(){
 	});
 	
 	$("#btnCondiciones").bind("click", function() {
-        $( "#dialog-form" ).dialog( "open" );
+        $("#dialog-form").dialog("open");
     });
 	
 	$("#btnCondicionesScoring").bind("click", function() {
-        $( "#dialog-scoring" ).dialog( "open" );
+        $("#dialog-scoring").dialog("open");
     });
 	
 	$("#btnEliminarAnalisis").bind("click", function(){

@@ -4,6 +4,7 @@ import java.io.OutputStream;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.directwebremoting.WebContextFactory;
 import org.jfree.data.general.DefaultPieDataset;
 
 import bbva.pe.gpr.bean.Estadistica;
@@ -35,40 +37,47 @@ public class EstadisticaAction extends DispatchAction {
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		Grafico graf = new Grafico();
-		graf.setTitle("Banca");
-		graf.setSubtitle("15000 solicitudes");
-		DefaultPieDataset dataset = graf.getDatasetPie();
-		dataset.setValue("asignados", 74);
-		dataset.setValue("sin asignar", 87);
-		dataset.setValue("anuladas", 62);
-		dataset.setValue("rechazadas", 92);
-		dataset.setValue("test", 51);
-		graf.setExplodePercent("rechazadas");
+		String index = request.getParameter("index");
 		
-		OutputStream out = response.getOutputStream();
-		
-		try {
-			byte[] toByte = graf.generaPieChart();
-			response.setContentType("image/png");
-			out.write(toByte);
-		} catch (Exception e) {
-			logger.error("generarPieChart", e);
-		} finally {
-			out.close();
-			out.flush();
+		if(index != null) {
+			Grafico graf = new Grafico();
+			graf.setTitle("Banca");
+			graf.setSubtitle("15000 solicitudes");
+			DefaultPieDataset dataset = graf.getDatasetPie();
+			dataset.setValue("asignados", 74);
+			dataset.setValue("sin asignar", 87);
+			dataset.setValue("anuladas", 62);
+			dataset.setValue("rechazadas", 92);
+			dataset.setValue("test", 51);
+			graf.setExplodePercent("rechazadas");
+			
+			OutputStream out = response.getOutputStream();
+			
+			try {
+				byte[] toByte = graf.generaPieChart();
+				response.setContentType("image/png");
+				out.write(toByte);
+			} catch (Exception e) {
+				logger.error("generarPieChart", e);
+			} finally {
+				out.close();
+				out.flush();
+			}
 		}
-
+		
 		return null;
 	}
 	
 	public Map<String, Object> listarEstadisticasAsignacion(Estadistica e, String fechaInicio, String fechaFin) {
+		HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			List<Map<String, Object>> data = estadisticaService.selectAsignacion(e);
 			e.setFechaInicio(new Date(formatter.parse(fechaInicio).getTime()));
 			e.setFechaFin(new Date(formatter.parse(fechaInicio).getTime()));
 			map = estadisticaService.selectCabeceraAsignacion(e);
-			map.put("data", estadisticaService.selectAsignacion(e));
+			map.put("data", data);
+			request.getSession().setAttribute("data", data);
 		} catch (Exception ex) {
 			logger.error("listarEstadisticasAsignacion", ex);
 		}
