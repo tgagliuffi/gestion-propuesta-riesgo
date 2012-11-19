@@ -68,7 +68,7 @@ public class Constant {
 	public static final String PRIORIDAD_ALTA = "ALTA";
 	
 	public static final String PERSONA_JURIDICA = "JURIDICA";
-	public static final String PERSONA_NATURAL = "NATURAL ";
+	public static final String PERSONA_NATURAL = "NATURAL";
 	
 	public static final String GRUPO_PER_NATUAL = "1";
 	public static final String GRUPO_CON_RATING = "2";

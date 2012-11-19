@@ -70,4 +70,8 @@ public class UsuarioDAOImpl extends SqlMapClientDaoSupport implements UsuarioDAO
 	public List<Usuario> getLstUsuariosRiesgo(Usuario usuarioBean)throws Exception {
 	    	return  (List<Usuario>)getSqlMapClientTemplate().queryForList("CARDEL_TGPR_USUARIOS.getLstUsuariosRiesgo",usuarioBean);
 	}
+    public Usuario getUsuarioMontos(Usuario usuarioBean){
+        Usuario record = (Usuario) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_USUARIOS.getUsuarioMontos", usuarioBean);
+        return record;
+    }
 }

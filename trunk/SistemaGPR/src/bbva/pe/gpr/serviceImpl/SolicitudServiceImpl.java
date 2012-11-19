@@ -157,7 +157,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 					return -1;
 				}else {
 					
-					solicitudBean.setEstadoSolicitud(Constant.ESTADO_SOLICITUD_ASIGNADO);
+					solicitudBean.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD+Constant.CHAR_GUION+Constant.ESTADO_SOLICITUD_ASIGNADO);
 				}
 				usuarioBean = usuarioDAO.selectByPrimaryKey(codUsuario);			
 			}else{

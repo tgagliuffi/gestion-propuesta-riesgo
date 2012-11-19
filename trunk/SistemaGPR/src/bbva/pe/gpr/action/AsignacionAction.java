@@ -1,5 +1,6 @@
 package bbva.pe.gpr.action;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.directwebremoting.WebContextFactory;
 
 import com.grupobbva.bc.per.tele.ldap.serializable.IILDPeUsuario;
 
@@ -51,7 +53,12 @@ public class AsignacionAction extends DispatchAction {
 	
 	public List<Usuario> consultarUsuarioAjax(String codRol){	
 		try {
-			return catalogoService.getLstUsuariosRiesgo(codRol);
+			HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+			IILDPeUsuario bean = (IILDPeUsuario)request.getSession().getAttribute("USUARIO_SESION");
+			Usuario usuario = new Usuario();
+			usuario.setCodigoUsuarioSession(bean.getUID());
+			usuario.setCodRol(new BigDecimal(codRol));
+			return catalogoService.getLstUsuariosRiesgo(usuario);
 		} catch (Exception e) {
 			logger.error("Exception AsignacionAction.consultarUsuarioEvaludores: " + e.getMessage());
 		}
@@ -59,7 +66,7 @@ public class AsignacionAction extends DispatchAction {
 	}
 	
 	public List<Solicitud> consultarSolicitudAjax(String codCentral, String nroSolicitud, 
-			   String fechaIngresoIni, String fechaIngresoFin, String fechaVencimiento) throws Exception {
+			   String fechaIngresoIni, String fechaIngresoFin, String fechaVencimiento, String usuario) throws Exception {
 
 		Solicitud solicitudBean = new Solicitud();
 		if(codCentral!=null && !codCentral.equalsIgnoreCase(Constant.STR_VACIO)){
@@ -71,10 +78,35 @@ public class AsignacionAction extends DispatchAction {
 		}if(fechaIngresoFin!=null && !fechaIngresoFin.equalsIgnoreCase(Constant.STR_VACIO)){
 		solicitudBean.setFechaIngresoFin(UtilDate.stringToUtilDate(fechaIngresoFin, null));
 		}
+		
 
 		try {
 		List<Solicitud> lstSolicitud=solicitudService.getLstSolicitudes(solicitudBean);
-		return lstSolicitud;
+		if(usuario.equals(Constant.STR_VACIO)){
+			return lstSolicitud;
+		}else{
+			Usuario usuarioBean = new Usuario();
+			usuarioBean.setCodigoUsuario(usuario);
+			usuarioBean = catalogoService.getUsuarioMontos(usuarioBean);
+			 lstSolicitud=solicitudService.getLstSolicitudes(solicitudBean);
+			for (Solicitud solicitud : lstSolicitud) {
+				if(solicitud.getGrupoPersona().equalsIgnoreCase(Constant.GRUPO_PER_NATUAL)){
+					if(solicitud.getRiesgoTotal().compareTo(usuarioBean.getMtoMaxPerNatual())==-1){
+						lstSolicitud.remove(solicitud);
+					}
+				}if(solicitud.getGrupoPersona().equalsIgnoreCase(Constant.GRUPO_CON_RATING)){
+					if(solicitud.getRiesgoTotal().compareTo(usuarioBean.getMtoMaxRating())==-1){
+						lstSolicitud.remove(solicitud);
+					}
+				}if(solicitud.getGrupoPersona().equalsIgnoreCase(Constant.GRUPO_SIN_RATING)){
+					if(solicitud.getRiesgoTotal().compareTo(usuarioBean.getMtoSinRating())==-1){
+						lstSolicitud.remove(solicitud);
+					}
+				}
+			}
+			return lstSolicitud;
+		}
+		
 		} catch (Exception e) {
 			logger.error("BusquedaSolicitudAction.consultarSolicitudAjax " +e);
 		}

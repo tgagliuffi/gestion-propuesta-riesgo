@@ -358,14 +358,12 @@ public class CatalogoServiceImpl implements CatalogoService{
     	  int rows=usuarioDAO.getDeleteUsuario(codUsuario);
     	  return rows;
       };
-      public List<Usuario> getLstUsuariosRiesgo(String codRol) throws Exception {
-  		Usuario usuarioBean = null;
-  		if(!codRol.equals("-1") && codRol!=null){
-  			usuarioBean = new Usuario();
-  			usuarioBean.setCodRol(new BigDecimal(codRol));
-  		}
+      public List<Usuario> getLstUsuariosRiesgo(Usuario usuarioBean) throws Exception {
   		return usuarioDAO.getLstUsuariosRiesgo(usuarioBean);
-  		}
+  	  }
+      public Usuario getUsuarioMontos(Usuario usuarioBean)throws Exception{
+    	  return usuarioDAO.getUsuarioMontos(usuarioBean);
+      }
  /*#####################################################################################################
    *  
    *                TGPR_ROLES	

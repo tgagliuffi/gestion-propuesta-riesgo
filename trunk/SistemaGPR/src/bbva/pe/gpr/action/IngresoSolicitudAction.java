@@ -254,8 +254,8 @@ public class IngresoSolicitudAction extends DispatchAction {
 				solicitudBean = appRCCService.invokeDeudaSisFinanciero(solicitudBean);
 				solicitudBean = appRCDService.invokeDedudasRCD(solicitudBean);
 				
-				solicitudForm.setCodCentral(solicitudForm.getCodCentral());
-				solicitudForm.setHdnCodCentral(solicitudForm.getCodCentral());
+				solicitudForm.setCodCentral(solicitudBean.getCodCentral());
+				solicitudForm.setHdnCodCentral(solicitudBean.getCodCentral());
 				solicitudForm.setDesMultTipoPersona((multDetallePersona!=null?multDetallePersona.getStrValor():Constant.VALOR_NO_ENCONTRADO));				
 				solicitudForm.setCodMultTipoPersona(multDetallePersona.getCodMultitabla()!=null?multDetallePersona.getCodMultitabla()+Constant.CHAR_GUION+multDetallePersona.getCodElemento():null);
 				solicitudForm.setNumeroDocumento(solicitudBean.getNumeroDocumento());

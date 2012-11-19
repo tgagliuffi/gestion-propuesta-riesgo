@@ -49,7 +49,7 @@ $(function() {
     $("#dialog-form").dialog(optionDialog);
 });
 
-var myColNamesEval  = ['','Registro', 'Nombres', 'Cargo', 'Cantidad', 'Monto delegado', 'Dependiente'];
+var myColNamesEval  = ['','Registro', 'Nombres', 'Cargo', 'Cantidad', 'Mto PerNatural','Mto Rating','Mto Sin Rating', 'Dependiente'];
 var myDataModelEval = [ 
                   
 					{name : 'codigoUsuario',		index : 'codigoUsuario',  			width : VAL_WIDTH.VSMALL,    formatter:formatoRadio ,align:'center'},
@@ -57,7 +57,9 @@ var myDataModelEval = [
                     {name : 'nombres',				index : 'nombres',					width : VAL_WIDTH.SMALL		},
                     {name : 'concatRoles',			index : 'concatRoles', 				width : VAL_WIDTH.SMALL		},
                     {name : 'cantidad',				index : 'cantidad', 				width : VAL_WIDTH.XLSMALL	},
-                    {name : 'mtoMaxDelegacion',		index : 'mtoMaxDelegacion', 		width : VAL_WIDTH.XLSMALL	},
+                    {name : 'mtoMaxPerNatual',		index : 'mtoMaxPerNatual', 			width : VAL_WIDTH.SMALL,	formatter:formartMonto, align:'right'},
+                    {name : 'mtoMaxRating',			index : 'mtoMaxRating', 			width : VAL_WIDTH.SMALL, 	formatter:formartMonto, align:'right'},
+                    {name : 'mtoSinRating',			index : 'mtoSinRating', 			width : VAL_WIDTH.SMALL,	formatter:formartMonto, align:'right'},
                     {name : 'dependiente',			index : 'dependiente', 				width : VAL_WIDTH.XLSMALL	}
                    ];
                    
@@ -73,13 +75,21 @@ var myDataModelSol =
                     {name : 'desMultTipoPersona',		index : 'desMultTipoPersona', 	width : 300		, sortable:false},
                     {name : 'desSolicitante',			index : 'desSolicitante', 		width : 320		, sortable:false},
                     {name : 'desMultMoneda',			index : 'desMultMoneda', 		width : 220		, sortable:false},
-                    {name : 'mtoSolicitud',				index : 'mtoSolicitud', 		width : 340		, sortable:false},
-                    {name : 'riesgoActual',				index : 'riesgoActual', 		width : 300		, sortable:false},
-                    {name : 'riesgoTotal',				index : 'riesgoTotal', 			width : 300		, sortable:false},    
+                    {name : 'mtoSolicitud',				index : 'mtoSolicitud', 		width : 340		, sortable:false, align:'right'},
+                    {name : 'riesgoActual',				index : 'riesgoActual', 		width : 300		, sortable:false, align:'right'},
+                    {name : 'riesgoTotal',				index : 'riesgoTotal', 			width : 300		, sortable:false,	align:'right'},    
                     {name : 'estado',					index : 'estado', 				width : VAL_WIDTH.XLSMALL,  	formatter: estadoFormat, sortable: false, align:'center'}
                
  ];
-	
+
+function formartMonto(cellvalue, options, rowObject){
+	if(cellvalue=='-1'){
+		return  'NO REGISTRADO';
+	}else{
+		return cellvalue;
+	}
+}
+
 function formatoRadio(cellvalue, options, rowObject){
     var radio ="<input type=\"radio\" onclick=\"mostrarMensaje('"+cellvalue+"');\" name=\"radioButton\" />";
 	return	radio;
@@ -125,7 +135,7 @@ function prioridadUnFormat(cellvalue, options, cell){
 	return $('input', cell).attr('value');
 }
 
-function consultarSolicitud(){
+function consultarSolicitud(objeto){
 	var formulario = document.getElementById('asigacionForm');
 	
 	var codCentral = formulario.codCentral.value;
@@ -133,9 +143,9 @@ function consultarSolicitud(){
 	var fechaIngresoIni = formulario.fechaIngresoIni.value;
 	var fechaIngresoFin = formulario.fechaIngresoFin.value;
 	var fechaVencimiento = formulario.fechaVencimiento.value;
-	
+
 	jQuery("#listSolicitud").GridUnload();
-	AsignacionAction.consultarSolicitudAjax(codCentral,nroSolicitud,fechaIngresoIni,fechaIngresoFin, fechaVencimiento, function(dataTable){
+	AsignacionAction.consultarSolicitudAjax(codCentral,nroSolicitud,fechaIngresoIni,fechaIngresoFin, fechaVencimiento, objeto, function(dataTable){
 		mostrarTablaSolicitud(dataTable);
 	});
 			
@@ -221,8 +231,20 @@ function grabarAsiganciones(){
 		
 	}
 	consultarEvaluador();
-	consultarSolicitud();
+	consultarSolicitud('');
+}
+
+function consultarFuertaRango(objeto){
 	
+	var formulario = document.getElementById('asigacionForm');
+	vfueraRango = formulario.stFueraRango.checked;
+	vUsuario = formulario.hdnRegistro.value;
+	if(vUsuario!=''){
+		consultarEvaluador();
+		consultarSolicitud(vUsuario);
+	}else{
+		alert('Debe seleccionar un usuario.');
+	}
 }
 
 optionDialog = {
@@ -251,7 +273,7 @@ optionDialog = {
 </script>
 	
 </head>
-<body onload="consultarEvaluador();consultarSolicitud();">
+<body onload="consultarEvaluador();consultarSolicitud('');">
 
 <html:form styleId="asigacionForm" method="post" action="asignacionAction.do?method=init">
  	<input type="hidden" id="hdnArreglo" name="hdnArreglo" value=''></input>
@@ -286,7 +308,7 @@ optionDialog = {
 			</td>
 	</tr>
 	</table>
-	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1000px;margin: 3px; padding: 5px;">
+	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1200px;margin: 3px; padding: 5px;">
 	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
 	<label>Usuarios</label></div>
 	<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" style="padding-top: 5px;">
@@ -329,7 +351,7 @@ optionDialog = {
 			<input type="text" name="nroSolicitud" class="cajaTexto" id="nroSolicitud" size="10" maxlength="8" onkeypress="ingresoNumeros(event);" >
 		</td>
 		<td align="right" valign="middle">
-			<input type="checkbox" name="stFueraRango" class="cajaTexto" id="stFueraRango">&nbsp;
+			<input type="checkbox" name="stFueraRango" class="cajaTexto" id="stFueraRango" onclick="consultarFuertaRango(this);">&nbsp;
 			<font class="fontText">Solicitudes Fuera de Rango</font>			
 		</td>
 	</tr>

@@ -110,7 +110,8 @@ public interface CatalogoService {
 	  public List<Usuario> getLstUsuario(Usuario usuarioBean)throws Exception ;
 	  String getUsuarioExiste(Usuario usuarioBean)throws Exception ;
 	  int getDeleteUsuario(String codUsuario)throws Exception ;
-	  List<Usuario> getLstUsuariosRiesgo(String codRol) throws Exception ;
+	  List<Usuario> getLstUsuariosRiesgo(Usuario usuarioBean) throws Exception ;
+	  Usuario getUsuarioMontos(Usuario usuarioBean)throws Exception; 
   
   /*#####################################################################################################
    * 
