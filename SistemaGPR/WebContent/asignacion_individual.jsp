@@ -46,6 +46,7 @@ $(function() {
     $( "#fechaIngresoIni").datepicker({dateFormat: 'dd/mm/yy'});
     $( "#fechaIngresoFin").datepicker({dateFormat: 'dd/mm/yy'});
     $( "#fechaVencimiento").datepicker({dateFormat: 'dd/mm/yy'});
+    $("#dialog-form").dialog(optionDialog);
 });
 
 var myColNamesEval  = ['','Registro', 'Nombres', 'Cargo', 'Cantidad', 'Monto delegado', 'Dependiente'];
@@ -224,6 +225,29 @@ function grabarAsiganciones(){
 	
 }
 
+optionDialog = {
+		width: 420,
+		autoOpen: false,
+	    modal: true,
+	    buttons: {
+	        "Aceptar": function() {
+	        	var formulario = document.getElementById('asigacionForm');
+	        	var text = $('#textGarantia').val();
+	        	formulario.strMensajePopUP.value=text;
+	        	console.log($(this).attr("id"));
+	        	$(this).dialog("close");
+	        },
+	        "Cancelar": function() {
+	        	console.log($(this).attr("id"));
+	        	$(this).dialog("close");
+	        }
+	    },
+	    close: function() {
+	    	console.log($(this).attr("id"));
+	    }
+	}; 
+		
+
 </script>
 	
 </head>
@@ -232,6 +256,7 @@ function grabarAsiganciones(){
 <html:form styleId="asigacionForm" method="post" action="asignacionAction.do?method=init">
  	<input type="hidden" id="hdnArreglo" name="hdnArreglo" value=''></input>
  	 	<input type="hidden" id="hdnRegistro" name="hdnRegistro" value=''></input>
+ 	 	<input type="hidden" id="strMensajePopUP" name="strMensajePopUP" value=''></input>
  	 	
 	<div style="background-color: #0066bb;">
 		<font face="Arial Narrow" size=3 color="#FFFFFF">&nbsp;Módulo de Asignación Individual</font>
@@ -332,10 +357,38 @@ function grabarAsiganciones(){
 	<table id="listSolicitud" class="grid">
 	</table>
 	<br/>
-	
 	<input type="button" class="buttonGPR"  name="btnEnviar" id="btnEnviar" value="Enviar" onclick="grabarAsiganciones();">
+    <input type="button"   id="btnCondiciones"  class="buttonGPR" onclick="llamarPopup();" value="OBSERVACION">&nbsp;
+		<div id="dialog-form" title="Añadir Observacion" style="width: 400px">
+		<form>
+	        <center>
+	        	<textarea id="textGarantia" name="textGarantia" rows="10" cols="40" style="width: 300px; height: 140px;" onkeypress="return limita(this, event,100)" onkeyup="cuenta(this, event,100,'contador')">
+	        	</textarea>
+	        	<span id="contador"></span>    	
+	        </center>
+		</form>
+	</div>
 	</div>
 </html:form>
+<script type="text/javascript">
 
+function limita(obj,elEvento, maxi) { 
+	var elem = obj; var evento = elEvento || window.event; var cod = evento.charCode || evento.keyCode; 
+	if(cod == 37 || cod == 38 || cod == 39 || cod == 40 || cod == 8 || cod == 46) {
+		return true; } 
+	    if(elem.value.length < maxi ) 
+	    { return true; } 
+	    return false; 
+	}
+
+function cuenta(obj,evento,maxi,div) { 
+	var elem = obj.value; 
+	var info = document.getElementById(div); info.innerHTML = maxi-elem.length; 
+}
+
+function llamarPopup(){
+	$( "#dialog-form" ).dialog( "open" );
+}
+</script>
 </body>
 </html>
