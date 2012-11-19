@@ -79,4 +79,7 @@ public class Constant {
 	public static final BigDecimal RESPONSABLE = BigDecimal.valueOf(3);
 
 	public static final String DICTAMEN = "4";
+	public static final String USUARIO_OFICINA = "1";
+	public static final String USUARIO_RIESGOS = "2";
+ 
 }
