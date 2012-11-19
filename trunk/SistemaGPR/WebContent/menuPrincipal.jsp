@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"	pageEncoding="utf-8"%>
+<%@page import="org.apache.commons.lang.StringUtils"%>
 <%@ page   import="bbva.pe.gpr.bean.Usuario"%>
 <%@page import="bbva.pe.gpr.bean.*"%>
 <%@ page import="java.util.List"%>
@@ -68,6 +69,9 @@ List<Menu> getLstMenu =(List<Menu>)request.getAttribute("getLstMenu");
 		<%for(int i=0;i<getLstMenu.size();i++){
 				String url = getLstMenu.get(i).getLink();
 				String desIframe = getLstMenu.get(i).getDescripcion();
+				if(StringUtils.isBlank(url)){
+					url = "#";
+				}
 				%>			
 				<div id="tabs<%=i+1%>">
 					<iframe src="<%=url%>" name="<%=desIframe%>" width="100%" scrolling="auto" frameborder="0">
