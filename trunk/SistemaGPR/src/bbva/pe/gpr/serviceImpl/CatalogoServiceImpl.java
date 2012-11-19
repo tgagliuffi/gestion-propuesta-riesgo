@@ -29,6 +29,7 @@ import bbva.pe.gpr.dao.RolDAO;
 import bbva.pe.gpr.dao.TerritorioDAO;
 import bbva.pe.gpr.dao.UsuarioDAO;
 import bbva.pe.gpr.service.CatalogoService;
+import bbva.pe.gpr.util.Constant;
 
 
 public class CatalogoServiceImpl implements CatalogoService{
@@ -430,5 +431,15 @@ public class CatalogoServiceImpl implements CatalogoService{
 
 	public String getJefeInmediatoRiesgo(String codUsuario) {
 		return gerenteOficinaDAO.getJefeInmediatoRiesgo(codUsuario);
+	}
+
+	public String getUsuarioVerificar(String codUsuario) {
+		String valor=gerenteOficinaDAO.getValidarUsuarioRiesgos(codUsuario);
+		String valorOficina=gerenteOficinaDAO.getValidarUsuario(codUsuario);
+		if(valor.equals("1")){
+			return Constant.USUARIO_OFICINA;
+		}else{
+			return Constant.USUARIO_RIESGOS;
+		}
 	}
 }
