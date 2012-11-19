@@ -40,6 +40,9 @@ optionDialog = {
     modal: true,
     buttons: {
         "Aceptar": function() {
+        	var formulario = document.getElementById('formSolicitudIngreso');
+        	var text = $('#textGarantia').val();
+        	formulario.strMensajePopUP.value=text;
         	console.log($(this).attr("id"));
         	$(this).dialog("close");
         },
@@ -1195,21 +1198,34 @@ var nroSolicitud = formulario.mantener.value;
 	
 	</tr>
 	<tr>
-		<td><input type="button" class="buttonGPR"  name="btnGuardar" id="btnGuardar" onclick="guardarSolicitud();" value="Guardar Solicitud">&nbsp;
-		<input type="button" class="buttonGPR"  name="btnReset" id="btnReset" onclick='limpiaForm($("#formSolicitudIngreso"));' value="Limpiar Solicitud">&nbsp;
-		<input type="button"   id="btnCondiciones"  class="buttonGPR" value="Añadir Observacion" onclick="llamarPopup();">&nbsp;
-		<div id="dialog-form" title="Observacion" style="width: 400px">
-		<form>
+		<td colspan="5" valign="middle">
+		<input type="button" class="buttonGPR"  name="btnGuardar" id="btnGuardar"  onclick="guardarSolicitud();" value="Guardar Solicitud">
+		<input type="button" class="buttonGPR"  name="btnReset"   id="btnReset"    onclick='limpiaForm($("#formSolicitudIngreso"));' value="Limpiar Solicitud">
+		<input type="button" class="buttonGPR"  name="btnPopup"   id="btnCondiciones" onclick="llamarPopup();" value="OBSERVACION">
+		<div id="dialog-form" title=" Añadir Observacion" style="width: 450px">
 	        <center>
-	        	<textarea id="textGarantia" rows="10" cols="40" style="width: 390px; height: 140px;"></textarea>
+	        	<textarea id="textGarantia" name="textGarantia"rows="10" cols="40" style="width:330px; height: 140px;" onkeypress="return limita(this, event,100)" onkeyup="cuenta(this, event,100,'contador')">
+	        	</textarea>
+	        	<span id="contador"></span>
 	        </center>
-		</form>
 	</div>
+	</td>
 	</tr>
 	</table>
 	
 </html:form>
 <script type="text/javascript">
+
+function limita(obj,elEvento, maxi) { 
+	var elem = obj; var evento = elEvento || window.event; var cod = evento.charCode || evento.keyCode; 
+	if(cod == 37 || cod == 38 || cod == 39 || cod == 40 || cod == 8 || cod == 46) { return true; } if(elem.value.length < maxi ) { 
+		return true; } return false; 
+	}
+
+function cuenta(obj,evento,maxi,div) { 
+	var elem = obj.value; var info = document.getElementById(div); info.innerHTML = maxi-elem.length; 
+}
+	
 function llamarPopup(){
 	$( "#dialog-form" ).dialog( "open" );
 }
