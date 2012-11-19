@@ -148,12 +148,19 @@ buscarSolicitud = function(){
 	}
 	
 	parameters = {
-		nroSolicitud: $("#nroSolicitud").val()
+		nroSolicitud: $("#nroSolicitud").val(),
+		codUsuarioAsigno: $("#id_usuario").val()
 	};
 	
 	DictamenAction.buscarSolicitud(parameters, function(data){
 		// debugger;
 		if(data.status) {
+			if(data.monto_delegacion != null || data.monto_delegacion != undefined) {
+				$("#monto_delegacion").val(data.monto_delegacion);
+			} else {
+				$("#monto_delegacion").val(0);
+			}
+			
 			configurarGrid("listProducts", data.solicitudDetalle, optionSolicitudDetalle);
 			configurarGrid("listAnalisis", data.analisis, optionAnalisis);
 			dictamen(data.dictamen);
@@ -189,6 +196,16 @@ buscarSolicitud = function(){
 			$("#riesgoGrupal").val(s.riesgoGrupal);
 			$("#riesgoActual").val(s.riesgoActual);
 			$("#riesgoTotal1").val(s.riesgoTotal);
+			$("#riesgoTotal").val(s.riesgoTotal);
+			
+			$("#tipoMoneda").attr("readonly", false);
+			if(s.codMultMoneda != null) {
+				codMultMoneda = s.codMultMoneda.split("-"); 
+				$("#tipoMoneda").val(codMultMoneda[1]);
+				$("#tipoMoneda").attr("readonly", true);
+				
+				$("#tipoMoneda2").val(codMultMoneda[1]);
+			}
 
 			$("#codCuentaEjecutivo").val(s.ejecutivoCtaCod);
 			$("#desCuentaEjecutivo").val(s.ejecutivoCtaNom);

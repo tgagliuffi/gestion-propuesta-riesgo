@@ -7,6 +7,8 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import bbva.pe.gpr.bean.Dictamen;
 import bbva.pe.gpr.bean.DictamenKey;
+import bbva.pe.gpr.bean.Solicitud;
+import bbva.pe.gpr.bean.Usuario;
 import bbva.pe.gpr.dao.DictamenDAO;
 
 public class DictamenDAOImpl extends SqlMapClientDaoSupport implements DictamenDAO {
@@ -16,7 +18,7 @@ public class DictamenDAOImpl extends SqlMapClientDaoSupport implements DictamenD
     }
 
     public int deleteByPrimaryKey(DictamenKey key) {
-        int rows = getSqlMapClientTemplate().delete("CARDEL_TGPR_DICTAMENES.ibatorgenerated_deleteByPrimaryKey", key);
+        int rows = getSqlMapClientTemplate().delete("CARDEL_TGPR_DICTAMENES.delete", key);
         return rows;
     }
 
@@ -53,5 +55,11 @@ public class DictamenDAOImpl extends SqlMapClientDaoSupport implements DictamenD
         }
         
         return record;
+	}
+
+	@Override
+	public Usuario montoMaxDelegacion(Solicitud s) {
+		Usuario usuario = (Usuario) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_DICTAMENES.montoMaxDelegacion", s);
+		return usuario;
 	}
 }

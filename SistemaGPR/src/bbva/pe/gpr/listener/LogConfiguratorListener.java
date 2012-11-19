@@ -36,7 +36,7 @@ public class LogConfiguratorListener implements ServletContextListener {
     	CatalogoService catalogoService=(CatalogoService)Context.getInstance().getBean("catalogoService");   
     	MultitablaDetalle par=catalogoService.selectMultitablaDTByPrimaryKey("T016", "16001");        
 		Properties prop = new Properties();
-    	prop.setProperty("log4j.rootCategory", "TRACE, LOGFILE, CONSOLE");
+    	prop.setProperty("log4j.rootCategory", "INFO, LOGFILE, CONSOLE");
 		prop.setProperty("log4j.appender.CONSOLE", "org.apache.log4j.ConsoleAppender");
 		prop.setProperty("log4j.appender.CONSOLE.layout", "org.apache.log4j.PatternLayout");
 		prop.setProperty("log4j.appender.CONSOLE.layout.ConversionPattern", "[%d{yyyy-MM-dd HH:mm:ss}] - [%5p] (%C{1}.%M:%L) - %m%n");

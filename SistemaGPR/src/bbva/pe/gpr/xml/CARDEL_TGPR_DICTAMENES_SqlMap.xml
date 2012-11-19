@@ -284,4 +284,14 @@
     where COD_DICTANAR = #codDictanar:DECIMAL#
       and NRO_SOLICITUD = #nroSolicitud:DECIMAL#
   </update>
+  
+  <update id="delete" parameterClass="bbva.pe.gpr.bean.Dictamen" >
+    update CARDEL.TGPR_DICTAMENES
+    set ESTADO = 0
+    where NRO_SOLICITUD = #nroSolicitud:DECIMAL#
+  </update>
+  
+  <select id="montoMaxDelegacion" resultClass="bbva.pe.gpr.bean.Usuario" parameterClass="bbva.pe.gpr.bean.Solicitud"  >
+  	select carrie.carriersgpkg.fn_rsg_montomaximo_x_usuario(#gestorCod:VARCHAR#, #grupoPersona:VARCHAR#) as mtoMaxDelegacion from dual
+  </select>
 </sqlMap>
