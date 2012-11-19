@@ -21,7 +21,11 @@ public class Dictamen extends DictamenKey {
 	private String strMensaje;
 	private String codMultDictamen;
 	private String ctrlRating;
-	
+	private String plazoVencimiento;
+	private String plazoReembolso;
+	private String garantias;
+	private String condicionantes;
+
 	public String getCodMultNivel() {
 		return codMultNivel;
 	}
@@ -129,5 +133,29 @@ public class Dictamen extends DictamenKey {
 	}
 	public void setCtrlRating(String ctrlRating) {
 		this.ctrlRating = ctrlRating;
+	}
+	public String getPlazo_vencimiento() {
+		return plazoVencimiento;
+	}
+	public void setPlazoVencimiento(String plazoVencimiento) {
+		this.plazoVencimiento = plazoVencimiento;
+	}
+	public String getPlazoReembolso() {
+		return plazoReembolso;
+	}
+	public void setPlazoReembolso(String plazoReembolso) {
+		this.plazoReembolso = plazoReembolso;
+	}
+	public String getGarantias() {
+		return garantias;
+	}
+	public void setGarantias(String garantias) {
+		this.garantias = garantias;
+	}
+	public String getCondicionantes() {
+		return condicionantes;
+	}
+	public void setCondicionantes(String condicionantes) {
+		this.condicionantes = condicionantes;
 	}
 }

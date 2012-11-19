@@ -96,6 +96,30 @@ dictamen = function(d){
 		$("#valOtr").val(d.otro);
 		$("#ctrlScoring_dictamen").val(d.ctrlScoring);
 		$("#fecVencimiento").val(d.fechaVencimiento);
+		$("#textCondicionantes").val(d.condicionantes);
+		$("#textGarantia").val(d.garantias);
+		$("#alReembolso").val(d.plazo_reembolso);
+		$("#alVencimiento").val(d.plazo_vencimiento);
+		
+		if($("#nivel").val() != '3') {
+			$("#slctDictamen").attr("readonly", true);
+			$("#slctNivAprob").attr("readonly", true);
+			$("#tipoMoneda").attr("readonly", true);
+			$("#montoAprobado").attr("readonly", true);
+			$("#rating_dictamen").attr("readonly", true);
+			$("#montoCualitativo").attr("readonly", true);
+			$("#montoCuantitativo").attr("readonly", true);
+			$("#montoICom").attr("readonly", true);
+			$("#montoCAlerta").attr("readonly", true);
+			$("#slctProactividad").attr("readonly", true);
+			$("#valOtr").attr("readonly", true);
+			$("#ctrlScoring_dictamen").attr("readonly", true);
+			$("#fecVencimiento").attr("readonly", true);
+			$("#textCondicionantes").attr("readonly", true);
+			$("#textGarantia").attr("readonly", true);
+			$("#alReembolso").attr("readonly", true);
+			$("#alVencimiento").attr("readonly", true);
+		}
 	} else {
 		habilitaCheckRating(true);
 	}
@@ -126,12 +150,24 @@ validaRating = function(){
 	}
 };
 
+validaCondicionesScoring = function(){
+	scoring = $("#ctrlScoring_dictamen").val().toUpperCase();
+	if(scoring == "I" && $("#slctDictamen").val() == "14004") {
+		$("#btnCondiciones").button("option", "disabled", false);
+		$("#btnCondicionesScoring").button("option", "disabled", false);
+	} else {
+		$("#btnCondicionesScoring").button("option", "disabled", true);
+		$("#btnCondiciones").button("option", "disabled", !($("#slctDictamen").val() == "14004"));
+	}
+};
+
 validaScoring = function(){
 	scoring = $("#ctrlScoring_dictamen").val().toUpperCase();
 	
 	if(scoring == "C" || scoring == "I" || scoring == "O") {
 		$("#rating_dictamen").attr("disabled", true);
 		habilitaCheckRating(true);
+		validaCondicionesScoring();
 	} else if(scoring.length == 0) {
 		$("#rating_dictamen").attr("disabled", false);
 	} else {
@@ -165,8 +201,10 @@ buscarSolicitud = function(){
 				$("#monto_delegacion").val();
 				if(data.monto_delegacion > s.riesgoTotal) {
 					$("#semaforoRiesgo").attr("src", "imagenes/verde.png");
+					$("#btnDictaminar").val("Dictaminar");
 				} else {
 					$("#semaforoRiesgo").attr("src", "imagenes/rojo.png");
+					$("#btnDictaminar").val("Dictaminen Superior");
 				}
 			} else {
 				$("#monto_delegacion").val(0);
@@ -215,14 +253,13 @@ buscarSolicitud = function(){
 
 			$("#codCuentaEjecutivo").val(s.ejecutivoCtaCod);
 			$("#desCuentaEjecutivo").val(s.ejecutivoCtaNom);
-			// $("#fechaIngresoOfic").val(formaterDate(s.fechaIngreso));
 			$("#fechaIngresoOfic").val(s.strFechaAsignacion);
 			$("#codOficinaAlta").val(s.oficinaAltaCod);
 			$("#desOficinaAlta").val(s.oficinaAltaNom);
 			$("#codGerenciaTerrit").val(s.gerenciaTerritorialCod);
 			$("#desGerenciaTerrit").val(s.gerenciaTerritorialNom);
-			
-			console.log(data);
+		
+			validaCondicionesScoring();
 		} else {
 			alert(data.error);/*
 			$("select").attr("disabled", true);
@@ -321,6 +358,34 @@ grabarAnalisis = function(){
 	}
 };
 
+dictamenSuperior = function(dictamen) {
+	solicitud = {
+		nroSolicitud: $("#nroSolicitud").val(),
+		gestorCod: $("#id_usuario").val()
+	};
+	DictamenAction. dictaminarSuperior(dictamen, solicitud, function(data){
+		if(data.warn != null || data.warn != undefined) {
+			alert(data.warn);
+		}
+		alert(data.error);
+	});
+};
+
+dictamenEvaluador = function(dictamen) {
+	DictamenAction.dictaminar(dictamen, 0, function(data){
+		if(data.type == -2) {
+			if(confirm(data.plazo)){
+				dictamenSuperior(dictamen);
+			}
+		} else {
+			if(data.warn != null || data.warn != undefined) {
+				alert(data.warn);
+			}
+			alert(data.error);
+		}
+	});
+};
+
 dictaminar = function(){
 	rating = 0;
 	if($("#rating_dictamen").val().toUpperCase() == "I") {
@@ -329,7 +394,10 @@ dictaminar = function(){
 		rating += $("#montoICom").attr("checked") == "checked" ? 1 : 0;
 		rating += $("#montoCAlerta").attr("checked") == "checked" ? 1 : 0;
 		
-		if(rating < 1 || rating > 3) {
+		if(rating == 0) {
+			alert("Debe marcar por lo menos una opci\u00F3n.");
+			return;
+		} else if(rating < 1 || rating > 3) {
 			alert("Solo puede marcar de una a tres opciones.");
 			return;
 		}
@@ -352,21 +420,18 @@ dictaminar = function(){
 		fechaVencimiento: $("#fecVencimiento").val(),
 		nroSolicitud: $("#nroSolicitud").val(),
 		codCentral: $("#codigoCentral").val(),
-		estado: 1
+		estado: 1,
+		condicionantes: $("#textCondicionantes").val(),
+		garantias: $("#textGarantia").val(),
+		plazo_reembolso: $("#alReembolso").val(),
+		plazo_vencimiento: $("#alVencimiento").val()
 	};
-	// console.log(dictamen);
-	DictamenAction.dictaminar(dictamen, function(data){
-		if(data.type == -2) {
-			if(confirm(data.plazo)){
-				alert("Dictamen Superior");
-			}
-		} else {
-			if(data.warn != null || data.warn != undefined) {
-				alert(data.warn);
-			}
-			alert(data.error);
-		}
-	});
+
+	if($(this).val()=='Dictaminen Superior') {
+		dictamenSuperior(dictamen);
+	} else {
+		dictamenEvaluador(dictamen);
+	}
 };
 
 $(function(){
@@ -428,6 +493,8 @@ $(document).ready(function(){
 		$("#btnCancelarAnalisis").bind("click", function(){
 			habilitarBotonAnalisis(true);
 		});
+		
+		$("#slctDictamen").bind("change", validaCondicionesScoring);
 		
 		$("#fecVencimiento").datepicker({
 			dateFormat : 'dd/mm/yy'
