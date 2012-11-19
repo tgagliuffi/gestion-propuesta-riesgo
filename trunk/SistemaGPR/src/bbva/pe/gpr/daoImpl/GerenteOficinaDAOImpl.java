@@ -12,18 +12,27 @@ public class GerenteOficinaDAOImpl extends SqlMapClientDaoSupport implements
 	}
 
 	public String getValidarUsuario(String codUsuario) {
-		return getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getValidarUsuario", codUsuario).get(0).toString();
+			return getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getValidarUsuario", codUsuario).get(0).toString();
 	}
 
 	public String getJefeInmediatoOficina(String codUsuario) {
-		return getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getJefeInmediatoOficina", codUsuario).get(0).toString();
+		if(!getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getJefeInmediatoOficina", codUsuario).isEmpty()){
+			return getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getJefeInmediatoOficina", codUsuario).get(0).toString();
+		}else{
+			return "";
+		}    
 	}
 
 	public String getJefeInmediatoRiesgo(String codUsuario) {
-		return getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getJefeInmediatoRiesgo", codUsuario).get(0).toString();
+		if(!getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getJefeInmediatoRiesgo", codUsuario).isEmpty()){
+			return getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getJefeInmediatoRiesgo", codUsuario).get(0).toString();
+		}else{
+			return "";
+		}
 	}
 
 	public String getValidarUsuarioRiesgos(String codUsuario) {
-		return getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getValidarUsuarioRiesgos", codUsuario).get(0).toString();
+			return getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getValidarUsuarioRiesgos", codUsuario).get(0).toString();
+	
 	}
 }
