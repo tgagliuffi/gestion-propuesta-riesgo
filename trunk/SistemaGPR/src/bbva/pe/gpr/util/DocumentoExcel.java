@@ -208,7 +208,6 @@ public class DocumentoExcel {
 		this.getSheet().getRow(indexRow).getCell(indexCellFrom).setCellValue(titulo);
 	}
 
-	@SuppressWarnings("resource")
 	public void setImagen(int indexRow, int indexCell, String pathImg) throws IOException {
 		FileInputStream fis = new FileInputStream(pathImg);
 		ByteArrayOutputStream img_bytes = new ByteArrayOutputStream();
