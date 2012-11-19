@@ -33,6 +33,11 @@ public class EstadisticaAction extends DispatchAction {
 		estadisticaService = (EstadisticaService) Context.getInstance().getBean("estadisticaService");
 	}
 
+	public ActionForward asignacion(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		return mapping.findForward("asignacion") ;
+	}
+	
 	public ActionForward generarPieChart(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {

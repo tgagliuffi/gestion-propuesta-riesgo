@@ -588,8 +588,6 @@
 		        </div>
 		        <table id="listCondiciones" style="padding: 3px; margin: 3px; width: 99%;">
 					<tr><td><input type="checkbox"/>&nbsp;Condicion 1</td></tr>
-					<tr><td><input type="checkbox"/>&nbsp;Condicion 2</td></tr>
-					<tr><td><input type="checkbox"/>&nbsp;Condicion 3</td></tr>
 				</table>
 			</div>
 		</form>

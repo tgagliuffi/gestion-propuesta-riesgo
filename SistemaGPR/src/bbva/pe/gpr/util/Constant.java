@@ -29,6 +29,7 @@ public class Constant {
 	public static final String TABLA_MOTIVO = "T002";
 	public static final String TABLA_PROACTIVIDAD = "T013";
 	public static final String TABLA_NIVEL_APROBACION = "T018";
+	public static final String TABLA_SCORING = "T019";
 	
 	public static final String VALOR_NO_ENCONTRADO = "VALOR NO ENCONTRADO";
 
