@@ -116,6 +116,12 @@
   	<bean id="estadisticaDAO" class="bbva.pe.gpr.daoImpl.EstadisticaDAOImpl">
     	<property name="sqlMapClient" ref="sqlMapClient"/>
   	</bean>
+  	<bean id="cartasRiesgosDAO" class="bbva.pe.gpr.daoImpl.CartasRiesgoDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
+  	<bean id="garantiaDAO" class="bbva.pe.gpr.daoImpl.GarantiaDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
   	
 <!-- =============================================================================================================================================-->
 <!-- ================================== Service Classes Implementations of BusinessObjects Services ===============================================-->
@@ -181,7 +187,14 @@
 			<constructor-arg index="0" ref="multitablaDetalleDAO"></constructor-arg>
 			<constructor-arg index="1" ref="solicitudDetalleDAO"></constructor-arg>
 	</bean>
+	<bean id="validacionServiceImpl" class="bbva.pe.gpr.serviceImpl.ValidacionServiceImpl">
+			<constructor-arg index="0" ref="solicitudDetalleDAO"></constructor-arg>
+			<constructor-arg index="1" ref="garantiaDetalleDAO"></constructor-arg>
+			<constructor-arg index="2" ref="garantiaDAO"></constructor-arg>
+			<constructor-arg index="3" ref="cartasRiesgosDAO"></constructor-arg>
+			<constructor-arg index="4" ref="gerenteOficinaDAOImpl"></constructor-arg>
 	
+	</bean>
 	<bean id="estadisticaServiceImpl" class="bbva.pe.gpr.serviceImpl.EstadisticaServiceImpl">
 			<constructor-arg index="0" ref="estadisticaDAO"></constructor-arg>
 	</bean>
