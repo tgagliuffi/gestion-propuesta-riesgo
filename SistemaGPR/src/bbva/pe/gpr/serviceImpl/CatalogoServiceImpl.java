@@ -426,12 +426,7 @@ public class CatalogoServiceImpl implements CatalogoService{
 	 }
 
 	public String getJefeInmediatoOficina(String codUsuario) {
-		String valor= gerenteOficinaDAO.getJefeInmediatoOficina(codUsuario);
-		if(valor.isEmpty()){
-           return "";		
-		}else{
-			return valor;
-		}
+		return gerenteOficinaDAO.getJefeInmediatoOficina(codUsuario);
 	}
 
 	public String getJefeInmediatoRiesgo(String codUsuario) {
