@@ -115,7 +115,7 @@
     	SELECT  COUNT(*)
 		FROM    CARDEL.TGPR_MULTITABLA_DETALLE
 		WHERE   cod_multitabla= #codMultiTabla# AND 
-                str_valor=#codValor#            AND 
+                COD_ELEMENTO=#codValor#            AND 
                 number_valor !=0                AND 
                 estado !=0
  </select>
