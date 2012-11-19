@@ -50,6 +50,7 @@
 		<input type="hidden" name="monto_delegacion" id="monto_delegacion" value="${requestScope.monto_delegacion}"/>
 		<input type="hidden" name="codAsignacion" id="codAsignacion" value="${requestScope.codAsignacion}"/>
 		<input type="hidden" name="error" id="error" value="${requestScope.error}"/>
+		<input type="hidden" name="nivel" id="nivel" value="${requestScope.nivel}"/>
 		<div style="background-color: #0066bb;height: 20px;line-height: 20px;">
 			<font face="Arial Narrow" size=3 color="#FFFFFF"><b style="font-size: 12px;">&nbsp;&nbsp;Módulo de Análisis y Dictamen</b></font>
 		</div>
@@ -238,7 +239,7 @@
 							</td>
 							<td valign="middle">
 								<input type="text" name="riesgoTotal" class="cajaTexto" id="riesgoTotal" size="15" maxlength="15" readonly>&nbsp;
-								<img src="imagenes/rojo.png" border="0">
+								<img id="semaforoRiesgo" src="imagenes/rojo.png" border="0">
 							</td>
 							<td valign="middle">
 								<font class="fontText" size="3" color="#000080"><b>Monto Aprobado</b></font>

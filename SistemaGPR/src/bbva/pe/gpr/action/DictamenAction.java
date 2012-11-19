@@ -20,7 +20,6 @@ import org.apache.struts.actions.DispatchAction;
 import bbva.pe.gpr.bean.Analisis;
 import bbva.pe.gpr.bean.Asignacion;
 import bbva.pe.gpr.bean.Banca;
-import bbva.pe.gpr.bean.Delegacion;
 import bbva.pe.gpr.bean.Dictamen;
 import bbva.pe.gpr.bean.Funcion;
 import bbva.pe.gpr.bean.MultitablaDetalle;
@@ -28,6 +27,7 @@ import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.SolicitudDetalle;
 import bbva.pe.gpr.context.Context;
 import bbva.pe.gpr.service.AnalisiService;
+import bbva.pe.gpr.service.AsignacionService;
 import bbva.pe.gpr.service.CatalogoService;
 import bbva.pe.gpr.service.ControlService;
 import bbva.pe.gpr.service.DictaminarService;
@@ -45,6 +45,7 @@ public class DictamenAction extends DispatchAction {
 	private static Logger logger = Logger.getLogger(DictamenAction.class);
 	private static SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
 	private AnalisiService analisisService;
+	private AsignacionService asignacionService;
 	private SolicitudService solicitudService;
 	private ControlService controlService;
 	private CatalogoService catalogoService;
@@ -55,6 +56,7 @@ public class DictamenAction extends DispatchAction {
 	private AplicativoRCCServiceImpl appRCCService;
 
 	public DictamenAction() {
+		asignacionService = (AsignacionService) Context.getInstance().getBean("asignacionService");
 		analisisService = (AnalisiService) Context.getInstance().getBean("analisisService");
 		controlService = (ControlService) Context.getInstance().getBean("controlService");
 		dictaminarService = (DictaminarService) Context.getInstance().getBean("dictaminarService");
@@ -92,8 +94,8 @@ public class DictamenAction extends DispatchAction {
 						request.setAttribute("nombre_jefe", jefe.getApellido1() + Constant.ESPACIO + jefe.getApellido2() + Constant.ESPACIO + jefe.getNombre());
 					}
 					
-					Delegacion delegacion = controlService.getDelegacion(usuario.getUID());
-					request.setAttribute("monto_delegacion", delegacion.getMontoMaximo());
+					request.setAttribute("nivel", nivel.getCodFuncion());
+					request.setAttribute("monto_delegacion", 0);
 					request.setAttribute("nroSolicitud", request.getParameter("nroSolicitud"));
 					request.setAttribute("codAsignacion", request.getParameter("codAsignacion"));
 				} else {
@@ -140,22 +142,15 @@ public class DictamenAction extends DispatchAction {
 		s.setNroSolicitud(nroSolicitud);
 		try {
 			listaSolicitud = solicitudService.getLstSolicitudes(s);
-			if (listaSolicitud != null && listaSolicitud.size() > 0) {					
+			if (listaSolicitud != null && listaSolicitud.size() > 0) {
 				s = listaSolicitud.get(0);
 				
-				// TODO: Solo para test
-				s = appPersonasService.invokeClient(s.getCodCentral());
-				s = appPersonasService.invokePE7CRUCE(s);
-				s = appPersonasService.invokeGerenciaTerritorial(s);
-				s = appPersonasService.invokeRelevancia(s);
-				s = appPersonasService.invokeClasificacionCliente(s);
-				s.setNroSolicitud(nroSolicitud);
-				// TODO: Solo para test
-				
-				if(s.getCodMultTipoPersona().equals(Constant.PERSONA_NATURAL)){
-					s = appPersonasService.invokeScorating(s);
-				}else{
-					s = appPersonasService.invokeRating(s);
+				if(s.getCodMultTipoPersona() != null) {
+					if(s.getCodMultTipoPersona().indexOf(Constant.PERSONA_NATURAL) > -1){
+						s = appPersonasService.invokeScorating(s);
+					}else{
+						s = appPersonasService.invokeRating(s);
+					}	
 				}
 				
 				s = appRCCService.invokeDeudaSisFinanciero(s);
@@ -191,6 +186,12 @@ public class DictamenAction extends DispatchAction {
 					a.setNroSolicitud(s.getNroSolicitud());
 					listAnalisis = analisisService.buscarAnalisis(a);
 					
+					Solicitud m = new Solicitud();
+					m.setGestorCod(uid.getCodUsuarioAsigno());
+					m.setGrupoPersona(s.getGrupoPersona());
+					BigDecimal montoDelegacion = dictaminarService.montoMaxDelegacion(m);
+					
+					map.put("monto_delegacion", montoDelegacion.intValue());
 					map.put("solicitud", s);
 					map.put("solicitudDetalle", listSolicitudDetalle);
 					map.put("dictamen", d);
@@ -257,9 +258,45 @@ public class DictamenAction extends DispatchAction {
 		return map;
 	}
 
-	public Map<String, Object> dictaminarSuperior(Dictamen row) {
+	private IILDPeUsuario responsableSuperior(Solicitud s) {
+		IILDPeUsuario jefe = null;
+		int i;
+		for(i = 0; i < 10; i++) {
+			if(dictaminarService.montoMaxDelegacion(s).compareTo(s.getRiesgoTotal()) == 1) {
+				break;
+			}
+			jefe = obtenerJefeSuperior(s.getGestorCod());
+			if(jefe != null) {
+				s.setGestorCod(jefe.getUID());
+			}
+		}
+		
+		return jefe;
+	}
+	
+	public Map<String, Object> dictaminarSuperior(Dictamen row, Solicitud s) {
 		Map<String, Object> map = new HashMap<String, Object>();
-
+		
+		try {
+			map = dictaminar(row);
+			
+			if(((Long) map.get("type")).longValue() > 0) {
+				String uid = s.getGestorCod();
+				IILDPeUsuario jefe = responsableSuperior(s);
+				if(asignacionService.asignarSolicitudMasiva("," + s.getNroSolicitud(), jefe.getUID(), uid)<=0){
+					map.put("status", false);
+					map.put("type", -1);
+					map.put("error", "No se pudo completar la asignaci\u00F3n al responsable superior.");
+				}
+			}
+			
+		} catch (Exception e) {
+			logger.error("", e);
+			map.put("status", false);
+			map.put("type", -1);
+			map.put("error", e.getMessage());
+		}
+		
 		return map;
 	}
 
@@ -290,6 +327,8 @@ public class DictamenAction extends DispatchAction {
 						}
 					}
 				}
+				
+				dictaminarService.delete(row);
 				
 				if(dictaminarService.dictaminarSolicitud(row) != null) {
 					map.put("status", true);
