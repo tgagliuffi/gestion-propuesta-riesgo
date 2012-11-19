@@ -88,7 +88,6 @@ public class AsignacionAction extends DispatchAction {
 			Usuario usuarioBean = new Usuario();
 			usuarioBean.setCodigoUsuario(usuario);
 			usuarioBean = catalogoService.getUsuarioMontos(usuarioBean);
-			 lstSolicitud=solicitudService.getLstSolicitudes(solicitudBean);
 			for (Solicitud solicitud : lstSolicitud) {
 				if(solicitud.getGrupoPersona().equalsIgnoreCase(Constant.GRUPO_PER_NATUAL)){
 					if(solicitud.getRiesgoTotal().compareTo(usuarioBean.getMtoMaxPerNatual())==-1){

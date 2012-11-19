@@ -239,11 +239,14 @@ function consultarFuertaRango(objeto){
 	var formulario = document.getElementById('asigacionForm');
 	vfueraRango = formulario.stFueraRango.checked;
 	vUsuario = formulario.hdnRegistro.value;
-	if(vUsuario!=''){
-		consultarEvaluador();
-		consultarSolicitud(vUsuario);
-	}else{
-		alert('Debe seleccionar un usuario.');
+	if(vfueraRango==true){
+		if(vUsuario!=''){
+			consultarEvaluador();
+			consultarSolicitud(vUsuario);
+		}else{
+			alert('Debe seleccionar un usuario.');
+			 formulario.stFueraRango.checked = false;
+		}
 	}
 }
 
