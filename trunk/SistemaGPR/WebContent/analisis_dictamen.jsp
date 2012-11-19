@@ -327,7 +327,7 @@
 			            <label>Producto</label>
 			        </div>
 					<table style="padding: 3px; margin: 3px; width: 99%;">
-						<tr>
+						<tr style="display: none;">
 							<td align="left" valign="middle"><font class="fontText"
 								size="3" color="#000080"><b>Banca</b></font>&nbsp;
 								<select id="bancaCliente" name="bancaCliente">
@@ -557,7 +557,7 @@
 					</tr>
 					<tr>
 						<td>Al Reembolso</td>
-						<td><input type="text" id="alVencimiento" value="" maxlength="30" /></td>
+						<td><input type="text" id="alReembolso" value="" maxlength="30" /></td>
 					</tr>
 				</table>
 			</div>

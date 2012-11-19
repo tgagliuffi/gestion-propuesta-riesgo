@@ -25,13 +25,18 @@
     <result column="COD_CENTRAL" property="codCentral" jdbcType="VARCHAR" />
     <result column="COD_MULT_DICTAMEN" property="codMultDictamen" jdbcType="VARCHAR" />
     <result column="CTRL_RATING" property="ctrlRating" jdbcType="VARCHAR" />
+    <result column="PLAZO_VENCIMIENTO" property="plazoVencimiento" jdbcType="VARCHAR" />
+	<result column="PLAZO_REEMBOLSO" property="plazoReembolso" jdbcType="VARCHAR" />
+	<result column="GARANTIAS" property="garantias" jdbcType="VARCHAR" />
+	<result column="CONDICIONANTES" property="condicionantes" jdbcType="VARCHAR" />
   </resultMap>
   <select id="findForNroSolicitud" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.DictamenKey" >
     select COD_DICTANAR, NRO_SOLICITUD, COD_MULT_NIVEL, COD_MULT_MONEDA, DESCRIPCION_MONEDA,
       RIESGO_TOTAL, MTO_APROBADO, CUAL, CUANT, ICON, CALERTA, PROACTIVIDAD, OTRO, CTRL_SCORING,
-      FECHA_VENCIMIENTO, ESTADO, COD_CENTRAL, COD_MULT_DICTAMEN, CTRL_RATING
+      FECHA_VENCIMIENTO, ESTADO, COD_CENTRAL, COD_MULT_DICTAMEN, CTRL_RATING, PLAZO_VENCIMIENTO,
+      PLAZO_REEMBOLSO, GARANTIAS, CONDICIONANTES
     from CARDEL.TGPR_DICTAMENES
-    where NRO_SOLICITUD = #nroSolicitud:DECIMAL#
+    where NRO_SOLICITUD = #nroSolicitud:DECIMAL# AND ESTADO = 1
   </select>
   <select id="ibatorgenerated_selectByPrimaryKey" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.DictamenKey" >
     <!--
@@ -61,12 +66,13 @@
   	insert into CARDEL.TGPR_DICTAMENES (COD_DICTANAR, NRO_SOLICITUD, COD_MULT_NIVEL,
       COD_MULT_MONEDA, DESCRIPCION_MONEDA, RIESGO_TOTAL, MTO_APROBADO, CUAL, CUANT, ICON, CALERTA,
       PROACTIVIDAD, OTRO, CTRL_SCORING, FECHA_VENCIMIENTO, ESTADO, COD_CENTRAL, COD_MULT_DICTAMEN,
-      CTRL_RATING)
+      CTRL_RATING, PLAZO_VENCIMIENTO, PLAZO_REEMBOLSO, GARANTIAS, CONDICIONANTES)
     values (#codDictanar:DECIMAL#, #nroSolicitud:DECIMAL#, #codMultNivel:VARCHAR#,
       #codMultMoneda:VARCHAR#, #descripcionMoneda:VARCHAR#, #riesgoTotal:DECIMAL#,
       #mtoAprobado:DECIMAL#, #cual:VARCHAR#, #cuant:VARCHAR#, #icon:VARCHAR#, #calerta:VARCHAR#,
       #proactividad:VARCHAR#, #otro:VARCHAR#, #ctrlScoring:VARCHAR#, #fechaVencimiento:VARCHAR#,
-      #estado:DECIMAL#, #codCentral:VARCHAR#, #codMultDictamen:VARCHAR#, #ctrlRating:VARCHAR#)
+      #estado:DECIMAL#, #codCentral:VARCHAR#, #codMultDictamen:VARCHAR#, #ctrlRating:VARCHAR#,
+      #plazoVencimiento:VARCHAR#, #plazoReembolso:VARCHAR#, #garantias:VARCHAR#, #condicionantes:VARCHAR#)
   </insert>
   <insert id="ibatorgenerated_insertSelective" parameterClass="bbva.pe.gpr.bean.Dictamen" >
     <!--

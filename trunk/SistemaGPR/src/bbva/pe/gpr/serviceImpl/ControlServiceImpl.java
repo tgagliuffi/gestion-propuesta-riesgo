@@ -43,11 +43,19 @@ public class ControlServiceImpl implements ControlService {
 		
 	//TODO si retorna 1 paso validacion si retorna 0 no paso validacion
 	public int condicionCliente(Solicitud solicitud) throws Exception {
-		String getBureau =solicitud.getCondicionCliente().getBureau();
-		String getBbva = solicitud.getCondicionCliente().getBbvaa();
-		String getSiFinan = solicitud.getCondicionCliente().getSistFinan();
-		String getRelPub = solicitud.getCondicionCliente().getRelevPubli();
-		String getInele = solicitud.getCondicionCliente().getInelegible();
+		String getBureau = "";
+		String getBbva = "";
+		String getSiFinan = "";
+		String getRelPub = "";
+		String getInele = "";
+		if(solicitud.getCondicionCliente() != null) {
+			getBureau = solicitud.getCondicionCliente().getBureau();
+			getBbva = solicitud.getCondicionCliente().getBbvaa();
+			getSiFinan = solicitud.getCondicionCliente().getSistFinan();
+			getRelPub = solicitud.getCondicionCliente().getRelevPubli();
+			getInele = solicitud.getCondicionCliente().getInelegible();
+		}
+		
 		if (	metodoGenericoCondCliente(Constant.TABLA_BUREAU, getBureau).equals("1")&& 
 				metodoGenericoCondCliente(Constant.TABLA_BBVA, getBbva).equals("1") && 
 				metodoGenericoCondCliente(Constant.TABLA_SISTEMA_FINANCIERO, getSiFinan).equals("1") && 
@@ -60,11 +68,19 @@ public class ControlServiceImpl implements ControlService {
 	
 	public String mensajeCondicionCliente(Solicitud solicitud ) throws Exception{
 		String mensaje="",bureau="Apto\n",bBVA="Apto\n",sistemaFin="Apto\n",relevaPub="Apto\n",inelegibles="Apto\n";
-		String getBureau =solicitud.getCondicionCliente().getBureau();
-		String getBbva = solicitud.getCondicionCliente().getBbvaa();
-		String getSiFinan = solicitud.getCondicionCliente().getSistFinan();
-		String getRelPub = solicitud.getCondicionCliente().getRelevPubli();
-		String getInele = solicitud.getCondicionCliente().getInelegible();
+		String getBureau = "";
+		String getBbva = "";
+		String getSiFinan = "";
+		String getRelPub = "";
+		String getInele = "";
+		
+		if(solicitud.getCondicionCliente() != null) {
+			getBureau = solicitud.getCondicionCliente().getBureau();
+			getBbva = solicitud.getCondicionCliente().getBbvaa();
+			getSiFinan = solicitud.getCondicionCliente().getSistFinan();
+			getRelPub = solicitud.getCondicionCliente().getRelevPubli();
+			getInele = solicitud.getCondicionCliente().getInelegible();
+		}
 		
 	    String valorBureau=metodoGenericoCondCliente(Constant.TABLA_BUREAU, getBureau);
 		String valorBBVA=metodoGenericoCondCliente(Constant.TABLA_BBVA, getBbva);
