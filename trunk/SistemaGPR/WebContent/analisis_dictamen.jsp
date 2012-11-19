@@ -237,7 +237,7 @@
 								<font class="fontText" size="3" color="#000080"><b>Riesgo Total</b></font>
 							</td>
 							<td valign="middle">
-								<input type="text" name="riesgoTotal" class="cajaTexto" id="riesgoTotal" size="15" maxlength="15">&nbsp;
+								<input type="text" name="riesgoTotal" class="cajaTexto" id="riesgoTotal" size="15" maxlength="15" readonly>&nbsp;
 								<img src="imagenes/rojo.png" border="0">
 							</td>
 							<td valign="middle">
@@ -338,7 +338,7 @@
 							</td>
 							<td align="center" valign="middle">
 								<font class="fontText" size="3" color="#000080"><b>Moneda</b></font>&nbsp;
-								<select id="tipoMoneda" name="tipoMoneda">
+								<select id="tipoMoneda2" name="tipoMoneda2">
 									<option value="SL">SOLES</option>
 									<option value="DL">DÓLARES</option>
 								</select>

@@ -2,10 +2,14 @@ package bbva.pe.gpr.serviceImpl;
 
 import java.math.BigDecimal;
 
+import org.apache.log4j.Logger;
+
 import bbva.pe.gpr.bean.Dictamen;
 import bbva.pe.gpr.bean.MultitablaDetalle;
+import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.SolicitudMensaje;
 import bbva.pe.gpr.bean.SolicitudOperacion;
+import bbva.pe.gpr.bean.Usuario;
 import bbva.pe.gpr.dao.DictamenDAO;
 import bbva.pe.gpr.dao.MultitablaDetalleDAO;
 import bbva.pe.gpr.dao.SolicitudMensajeDAO;
@@ -14,6 +18,8 @@ import bbva.pe.gpr.service.DictaminarService;
 import bbva.pe.gpr.util.Constant;
 
 public class DictaminarServiceImpl implements DictaminarService {
+	
+	private static Logger logger = Logger.getLogger(DictaminarServiceImpl.class);
 	private DictamenDAO dictamenDAO;
 	private SolicitudOperacionDAO solicitudOperacionDAO;
 	private SolicitudMensajeDAO solicitudMensajeDAO;
@@ -102,5 +108,32 @@ public class DictaminarServiceImpl implements DictaminarService {
 
 	public Dictamen findForNroSolictud(Dictamen d) throws Exception {
 		return dictamenDAO.findForNumeroSolicitud(d);
+	}
+
+	public BigDecimal montoMaxDelegacion(Solicitud s) {
+		BigDecimal monto = BigDecimal.ZERO;
+		
+		try {
+			Usuario usuario = dictamenDAO.montoMaxDelegacion(s);
+			monto = usuario.getMtoMaxDelegacion();
+		} catch(Exception e) {
+			logger.error("", e);
+		}
+		
+		return monto;
+	}
+
+	public Long delete(Dictamen dictamen) throws Exception {
+		Long rspt = null;
+
+		if (dictamenDAO.deleteByPrimaryKey(dictamen) > 0) {
+			ingresaSolicitudOperacion(dictamen, Constant.TABLA_PROCESO, Constant.MULT_PROCESO_DICTAMINAR);
+			if (dictamen.getStrMensaje() != null) {
+				solicitudMensajeDAO.insert(seteaMensajeBean(dictamen));
+			}
+			rspt = new Long(1);
+		}
+		
+		return rspt;
 	}
 }
