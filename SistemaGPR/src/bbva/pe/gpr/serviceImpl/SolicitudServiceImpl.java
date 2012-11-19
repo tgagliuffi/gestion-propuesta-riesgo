@@ -375,6 +375,4 @@ public class SolicitudServiceImpl implements SolicitudService{
 	  {
 		  return solicitudesDAO.updateByPrimaryKeySelective(solicitudBean);
 	  }
-	 
-
 }

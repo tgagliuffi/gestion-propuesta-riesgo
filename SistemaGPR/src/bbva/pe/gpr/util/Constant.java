@@ -77,5 +77,6 @@ public class Constant {
 	public static final BigDecimal EVALUADOR = BigDecimal.ONE ;
 	public static final BigDecimal DICTAMINADOR = BigDecimal.valueOf(2);
 	public static final BigDecimal RESPONSABLE = BigDecimal.valueOf(3);
-	
+
+	public static final String DICTAMEN = "4";
 }
