@@ -192,11 +192,11 @@ public class ValidacionServiceImpl implements ValidacionService {
 		}else{
 			//riesgos
 			if(solicitud.getGrupoPersona().equals(Constant.GRUPO_CON_RATING)){
-			valorRetorno=riesgoPorRating(solicitud);	
+			//valorRetorno=riesgoPorRating(solicitud);	
 			}else if(solicitud.getGrupoPersona().equals(Constant.GRUPO_SIN_RATING)){
-			valorRetorno=riesgoSinRating(solicitud);					
+			//valorRetorno=riesgoSinRating(solicitud);					
 			}else if(solicitud.getGrupoPersona().equals(Constant.GRUPO_PER_NATUAL)){
-			valorRetorno=riesgoPersonaNatural(solicitud);	
+			//valorRetorno=riesgoPersonaNatural(solicitud);	
 			}
 		}
 			return valorRetorno;
