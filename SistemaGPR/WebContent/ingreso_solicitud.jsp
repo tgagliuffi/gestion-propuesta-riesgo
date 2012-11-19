@@ -1196,9 +1196,10 @@ var nroSolicitud = formulario.mantener.value;
 	
 	</tr>
 	<tr>
-		<td><input type="button" class="buttonGPR"  name="btnGuardar" id="btnGuardar" onclick="guardarSolicitud();" value="Guardar Solicitud">&nbsp;
+		<td colspan="5" valign="middle">
+		<input type="button" class="buttonGPR"  name="btnGuardar" id="btnGuardar" onclick="guardarSolicitud();" value="Guardar Solicitud">&nbsp;
 		<input type="button" class="buttonGPR"  name="btnReset" id="btnReset" onclick='limpiaForm($("#formSolicitudIngreso"));' value="Limpiar Solicitud">&nbsp;
-		<input type="button"   id="btnCondiciones"  class="buttonGPR" value="Añadir Observacion" onclick="llamarPopup();">&nbsp;
+		<input type="button"   id="btnCondiciones"  class="buttonGPR" value="Observacion" onclick="llamarPopup();">&nbsp;
 		<div id="dialog-form" title="Observacion" style="width: 400px">
 		<form>
 	        <center>
