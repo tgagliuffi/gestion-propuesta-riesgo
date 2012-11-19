@@ -40,5 +40,12 @@
 		FROM 	CARDEL.TRSG_GERENTE 
 		WHERE   COD_REGISTRO=#value#
  </select>
+
+ <select id="getValidarUsuarioRiesgos"   resultClass="string">
+    	SELECT  COUNT(*)
+		FROM    CARDEL.TRSG_GERENTE
+		WHERE   COD_REGISTRO= #cod_registro#   AND
+                estado !=0
+ </select>
  
  </sqlMap>
