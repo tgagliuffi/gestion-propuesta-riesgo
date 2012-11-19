@@ -38,15 +38,16 @@
 	
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/dictamen/general.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/dictamen/estadisticaAsignacion.js"></script>
+	<style type="text/css">
+		* {font-family: Tahoma !important;}
+	</style>
 </head>
 <body>
 
 <form name="formEstadicticaAsignacion" method="post">
-
-	<div style="background-color: #0066bb;">
-		<font face="Arial Narrow" size=3 color="#FFFFFF"><b>&nbsp;Módulo de Estadísticas de asignaciones automáticas y manuales</b></font>
+	<div style="background-color: #0066bb;height: 20px;line-height: 20px;">
+		<font face="Arial Narrow" size=3 color="#FFFFFF"><b style="font-size: 12px;">&nbsp;&nbsp;Módulo de Estadísticas de Asignaciones Automáticas y Manuales</b></font>
 	</div>
-
 	<br/>
 	<table style="width: 400px" border="0" cellspacing="0" cellpadding="0">
 	<tr>
@@ -77,7 +78,7 @@
 	</tr>
 	</table>
 	
-	<div id="tabsDictamen" style="width: 900px;">
+	<div id="tabsEstadisticas" style="width: 900px;">
 		<ul>
 			<li><a href="#tabs-1">Graficas</a></li>
 			<li><a href="#tabs-2">Detalle</a></li>

@@ -473,6 +473,15 @@ $(document).ready(function(){
 	    });	
 		$("#bancaCliente").html(options);
 	});
+	DictamenAction.cargarComboCondicionesScoring(function(data){
+		options = "";
+		console.log(data);
+		$.each(data, function(i , columns){ 
+			console.log(columns);
+		    options +='<tr><td><input type="checkbox" value="' + columns.codElemento + '" id="_' + columns.codElemento + '">&nbsp;&nbsp;' + columns.strValor + "</td></td>";
+		});
+		$("#listCondiciones").html(options);
+	});
 	
 	if($("#nivel").val() != '1') {
 		$("#btnCondiciones").button("option", "disabled", true);

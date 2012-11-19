@@ -36,6 +36,10 @@ buscarEstadisticaAsignacion = function(){
 	});
 };
 
+$(function(){
+	$("#tabsEstadisticas").tabs();
+});
+
 $(document).ready(function(){
 	buscarEstadisticaAsignacion();
 });

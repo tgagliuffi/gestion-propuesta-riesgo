@@ -33,6 +33,7 @@ import bbva.pe.gpr.service.ControlService;
 import bbva.pe.gpr.service.DictaminarService;
 import bbva.pe.gpr.service.SeguridadService;
 import bbva.pe.gpr.service.SolicitudService;
+import bbva.pe.gpr.service.ValidacionService;
 import bbva.pe.gpr.serviceImpl.AplicativoPersonasServiceImpl;
 import bbva.pe.gpr.serviceImpl.AplicativoRCCServiceImpl;
 import bbva.pe.gpr.serviceImpl.AplicativoRCDServiceImpl;
@@ -54,6 +55,7 @@ public class DictamenAction extends DispatchAction {
 	private AplicativoPersonasServiceImpl appPersonasService;
 	private AplicativoRCDServiceImpl appRCDService;
 	private AplicativoRCCServiceImpl appRCCService;
+	private ValidacionService validacionService;
 
 	public DictamenAction() {
 		asignacionService = (AsignacionService) Context.getInstance().getBean("asignacionService");
@@ -63,6 +65,7 @@ public class DictamenAction extends DispatchAction {
 		solicitudService = (SolicitudService) Context.getInstance().getBean("solicitudService");
 		catalogoService = (CatalogoService) Context.getInstance().getBean("catalogoService");
 		seguridadService = (SeguridadService) Context.getInstance().getBean("seguridadService");
+		validacionService = (ValidacionService) Context.getInstance().getBean("validacionServiceImpl");
 		
 		appPersonasService = new AplicativoPersonasServiceImpl();
 		appRCDService = new AplicativoRCDServiceImpl();
@@ -318,7 +321,7 @@ public class DictamenAction extends DispatchAction {
 					}
 					
 					if(sd != null && sd.size() > 0) {
-						if(controlService.validacionMontosPlazos(sd) != 1 || superior == 0) {
+						if(validacionService.metodoEncapsulado(s) != 1 || superior == 0) {
 							plazo = "El cliente no cumple con la validaci\u00F3n de montos y plazos. Ud. no pude dictaminar esta solicitud, \u00BF Desea enviarlo para su dictamen a un superior \u003F";
 							map.put("status", false);
 							map.put("type", -2);
@@ -380,6 +383,10 @@ public class DictamenAction extends DispatchAction {
 	
 	public List<MultitablaDetalle> cargarComboMoneda(){
 		return cargarCombo(Constant.TABLA_MONEDA);
+	}
+	
+	public List<MultitablaDetalle> cargarComboCondicionesScoring(){
+		return cargarCombo(Constant.TABLA_SCORING);
 	}
 	
 	public List<Banca> cargarComboBanca() {
