@@ -154,18 +154,24 @@ buscarSolicitud = function(){
 	
 	DictamenAction.buscarSolicitud(parameters, function(data){
 		// debugger;
-		if(data.status) {
-			if(data.monto_delegacion != null || data.monto_delegacion != undefined) {
-				$("#monto_delegacion").val(data.monto_delegacion);
-			} else {
-				$("#monto_delegacion").val(0);
-			}
-			
+		if(data.status) {			
 			configurarGrid("listProducts", data.solicitudDetalle, optionSolicitudDetalle);
 			configurarGrid("listAnalisis", data.analisis, optionAnalisis);
 			dictamen(data.dictamen);
 			
 			s = data.solicitud;
+			
+			if(data.monto_delegacion != null || data.monto_delegacion != undefined) {
+				$("#monto_delegacion").val();
+				if(data.monto_delegacion > s.riesgoTotal) {
+					$("#semaforoRiesgo").attr("src", "imagenes/verde.png");
+				} else {
+					$("#semaforoRiesgo").attr("src", "imagenes/rojo.png");
+				}
+			} else {
+				$("#monto_delegacion").val(0);
+			}
+			
 			$("#codigoCentral").val(s.codCentral);
 			$("#tipoPersona").val(s.desMultTipoPersona);
 			$("#rucDni").val(s.numeroDocumento);
@@ -258,6 +264,111 @@ optionDialog = {
     }
 }; 
 
+eliminarAnalisis = function(){
+	if(confirm("\u00BFEst\u00E1 seguro que desea eliminar este proceso del an\u00E1lisis\u003F")){
+		rowId = $("#listAnalisis").jqGrid('getGridParam','selrow');
+		if(rowId != null || rowId != undefined) {
+			row = $("#listAnalisis").jqGrid('getRowData', rowId);
+			analisis = {
+				codAnalisis: row.codAnalisis,
+				codMutlProceso: row.codMutlProceso,
+				codMultMotivo: row.codMultMotivo,
+				comentario: row.comentario,
+				estado: 1,
+				codAsignacion: row.codAsignacion,
+				codCentral: row.codCentral,
+				codUsuario: $("#codEvaluador").val(),
+				nroSolicitud: row.nroSolicitud
+			};
+			DictamenAction.eliminarAnalisis(analisis, function(data){
+				configurarGrid("listAnalisis", data.analisis, optionAnalisis);
+				alert(data.error);
+			});	
+		} else {
+			alert("Seleccione el proceso a elimimar");
+		}
+	}
+};
+
+agregarAnalisis = function(){
+	habilitarBotonAnalisis(false);
+	$("#cboProceso").val("9999999999");
+	$("#cboMotivo").val("9999999999");
+	$("#textMensaje").val("");
+};
+
+grabarAnalisis = function(){
+	if($("#cboProceso").val()=="9999999999" || $("#cboMotivo").val()=="9999999999") {
+		alert("Debe seleccionar el proceso y motivo");
+		return;
+	}
+	if(confirm("\u00BFEst\u00E1 seguro que desea grabar este proceso del an\u00E1lisis\u003F")){
+		analisis = {
+			codMutlProceso: $("#cboProceso").val(),
+			codMultMotivo: $("#cboMotivo").val(),
+			comentario: $("#textMensaje").val(),
+			estado: 1,
+			codAsignacion: $("#codAsignacion").val(),
+			codCentral: $("#codigoCentral").val(),
+			codUsuario: $("#codEvaluador").val(),
+			nroSolicitud: $("#nroSolicitud").val()
+		};
+		DictamenAction.agregarAnalisis(analisis, function(data){
+			configurarGrid("listAnalisis", data.analisis, optionAnalisis);
+			alert(data.error);
+		});
+		habilitarBotonAnalisis(true);
+	}
+};
+
+dictaminar = function(){
+	rating = 0;
+	if($("#rating_dictamen").val().toUpperCase() == "I") {
+		rating += $("#montoCualitativo").attr("checked") == "checked" ? 1 : 0;
+		rating += $("#montoCuantitativo").attr("checked") == "checked" ? 1 : 0;
+		rating += $("#montoICom").attr("checked") == "checked" ? 1 : 0;
+		rating += $("#montoCAlerta").attr("checked") == "checked" ? 1 : 0;
+		
+		if(rating < 1 || rating > 3) {
+			alert("Solo puede marcar de una a tres opciones.");
+			return;
+		}
+	}
+	
+	dictamen={
+		codMultDictamen: $("#slctDictamen").val(),
+		codMultNivel: $("#slctNivAprob").val(),
+		codMultMoneda: $("#tipoMoneda").val(),
+		riesgoTotal: $("#riesgoTotal").val(),
+		mtoAprobado: $("#montoAprobado").val(),
+		ctrlRating: $("#rating_dictamen").val(),
+		cual: $("#montoCualitativo").attr("checked"),
+		cuant: $("#montoCuantitativo").attr("checked"),
+		icon: $("#montoICom").attr("checked"),
+		calerta: $("#montoCAlerta").attr("checked"),
+		proactividad: $("#slctProactividad").val(),
+		otro: $("#valOtr").val(),
+		ctrlScoring: $("#ctrlScoring_dictamen").val(),
+		fechaVencimiento: $("#fecVencimiento").val(),
+		nroSolicitud: $("#nroSolicitud").val(),
+		codCentral: $("#codigoCentral").val(),
+		estado: 1
+	};
+	// console.log(dictamen);
+	DictamenAction.dictaminar(dictamen, function(data){
+		if(data.type == -2) {
+			if(confirm(data.plazo)){
+				alert("Dictamen Superior");
+			}
+		} else {
+			if(data.warn != null || data.warn != undefined) {
+				alert(data.warn);
+			}
+			alert(data.error);
+		}
+	});
+};
+
 $(function(){
 	$("#tabsDictamen").tabs();
 	$("#dialog-scoring").dialog(optionDialog);
@@ -298,129 +409,36 @@ $(document).ready(function(){
 		$("#bancaCliente").html(options);
 	});
 	
-	$("#btnCondiciones").bind("click", function() {
-        $("#dialog-form").dialog("open");
-    });
-	
-	$("#btnCondicionesScoring").bind("click", function() {
-        $("#dialog-scoring").dialog("open");
-    });
-	
-	$("#btnEliminarAnalisis").bind("click", function(){
-		if(confirm("\u00BFEst\u00E1 seguro que desea eliminar este proceso del an\u00E1lisis\u003F")){
-			rowId = $("#listAnalisis").jqGrid('getGridParam','selrow');
-			if(rowId != null || rowId != undefined) {
-				row = $("#listAnalisis").jqGrid('getRowData', rowId);
-				analisis = {
-					codAnalisis: row.codAnalisis,
-					codMutlProceso: row.codMutlProceso,
-					codMultMotivo: row.codMultMotivo,
-					comentario: row.comentario,
-					estado: 1,
-					codAsignacion: row.codAsignacion,
-					codCentral: row.codCentral,
-					codUsuario: $("#codEvaluador").val(),
-					nroSolicitud: row.nroSolicitud
-				};
-				DictamenAction.eliminarAnalisis(analisis, function(data){
-					configurarGrid("listAnalisis", data.analisis, optionAnalisis);
-					alert(data.error);
-				});	
-			} else {
-				alert("Seleccione el proceso a elimimar");
-			}
-		}
-	});
-	
-	$("#btnAgregarAnalisis").bind("click", function(){
-		habilitarBotonAnalisis(false);
-		$("#cboProceso").val("9999999999");
-		$("#cboMotivo").val("9999999999");
-		$("#textMensaje").val("");
-	});
-	
-	$("#btnGrabarAnalisis").bind("click", function(){
-		if($("#cboProceso").val()=="9999999999" || $("#cboMotivo").val()=="9999999999") {
-			alert("Debe seleccionar el proceso y motivo");
-			return;
-		}
-		if(confirm("\u00BFEst\u00E1 seguro que desea grabar este proceso del an\u00E1lisis\u003F")){
-			analisis = {
-				codMutlProceso: $("#cboProceso").val(),
-				codMultMotivo: $("#cboMotivo").val(),
-				comentario: $("#textMensaje").val(),
-				estado: 1,
-				codAsignacion: $("#codAsignacion").val(),
-				codCentral: $("#codigoCentral").val(),
-				codUsuario: $("#codEvaluador").val(),
-				nroSolicitud: $("#nroSolicitud").val()
-			};
-			DictamenAction.agregarAnalisis(analisis, function(data){
-				configurarGrid("listAnalisis", data.analisis, optionAnalisis);
-				alert(data.error);
-			});
-			habilitarBotonAnalisis(true);
-		}
-	});
-	
-	$("#btnCancelarAnalisis").bind("click", function(){
-		habilitarBotonAnalisis(true);
-	});
-	
-	$("#fecVencimiento").datepicker({
-		dateFormat : 'dd/mm/yy'
-	});
-	
-	$("#btnDictaminar").bind("click", function(){
-		rating = 0;
-		if($("#rating_dictamen").val().toUpperCase() == "I") {
-			rating += $("#montoCualitativo").attr("checked") == "checked" ? 1 : 0;
-			rating += $("#montoCuantitativo").attr("checked") == "checked" ? 1 : 0;
-			rating += $("#montoICom").attr("checked") == "checked" ? 1 : 0;
-			rating += $("#montoCAlerta").attr("checked") == "checked" ? 1 : 0;
-			
-			if(rating < 1 || rating > 3) {
-				alert("Solo puede marcar de una a tres opciones.");
-				return;
-			}
-		}
+	if($("#nivel").val() != '1') {
+		$("#btnCondiciones").button("option", "disabled", true);
+		$("#btnCondicionesScoring").button("option", "disabled", true);
 		
-		dictamen={
-			codMultDictamen: $("#slctDictamen").val(),
-			codMultNivel: $("#slctNivAprob").val(),
-			codMultMoneda: $("#tipoMoneda").val(),
-			riesgoTotal: $("#riesgoTotal").val(),
-			mtoAprobado: $("#montoAprobado").val(),
-			ctrlRating: $("#rating_dictamen").val(),
-			cual: $("#montoCualitativo").attr("checked"),
-			cuant: $("#montoCuantitativo").attr("checked"),
-			icon: $("#montoICom").attr("checked"),
-			calerta: $("#montoCAlerta").attr("checked"),
-			proactividad: $("#slctProactividad").val(),
-			otro: $("#valOtr").val(),
-			ctrlScoring: $("#ctrlScoring_dictamen").val(),
-			fechaVencimiento: $("#fecVencimiento").val(),
-			nroSolicitud: $("#nroSolicitud").val(),
-			codCentral: $("#codigoCentral").val(),
-			estado: 1
-		};
-		console.log(dictamen);
-		DictamenAction.dictaminar(dictamen, function(data){
-			if(data.type == -2) {
-				if(confirm(data.plazo)){
-					alert("Dictamen Superior");
-				}
-			} else {
-				if(data.warn != null || data.warn != undefined) {
-					alert(data.warn);
-				}
-				alert(data.error);
-			}
+		$("#btnCondiciones").bind("click", function() {
+	        $("#dialog-form").dialog("open");
+	    });
+		
+		$("#btnCondicionesScoring").bind("click", function() {
+	        $("#dialog-scoring").dialog("open");
+	    });
+		
+		$("#btnEliminarAnalisis").bind("click", eliminarAnalisis);
+		$("#btnAgregarAnalisis").bind("click", agregarAnalisis);
+		$("#btnGrabarAnalisis").bind("click", grabarAnalisis);
+		
+		$("#btnCancelarAnalisis").bind("click", function(){
+			habilitarBotonAnalisis(true);
 		});
-	});
-	
-	$("#rating_dictamen").bind("change", validaRating);
-	$("#ctrlScoring_dictamen").bind("change", validaScoring);
-	
+		
+		$("#fecVencimiento").datepicker({
+			dateFormat : 'dd/mm/yy'
+		});
+		
+		$("#btnDictaminar").bind("click", dictaminar);
+		$("#rating_dictamen").bind("change", validaRating);
+		$("#ctrlScoring_dictamen").bind("change", validaScoring);
+	} else {
+		$("#tabsDictamen").css({"display": "none"});
+	}
+
 	buscarSolicitud();
 });
