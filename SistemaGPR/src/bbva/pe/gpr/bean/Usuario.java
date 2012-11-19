@@ -20,6 +20,12 @@ public class Usuario {
 	private Long cantidad;
 	private String dependiente;
 	private BigDecimal codRol;
+	private BigDecimal mtoMaxPerNatual;
+	private BigDecimal mtoMaxRating;
+	private BigDecimal mtoSinRating;
+	
+	private String codigoUsuarioSession;
+	
 	
 	public Long getIdUsuario() {
 		return idUsuario;
@@ -99,5 +105,29 @@ public class Usuario {
 	public void setCodRol(BigDecimal codRol) {
 		this.codRol = codRol;
 	}
-
+	public BigDecimal getMtoMaxPerNatual() {
+		return mtoMaxPerNatual;
+	}
+	public void setMtoMaxPerNatual(BigDecimal mtoMaxPerNatual) {
+		this.mtoMaxPerNatual = mtoMaxPerNatual;
+	}
+	public BigDecimal getMtoMaxRating() {
+		return mtoMaxRating;
+	}
+	public void setMtoMaxRating(BigDecimal mtoMaxRating) {
+		this.mtoMaxRating = mtoMaxRating;
+	}
+	public BigDecimal getMtoSinRating() {
+		return mtoSinRating;
+	}
+	public void setMtoSinRating(BigDecimal mtoSinRating) {
+		this.mtoSinRating = mtoSinRating;
+	}
+	public String getCodigoUsuarioSession() {
+		return codigoUsuarioSession;
+	}
+	public void setCodigoUsuarioSession(String codigoUsuarioSession) {
+		this.codigoUsuarioSession = codigoUsuarioSession;
+	}
+	
 }

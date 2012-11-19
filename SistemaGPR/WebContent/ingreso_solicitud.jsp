@@ -31,6 +31,7 @@
 	<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/util/formatters.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/script.js" type="text/javascript"></script>
+		<script src="<%=request.getContextPath()%>/js/util.gpr.js" type="text/javascript"></script>
 	
 <script type="text/javascript">
 
@@ -40,9 +41,6 @@ optionDialog = {
     modal: true,
     buttons: {
         "Aceptar": function() {
-        	var formulario = document.getElementById('formSolicitudIngreso');
-        	var text = $('#textGarantia').val();
-        	formulario.strMensajePopUP.value=text;
         	console.log($(this).attr("id"));
         	$(this).dialog("close");
         },
@@ -812,7 +810,7 @@ var nroSolicitud = formulario.mantener.value;
 			<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
 				<input type="text" name="desMultTipoPersona" class="cajaTexto" id="desMultTipoPersona" size="20" maxlength="8"  value="${Solicitud.desMultTipoPersona}" readonly="readonly">&nbsp;
 				<%}else{%>
-				<input type="text" name="desMultTipoPersona" class="cajaTexto" id="desMultTipoPersona" size="20" maxlength="60" value='${solicitudForm.desMultTipoPersona}' readonly="readonly">&nbsp;
+				<input type="text" name="desMultTipoPersona" class="cajaTexto" id="desMultTipoPersona" size="20" maxlength="60" value="${solicitudForm.desMultTipoPersona}" readonly="readonly">&nbsp;
 			<%}%>			
 			
 			<font class="fontText">Ruc / DNI *</font>&nbsp;
@@ -820,7 +818,7 @@ var nroSolicitud = formulario.mantener.value;
 			<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>  
 				<html:text property="numeroDocumento" styleClass="cajaTexto" styleId="numeroDocumento" size="27" maxlength="27" value="${Solicitud.numeroDocumento}" readonly="readonly" />
 				<%}else{%>
-				<html:text property="numeroDocumento" styleClass="cajaTexto" styleId="numeroDocumento" size="27" maxlength="27" value='${solicitudForm.numeroDocumento}' readonly="readonly"/>
+				<html:text property="numeroDocumento" styleClass="cajaTexto" styleId="numeroDocumento" size="27" maxlength="27" value="${solicitudForm.numeroDocumento}" readonly="readonly"/>
 			<%}%>
 			
 			
@@ -831,9 +829,9 @@ var nroSolicitud = formulario.mantener.value;
        		<font class="fontText">Razon Social / Apellidos y Nombres *</font>&nbsp;
        		
        		<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-       		<html:text property="desSolicitante" styleClass="cajaTexto" styleId="desSolicitante" size="76" maxlength="76" value="${Solicitud.desSolicitante}" readonly="readonly" />
+       		<html:text property="desSolicitante" styleClass="cajaTexto" styleId="desSolicitante" size="76" maxlength="76" value="${Solicitud.desSolicitante}" readonly="readonly"/>
 			<%}else{%>
-			<html:text property="desSolicitante" styleClass="cajaTexto" styleId="desSolicitante" size="76" maxlength="76" value='${solicitudForm.desSolicitante}' readonly="readonly"/>
+			<html:text property="desSolicitante" styleClass="cajaTexto" styleId="desSolicitante" size="76" maxlength="76" value="${solicitudForm.desSolicitante}" readonly="readonly"/>
 			<%}%>
        </td>   
 	</tr>
@@ -842,11 +840,11 @@ var nroSolicitud = formulario.mantener.value;
        		<font class="fontText">Oficina Principal *</font>&nbsp;
        		
        		<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-       		<html:text property="codOficina" styleClass="cajaTexto" styleId="codOficina" size="10" maxlength="10" value='${Solicitud.codOficina}' readonly="readonly" />
-       		<html:text property="desOficina" styleClass="cajaTexto" styleId="desOficina" size="40" maxlength="20" value='${Solicitud.desOficina}' readonly="readonly" />&nbsp;&nbsp;
+       		<html:text property="codOficina" styleClass="cajaTexto" styleId="codOficina" size="10" maxlength="10" value="${Solicitud.codOficina}" readonly="readonly" />
+       		<html:text property="desOficina" styleClass="cajaTexto" styleId="desOficina" size="40" maxlength="20" value="${Solicitud.desOficina}" readonly="readonly" />&nbsp;&nbsp;
 			<%}else{%>
-			<html:text property="codOficina" styleClass="cajaTexto" styleId="codOficina" size="10" maxlength="10" value='${solicitudForm.codOficina}' readonly="readonly"/>
-       		<html:text property="desOficina" styleClass="cajaTexto" styleId="desOficina" size="40" maxlength="20" value='${solicitudForm.desOficina}' readonly="readonly"/>&nbsp;&nbsp;
+			<html:text property="codOficina" styleClass="cajaTexto" styleId="codOficina" size="10" maxlength="10" value="${solicitudForm.codOficina}" readonly="readonly"/>
+       		<html:text property="desOficina" styleClass="cajaTexto" styleId="desOficina" size="40" maxlength="20" value="${solicitudForm.desOficina}" readonly="readonly"/>&nbsp;&nbsp;
 		
 		    <%}%>
 	   </td>
@@ -854,11 +852,11 @@ var nroSolicitud = formulario.mantener.value;
 			<font class="fontText">Gestor *</font>&nbsp;
 			
 			<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-			<html:text property="gestorCod" styleClass="cajaTexto" styleId="gestorCod" size="10" maxlength="10" value='${Solicitud.gestorCod}' readonly="readonly" />
-       		<html:text property="gestorNom" styleClass="cajaTexto" styleId="gestorNom" size="40" maxlength="20" value='${Solicitud.gestorNom}' readonly="readonly" />
+			<html:text property="gestorCod" styleClass="cajaTexto" styleId="gestorCod" size="10" maxlength="10" value="${Solicitud.gestorCod}" readonly="readonly" />
+       		<html:text property="gestorNom" styleClass="cajaTexto" styleId="gestorNom" size="40" maxlength="20" value="${Solicitud.gestorNom}" readonly="readonly" />
 			<%}else{%>
-			<html:text property="gestorCod" styleClass="cajaTexto" styleId="gestorCod" size="10" maxlength="10" value='${solicitudForm.gestorCod}' readonly="readonly"/>
-       		<html:text property="gestorNom" styleClass="cajaTexto" styleId="gestorNom" size="40" maxlength="20" value='${solicitudForm.gestorNom}' readonly="readonly"/>
+			<html:text property="gestorCod" styleClass="cajaTexto" styleId="gestorCod" size="10" maxlength="10" value="${solicitudForm.gestorCod}" readonly="readonly"/>
+       		<html:text property="gestorNom" styleClass="cajaTexto" styleId="gestorNom" size="40" maxlength="20" value="${solicitudForm.gestorNom}" readonly="readonly"/>
 			<%}%>
        </td>
 	</tr>
@@ -868,11 +866,11 @@ var nroSolicitud = formulario.mantener.value;
 			<font class="fontText">Empleador *</font>&nbsp;
 			
 			<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-			<html:text property="empleadorCod" styleClass="cajaTexto" styleId="empleadorCod" size="14" maxlength="10" value='${Solicitud.empleadorCod}' readonly="readonly" />
-       		<html:text property="empleadorNom" styleClass="cajaTexto" styleId="empleadorNom" size="40" maxlength="20" value='${Solicitud.empleadorNom}' readonly="readonly" />
+			<html:text property="empleadorCod" styleClass="cajaTexto" styleId="empleadorCod" size="14" maxlength="10" value="${Solicitud.empleadorCod}" readonly="readonly" />
+       		<html:text property="empleadorNom" styleClass="cajaTexto" styleId="empleadorNom" size="40" maxlength="20" value="${Solicitud.empleadorNom}" readonly="readonly" />
 			<%}else{%>
-			<html:text property="empleadorCod" styleClass="cajaTexto" styleId="empleadorCod" size="14" maxlength="10" value='${solicitudForm.empleadorCod}' readonly="readonly"/>
-       		<html:text property="empleadorNom" styleClass="cajaTexto" styleId="empleadorNom" size="40" maxlength="20" value='${solicitudForm.empleadorNom}' readonly="readonly"/>
+			<html:text property="empleadorCod" styleClass="cajaTexto" styleId="empleadorCod" size="14" maxlength="10" value="${solicitudForm.empleadorCod}" readonly="readonly"/>
+       		<html:text property="empleadorNom" styleClass="cajaTexto" styleId="empleadorNom" size="40" maxlength="20" value="${solicitudForm.empleadorNom}" readonly="readonly"/>
 			<%}%>
        </td>
 	</tr>
@@ -893,8 +891,8 @@ var nroSolicitud = formulario.mantener.value;
 			<input type="text" name="ejecutivoCtaCod" class="cajaTexto" id="ejecutivoCtaCod" size="10" maxlength="10" value="${Solicitud.ejecutivoCtaCod}"  readonly="readonly">
 			<input type="text" name="ejecutivoCtaNom" class="cajaTexto" id="ejecutivoCtaNom" size="40" maxlength="20" value="${Solicitud.ejecutivoCtaNom}"  readonly="readonly">
 			<%}else{%>
-			<input type="text" name="ejecutivoCtaCod" class="cajaTexto" id="ejecutivoCtaCod" size="10" maxlength="10" value='${solicitudForm.ejecutivoCtaCod}' readonly="readonly">
-			<input type="text" name="ejecutivoCtaNom" class="cajaTexto" id="ejecutivoCtaNom" size="40" maxlength="20" value='${solicitudForm.ejecutivoCtaNom}' readonly="readonly">
+			<input type="text" name="ejecutivoCtaCod" class="cajaTexto" id="ejecutivoCtaCod" size="10" maxlength="10" value="${solicitudForm.ejecutivoCtaCod}" readonly="readonly">
+			<input type="text" name="ejecutivoCtaNom" class="cajaTexto" id="ejecutivoCtaNom" size="40" maxlength="20" value="${solicitudForm.ejecutivoCtaNom}" readonly="readonly">
 			<%}%>
 			
 	   </td>
@@ -904,7 +902,7 @@ var nroSolicitud = formulario.mantener.value;
 			<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
 			<input type="text" name="strFechaIngreso" class="cajaTexto" id="strFechaIngreso" size="20" maxlength="20" value="${Solicitud.strFechaIngreso}" readonly="readonly">
 			<%}else{%>
-			<input type="text" name="strFechaIngreso" class="cajaTexto" id="strFechaIngreso" size="30"  maxlength="30" value='${solicitudForm.strFechaIngreso}' readonly="readonly">
+			<input type="text" name="strFechaIngreso" class="cajaTexto" id="strFechaIngreso" size="30"  maxlength="30" value="${solicitudForm.strFechaIngreso}" readonly="readonly">
 			<%}%>
 			
        </td>
@@ -1198,34 +1196,21 @@ var nroSolicitud = formulario.mantener.value;
 	
 	</tr>
 	<tr>
-		<td colspan="5" valign="middle">
-		<input type="button" class="buttonGPR"  name="btnGuardar" id="btnGuardar"  onclick="guardarSolicitud();" value="Guardar Solicitud">
-		<input type="button" class="buttonGPR"  name="btnReset"   id="btnReset"    onclick='limpiaForm($("#formSolicitudIngreso"));' value="Limpiar Solicitud">
-		<input type="button" class="buttonGPR"  name="btnPopup"   id="btnCondiciones" onclick="llamarPopup();" value="OBSERVACION">
-		<div id="dialog-form" title=" Añadir Observacion" style="width: 450px">
+		<td><input type="button" class="buttonGPR"  name="btnGuardar" id="btnGuardar" onclick="guardarSolicitud();" value="Guardar Solicitud">&nbsp;
+		<input type="button" class="buttonGPR"  name="btnReset" id="btnReset" onclick='limpiaForm($("#formSolicitudIngreso"));' value="Limpiar Solicitud">&nbsp;
+		<input type="button"   id="btnCondiciones"  class="buttonGPR" value="Añadir Observacion" onclick="llamarPopup();">&nbsp;
+		<div id="dialog-form" title="Observacion" style="width: 400px">
+		<form>
 	        <center>
-	        	<textarea id="textGarantia" name="textGarantia"rows="10" cols="40" style="width:330px; height: 140px;" onkeypress="return limita(this, event,100)" onkeyup="cuenta(this, event,100,'contador')">
-	        	</textarea>
-	        	<span id="contador"></span>
+	        	<textarea id="textGarantia" rows="10" cols="40" style="width: 390px; height: 140px;"></textarea>
 	        </center>
+		</form>
 	</div>
-	</td>
 	</tr>
 	</table>
 	
 </html:form>
 <script type="text/javascript">
-
-function limita(obj,elEvento, maxi) { 
-	var elem = obj; var evento = elEvento || window.event; var cod = evento.charCode || evento.keyCode; 
-	if(cod == 37 || cod == 38 || cod == 39 || cod == 40 || cod == 8 || cod == 46) { return true; } if(elem.value.length < maxi ) { 
-		return true; } return false; 
-	}
-
-function cuenta(obj,evento,maxi,div) { 
-	var elem = obj.value; var info = document.getElementById(div); info.innerHTML = maxi-elem.length; 
-}
-	
 function llamarPopup(){
 	$( "#dialog-form" ).dialog( "open" );
 }
