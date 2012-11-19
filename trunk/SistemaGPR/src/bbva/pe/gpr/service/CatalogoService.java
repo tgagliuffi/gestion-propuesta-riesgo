@@ -137,6 +137,7 @@ public interface CatalogoService {
 	  String getValidarUsuario(String codUsuario);
 	  String getJefeInmediatoOficina(String codUsuario);
 	  String getJefeInmediatoRiesgo(String codUsuario);
+	  String getUsuarioVerificar(String codUsuario);
    /*#####################################################################################################
 	   * 
 	   * 	
