@@ -49,7 +49,7 @@ public class EstadisticaAction extends DispatchAction {
 
 		String index = request.getParameter("index");
 		
-		List<byte[]> data = (List<byte[]>) request.getSession().getAttribute("data");
+		List<byte[]> data = (List<byte[]>) request.getSession().getAttribute("graf");
 		
 		if(index != null && data != null) {
 			OutputStream out = response.getOutputStream();
@@ -73,19 +73,46 @@ public class EstadisticaAction extends DispatchAction {
 			HttpServletResponse response) throws Exception {
 
 		int i;
+		int j;
 		int row;
 		int col;
 		byte [] outArray = null;
-		List<byte[]> data = (List<byte[]>) request.getSession().getAttribute("data");
+		List<byte[]> graf = (List<byte[]>) request.getSession().getAttribute("graf");
+		Map<String, Object> map = (Map<String, Object>) request.getSession().getAttribute("data");
+		List<String> colsName = (List<String>) map.get("colsName");
+		List<Map<String, Object>> colsModel = (List<Map<String, Object>>) map.get("colsModel");
+		List<Map<String, Object>> data = (List<Map<String, Object>>) map.get("data");
+		String colName;
 		
 		DocumentoExcel doc = new DocumentoExcel();
 		doc.getWorkbook().setSheetName(0, "Solicitudes Asignadas");
 		
-		col = 7;
+		doc.setContentValue(0, 0, 10, "Solicitudes Asignadas");
 		row = 2;
+		
+		for(i = 0; i < colsName.size(); i++) {
+			doc.setContentValue(row, i, colsName.get(i));
+		}
+		row++;
+		
 		for(i = 0; i < data.size(); i++) {
-			doc.setImagen(row, 0, data.get(i));
-			row += 23;
+			for(j = 0; j < colsModel.size(); j++) {
+				colName = colsModel.get(j).get("index").toString();
+				doc.setContentValue(row, j, data.get(i).get(colName).toString());
+			}
+			row++;
+		}
+		row++;
+		
+		col = 0;
+		for(i = 0; i < graf.size(); i++) {
+			doc.setImagen(row, col, graf.get(i));
+			col += 7;
+			
+			if(col == 14) {
+				col = 0;
+				row += 23;
+			}
 		}
 		
 		outArray = doc.getExcelToByteArray();
@@ -113,7 +140,7 @@ public class EstadisticaAction extends DispatchAction {
 			map = estadisticaService.selectCabeceraAsignacion(e);
 			map.put("data", data);
 			request.getSession().setAttribute("graf", grafAsignacion(data));
-			request.getSession().setAttribute("data", data);
+			request.getSession().setAttribute("data", map);
 		} catch (Exception ex) {
 			logger.error("listarEstadisticasAsignacion", ex);
 		}
