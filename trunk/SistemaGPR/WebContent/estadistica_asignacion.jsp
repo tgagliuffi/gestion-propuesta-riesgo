@@ -23,7 +23,6 @@
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-ui.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/util/gridUtil.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/i18n/grid.locale-es.js"></script>
-	<%-- <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js"></script> --%>
 	
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/01_jquery.layout.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/02_grid.locale-es.js"></script>
@@ -74,6 +73,8 @@
 		</td>
 		<td align="left" valign="middle">
 			<input type="button" class="buttonGPR"  name="btnConsultar" id="btnConsultar" value="Consultar">
+			<input type="button" class="buttonGPR"  name="btnExcel" id="btnExcel" value="Excel">
+			<input type="button" class="buttonGPR"  name="btnPDF" id="btnPDF" value="PDF">
 		</td>	
 	</tr>
 	</table>
@@ -84,7 +85,7 @@
 			<li><a href="#tabs-2">Detalle</a></li>
 		</ul>
 		<div id="tabs-1">
-			
+			<table id="panelGraf" align="center"></table>	
 		</div>
 		<div id="tabs-2" style="margin: 3px; padding: 3px;">
 			<div id="panel_listDetallado">

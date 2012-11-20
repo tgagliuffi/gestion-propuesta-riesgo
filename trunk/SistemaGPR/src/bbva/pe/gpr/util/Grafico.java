@@ -142,7 +142,7 @@ public class Grafico {
         plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0} ({2})"));
         plot.setLegendLabelToolTipGenerator(new StandardPieSectionLabelGenerator("{0}"));
         plot.setSimpleLabels(true);
-        plot.setInteriorGap(0.0D);
+        // plot.setInteriorGap(0.0D);
         plot.setBaseSectionOutlinePaint(Color.white);
         plot.setLabelBackgroundPaint(new Color(250, 250, 250));
         plot.setShadowPaint(new Color(240, 240, 240));

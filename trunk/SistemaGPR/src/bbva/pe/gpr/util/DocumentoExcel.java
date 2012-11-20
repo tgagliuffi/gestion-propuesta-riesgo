@@ -46,6 +46,16 @@ public class DocumentoExcel {
 		this.crearStyleFooterRight();
 	}
 
+	public DocumentoExcel(File file) throws InvalidFormatException, FileNotFoundException, IOException {
+		this.setWorkbook((HSSFWorkbook) WorkbookFactory.create(new FileInputStream(file)));
+		this.setSheet((HSSFSheet) this.getWorkbook().getSheetAt(0));
+		this.crearContentStaticStyle();
+		this.crearLabelStaticStyle();
+		this.crearStyleBarraTitulo();
+		this.crearStyleFooter();
+		this.crearStyleFooterRight();
+	}
+	
 	public void setLabelValue(int indexRow, int indexCell, String valor) {
 		if (this.getSheet().getRow(indexRow) == null)
 			this.getSheet().createRow(indexRow);
@@ -208,8 +218,25 @@ public class DocumentoExcel {
 		this.getSheet().getRow(indexRow).getCell(indexCellFrom).setCellValue(titulo);
 	}
 
+	public void setImagen(int indexRow, int indexCell, byte[] imageToByteArray) throws IOException {
+		HSSFClientAnchor anchor = new HSSFClientAnchor();
+		anchor.setCol1(indexCell);
+		anchor.setRow1(indexRow);
+		int index = this.getWorkbook().addPicture(imageToByteArray, HSSFWorkbook.PICTURE_TYPE_JPEG);
+
+		HSSFPatriarch patriarch = null;
+		if (this.getSheet().getDrawingPatriarch() == null)
+			patriarch = this.getSheet().createDrawingPatriarch();
+		else
+			patriarch = this.getSheet().getDrawingPatriarch();
+
+		HSSFPicture picture = patriarch.createPicture(anchor, index);
+		picture.setAnchor(picture.getPreferredSize());
+	}
+	
 	public void setImagen(int indexRow, int indexCell, String pathImg) throws IOException {
 		FileInputStream fis = new FileInputStream(pathImg);
+		@SuppressWarnings("resource")
 		ByteArrayOutputStream img_bytes = new ByteArrayOutputStream();
 		
 		int b;
