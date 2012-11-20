@@ -46,9 +46,9 @@ public class DocumentoExcel {
 		this.crearStyleFooterRight();
 	}
 
-	public DocumentoExcel(File file) throws InvalidFormatException, FileNotFoundException, IOException {
-		this.setWorkbook((HSSFWorkbook) WorkbookFactory.create(new FileInputStream(file)));
-		this.setSheet((HSSFSheet) this.getWorkbook().getSheetAt(0));
+	public DocumentoExcel() throws InvalidFormatException, FileNotFoundException, IOException {
+		this.setWorkbook(new HSSFWorkbook());
+		this.setSheet(this.getWorkbook().createSheet());
 		this.crearContentStaticStyle();
 		this.crearLabelStaticStyle();
 		this.crearStyleBarraTitulo();
