@@ -27,4 +27,10 @@ public class EstadisticaDAOImpl extends SqlMapClientDaoSupport  implements Estad
 		return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_ESTADISTICAS.selectCabeceraAsignacion", filtro);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Estadistica> selectAtencion(Estadistica filtro)
+			throws Exception {
+		return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_ESTADISTICAS.selectAtencion", filtro);
+	}
 }
