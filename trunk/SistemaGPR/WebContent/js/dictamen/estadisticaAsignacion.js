@@ -1,16 +1,22 @@
-optionEstadistica = {
-	height: 140,
-	width: 900 /*,
-	onSelectRow: function(id) {
-		row = $(this).getRowData(id);
-		$("#textMensaje").val(row.comentario);
-	}*/
-};
-
 buscarEstadisticaAsignacion = function(){
-	estadistica = {};
-	fechaInicio = "17/11/2012 00:00:00";
-	fechaFin = "17/11/2012 23:59:59";
+	estadistica = {codBanca: $("#bancaCliente").val()};
+	d1 = $("#inifechaSolicitud").val();
+	d2 = $("#finfechaSolicitud").val();
+
+	if(d1.length > 0 && d2.length > 0) {
+		if(compareDate(d1, d2)){
+			fechaInicio = $("#finfechaSolicitud").val();
+			fechaFin = $("#inifechaSolicitud").val();
+		} else {
+			fechaInicio = $("#inifechaSolicitud").val();
+			fechaFin = $("#finfechaSolicitud").val();
+		}	
+	} else {
+		alert("Ingrese un rando de fechas.");
+		$("#inifechaSolicitud").focus();
+		return;
+	}
+
 	EstadisticaAction.listarEstadisticasAsignacion(estadistica, fechaInicio, fechaFin, function(data){
 		console.log(data);
 		html  = "<table cellpadding=0 cellspacing=0>";
@@ -59,5 +65,45 @@ $(document).ready(function(){
 	$(".cmd").removeClass("buttonGPR");
 	$(".cmd").button();
 	
+	$("#inifechaSolicitud").val(formaterDate(new Date()));
+	$("#finfechaSolicitud").val(formaterDate(new Date()));
+	$("#inifechaSolicitud, #finfechaSolicitud").datepicker({
+		dateFormat : 'dd/mm/yy'
+	});
+
+	EstadisticaAction.cargarComboBanca(function(data){
+		 options = '<option value="-1">TODOS</option>';
+	    $.each(data, function(i , columns){
+	        var value = columns.codBanca; 
+	        var label = columns.descripcion;		
+	        options +='<option value="' + value + '">' + label + '</option>';
+	    });	
+		$("#bancaCliente").html(options);
+	});
+	
 	buscarEstadisticaAsignacion();
+	
+	$("#btnConsultar").bind("click", buscarEstadisticaAsignacion);
+	$("#btnExcel").bind("click", function(){
+		d1 = $("#inifechaSolicitud").val();
+		d2 = $("#finfechaSolicitud").val();
+
+		if(d1.length > 0 && d2.length > 0) {
+			if(compareDate(d1, d2)){
+				fechaInicio = $("#finfechaSolicitud").val();
+				fechaFin = $("#inifechaSolicitud").val();
+			} else {
+				fechaInicio = $("#inifechaSolicitud").val();
+				fechaFin = $("#finfechaSolicitud").val();
+			}	
+		} else {
+			alert("Ingrese un rando de fechas.");
+			$("#inifechaSolicitud").focus();
+			return;
+		}
+		
+		url = obtenerContexto() + "estadisticas.do?method=generarExcelAsignacion&codBanca=" + $("#bancaCliente").val() + "&fecInicio=" + fechaInicio + "&fecFin=" + fechaFin;
+		window.open(url, "_blank");
+	});
+	// $("#btnPDF");
 });

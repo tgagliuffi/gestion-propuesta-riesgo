@@ -1,6 +1,7 @@
 package bbva.pe.gpr.action;
 
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,8 +23,10 @@ import org.apache.struts.actions.DispatchAction;
 import org.directwebremoting.WebContextFactory;
 import org.jfree.data.general.DefaultPieDataset;
 
+import bbva.pe.gpr.bean.Banca;
 import bbva.pe.gpr.bean.Estadistica;
 import bbva.pe.gpr.context.Context;
+import bbva.pe.gpr.service.CatalogoService;
 import bbva.pe.gpr.service.EstadisticaService;
 import bbva.pe.gpr.util.DocumentoExcel;
 import bbva.pe.gpr.util.Grafico;
@@ -32,10 +35,12 @@ public class EstadisticaAction extends DispatchAction {
 
 	private static Logger logger = Logger.getLogger(EstadisticaAction.class);
 	private EstadisticaService estadisticaService;
+	private CatalogoService catalogoService;
 	private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	
 	public EstadisticaAction() {
 		estadisticaService = (EstadisticaService) Context.getInstance().getBean("estadisticaService");
+		catalogoService = (CatalogoService) Context.getInstance().getBean("catalogoService");
 	}
 
 	public ActionForward asignacion(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -72,10 +77,31 @@ public class EstadisticaAction extends DispatchAction {
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
+		String title = "Solicitudes Asignadas";
+		String banca = request.getParameter("codBanca") == null ? "-1" : request.getParameter("codBanca");
+		String inicio = request.getParameter("fecInicio") == null ? "" : request.getParameter("fecInicio"); 
+		String fin = request.getParameter("fecFin") == null ? "" : request.getParameter("fecFin");
+		
+		String fechaInicio = request.getSession().getAttribute("fecInicio") == null ? "" : (String) request.getSession().getAttribute("fecInicio");
+		String fechaFin = request.getSession().getAttribute("fecFin") == null ? "" : (String) request.getSession().getAttribute("fecFin");
+		
+		if(request.getSession().getAttribute("data") == null || !(inicio.equalsIgnoreCase(fechaInicio) && fin.equalsIgnoreCase(fechaFin))) {
+			Estadistica e = new Estadistica();
+			e.setCodBanca(BigDecimal.valueOf(Double.parseDouble(banca)));
+			listarEstadisticasAsignacion(e, inicio, fin, request);
+		}
+		
+		if(inicio.length() > 0 && fin.length() > 0) {
+			if(!inicio.equalsIgnoreCase(fin)) {
+				title += " del " + inicio + " al " + fin; 
+			} else {
+				title += " del " + inicio;
+			}
+		}
+		
 		int i;
 		int j;
 		int row;
-		int col;
 		byte [] outArray = null;
 		List<byte[]> graf = (List<byte[]>) request.getSession().getAttribute("graf");
 		Map<String, Object> map = (Map<String, Object>) request.getSession().getAttribute("data");
@@ -87,32 +113,34 @@ public class EstadisticaAction extends DispatchAction {
 		DocumentoExcel doc = new DocumentoExcel();
 		doc.getWorkbook().setSheetName(0, "Solicitudes Asignadas");
 		
-		doc.setContentValue(0, 0, 10, "Solicitudes Asignadas");
+		doc.setBarraTitulo2(0, 0, 10, title);
 		row = 2;
 		
 		for(i = 0; i < colsName.size(); i++) {
-			doc.setContentValue(row, i, colsName.get(i));
+			doc.setBarraTitulo(row, i, colsName.get(i));
 		}
 		row++;
 		
 		for(i = 0; i < data.size(); i++) {
 			for(j = 0; j < colsModel.size(); j++) {
 				colName = colsModel.get(j).get("index").toString();
-				doc.setContentValue(row, j, data.get(i).get(colName).toString());
+				if(data.get(i).get(colName) != null) {
+					doc.setContentValue(row, j, data.get(i).get(colName).toString());
+				} else {
+					doc.setContentValue(row, j, "");
+				}
 			}
 			row++;
 		}
 		row++;
 		
-		col = 0;
+		for(i = 0; i < colsName.size(); i++) {
+			doc.getSheet().autoSizeColumn(i);
+		}
+		
 		for(i = 0; i < graf.size(); i++) {
-			doc.setImagen(row, col, graf.get(i));
-			col += 7;
-			
-			if(col == 14) {
-				col = 0;
-				row += 23;
-			}
+			doc.setImagen(row, 0, graf.get(i));
+			row += 23;
 		}
 		
 		outArray = doc.getExcelToByteArray();
@@ -131,20 +159,39 @@ public class EstadisticaAction extends DispatchAction {
 	
 	public Map<String, Object> listarEstadisticasAsignacion(Estadistica e, String fechaInicio, String fechaFin) {
 		HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+		return listarEstadisticasAsignacion(e, fechaInicio, fechaFin, request);
+	}
+	
+	private Map<String, Object> listarEstadisticasAsignacion(Estadistica e, String fechaInicio, String fechaFin, HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			e.setFechaInicio(new Date(formatter.parse(fechaInicio).getTime()));
-			e.setFechaFin(new Date(formatter.parse(fechaFin).getTime()));
+			e.setFechaInicio(new Date(formatter.parse(fechaInicio + " 00:00:00").getTime()));
+			e.setFechaFin(new Date(formatter.parse(fechaFin + " 23:59:59").getTime()));
 			
 			List<Map<String, Object>> data = estadisticaService.selectAsignacion(e);
 			map = estadisticaService.selectCabeceraAsignacion(e);
 			map.put("data", data);
+			
+			
 			request.getSession().setAttribute("graf", grafAsignacion(data));
 			request.getSession().setAttribute("data", map);
+			request.getSession().setAttribute("fecInicio", fechaInicio);
+			request.getSession().setAttribute("fecFin", fechaFin);
 		} catch (Exception ex) {
 			logger.error("listarEstadisticasAsignacion", ex);
 		}
 		return map;
+	}
+	
+	public List<Banca> cargarComboBanca() {
+		Banca bancaBean = new Banca();
+		bancaBean.setEstado(BigDecimal.ONE);
+		try {
+			return catalogoService.getLstBancaByCriteria(bancaBean);
+		} catch (Exception e) {
+			logger.error("", e);
+			return null;
+		}
 	}
 
 	private List<byte[]> grafAsignacion(List<Map<String, Object>> data) {

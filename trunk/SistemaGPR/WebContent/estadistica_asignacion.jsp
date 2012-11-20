@@ -45,52 +45,50 @@
 
 <form name="formEstadicticaAsignacion" method="post">
 	<div style="background-color: #0066bb;height: 20px;line-height: 20px;">
-		<font face="Arial Narrow" size=3 color="#FFFFFF"><b style="font-size: 12px;">&nbsp;&nbsp;Módulo de Estadísticas de Asignaciones Automáticas y Manuales</b></font>
+		<font face="Arial Narrow" size=3 color="#FFFFFF"><b style="font-size: 12px;">&nbsp;&nbsp;&nbsp;Módulo de Estadísticas de Asignaciones Automáticas y Manuales</b></font>
 	</div>
 	<br/>
-	<table style="width: 400px" border="0" cellspacing="0" cellpadding="0">
-	<tr>
-       <td align="left" valign="middle">
-       		<font class="fontText"><b>Banca</b></font>
-       </td>
-       <td align="left" valign="middle">       
-	   		<select id="bancaCliente" name="bancaCliente">
-				<option value="TD">Todos</option>
-				<option value="BP">Banca Personas</option>
-				<option value="BC">Banca Corporativa</option>			
-				<option value="BM">Banca Mayorista</option>
-				<option value="BE">Banca Empresas</option>
-			</select>
-	   </td>
-	</tr>
-	<tr>
-		<td align="left" valign="middle">
-			<font class="fontText"><b>Fecha Solicitud</b></font>
-		</td>
-		<td align="left" valign="middle">
-			<input type="text" name="inifechaSolicitud" class="cajaTexto" id="inifechaSolicitud" size="14" maxlength="14">&nbsp;al&nbsp;
-			<input type="text" name="finfechaSolicitud" class="cajaTexto" id="finfechaSolicitud" size="14" maxlength="14">
-		</td>
-		<td align="left" valign="middle">
-			<input type="button" class="buttonGPR"  name="btnConsultar" id="btnConsultar" value="Consultar">
-			<input type="button" class="buttonGPR"  name="btnExcel" id="btnExcel" value="Excel">
-			<input type="button" class="buttonGPR"  name="btnPDF" id="btnPDF" value="PDF">
-		</td>	
-	</tr>
-	</table>
-	
-	<div id="tabsEstadisticas" style="width: 900px;">
-		<ul>
-			<li><a href="#tabs-1">Graficas</a></li>
-			<li><a href="#tabs-2">Detalle</a></li>
-		</ul>
-		<div id="tabs-1">
-			<table id="panelGraf" align="center"></table>	
-		</div>
-		<div id="tabs-2" style="margin: 3px; padding: 3px;">
-			<div id="panel_listDetallado">
-				<div id="paginador_listDetallado"></div>
-				<table id="listDetallado"></table>
+	<div style="padding: 5px;">
+		<table style="width: 900px" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+	       <td valign="middle">
+	       		<font class="fontText"><b>Banca</b></font>
+	       </td>
+	       <td valign="middle">       
+		   		<select id="bancaCliente" name="bancaCliente">
+					<option value="-1">TODOS</option>
+				</select>
+		   </td>
+		</tr>
+		<tr>
+			<td valign="middle">
+				<font class="fontText"><b>Fecha Solicitud</b></font>
+			</td>
+			<td valign="middle">
+				<input type="text" name="inifechaSolicitud" class="cajaTexto" id="inifechaSolicitud" size="14" maxlength="14">&nbsp;al&nbsp;
+				<input type="text" name="finfechaSolicitud" class="cajaTexto" id="finfechaSolicitud" size="14" maxlength="14">
+			</td>
+			<td valign="middle">
+				<input type="button" class="buttonGPR"  name="btnConsultar" id="btnConsultar" value="Consultar">
+				<input type="button" class="buttonGPR"  name="btnExcel" id="btnExcel" value="Excel">
+				<input type="button" class="buttonGPR"  name="btnPDF" id="btnPDF" value="PDF">
+			</td>	
+		</tr>
+		</table>
+		<br/>
+		<div id="tabsEstadisticas" style="width: 900px;">
+			<ul>
+				<li><a href="#tabs-1">Graficas</a></li>
+				<li><a href="#tabs-2">Detalle</a></li>
+			</ul>
+			<div id="tabs-1">
+				<table id="panelGraf" align="center"></table>	
+			</div>
+			<div id="tabs-2" style="margin: 3px; padding: 3px;">
+				<div id="panel_listDetallado">
+					<div id="paginador_listDetallado"></div>
+					<table id="listDetallado"></table>
+				</div>
 			</div>
 		</div>
 	</div>

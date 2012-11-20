@@ -7,5 +7,6 @@ import bbva.pe.gpr.bean.Estadistica;
 public interface EstadisticaDAO {
 	
 	List<Estadistica> selectAsignacion(Estadistica filtro) throws Exception;
+	List<Estadistica> selectAtencion(Estadistica filtro) throws Exception;
 	List<Estadistica> selectCabeceraAsignacion(Estadistica filtro) throws Exception;
 }

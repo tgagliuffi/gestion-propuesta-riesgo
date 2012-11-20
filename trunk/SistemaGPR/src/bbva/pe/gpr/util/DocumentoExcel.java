@@ -32,6 +32,7 @@ public class DocumentoExcel {
 	private HSSFCellStyle styleLabel = null;
 	private HSSFCellStyle styleContent = null;
 	private HSSFCellStyle styleBarraTitulo = null;
+	private HSSFCellStyle styleBarraTitulo2 = null;
 	private HSSFCellStyle styleFooter = null;
 	private HSSFCellStyle styleFooterRight = null;	
 
@@ -42,6 +43,7 @@ public class DocumentoExcel {
 		this.crearContentStaticStyle();
 		this.crearLabelStaticStyle();
 		this.crearStyleBarraTitulo();
+		this.crearStyleBarraTitulo2();
 		this.crearStyleFooter();
 		this.crearStyleFooterRight();
 	}
@@ -49,9 +51,15 @@ public class DocumentoExcel {
 	public DocumentoExcel() throws InvalidFormatException, FileNotFoundException, IOException {
 		this.setWorkbook(new HSSFWorkbook());
 		this.setSheet(this.getWorkbook().createSheet());
+		
+		this.crearColor(HSSFColor.BLUE.index, 83, 142, 213);
+		this.crearColor(HSSFColor.BLUE_GREY.index, 157, 190, 231);
+		this.crearColor(HSSFColor.SKY_BLUE.index, 31,73,125);
+		
 		this.crearContentStaticStyle();
 		this.crearLabelStaticStyle();
 		this.crearStyleBarraTitulo();
+		this.crearStyleBarraTitulo2();
 		this.crearStyleFooter();
 		this.crearStyleFooterRight();
 	}
@@ -165,6 +173,18 @@ public class DocumentoExcel {
 
 	}
 
+	public void setBarraTitulo2(int indexRow, int indexCell, String valor) {
+
+		if (this.getSheet().getRow(indexRow) == null)
+			this.getSheet().createRow(indexRow);
+		if (this.getSheet().getRow(indexRow).getCell(indexCell) == null)
+			this.getSheet().getRow(indexRow).createCell(indexCell);
+
+		this.getSheet().getRow(indexRow).getCell(indexCell).setCellStyle(this.getStyleBarraTitulo2());
+		this.getSheet().getRow(indexRow).getCell(indexCell).setCellValue(valor);
+
+	}
+	
 	public void setFooter(int indexRow, int indexCellFrom, int indexCellTo,
 			String titulo) {
 		if (this.getSheet().getRow(indexRow) == null)
@@ -217,6 +237,21 @@ public class DocumentoExcel {
 		this.getSheet().addMergedRegion(new CellRangeAddress(indexRow, indexRow, indexCellFrom, indexCellTo));
 		this.getSheet().getRow(indexRow).getCell(indexCellFrom).setCellValue(titulo);
 	}
+	
+	public void setBarraTitulo2(int indexRow, int indexCellFrom, int indexCellTo, String titulo) {
+		if (this.getSheet().getRow(indexRow) == null)
+			this.getSheet().createRow(indexRow);
+
+		for (int index = indexCellFrom; index <= indexCellTo; index++) {
+			if (this.getSheet().getRow(indexRow).getCell(index) == null) {
+				this.getSheet().getRow(indexRow).createCell(index);
+			}
+			this.getSheet().getRow(indexRow).getCell(index).setCellStyle(this.getStyleBarraTitulo2());
+		}
+		
+		this.getSheet().addMergedRegion(new CellRangeAddress(indexRow, indexRow, indexCellFrom, indexCellTo));
+		this.getSheet().getRow(indexRow).getCell(indexCellFrom).setCellValue(titulo);
+	}
 
 	public void setImagen(int indexRow, int indexCell, byte[] imageToByteArray) throws IOException {
 		HSSFClientAnchor anchor = new HSSFClientAnchor();
@@ -232,6 +267,9 @@ public class DocumentoExcel {
 
 		HSSFPicture picture = patriarch.createPicture(anchor, index);
 		picture.setAnchor(picture.getPreferredSize());
+		picture.setLineStyle(HSSFPicture.LINESTYLE_SOLID);
+		picture.setLineWidth(1);
+		picture.setLineStyleColor(0, 0, 0);
 	}
 	
 	public void setImagen(int indexRow, int indexCell, String pathImg) throws IOException {
@@ -294,7 +332,7 @@ public class DocumentoExcel {
 		style.setAlignment(HSSFCellStyle.ALIGN_LEFT);
 
 		HSSFFont font = workbook.createFont();
-		font.setFontName("Arial");
+		font.setFontName("Tahoma");
 		font.setFontHeightInPoints((short) 10);
 		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 		style.setFont(font);
@@ -311,9 +349,13 @@ public class DocumentoExcel {
 	    style.setBorderLeft(CellStyle.BORDER_THIN);
 	    style.setBorderRight(CellStyle.BORDER_THIN);
 	    style.setBorderTop(CellStyle.BORDER_THIN);
+		style.setBottomBorderColor(HSSFColor.BLUE_GREY.index);
+		style.setLeftBorderColor(HSSFColor.BLUE_GREY.index);
+		style.setRightBorderColor(HSSFColor.BLUE_GREY.index);
+		style.setTopBorderColor(HSSFColor.BLUE_GREY.index);
 		
 		HSSFFont font = workbook.createFont();
-		font.setFontName("Arial");
+		font.setFontName("Tahoma");
 		font.setFontHeightInPoints((short) 10);
 		style.setFont(font);
 
@@ -321,27 +363,43 @@ public class DocumentoExcel {
 	}
 
 	private void crearStyleBarraTitulo() {
-		this.crearColor(HSSFColor.BLUE.index, 83, 142, 213);
-		
 		HSSFCellStyle style = workbook.createCellStyle();
 		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		style.setFillForegroundColor(HSSFColor.BLUE.index);
 		style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 
+		style.setBottomBorderColor(HSSFColor.BLUE_GREY.index);
+		style.setLeftBorderColor(HSSFColor.BLUE_GREY.index);
+		style.setRightBorderColor(HSSFColor.BLUE_GREY.index);
+		style.setTopBorderColor(HSSFColor.BLUE_GREY.index);
 		style.setBorderBottom(CellStyle.BORDER_THIN);
 	    style.setBorderLeft(CellStyle.BORDER_THIN);
 	    style.setBorderRight(CellStyle.BORDER_THIN);
 	    style.setBorderTop(CellStyle.BORDER_THIN);
 		
 		HSSFFont font = workbook.createFont();
-		font.setFontName("Arial");
-		font.setFontHeightInPoints((short) 10);
+		font.setFontName("Tahoma");
+		font.setFontHeightInPoints((short) 11);
 		font.setColor(HSSFColor.WHITE.index);
 		style.setFont(font);
 
 		this.setStyleBarraTitulo(style);
 	}
 
+	private void crearStyleBarraTitulo2() {
+		HSSFCellStyle style = workbook.createCellStyle();
+		style.setAlignment(HSSFCellStyle.ALIGN_LEFT);
+				
+		HSSFFont font = workbook.createFont();
+		font.setFontName("Tahoma");
+		font.setFontHeightInPoints((short) 11);
+		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setColor(HSSFColor.SKY_BLUE.index);
+		style.setFont(font);
+
+		this.setStyleBarraTitulo2(style);
+	}
+	
 	private void crearStyleFooter() {
 		HSSFCellStyle style = workbook.createCellStyle();
 		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
@@ -349,7 +407,7 @@ public class DocumentoExcel {
 		style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 
 		HSSFFont font = workbook.createFont();
-		font.setFontName("Arial");
+		font.setFontName("Tahoma");
 		font.setFontHeightInPoints((short) 10);
 		font.setColor(HSSFColor.WHITE.index);
 		style.setFont(font);
@@ -364,7 +422,7 @@ public class DocumentoExcel {
 		style.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 
 		HSSFFont font = workbook.createFont();
-		font.setFontName("Arial");
+		font.setFontName("Tahoma");
 		font.setFontHeightInPoints((short) 10);
 		font.setColor(HSSFColor.WHITE.index);
 		style.setFont(font);
@@ -385,7 +443,7 @@ public class DocumentoExcel {
 		style.setFillPattern(fill);
 
 		HSSFFont font = workbook.createFont();
-		font.setFontName("Arial");
+		font.setFontName("Tahoma");
 		font.setFontHeightInPoints((short) fontSize);
 		font.setColor(colorFont);
 		style.setFont(font);
@@ -459,5 +517,13 @@ public class DocumentoExcel {
 
 	public void setStyleFooterRight(HSSFCellStyle styleFooterRight) {
 		this.styleFooterRight = styleFooterRight;
+	}
+
+	public HSSFCellStyle getStyleBarraTitulo2() {
+		return styleBarraTitulo2;
+	}
+
+	public void setStyleBarraTitulo2(HSSFCellStyle styleBarraTitulo2) {
+		this.styleBarraTitulo2 = styleBarraTitulo2;
 	}
 }
