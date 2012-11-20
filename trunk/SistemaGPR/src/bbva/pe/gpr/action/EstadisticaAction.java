@@ -1,7 +1,5 @@
 package bbva.pe.gpr.action;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.OutputStream;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -41,7 +39,6 @@ public class EstadisticaAction extends DispatchAction {
 	}
 
 	public ActionForward asignacion(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
 		return mapping.findForward("asignacion") ;
 	}
 	
@@ -75,14 +72,22 @@ public class EstadisticaAction extends DispatchAction {
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-
+		int i;
+		int row;
+		int col;
 		byte [] outArray = null;
-		
 		List<byte[]> data = (List<byte[]>) request.getSession().getAttribute("data");
 		
-		File file = File.createTempFile("test.xls", ".tmp");
-		DocumentoExcel doc = new DocumentoExcel(file);
-		doc.setImagen(0, 0, data.get(0));
+		DocumentoExcel doc = new DocumentoExcel();
+		doc.getWorkbook().setSheetName(0, "Solicitudes Asignadas");
+		
+		col = 7;
+		row = 2;
+		for(i = 0; i < data.size(); i++) {
+			doc.setImagen(row, 0, data.get(i));
+			row += 23;
+		}
+		
 		outArray = doc.getExcelToByteArray();
 		
 		response.setContentType("application/ms-excel");
@@ -107,7 +112,8 @@ public class EstadisticaAction extends DispatchAction {
 			List<Map<String, Object>> data = estadisticaService.selectAsignacion(e);
 			map = estadisticaService.selectCabeceraAsignacion(e);
 			map.put("data", data);
-			request.getSession().setAttribute("data", grafAsignacion(data));
+			request.getSession().setAttribute("graf", grafAsignacion(data));
+			request.getSession().setAttribute("data", data);
 		} catch (Exception ex) {
 			logger.error("listarEstadisticasAsignacion", ex);
 		}
