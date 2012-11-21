@@ -18,7 +18,6 @@ buscarEstadisticaAsignacion = function(){
 	}
 
 	EstadisticaAction.listarEstadisticasAsignacion(estadistica, fechaInicio, fechaFin, function(data){
-		console.log(data);
 		html  = "<table cellpadding=0 cellspacing=0>";
 		html += "<tr>";
 		$.each(data.colsName, function(i, col){

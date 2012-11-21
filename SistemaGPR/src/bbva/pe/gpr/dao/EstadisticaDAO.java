@@ -9,4 +9,5 @@ public interface EstadisticaDAO {
 	List<Estadistica> selectAsignacion(Estadistica filtro) throws Exception;
 	List<Estadistica> selectAtencion(Estadistica filtro) throws Exception;
 	List<Estadistica> selectCabeceraAsignacion(Estadistica filtro) throws Exception;
+	List<Estadistica> selectCabeceraAtencion(Estadistica filtro) throws Exception;
 }

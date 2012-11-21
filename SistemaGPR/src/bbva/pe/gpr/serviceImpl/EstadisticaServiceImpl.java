@@ -82,11 +82,12 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 		List<Map<String, Object>> colsModel = new ArrayList<Map<String, Object>>();
 		List<Estadistica> listCabEstadistica;
 		int i = 0;
+		String colName;
 		
 		try {
-			listCabEstadistica = estadisticaDAO.selectCabeceraAsignacion(filtro);
+			listCabEstadistica = estadisticaDAO.selectCabeceraAtencion(filtro);
 			colsName.add("BANCA");
-			colsName.add("DICTAMEN");
+			colsName.add("DICTAMINADO EN");
 			colsName.add("TERRITORIO");
 			colsName.add("OFICINA");
 			colsName.add("TOTAL");
@@ -98,8 +99,8 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 			colsModel.add(colModel);
 			
 			colModel = new HashMap<String, Object>();
-			colModel.put("index", "desDictamen");
-			colModel.put("name", "desDictamen");
+			colModel.put("index", "orgDictamen");
+			colModel.put("name", "orgDictamen");
 			colModel.put("width", 150);
 			colsModel.add(colModel);
 			
@@ -124,9 +125,11 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 			for(i = 0; i < listCabEstadistica.size(); i++) {
 				colsName.add(listCabEstadistica.get(i).getDesEstadoSolicitud());
 				
+				colName = "s_" + listCabEstadistica.get(i).getDesEstadoSolicitud().replaceAll(" ", "_").toLowerCase();
+				
 				colModel = new HashMap<String, Object>();
-				colModel.put("index", "s_" + listCabEstadistica.get(i).getDesEstadoSolicitud().replaceAll(" ", "_").toLowerCase());
-				colModel.put("name", "s_" + listCabEstadistica.get(i).getDesEstadoSolicitud().replaceAll(" ", "_").toLowerCase());
+				colModel.put("index", colName);
+				colModel.put("name", colName);
 				colModel.put("width", 100);
 				colModel.put("align", "right");
 				colsModel.add(colModel);
@@ -213,10 +216,12 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 		List<Estadistica> listCabEstadistica;
 		Map<String, Object> item;
 		Map<String, Map<String, Object>> position = new HashMap<String, Map<String,Object>>();
+		String colName;
+		BigDecimal tmp;
 		
 		try {		
 			listEstadistica = estadisticaDAO.selectAtencion(filtro);
-			listCabEstadistica = estadisticaDAO.selectCabeceraAsignacion(filtro);
+			listCabEstadistica = estadisticaDAO.selectCabeceraAtencion(filtro);
 			
 			for(Estadistica e : listEstadistica) {
 				
@@ -225,18 +230,31 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 				} else {
 					item = new HashMap<String, Object>();
 					item.put("desBanca", e.getDesBanca());
-					item.put("desDictamen", e.getDesBanca());
-					item.put("desTerritorio", e.getDesBanca());
-					item.put("desOficina", e.getDesBanca());
-					
+					item.put("orgDictamen", e.getOrgDictamen());
+					item.put("desTerritorio", e.getDesTerritorio());
+					item.put("desOficina", e.getDesOficina());
+					item.put("total", 0);
+					item.put("s_anuladas", 0);
+					item.put("s_priorizadas", 0);
+					item.put("s_fuera_de_rango", 0);
 				}
 
 				for(Estadistica c : listCabEstadistica) {
-					if(c.getDesEstadoSolicitud().equalsIgnoreCase(e.getDesEstadoSolicitud())) {
-						item.put("s_" + c.getDesEstadoSolicitud().replaceAll(" ", "_").toLowerCase(), e.getNroSolicitudes());
+					colName = "s_" + c.getDesEstadoSolicitud().replaceAll(" ", "_").toLowerCase();
+					tmp = Constant.StringToBigDecimal(item.get(colName));
+					if(c.getDesEstadoSolicitud().equalsIgnoreCase("ANULADAS")) {
+						item.put(colName, e.getAnuladas().add(tmp).intValue());
+					} else if(c.getDesEstadoSolicitud().equalsIgnoreCase("PRIORIZADAS")) {
+						item.put(colName, e.getPriorizadas().add(tmp).intValue());
+					} else if(c.getDesEstadoSolicitud().equalsIgnoreCase("FUERA_DE_RANGO")) {
+						item.put(colName, e.getFueraDeRango().add(tmp).intValue());
+					} else if(c.getDesEstadoSolicitud().equalsIgnoreCase(e.getDesEstadoSolicitud())) {
+						tmp = Constant.StringToBigDecimal(item.get("total"));
+						item.put(colName, e.getNroSolicitudes());
+						item.put("total", e.getNroSolicitudes().add(tmp).intValue());
 					} else {
-						if(!item.containsKey("s_" + c.getDesEstadoSolicitud().replaceAll(" ", "_").toLowerCase())) {
-							item.put("s_" + c.getDesEstadoSolicitud().replaceAll(" ", "_").toLowerCase(), 0);
+						if(!item.containsKey(colName)) {
+							item.put(colName, 0);
 						}
 					}
 				}

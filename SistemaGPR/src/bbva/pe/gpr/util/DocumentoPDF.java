@@ -8,6 +8,7 @@ import bbva.pe.gpr.action.EstadisticaAction;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -20,6 +21,7 @@ public class DocumentoPDF {
     public DocumentoPDF() {
     	baos = new ByteArrayOutputStream();
     	try {
+    		document = new Document(PageSize.A4);
 			PdfWriter.getInstance(document, baos);
 		} catch (DocumentException e) {
 			logger.error("", e);

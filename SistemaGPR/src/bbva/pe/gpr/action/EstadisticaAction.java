@@ -204,7 +204,7 @@ public class EstadisticaAction extends DispatchAction {
 			e.setFechaFin(new java.sql.Date(formatter.parse(fechaFin + " 23:59:59").getTime()));
 			
 			List<Map<String, Object>> data = estadisticaService.selectAtencion(e);
-			map = estadisticaService.selectCabeceraAsignacion(e);
+			map = estadisticaService.selectCabeceraAtencion(e);
 			map.put("data", data);
 			
 			request.getSession().setAttribute("graf", grafAsignacion(data));

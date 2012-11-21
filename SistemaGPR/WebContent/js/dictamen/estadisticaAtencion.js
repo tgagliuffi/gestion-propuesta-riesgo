@@ -1,5 +1,10 @@
-buscarEstadisticaAsignacion = function(){
-	estadistica = {codBanca: $("#bancaCliente").val()};
+buscarEstadisticaAtencion = function(){
+	estadistica = {
+		codBanca: $("#bancaCliente").val()/*,
+		codOficina: "",
+		codTerritorio: "",
+		orgDictamen: ""*/
+	};
 	d1 = $("#inifechaSolicitud").val();
 	d2 = $("#finfechaSolicitud").val();
 
@@ -17,7 +22,7 @@ buscarEstadisticaAsignacion = function(){
 		return;
 	}
 
-	EstadisticaAction.listarEstadisticasAsignacion(estadistica, fechaInicio, fechaFin, function(data){
+	EstadisticaAction.listarEstadisticasAtencion(estadistica, fechaInicio, fechaFin, function(data){
 		console.log(data);
 		html  = "<table cellpadding=0 cellspacing=0>";
 		html += "<tr>";
@@ -87,9 +92,9 @@ $(document).ready(function(){
 		$("#bancaCliente").html(options);
 	});
 	
-	buscarEstadisticaAsignacion();
+	buscarEstadisticaAtencion();
 	
-	$("#btnConsultar").bind("click", buscarEstadisticaAsignacion);
+	$("#btnConsultar").bind("click", buscarEstadisticaAtencion);
 	$("#btnExcel").bind("click", function(){
 		d1 = $("#inifechaSolicitud").val();
 		d2 = $("#finfechaSolicitud").val();
