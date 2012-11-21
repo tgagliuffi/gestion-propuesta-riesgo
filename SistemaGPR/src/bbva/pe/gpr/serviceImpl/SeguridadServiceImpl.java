@@ -8,6 +8,7 @@ import bbva.pe.gpr.bean.FuncionRol;
 import bbva.pe.gpr.bean.Menu;
 import bbva.pe.gpr.bean.Rol;
 import bbva.pe.gpr.bean.UsuarioRol;
+import bbva.pe.gpr.bean.UsuarioRolKey;
 import bbva.pe.gpr.dao.FuncionDAO;
 import bbva.pe.gpr.dao.FuncionRolDAO;
 import bbva.pe.gpr.dao.MenuDAO;
@@ -147,5 +148,12 @@ public class SeguridadServiceImpl implements SeguridadService {
 		}
 
 		return nivel;
+	}
+	public void insert(UsuarioRol record) throws Exception {
+		 usuarioRolDAO.insert(record);	
+	}
+
+	public UsuarioRol selectByPrimaryKeyUsuarioRol(UsuarioRolKey key) {
+		return usuarioRolDAO.selectByPrimaryKey(key);
 	}
 }
