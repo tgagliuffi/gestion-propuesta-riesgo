@@ -40,6 +40,7 @@ buscarEstadisticaAsignacion = function(){
 		html += "</table>";
 		
 		$("#panel_listDetallado").html(html);
+		$("#panelGraf").html("Cargando...");
 		
 		k = 0;
 		html = "<tr>";
@@ -72,6 +73,10 @@ $(document).ready(function(){
 		dateFormat : 'dd/mm/yy'
 	});
 
+	EstadisticaAction.cargarComboDictamen(function(data){
+		$("#slctDictamen").html(contenidocombo(data));
+	});
+	
 	EstadisticaAction.cargarComboBanca(function(data){
 		 options = '<option value="-1">TODOS</option>';
 	    $.each(data, function(i , columns){

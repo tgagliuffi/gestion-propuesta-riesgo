@@ -87,4 +87,15 @@ public class Constant {
 	public static final int POSICION_COD_ROL = 1;
 	public static final int POSICION_COD_SUBBANCA = 2;
 	
+	public static BigDecimal StringToBigDecimal(Object value) {
+		double arg = 0;
+		try {
+			if(value != null) {
+				arg = Double.parseDouble(value.toString());
+			}
+		} catch(NumberFormatException e) {
+			arg = 0;
+		}
+		return BigDecimal.valueOf(arg);
+	}
 }
