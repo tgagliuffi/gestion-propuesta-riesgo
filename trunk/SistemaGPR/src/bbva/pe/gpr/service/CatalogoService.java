@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import bbva.pe.gpr.bean.Banca;
+import bbva.pe.gpr.bean.BancaSub;
 import bbva.pe.gpr.bean.Campania;
 import bbva.pe.gpr.bean.Funcion;
 import bbva.pe.gpr.bean.Multitabla;
@@ -16,6 +17,8 @@ import bbva.pe.gpr.bean.Producto;
 import bbva.pe.gpr.bean.Rol;
 import bbva.pe.gpr.bean.Territorio;
 import bbva.pe.gpr.bean.Usuario;
+import bbva.pe.gpr.bean.UsuarioSubanca;
+import bbva.pe.gpr.bean.UsuarioSubancaKey;
 
 public interface CatalogoService {
 	
@@ -119,6 +122,7 @@ public interface CatalogoService {
    * 
    *##################################################################################################### */
 	  public  List<Rol> getLstRolesByCriteria(Rol rolBean)throws Exception;
+	  public Rol getRolSelectByPrimaryKey(BigDecimal codRol)throws Exception;
   /*#####################################################################################################
    * 
    * 	                               TGPR_OFICINA_ASIGNADA
@@ -150,4 +154,12 @@ public interface CatalogoService {
 		   *                         TGPR_FUNCIONES
 	*##################################################################################################### */
 	  public  List<Funcion> getLstFuncionByCriteria(Funcion funcionBean)throws Exception;
+		/*#####################################################################################################
+	   * 
+	   * 	
+	   *                         TGPR_USUARIO_SUBBANCA
+*##################################################################################################### */
+	  public UsuarioSubanca selectByPrimaryKey(UsuarioSubancaKey key);
+	  public BancaSub selectByPrimaryKeyBancaSub(String codSubbanca);
+	  public void insert(UsuarioSubanca record);
 }
