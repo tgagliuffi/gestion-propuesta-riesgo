@@ -33,6 +33,5 @@ public class GerenteOficinaDAOImpl extends SqlMapClientDaoSupport implements
 
 	public String getValidarUsuarioRiesgos(String codUsuario) {
 			return getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_GERENTE.getValidarUsuarioRiesgos", codUsuario).get(0).toString();
-	
 	}
 }
