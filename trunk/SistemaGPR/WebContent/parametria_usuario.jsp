@@ -118,10 +118,10 @@ function nuevoUsuario(){
 	formulario.submit();
 }
 
-function registroMasivo(){
+function cargaMasiva(){
 	var formulario = document.getElementById('usuarioForm');
 	formulario.action =rutaContexto+'/usuarioAction.do?method=registroMasivo';
-	formulario.submit();	
+	formulario.submit();		
 }
 </script>
 </head>
@@ -203,6 +203,7 @@ function registroMasivo(){
 			<a href="javascript:consultarUsuario();" class="buttonGPR">BUSCAR</a>
 <!-- 			<a href="javascript:nuevoUsuario();" class="buttonGPR">NUEVO</a> -->
 			<a href="javascript:limpiarConsultarUsuario();" class="buttonGPR">LIMPIAR</a>
+			<a href="javascript:cargaMasiva();" class="buttonGPR">CARGA MASIVA</a>
 	<br/>
 	<br>
 </html:form>
