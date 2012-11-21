@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="CARDEL_TGPR_RIESGOS" >
+
+	<select id="getMontoDelegacion" resultClass="bbva.pe.gpr.bean.Usuario" parameterClass="bbva.pe.gpr.bean.Solicitud">
+  	select carrie.carriersgpkg.fn_rsg_montomaximo_x_usuario(#gestorCod:VARCHAR#, #grupoPersona:VARCHAR#) as mtoMaxDelegacion from dual
+	</select>
+	
+	<select id="getLstProductoDelegacion" resultClass="bbva.pe.gpr.bean.ProductoDelegacion" parameterClass="string">
+  	select carrie.carriersgpkg.carriersgpkg.fn_rsg_limite_prod_x_userio(#gestorCod:VARCHAR#)  from dual
+	</select>
+	
+</sqlMap>
