@@ -10,4 +10,5 @@ public interface UsuarioRolDAO {
     UsuarioRol selectByPrimaryKey(UsuarioRolKey key);
     int updateByPrimaryKeySelective(UsuarioRol record);
     int updateByPrimaryKey(UsuarioRol record);
+    int getUsuarioAsignadoRol(UsuarioRol record);
 }
