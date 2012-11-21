@@ -3,6 +3,7 @@ package bbva.pe.gpr.form;
 import java.math.BigDecimal;
 
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.upload.FormFile;
 
 public class UsuarioForm extends ActionForm {
 
@@ -30,6 +31,7 @@ public class UsuarioForm extends ActionForm {
 	private BigDecimal codRol;
 	private String descripcionRol;
 	private String idFunciones;
+	private FormFile file;
 	
 	public String getJefeInmediato() {
 		return jefeInmediato;
@@ -151,5 +153,12 @@ public class UsuarioForm extends ActionForm {
 	public void setIdFunciones(String idFunciones) {
 		this.idFunciones = idFunciones;
 	}
+	public FormFile getFile() {
+		return file;
+	}
+	public void setFile(FormFile file) {
+		this.file = file;
+	}
+
 
 }
