@@ -116,7 +116,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 		List<SolicitudDetalle> getLstSolicitudDetalles = solicitudDetalleDAO.getListSolicitudDetalleForId(solicitud);		
 			for(SolicitudDetalle solicitudes:getLstSolicitudDetalles){
 				//cartas delegacion
-				BigDecimal montoRiesgos=cartasRiesgosDAO.montoDelegacionPorRating(solicitud.getGestorCod(), solicitud.getRating(),solicitud.getGrupoPersona());
+				BigDecimal montoRiesgos=cartasRiesgosDAO.montDelegacion(solicitud.getGestorCod(),solicitud.getGrupoPersona());
 				BigDecimal montoSolicitud=solicitudes.getMtoProducto();
 				 if((montoRiesgos.compareTo(montoSolicitud)==0 || montoRiesgos.compareTo(montoSolicitud)==1)){
 							valorRetorno++;
@@ -133,7 +133,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 		List<SolicitudDetalle> getLstSolicitudDetalles = solicitudDetalleDAO.getListSolicitudDetalleForId(solicitud);		
 			for(SolicitudDetalle solicitudes:getLstSolicitudDetalles){
 				//cartas delegacion
-				BigDecimal montoRiesgos=solicitudes.getMtoProducto();				
+				BigDecimal montoRiesgos=cartasRiesgosDAO.montDelegacion(solicitud.getGestorCod(),solicitud.getGrupoPersona());			
 				BigDecimal montoSolicitud=solicitudes.getMtoProducto();
 				if((montoRiesgos.compareTo(montoSolicitud)==0 || montoRiesgos.compareTo(montoSolicitud)==1)){
 							valorRetorno++;
@@ -148,11 +148,11 @@ public class ValidacionServiceImpl implements ValidacionService {
 	public int riesgoPersonaNatural(Solicitud solicitud) {
 		int valorRetorno=0;
 		List<SolicitudDetalle> getLstSolicitudDetalles = solicitudDetalleDAO.getListSolicitudDetalleForId(solicitud);		
-		List<ProductoDelegacion> getLstProducto=cartasRiesgosDAO.getDelegacionPersonaNatural(solicitud.getGestorCod(), solicitud.getGrupoPersona());
+		List<ProductoDelegacion> getLstProducto=cartasRiesgosDAO.getDelegacionPersonaNatural(solicitud.getGestorCod());
 				for (int i = 0; i < getLstSolicitudDetalles.size(); i++) {
 					for (int y = 0; y < getLstProducto.size(); y++) {
 						if (getLstSolicitudDetalles.get(i).getCodProducto().equals((getLstProducto.get(y).getCodProducto())) && 
-							(getLstSolicitudDetalles.get(i).getMtoProducto().compareTo(getLstProducto.get(y).getMontoProducto())==0 ||
+						   (getLstSolicitudDetalles.get(i).getMtoProducto().compareTo(getLstProducto.get(y).getMontoProducto())==0 ||
 							getLstSolicitudDetalles.get(i).getMtoProducto().compareTo(getLstProducto.get(y).getMontoProducto())==1)){
 						    valorRetorno++;
 						}
