@@ -2,9 +2,9 @@ package bbva.pe.gpr.action;
 
 import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -31,7 +31,14 @@ import bbva.pe.gpr.service.CatalogoService;
 import bbva.pe.gpr.service.EstadisticaService;
 import bbva.pe.gpr.util.Constant;
 import bbva.pe.gpr.util.DocumentoExcel;
+import bbva.pe.gpr.util.DocumentoPDF;
 import bbva.pe.gpr.util.Grafico;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 
 public class EstadisticaAction extends DispatchAction {
 
@@ -87,7 +94,12 @@ public class EstadisticaAction extends DispatchAction {
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		String title = "Solicitudes Asignadas";
+		String title = request.getParameter("title") == null ? "Solicitudes" : request.getParameter("title");
+		
+		response.setContentType("application/ms-excel");
+		response.setHeader("Expires:", "0");
+		response.setHeader("Content-Disposition", "attachment; filename=" + title.replaceAll(" ", "_") + ".xls");
+		
 		String banca = request.getParameter("codBanca") == null ? "-1" : request.getParameter("codBanca");
 		String inicio = request.getParameter("fecInicio") == null ? "" : request.getParameter("fecInicio"); 
 		String fin = request.getParameter("fecFin") == null ? "" : request.getParameter("fecFin");
@@ -154,10 +166,6 @@ public class EstadisticaAction extends DispatchAction {
 		}
 		
 		outArray = doc.getExcelToByteArray();
-		
-		response.setContentType("application/ms-excel");
-		response.setHeader("Expires:", "0");
-		response.setHeader("Content-Disposition", "attachment; filename=SolicitudesAsignadas.xls");
 		if(outArray != null) { 
 			response.setContentLength(outArray.length);
 			response.getOutputStream().write(outArray);
@@ -255,7 +263,7 @@ public class EstadisticaAction extends DispatchAction {
 		Set<Entry<String, Object>> set;
 		Iterator<Entry<String, Object>> items;
 		Entry<String, Object> entry;
-		
+		Number value;
 		
 		for(i = 0; i < data.size(); i++) {
 			item = data.get(i);
@@ -296,7 +304,12 @@ public class EstadisticaAction extends DispatchAction {
 						
 						total += parcial;
 						if(parcial > 0) {
-							dataset.setValue(key, parcial);
+							if(dataset.getIndex(key) != -1) {
+								value = dataset.getValue(key);
+								dataset.setValue(key, parcial + value.intValue());
+							} else {
+								dataset.setValue(key, parcial);
+							}						
 						}
 					}
 				}
@@ -314,5 +327,108 @@ public class EstadisticaAction extends DispatchAction {
 		}		
 		
 		return toByte;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ActionForward generarPDF(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		String title = request.getParameter("title") == null ? "Solicitudes" : request.getParameter("title");
+		
+		response.setContentType("application/pdf");
+		response.setHeader("Expires:", "0");
+		response.setHeader("Content-Disposition", "attachment; filename=" + title.replaceAll(" ", "_") + ".pdf");
+		
+		String banca = request.getParameter("codBanca") == null ? "-1" : request.getParameter("codBanca");
+		String inicio = request.getParameter("fecInicio") == null ? "" : request.getParameter("fecInicio"); 
+		String fin = request.getParameter("fecFin") == null ? "" : request.getParameter("fecFin");
+		
+		String fechaInicio = request.getSession().getAttribute("fecInicio") == null ? "" : (String) request.getSession().getAttribute("fecInicio");
+		String fechaFin = request.getSession().getAttribute("fecFin") == null ? "" : (String) request.getSession().getAttribute("fecFin");
+		
+		if(request.getSession().getAttribute("data") == null || !(inicio.equalsIgnoreCase(fechaInicio) && fin.equalsIgnoreCase(fechaFin))) {
+			Estadistica e = new Estadistica();
+			e.setCodBanca(BigDecimal.valueOf(Double.parseDouble(banca)));
+			if(title.toLowerCase().indexOf("atendidas") > -1) {
+				listarEstadisticasAtencion(e, inicio, fin, request);
+			} else {
+				listarEstadisticasAsignacion(e, inicio, fin, request);
+			}
+		}
+		
+		if(inicio.length() > 0 && fin.length() > 0) {
+			if(!inicio.equalsIgnoreCase(fin)) {
+				title += " del " + inicio + " al " + fin; 
+			} else {
+				title += " del " + inicio;
+			}
+		}
+		
+		int i;
+		int j;
+		int row;
+		byte [] outArray = null;
+		List<byte[]> graf = (List<byte[]>) request.getSession().getAttribute("graf");
+		Map<String, Object> map = (Map<String, Object>) request.getSession().getAttribute("data");
+		List<String> colsName = (List<String>) map.get("colsName");
+		List<Map<String, Object>> colsModel = (List<Map<String, Object>>) map.get("colsModel");
+		List<Map<String, Object>> data = (List<Map<String, Object>>) map.get("data");
+		String colName;
+		
+		DocumentoPDF doc = new DocumentoPDF();
+		
+		doc.setTitle(title);
+		row = 2;
+		
+		PdfPTable table = doc.getTable(colsName.size());
+        PdfPCell cell;
+        table.getDefaultCell().setBackgroundColor(BaseColor.WHITE);
+        
+        for (i = 0; i < colsName.size(); i++) {
+			cell = new PdfPCell(new Phrase(colsName.get(i), doc.getFontHeaderTable()));
+			cell.setBackgroundColor(new BaseColor(83, 142, 213)) ;
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setBorderColor(new BaseColor(157, 190, 231));
+            table.addCell(cell);
+        }
+		
+        doc.add(table);
+		/*
+		for(i = 0; i < colsName.size(); i++) {
+			doc.setBarraTitulo(row, i, colsName.get(i));
+		}
+		row++;
+		
+		for(i = 0; i < data.size(); i++) {
+			for(j = 0; j < colsModel.size(); j++) {
+				colName = colsModel.get(j).get("index").toString();
+				if(data.get(i).get(colName) != null) {
+					doc.setContentValue(row, j, data.get(i).get(colName).toString());
+				} else {
+					doc.setContentValue(row, j, "");
+				}
+			}
+			row++;
+		}
+		row++;
+		
+		for(i = 0; i < colsName.size(); i++) {
+			doc.getSheet().autoSizeColumn(i);
+		}
+		
+		for(i = 0; i < graf.size(); i++) {
+			doc.setImagen(row, 0, graf.get(i));
+			row += 23;
+		}*/
+		
+		outArray = doc.toByteArray();
+		if(outArray != null) { 
+			response.setContentLength(outArray.length);
+			response.getOutputStream().write(outArray);
+			response.getOutputStream().flush();
+		}
+		return null;
+		
 	}
 }

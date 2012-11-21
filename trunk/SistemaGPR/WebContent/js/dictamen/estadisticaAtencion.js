@@ -113,8 +113,28 @@ $(document).ready(function(){
 			return;
 		}
 		
-		url = obtenerContexto() + "estadisticas.do?method=generarExcelAsignacion&codBanca=" + $("#bancaCliente").val() + "&fecInicio=" + fechaInicio + "&fecFin=" + fechaFin;
+		url = obtenerContexto() + "estadisticas.do?method=generarExcelAsignacion&codBanca=" + $("#bancaCliente").val() + "&fecInicio=" + fechaInicio + "&fecFin=" + fechaFin + "&title=Solicitudes Atendidas";
 		window.open(url, "_blank");
 	});
-	// $("#btnPDF");
+	$("#btnPDF").bind("click", function(){
+		d1 = $("#inifechaSolicitud").val();
+		d2 = $("#finfechaSolicitud").val();
+
+		if(d1.length > 0 && d2.length > 0) {
+			if(compareDate(d1, d2)){
+				fechaInicio = $("#finfechaSolicitud").val();
+				fechaFin = $("#inifechaSolicitud").val();
+			} else {
+				fechaInicio = $("#inifechaSolicitud").val();
+				fechaFin = $("#finfechaSolicitud").val();
+			}	
+		} else {
+			alert("Ingrese un rando de fechas.");
+			$("#inifechaSolicitud").focus();
+			return;
+		}
+		
+		url = obtenerContexto() + "estadisticas.do?method=generarPDF&codBanca=" + $("#bancaCliente").val() + "&fecInicio=" + fechaInicio + "&fecFin=" + fechaFin + "&title=Solicitudes Atendidas";
+		window.open(url, "_blank");
+	});
 });
