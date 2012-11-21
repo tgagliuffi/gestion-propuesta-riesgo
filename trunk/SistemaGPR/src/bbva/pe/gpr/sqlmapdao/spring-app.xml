@@ -122,6 +122,12 @@
   	<bean id="garantiaDAO" class="bbva.pe.gpr.daoImpl.GarantiaDAOImpl">
     	<property name="sqlMapClient" ref="sqlMapClient"/>
   	</bean>
+  	<bean id="usuarioSubancaDAOImpl" class="bbva.pe.gpr.daoImpl.UsuarioSubancaDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
+  	<bean id="bancaSubDAOImpl" class="bbva.pe.gpr.daoImpl.BancaSubDAOImpl">
+    	<property name="sqlMapClient" ref="sqlMapClient"/>
+  	</bean>
   	
 <!-- =============================================================================================================================================-->
 <!-- ================================== Service Classes Implementations of BusinessObjects Services ===============================================-->
@@ -139,7 +145,8 @@
 			<constructor-arg index="9" ref="gerenteOficinaDAOImpl"></constructor-arg>
 			<constructor-arg index="10" ref="solicitudRechazadaDAOImpl"></constructor-arg>
 			<constructor-arg index="11" ref="funcionDAO"></constructor-arg>
-			
+			<constructor-arg index="12" ref="usuarioSubancaDAOImpl"></constructor-arg>
+			<constructor-arg index="13" ref="bancaSubDAOImpl"></constructor-arg>			
 		
 	</bean>
 	<bean id="seguridadServiceImpl" class="bbva.pe.gpr.serviceImpl.SeguridadServiceImpl">
