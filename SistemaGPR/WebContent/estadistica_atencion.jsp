@@ -64,6 +64,8 @@
 	       <td valign="middle">       
 		   		<select id="slctDictamen" name="slctDictamen">
 					<option value="-1">TODOS</option>
+					<option value="RIESGOS">RIESGOS</option>
+					<option value="OFICINA">OFICINA</option>
 				</select>
 		   </td>
 		</tr>
@@ -72,8 +74,10 @@
 	       		<font class="fontText"><b>Territorio</b></font>
 	       </td>
 	       <td colspan="3" valign="middle">
-				<input type="text" name="codTerritorio" class="cajaTexto" id="codTerritorio" size="10" maxlength="10">
-				<input type="text" name="desTerritorio" class="cajaTexto" id="desTerritorio" size="78" maxlength="78">&nbsp;&nbsp;
+				<select id="codTerritorio" name="codTerritorio">
+					<option value="-1">TODOS</option>
+				</select>
+				<!-- input type="text" name="desTerritorio" class="cajaTexto" id="desTerritorio" size="78" maxlength="78" -->
 		   </td>
 		</tr>
 		<tr>
@@ -81,8 +85,10 @@
 	       		<font class="fontText"><b>Oficina</b></font>
 	       </td>
 	       <td colspan="3" valign="middle">
-				<input type="text" name="codOficina" class="cajaTexto" id="codOficina" size="10" maxlength="10">
-				<input type="text" name="desOficina" class="cajaTexto" id="desOficina" size="78" maxlength="78">&nbsp;&nbsp;
+	       		<select id="codOficina" name="codOficina">
+	       			<option value="-1">TODOS</option>
+	       		</select>
+				<!-- input type="text" name="desOficina" class="cajaTexto" id="desOficina" size="78" maxlength="78" -->
 		   </td>
 		</tr>
 		
