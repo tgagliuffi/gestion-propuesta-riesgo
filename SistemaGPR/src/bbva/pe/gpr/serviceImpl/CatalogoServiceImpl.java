@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import bbva.pe.gpr.bean.Banca;
+import bbva.pe.gpr.bean.BancaSub;
 import bbva.pe.gpr.bean.Campania;
 import bbva.pe.gpr.bean.Funcion;
 import bbva.pe.gpr.bean.Multitabla;
@@ -16,7 +17,10 @@ import bbva.pe.gpr.bean.Producto;
 import bbva.pe.gpr.bean.Rol;
 import bbva.pe.gpr.bean.Territorio;
 import bbva.pe.gpr.bean.Usuario;
+import bbva.pe.gpr.bean.UsuarioSubanca;
+import bbva.pe.gpr.bean.UsuarioSubancaKey;
 import bbva.pe.gpr.dao.BancaDAO;
+import bbva.pe.gpr.dao.BancaSubDAO;
 import bbva.pe.gpr.dao.FuncionDAO;
 import bbva.pe.gpr.dao.GerenteOficinaDAO;
 import bbva.pe.gpr.dao.MultitablaDAO;
@@ -28,6 +32,7 @@ import bbva.pe.gpr.dao.ProductoDAO;
 import bbva.pe.gpr.dao.RolDAO;
 import bbva.pe.gpr.dao.TerritorioDAO;
 import bbva.pe.gpr.dao.UsuarioDAO;
+import bbva.pe.gpr.dao.UsuarioSubancaDAO;
 import bbva.pe.gpr.service.CatalogoService;
 import bbva.pe.gpr.util.Constant;
 
@@ -45,6 +50,9 @@ public class CatalogoServiceImpl implements CatalogoService{
       private GerenteOficinaDAO gerenteOficinaDAO;
       private SolicitudRechazadaDAO solicitudRechazadaDAO;
       private FuncionDAO funcionDAO; 
+      private UsuarioSubancaDAO usuarioSubancaDAO;
+      private BancaSubDAO bancaSubDAO; 
+
 	public CatalogoServiceImpl(
 			  BancaDAO bancaDAO,
 			  ProductoDAO productoDAO,
@@ -57,7 +65,9 @@ public class CatalogoServiceImpl implements CatalogoService{
 			  UsuarioOficinaDAO usuarioOficinaDAO,
 			  GerenteOficinaDAO gerenteOficinaDAO,
 			  SolicitudRechazadaDAO solicitudRechazadaDAO,
-			  FuncionDAO funcionDAO
+			  FuncionDAO funcionDAO,
+			  UsuarioSubancaDAO usuarioSubancaDAO,
+			  BancaSubDAO bancaSubDAO
 			  ) {
 		  super();
 		  this.bancaDAO=bancaDAO;
@@ -72,6 +82,8 @@ public class CatalogoServiceImpl implements CatalogoService{
 		  this.gerenteOficinaDAO=gerenteOficinaDAO;
 		  this.solicitudRechazadaDAO =solicitudRechazadaDAO;
 		  this.funcionDAO=funcionDAO;
+		  this.usuarioSubancaDAO=usuarioSubancaDAO;
+		  this.bancaSubDAO=bancaSubDAO;
 	  }
 
 	public BancaDAO getBancaDAO(){return bancaDAO;}
@@ -152,6 +164,22 @@ public class CatalogoServiceImpl implements CatalogoService{
 		public void setFuncionDAO(FuncionDAO funcionDAO) {
 			this.funcionDAO = funcionDAO;
 		}
+
+		public UsuarioSubancaDAO getUsuarioSubancaDAO() {
+			return usuarioSubancaDAO;
+		}
+
+		public void setUsuarioSubancaDAO(UsuarioSubancaDAO usuarioSubancaDAO) {
+			this.usuarioSubancaDAO = usuarioSubancaDAO;
+		}
+	      public BancaSubDAO getBancaSubDAO() {
+	  		return bancaSubDAO;
+	  	}
+
+	  	public void setBancaSubDAO(BancaSubDAO bancaSubDAO) {
+	  		this.bancaSubDAO = bancaSubDAO;
+	  	}
+
 
 	/*#####################################################################################################
    * 
@@ -374,6 +402,9 @@ public class CatalogoServiceImpl implements CatalogoService{
 	 public List<Rol> getLstRolesByCriteria(Rol rolBean) throws Exception {
 		return rolDAO.getLstRolesByCriteria(rolBean);
 	 }
+	 public Rol getRolSelectByPrimaryKey(BigDecimal codRol) throws Exception {
+			return rolDAO.selectByPrimaryKey(codRol);
+	}
  /*#####################################################################################################
    *  
    *                TGPR_OFICINA_ASIGNADA
@@ -442,4 +473,17 @@ public class CatalogoServiceImpl implements CatalogoService{
 			return Constant.USUARIO_RIESGOS;
 		}
 	}
+
+	public UsuarioSubanca selectByPrimaryKey(UsuarioSubancaKey key) {
+		return usuarioSubancaDAO.selectByPrimaryKey(key);
+	}
+
+	public BancaSub selectByPrimaryKeyBancaSub(String codSubbanca) {
+		return bancaSubDAO.selectByPrimaryKey(codSubbanca);
+	}
+
+	public void insert(UsuarioSubanca record) {
+     usuarioSubancaDAO.insert(record);
+	}
+    
 }
