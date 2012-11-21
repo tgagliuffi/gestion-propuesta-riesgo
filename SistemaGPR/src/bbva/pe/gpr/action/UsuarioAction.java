@@ -1,32 +1,57 @@
 package bbva.pe.gpr.action;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-import com.grupobbva.bc.per.tele.ldap.comunes.IILDPeExcepcion;
-import com.grupobbva.bc.per.tele.ldap.serializable.IILDPeUsuario;
+import org.apache.struts.upload.FormFile;
 
 import bbva.pe.gpr.bean.Banca;
+import bbva.pe.gpr.bean.BancaSub;
 import bbva.pe.gpr.bean.Funcion;
 import bbva.pe.gpr.bean.FuncionRol;
 import bbva.pe.gpr.bean.Rol;
 import bbva.pe.gpr.bean.Usuario;
+import bbva.pe.gpr.bean.UsuarioRol;
+import bbva.pe.gpr.bean.UsuarioSubanca;
 import bbva.pe.gpr.context.Context;
 import bbva.pe.gpr.form.UsuarioForm;
 import bbva.pe.gpr.service.CatalogoService;
 import bbva.pe.gpr.service.SeguridadService;
 import bbva.pe.gpr.util.Constant;
+import bbva.pe.gpr.util.FechaUtil;
+import bbva.pe.gpr.util.FilaError;
+
+import com.grupobbva.bc.per.tele.ldap.comunes.IILDPeExcepcion;
+import com.grupobbva.bc.per.tele.ldap.serializable.IILDPeUsuario;
 
 public class UsuarioAction  extends DispatchAction{
 	private CatalogoService catalogoService; 
@@ -237,210 +262,290 @@ public class UsuarioAction  extends DispatchAction{
 	}
 
 	public ActionForward registroMasivo(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		return mapping.findForward("registroMasivo");		
+		return mapping.findForward("cargaMasiva");		
 	}
 
-//	public ActionForward grabarRegistroMasivo(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		UsuarioForm usuarioForm= (UsuarioForm)form;
-//		@SuppressWarnings("unused")
-//		FormFile file=usuarioForm.getFile();
-//		List<Usuario> listaUsuarios = new ArrayList<Usuario>();
-//		POIFSFileSystem fs = new POIFSFileSystem(file.getInputStream());
-//		HSSFWorkbook wb = new HSSFWorkbook(fs);
-//		HSSFSheet sheet = wb.getSheetAt(0);
-//		Usuario usuario = null;
-//		Map<Integer, Object> registro = null;
-//		int i = 1;
-//		Row row = sheet.getRow(i);
-//		int numErrores = 0;
-//		int numCamposVacios = 0;
-//		
-//		while (row != null) {
-//
-//			for (int j = 0; j < Constant.TOTAL_POSICIONES_CARGA_MASIVA; j++) {
-//				Cell cell = row.getCell(j);
-//				Object valorValidar = null;
-//				if (cell != null && cell.getCellType() == Cell.CELL_TYPE_STRING) {
-//					valorValidar = cell.getStringCellValue();
-//				} else if (cell != null && cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-//					valorValidar = cell.getNumericCellValue();
-//				} else if (cell != null && cell.getCellType() == Cell.CELL_TYPE_BLANK) {
-//					valorValidar = "";
-//				} else {
-//					valorValidar = "";
-//				}
-//
-//				if (valorValidar == null || valorValidar.toString().trim().equals("")) {
-//					numCamposVacios++;
-//				}
-//			}
-//			if (numCamposVacios == Constant.TOTAL_POSICIONES_CARGA_MASIVA) {
-//				i++;
-//				row = sheet.getRow(i);
-//				numCamposVacios = 0;
-//				continue;
-//			}
-//			numCamposVacios = 0;
-//			registro = new HashMap<Integer, Object>();
-//			numErrores = 0;
-//			for (int j = 0; j <= Constant.TOTAL_POSICIONES_CARGA_MASIVA; j++) {
-//				Cell cell = row.getCell(j);
-//
-//				Object valor = null;
-//				if (cell != null && cell.getCellType() == Cell.CELL_TYPE_STRING) {
-//					valor = cell.getStringCellValue();
-//				} else if (cell != null && cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-//					valor = cell.getNumericCellValue();
-//				} else if (cell != null && cell.getCellType() == Cell.CELL_TYPE_BLANK) {
-//					valor = "";
-//				} else {
-//					valor = "";
-//				}
-//
-//				// validar los datos
-//				FilaError error = validarDato(i + 1, j, valor,listaUsuarios);
-//				if (error != null) {
-//					numErrores++;
-//				//	listaErrores.add(error);
-//				}
-//				registro.put(j, valor);
-//			}
-//			if (numErrores == 0) {
-////				// Validar creacion de Objeto Gerente
-//				FilaError error = null;
-//				try {
-//				//	usuario = crearObjectoGerente(registro);
-////					if (gerente != null) {
-////						if(gerente.getNombres()== null){
-////							error = new FilaError();
-////							error.setNumFila(i + 1);
-////							error.setNombreColumna("LDAP");
-////							error.setDescripcionError("Error consultando Nombres de Funcionario.");
-////							//listaErrores.add(error);
-////						}else if(gerente.getApPaterno()== null){
-////							error = new FilaError();
-////							error.setNumFila(i + 1);
-////							error.setNombreColumna("LDAP");
-////							error.setDescripcionError("Error consultando Ap. Paterno de Funcionario.");
-////							//listaErrores.add(error);
-////						}else if(gerente.getApMaterno()== null){
-////							error = new FilaError();
-////							error.setNumFila(i + 1);
-////							error.setNombreColumna("LDAP");
-////							error.setDescripcionError("Error consultando Ap. Materno de Funcionario.");
-////							//listaErrores.add(error);
-////						}else if(gerente.getCodOficina()== null){
-////							error = new FilaError();
-////							error.setNumFila(i + 1);
-////							error.setNombreColumna("LDAP");
-////							error.setDescripcionError("Error consultando el Cod. Oficina de Funcionario.");
-////							//listaErrores.add(error);
-////						}else if(gerente.getNombreOficina()== null){
-////							error = new FilaError();
-////							error.setNumFila(i + 1);
-////							error.setNombreColumna("LDAP");
-////							error.setDescripcionError("Error consultando el Nombre Oficina de Funcionario.");
-////							//listaErrores.add(error);
-////						}else if(gerente.getCorreo()== null){
-////							error = new FilaError();
-////							error.setNumFila(i + 1);
-////							error.setNombreColumna("LDAP");
-////							error.setDescripcionError("Error consultando el Correo de Funcionario.");
-////							//listaErrores.add(error);
-////						}else{
-//						listaUsuarios.add(usuario);
-////							//listaUsuarios.add(usuario);
-////						}
-////					} else {
-////						error = new FilaError();
-////						error.setNumFila(i + 1);
-////						error.setNombreColumna("COD_REGISTRO");
-////						error.setDescripcionError("El código de registro no existe en el LDAP.");
-////						//listaErrores.add(error);
-////					}
-////				} catch (IILDPeExcepcion e) {
-////					error = new FilaError();
-////					error.setNumFila(i + 1);
-////					error.setNombreColumna("LDAP");
-////					error.setDescripcionError("Error consultando LDAP.");
-//					//listaErrores.add(error);
-//				} catch (Exception e) {
-//					error = new FilaError();
-//					error.setNumFila(i + 1);
-//					error.setNombreColumna("COD_CARGO");
-//					error.setDescripcionError(e.getMessage());
-//					//listaErrores.add(error);
-//				}
-//			}
-//			i++;
-//			row = sheet.getRow(i);
-//		}
-//		if (!listaUsuarios.isEmpty()) {
-//			//super.saveCollection(listaUsuarios);
-//		}
-//		return null;		
-//	}
-   //añadido
-//	public FilaError validarDato(int fila, int posicion, Object valor,
-//			List<Usuario> listaGerentes) {
-//		FilaError error = null;
-//		Usuario usuario = null;
-//		if (posicion == Constant.POSICION_COD_REGISTRO) {
-//			if (valor == null || valor.toString().trim().equals("")) {
-//				error = new FilaError();
-//				error.setNumFila(fila);
-//				error.setNombreColumna("COD_REGISTRO");
-//				error.setDescripcionError("El código de registro es obligatorio");
-//			} else {
-//				for (Usuario _gerente : listaGerentes) {
-//					if (_gerente.getCodigoUsuario().equals(valor.toString())) {
-//						error = new FilaError();
-//						error.setNumFila(fila);
-//						error.setNombreColumna("COD_REGISTRO");
-//						error.setDescripcionError("El código de registro ya esta registrado en lineas anteriores");
-//						break;
-//					}
-//				}
-//
-//			}
-//
-//		} else  if(posicion == Constant.POSICION_COD_BANCA){
-//			if (valor != null && !valor.toString().trim().equals("")) {
-//				String cargo = valor.toString();
-//				try {
-//					if (valor == null || valor.toString().trim().equals("")) {
-//						error = new FilaError();
-//						error.setNumFila(fila);
-//						error.setNombreColumna("COD_BANCA");
-//						error.setDescripcionError("No se pudo comprobar  el código de BANCA.");
-//					}
-//				} catch (Exception e) {
-//					error = new FilaError();
-//					error.setNumFila(fila);
-//					error.setNombreColumna("COD_BANCA");
-//					error.setDescripcionError("No se pudo comprobar  el código de BANCA.");
-//				}
-//			}
-//		}else  if(posicion == Constant.POSICION_COD_ROL){
-//			if (valor != null && !valor.toString().trim().equals("")) {
-//				String cargo = valor.toString();
-//				try {
-//					if (valor == null || valor.toString().trim().equals("")) {
-//						error = new FilaError();
-//						error.setNumFila(fila);
-//						error.setNombreColumna("COD_ROL");
-//						error.setDescripcionError("No se pudo comprobar  el código de ROL.");
-//					}
-//				} catch (Exception e) {
-//					error = new FilaError();
-//					error.setNumFila(fila);
-//					error.setNombreColumna("COD_ROL");
-//					error.setDescripcionError("No se pudo comprobar  el código de ROL.");
-//				}
-//			}
-//		}
-//		return error;
-//	}
+	public ActionForward cargarRegistroMasivo(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+      HashMap<String, String> parametros=new HashMap<String, String>();
+      String rutaPlantilla= catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_CONFIGURACIONES, "16002").getStrValor() +"PLANTILLA_ASIGNAR_ROL.xls";  
+      String rutaPlantillaLogError= catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_CONFIGURACIONES, "16002").getStrValor() +"PLANTILLA_LOG_ERROR.xls";  
+      parametros.put("DIR_PLANTILLAS",rutaPlantilla);
+		parametros.put("NOM_PLANTILLA_LOG_ERR",rutaPlantillaLogError);
+		try{
+			UsuarioForm usuarioForm= (UsuarioForm)form;
+			grabarRegistroMasivo(usuarioForm,parametros,request);
+			List<FilaError> getListError=(List<FilaError>)request.getAttribute("LstErrores");
+			 if(!getListError.isEmpty()){
+				 request.setAttribute("listaLog","1");
+			 }
+		}
+		catch (Exception e) {
+		}
+		return mapping.findForward("cargaMasiva");		
+	}
+
+	public void grabarRegistroMasivo (ActionForm form,HashMap<String, String> parametros,HttpServletRequest request) throws Exception {
+		UsuarioForm usuarioForm= (UsuarioForm)form;
+		try {
+		FormFile file=usuarioForm.getFile();
+		List<UsuarioRol> listaUsuariosRol = new ArrayList<UsuarioRol>();
+		List<FilaError> listaErrores = new ArrayList<FilaError>();
+		POIFSFileSystem fs = new POIFSFileSystem(file.getInputStream());
+		HSSFWorkbook wb = new HSSFWorkbook(fs);
+		HSSFSheet sheet = wb.getSheetAt(0);
+		UsuarioRol usuarioRol = new UsuarioRol();
+		List<UsuarioSubanca> listausuarioSubbanca = new ArrayList<UsuarioSubanca>();
+		UsuarioSubanca usuarioSubbanca=new UsuarioSubanca();
+		Map<Integer, Object> registro = null;
+		int i = 1;
+		Row row = sheet.getRow(i);
+		int numErrores = 0;
+		int numCamposVacios = 0;
+		while (row != null) {
+			for (int j = 0; j < Constant.TOTAL_POSICIONES_CARGA_MASIVA; j++) {
+				Cell cell = row.getCell(j);
+				Object valorValidar = null;
+				if (cell != null && cell.getCellType() == Cell.CELL_TYPE_STRING) {
+					valorValidar = cell.getStringCellValue();
+				} else if (cell != null && cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+					valorValidar = cell.getNumericCellValue();
+				} else if (cell != null && cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+					valorValidar = "";
+				} else {
+					valorValidar = "";
+				}
+				if (valorValidar == null || valorValidar.toString().trim().equals("")) {
+					numCamposVacios++;
+				}
+			}
+			if (numCamposVacios == Constant.TOTAL_POSICIONES_CARGA_MASIVA) {
+				i++;
+				row = sheet.getRow(i);
+				numCamposVacios = 0;
+				continue;
+			}
+			numCamposVacios = 0;
+			registro = new HashMap<Integer, Object>();
+			numErrores = 0;
+			for (int j = 0; j <= Constant.TOTAL_POSICIONES_CARGA_MASIVA; j++) {
+				Cell cell = row.getCell(j);
+				Object valor = null;
+				if (cell != null && cell.getCellType() == Cell.CELL_TYPE_STRING) {
+					valor = cell.getStringCellValue();
+				} else if (cell != null && cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+					valor = cell.getNumericCellValue();
+				} else if (cell != null && cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+					valor = "";
+				} else {
+					valor = "";
+				}
+				FilaError error = validarDato(i + 1, j, valor);
+				if (error != null) {
+					numErrores++;
+				    listaErrores.add(error);
+				}
+				registro.put(j, valor);
+			}
+			if (numErrores == 0) {
+				FilaError error = null;
+				try {
+					usuarioRol = crearObjectoUsuario(registro);
+					if (usuarioRol != null) {
+						if(usuarioRol.getCodUsuario()== null){
+							error = new FilaError();
+							error.setNumFila(i + 1);
+							error.setNombreColumna("CODIGO");
+							error.setDescripcionError("Error consultando codigo de Funcionario.");
+							listaErrores.add(error);
+						}else if(usuarioRol.getCodRol()== null){
+							error = new FilaError();
+							error.setNumFila(i + 1);
+							error.setNombreColumna("ROL");
+							error.setDescripcionError("Error consultando rol de Funcionario.");
+							listaErrores.add(error);
+						}else if((usuarioRol.getDescripcion()== null)) {
+							error = new FilaError();
+							error.setNumFila(i + 1);
+							error.setNombreColumna("SUBBANCA");
+							error.setDescripcionError("Error consultando subbanca de Funcionario.");
+							listaErrores.add(error);
+						}else{
+							listaUsuariosRol.add(usuarioRol);
+						}
+					} 
+ 		      } catch (Exception e) {
+					System.out.print(""+e.getMessage());
+					error = new FilaError();
+					error.setNumFila(i + 1);
+					error.setNombreColumna("COD_CARGO");
+					error.setDescripcionError(e.getMessage());
+					listaErrores.add(error);
+				}
+			}
+			i++;
+			row = sheet.getRow(i);
+		}
+		if (!listaUsuariosRol.isEmpty()) {
+			saveUsuarioRolesCargaMasiva(listaUsuariosRol);
+		}
+		if (!listaErrores.isEmpty()) {
+			saveLogErrores(listaErrores,parametros,request);
+			request.setAttribute("LstErrores", listaErrores);
+		}
+		if (!listaUsuariosRol.isEmpty()) {
+			saveUsuarioSubBancaCargaMasiva(listaUsuariosRol);
+		}
+		
+		}catch (Exception e) {
+	    log.debug(e.getLocalizedMessage());
+		}
+	}
+	
+	public FilaError validarDato(int fila, int posicion, Object valor) {
+		FilaError error = null;
+		if (posicion == Constant.POSICION_COD_REGISTRO) {
+			if (valor == null || valor.toString().trim().equals("")) {
+				error = new FilaError();
+				error.setNumFila(fila);
+				error.setNombreColumna("COD_REGISTRO");
+				error.setDescripcionError("El código de REGISTRO es obligatorio");
+			}
+		} else  if(posicion == Constant.POSICION_COD_ROL){
+			if (valor == null || valor.toString().trim().equals("")) {
+					if (valor == null || valor.toString().trim().equals("")) {
+						error = new FilaError();
+						error.setNumFila(fila);
+						error.setNombreColumna("COD_rol");
+						error.setDescripcionError("El código de ROL es obligatorio");
+							}
+					}	
+				}else if(posicion == Constant.POSICION_COD_SUBBANCA){
+					if (valor == null || valor.toString().trim().equals("")) {
+						if (valor == null || valor.toString().trim().equals("")) {
+							error = new FilaError();
+							error.setNumFila(fila);
+							error.setNombreColumna("COD_SUBBANCA");
+							error.setDescripcionError("El código de SUBBANCA es obligatorio");
+								}
+						}	
+				}
+		return error;
+	}
+	
+	private UsuarioRol crearObjectoUsuario(Map<Integer, Object> parameter)
+			throws IILDPeExcepcion {
+
+		UsuarioRol usuarioRol =new UsuarioRol();
+		Object value = null;
+		String codRegistro = null;
+		String codRol = null;
+		String codSubBanca=null;
+		value = parameter.get(Constant.POSICION_COD_REGISTRO);
+		codRegistro = (value != null ? value.toString() : null);
+		if (codRegistro.substring(0,1).equals("0")&&codRegistro.length()==7){
+			codRegistro = "P"+codRegistro.substring(1,7);
+		}
+		
+		value = parameter.get(Constant.POSICION_COD_ROL);
+		codRol = (value != null ? value.toString() : null);
+		
+		value = parameter.get(Constant.POSICION_COD_SUBBANCA);
+		codSubBanca = (value != null ? value.toString() : null);
+		
+		try {
+		UsuarioSubanca usuarioSubanca= new UsuarioSubanca();
+        usuarioSubanca.setCodSubanca(codSubBanca);
+        usuarioSubanca.setCodUsuario(codRegistro);
+        UsuarioSubanca userSubBanca=catalogoService.selectByPrimaryKey(usuarioSubanca);
+        if(userSubBanca==null){
+			BancaSub getSubBanca=catalogoService.selectByPrimaryKeyBancaSub(codSubBanca);
+	        if(getSubBanca!=null){
+	    		usuarioRol.setDescripcion(getSubBanca.getCodSubbanca());
+	        }else{
+	        	usuarioRol.setDescripcion(null);
+	        }
+        }
+        
+        UsuarioRol usuario=new UsuarioRol();
+		usuario.setCodRol(new BigDecimal(codRol));
+		usuario.setCodUsuario(codRegistro);
+		UsuarioRol user=seguridadService.selectByPrimaryKeyUsuarioRol(usuario);
+		if(user==null){
+			Rol getRol=catalogoService.getRolSelectByPrimaryKey(new BigDecimal(codRol));
+	        if(getRol!=null){
+	    		usuarioRol.setCodRol(getRol.getCodRol());
+	        }else{
+	        	usuarioRol.setCodRol(null);
+	     }
+	        
+	    Usuario getLstusuario=catalogoService.selectUsuarioByPrimaryKey(codRegistro);
+		if(getLstusuario!=null){
+			usuarioRol.setCodUsuario(getLstusuario.getCodigoUsuario());
+	        }else{
+	    		usuarioRol.setCodUsuario(null);
+	        }
+			usuarioRol.setEstado(Constant.ESTADO_ACTIVO);
+			}
+			}catch (Exception e) {
+        System.out.print(""+e.getLocalizedMessage());
+		}
+			return usuarioRol;
+	}
+	
+	public void saveLogErrores(List<FilaError> listaErrores, HashMap<String, String> parametros,HttpServletRequest request) throws Exception {
+		InputStream inp = null;
+		FileOutputStream fileOut = null;
+		try {
+			File file = new File(parametros.get("NOM_PLANTILLA_LOG_ERR"));
+			inp = new FileInputStream(file);
+			Workbook wb = WorkbookFactory.create(inp);
+			Sheet sheet = wb.getSheetAt(0);
+			int i = 1;
+			Row row = null;
+			Cell cell0 = null;
+			Cell cell1 = null;
+			Cell cell2 = null;
+			for (FilaError error : listaErrores) {
+				row = sheet.getRow(i);
+				if (row == null) {
+					row = sheet.createRow(i);
+				}
+				cell0 = row.getCell(0);
+				if (cell0 == null) {
+					cell0 = row.createCell(0);
+				}
+				cell0.setCellValue(error.getNumFila());
+				cell1 = row.getCell(1);
+				if (cell1 == null) {
+					cell1 = row.createCell(1);
+				}
+				cell1.setCellValue(error.getNombreColumna());
+				cell2 = row.getCell(2);
+				if (cell2 == null) {
+					cell2 = row.createCell(2);
+				}
+				cell2.setCellValue(error.getDescripcionError());
+				i++;
+			}
+		    String rutaPlantilla= catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_CONFIGURACIONES, "16002").getStrValor();
+			String nombreFileError =rutaPlantilla+"LOG_ERROR_"+FechaUtil.formatFecha(new Date(),FechaUtil.YYYYMMDD_HHMMSS)+".xls";
+			fileOut = new FileOutputStream(nombreFileError);
+			request.getSession().setAttribute("FILE_LOG_ERROR_MASIVO", nombreFileError);
+			wb.write(fileOut);
+		} catch (FileNotFoundException e) {
+			log.debug(e);
+		} catch (InvalidFormatException e) {
+			log.debug(e);
+		} catch (IOException e) {
+			log.debug(e);
+		} finally {
+			try {
+				fileOut.close();
+			} catch (IOException e) {
+				log.debug(e);
+			}
+		}
+	}
 	
 	public String saveUsuarioRol(String codUsuario,String codRoles) throws Exception {
 		try {
@@ -465,20 +570,64 @@ public class UsuarioAction  extends DispatchAction{
 	return "";
 	}
 	
-	public ActionForward saveUsuario(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String codUsuario= request.getParameter("codUsuarios");
-		String nombre = request.getParameter("nombre");
-		Usuario user = new Usuario();
-		user.setCodigoUsuario(codUsuario);
-		user.setNombres(nombre);
-		user.setFechaCreacion(new Date());
-		user.setEstado("1");
-		try {
-	
-		
-		}catch (Exception e) {
-			System.out.print("Error " + e.getLocalizedMessage());
-		}
+    public void saveUsuarioRolesCargaMasiva(List<UsuarioRol> getLstUSuarioRoles) throws Exception{
+	 if(!getLstUSuarioRoles.isEmpty()){
+		  for (UsuarioRol usuarioRol:getLstUSuarioRoles){
+		   seguridadService.insert(usuarioRol);
+		   }
+	 	}
+    }	
+    
+    public void saveUsuarioSubBancaCargaMasiva(List<UsuarioRol> getLstUSuarioSuBanca) throws Exception{
+   	 if(!getLstUSuarioSuBanca.isEmpty()){
+   		  for (UsuarioRol usuarioSubBanca:getLstUSuarioSuBanca){
+   		      UsuarioSubanca usuario= new UsuarioSubanca();
+   		      usuario.setCodSubanca(usuarioSubBanca.getDescripcion());
+   		      usuario.setCodUsuario(usuarioSubBanca.getCodUsuario());
+   		      usuario.setEstado(Constant.ESTADO_ACTIVO);
+   			  catalogoService.insert(usuario);
+   		   }
+   	 	}
+       }	
+    
+	public ActionForward descargarPlantillaExcel(ActionMapping mapping,ActionForm form, HttpServletRequest request,HttpServletResponse response) throws Exception {
+	    
+		File file;
+	    String rutaPlantilla= catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_CONFIGURACIONES, "16002").getStrValor() +"PLANTILLA_ASIGNAR_ROL.xls";  
+		file = new File(rutaPlantilla);
+		FileInputStream fis = new FileInputStream(file);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream(); 		
+		byte b[] = new byte[2048];
+	    int len = 0;
+	    while ((len = fis.read(b)) != -1) {
+	    	baos.write(b, 0, len);
+	    }
+		response.setContentType("application/ms-excel");
+		response.setHeader("Expires:", "0");
+		response.setHeader("Content-Disposition", "attachment; filename=PlantillaUsuarioRol.xls");
+		response.getOutputStream().write(baos.toByteArray());
+		response.getOutputStream().close();
+		response.getOutputStream().flush();
 		return null;
 	}
+	public void descargarLogError(ActionMapping mapping,ActionForm form, HttpServletRequest request,HttpServletResponse response) throws Exception {
+	    
+		File file;		
+		String getNombre=(String)request.getSession().getAttribute("FILE_LOG_ERROR_MASIVO");
+		file = new File(getNombre);
+		FileInputStream fis = new FileInputStream(file);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream(); 		
+		byte b[] = new byte[2048];
+	    int len = 0;
+	    while ((len = fis.read(b)) != -1) {
+	    	baos.write(b, 0, len);
+	    }
+		response.setContentType("application/ms-excel");
+		response.setHeader("Expires:", "0");
+		response.setHeader("Content-Disposition", "attachment; filename=LogError.xls");
+		response.getOutputStream().write(baos.toByteArray());
+		response.getOutputStream().close();
+		response.getOutputStream().flush();;
+	}
+   
 }
