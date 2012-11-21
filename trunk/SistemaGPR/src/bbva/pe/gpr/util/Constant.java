@@ -82,7 +82,9 @@ public class Constant {
 	public static final String DICTAMEN = "4";
 	public static final String USUARIO_OFICINA = "1";
 	public static final String USUARIO_RIESGOS = "2";
-    public static final int TOTAL_POSICIONES_CARGA_MASIVA=2;
+    public static final int TOTAL_POSICIONES_CARGA_MASIVA=3;
     public static final int POSICION_COD_REGISTRO = 0;
 	public static final int POSICION_COD_ROL = 1;
+	public static final int POSICION_COD_SUBBANCA = 2;
+	
 }
