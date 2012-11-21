@@ -13,7 +13,7 @@
 		<form-bean name="asignarOficinaForm" type="bbva.pe.gpr.form.AsignarOficinaForm" />
 		<form-bean name="ProductoForm"	type="bbva.pe.gpr.form.ProductoForm"></form-bean>
 		<form-bean name="usuarioForm"	type="bbva.pe.gpr.form.UsuarioForm"></form-bean>
-		<form-bean name="asigacionForm" type="bbva.pe.gpr.form.AsignacionForm"></form-bean>
+		<form-bean name="asigacionForm" type="bbva.pe.gpr.form.AsignacionForm"></form-bean>		
 	</form-beans>
 
 	<global-exceptions></global-exceptions>
@@ -56,7 +56,8 @@
 			<forward name="parametriaUsuario" path="/parametria_usuario.jsp"/>
 			<forward name="configuracionUsuario" path="/configuracion_usuario.jsp"/>
 			<forward name="asignarRol" path="/asignar_roles.jsp"/>
-			<forward name="asignarFunciones" path="/asignar_funciones.jsp"/>
+<!-- 		<forward name="asignarFunciones" path="/asignar_funciones.jsp"/> -->
+			<forward name="cargaMasiva" path="/carga_masiva.jsp"/>			
 		</action>
 		
 		<action name="ProductoForm" path="/solicitudForm" scope="session" type="bbva.pe.gpr.action.ProductoAction" 
@@ -84,6 +85,5 @@
 			<forward name="success" path="/asignacion_individual.jsp"></forward>
 		</action>
 	</action-mappings>
-
 	<message-resources parameter="MessageResource"></message-resources>	
 </struts-config>
