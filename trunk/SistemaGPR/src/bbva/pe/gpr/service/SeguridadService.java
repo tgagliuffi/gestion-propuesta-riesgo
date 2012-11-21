@@ -6,6 +6,8 @@ import bbva.pe.gpr.bean.Funcion;
 import bbva.pe.gpr.bean.FuncionRol;
 import bbva.pe.gpr.bean.Menu;
 import bbva.pe.gpr.bean.Rol;
+import bbva.pe.gpr.bean.UsuarioRol;
+import bbva.pe.gpr.bean.UsuarioRolKey;
 
 public interface SeguridadService {
 	 List<Funcion> getLstFuncionByCriteria(Funcion record) throws Exception;
@@ -16,4 +18,6 @@ public interface SeguridadService {
 	 List<Menu> getListadoMenu(String codUsuario);
 	 List<Funcion> getLstRolFuncionesxUsuario(String codUsuario) throws Exception;
 	 Funcion getNivelDictamen(String codUsuario) throws Exception;
+	 void insert(UsuarioRol record)throws Exception;
+	 UsuarioRol selectByPrimaryKeyUsuarioRol(UsuarioRolKey key);
 }
