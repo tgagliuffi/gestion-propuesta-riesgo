@@ -7,7 +7,7 @@ public class Estadistica {
 	
 	private BigDecimal codBanca;
 	private String desBanca;
-	private String codTerritorio;
+	private BigDecimal codTerritorio;
 	private String desTerritorio;
 	private String codOficina;
 	private String desOficina;
@@ -38,11 +38,11 @@ public class Estadistica {
 		this.desBanca = desBanca;
 	}
 
-	public String getCodTerritorio() {
+	public BigDecimal getCodTerritorio() {
 		return codTerritorio;
 	}
 
-	public void setCodTerritorio(String codTerritorio) {
+	public void setCodTerritorio(BigDecimal codTerritorio) {
 		this.codTerritorio = codTerritorio;
 	}
 

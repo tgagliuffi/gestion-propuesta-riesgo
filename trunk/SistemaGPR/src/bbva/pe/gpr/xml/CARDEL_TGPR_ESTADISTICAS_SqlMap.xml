@@ -51,9 +51,9 @@
 			     LEFT JOIN CARDEL.TGPR_MULTITABLA_DETALLE C ON B.COD_MULT_DICTAMEN=C.COD_ELEMENTO AND C.COD_MULTITABLA='T014'
 			WHERE
 				(#codBanca:DECIMAL# IS NULL OR #codBanca:DECIMAL# = -1 OR COD_BANCA = #codBanca:DECIMAL#) AND
-				(#codOficina:VARCHAR# IS NULL OR #codOficina:VARCHAR# = -1 OR COD_OFICINA = #codOficina:VARCHAR#) AND
-				(#codTerritorio:VARCHAR# IS NULL OR #codTerritorio:VARCHAR# = -1 OR COD_TERRITORIO = #codTerritorio:VARCHAR#) AND
-				(#orgDictamen:VARCHAR# IS NULL OR #orgDictamen:VARCHAR# = -1 OR PREFIJO_INGRESO = #orgDictamen:VARCHAR#) AND
+				(#codOficina:VARCHAR# IS NULL OR #codOficina:VARCHAR# = '-1' OR COD_OFICINA = #codOficina:VARCHAR#) AND
+				(#codTerritorio:DECIMAL# IS NULL OR #codTerritorio:DECIMAL# = -1 OR COD_TERRITORIO = #codTerritorio:DECIMAL#) AND
+				(#orgDictamen:VARCHAR# IS NULL OR #orgDictamen:VARCHAR# = '-1' OR PREFIJO_INGRESO = #orgDictamen:VARCHAR#) AND
 				(FECHA_INGRESO >= #fechaInicio:DATE# AND FECHA_INGRESO <= #fechaFin:DATE#)
 			GROUP BY A.COD_BANCA, A.DES_BANCA, C.STR_VALOR
 			       , A.COD_OFICINA, A.DES_OFICINA
@@ -89,9 +89,9 @@
 				     LEFT JOIN CARDEL.TGPR_MULTITABLA_DETALLE C ON B.COD_MULT_DICTAMEN=C.COD_ELEMENTO AND C.COD_MULTITABLA='T014'
 				WHERE
 					(#codBanca:DECIMAL# IS NULL OR #codBanca:DECIMAL# = -1 OR COD_BANCA = #codBanca:DECIMAL#) AND
-					(#codOficina:VARCHAR# IS NULL OR #codOficina:VARCHAR# = -1 OR COD_OFICINA = #codOficina:VARCHAR#) AND
-					(#codTerritorio:VARCHAR# IS NULL OR #codTerritorio:VARCHAR# = -1 OR COD_TERRITORIO = #codTerritorio:VARCHAR#) AND
-					(#orgDictamen:VARCHAR# IS NULL OR #orgDictamen:VARCHAR# = -1 OR PREFIJO_INGRESO = #orgDictamen:VARCHAR#) AND
+					(#codOficina:VARCHAR# IS NULL OR #codOficina:VARCHAR# = '-1' OR COD_OFICINA = #codOficina:VARCHAR#) AND
+					(#codTerritorio:DECIMAL# IS NULL OR #codTerritorio:DECIMAL# = -1 OR COD_TERRITORIO = #codTerritorio:DECIMAL#) AND
+					(#orgDictamen:VARCHAR# IS NULL OR #orgDictamen:VARCHAR# = '-1' OR PREFIJO_INGRESO = #orgDictamen:VARCHAR#) AND
 					(FECHA_INGRESO >= #fechaInicio:DATE# AND FECHA_INGRESO <= #fechaFin:DATE#)
 				GROUP BY NVL(C.STR_VALOR, 'PENDIENTE')
 				ORDER BY NVL(C.STR_VALOR, 'PENDIENTE')

@@ -25,11 +25,11 @@ import org.jfree.data.general.DefaultPieDataset;
 
 import bbva.pe.gpr.bean.Banca;
 import bbva.pe.gpr.bean.Estadistica;
-import bbva.pe.gpr.bean.MultitablaDetalle;
+import bbva.pe.gpr.bean.Oficina;
+import bbva.pe.gpr.bean.Territorio;
 import bbva.pe.gpr.context.Context;
 import bbva.pe.gpr.service.CatalogoService;
 import bbva.pe.gpr.service.EstadisticaService;
-import bbva.pe.gpr.util.Constant;
 import bbva.pe.gpr.util.DocumentoExcel;
 import bbva.pe.gpr.util.DocumentoPDF;
 import bbva.pe.gpr.util.Grafico;
@@ -225,17 +225,25 @@ public class EstadisticaAction extends DispatchAction {
 		return map;
 	}
 	
-	private List<MultitablaDetalle> cargarCombo(String tabla) {
+	public List<Territorio> cargarComboTerritorio(){
+		Territorio t = new Territorio();
 		try {
-			return catalogoService.getLstMultitablaDetalle(tabla);
+			return catalogoService.getLstTerritorioByCriteria(t);
 		} catch (Exception e) {
-			logger.error("Exception DictamenAction.cargarComboProceso: ", e);
-		} 
-		return new ArrayList<MultitablaDetalle>();
+			logger.error("", e);
+			return new ArrayList<Territorio>();
+		}
 	}
 	
-	public List<MultitablaDetalle> cargarComboDictamen(){
-		return cargarCombo(Constant.TABLA_DICTAMEN);
+	public List<Oficina> cargarComboOficina(BigDecimal codTerritorio){
+		Oficina o = new Oficina();
+		o.setCodTerritorio(codTerritorio);
+		try {
+			return catalogoService.getLstOficinaByCriteria(o);
+		} catch (Exception e) {
+			logger.error("", e);
+			return new ArrayList<Oficina>();
+		}
 	}
 	
 	public List<Banca> cargarComboBanca() {

@@ -1,9 +1,26 @@
+buscarOficina = function(){
+	if($("#codTerritorio").val() == "-1") {
+		options = '<option value="-1">TODOS</option>';
+		$("#codOficina").html(options);
+	} else {
+		EstadisticaAction.cargarComboOficina(function(data){
+			options = '<option value="-1">TODOS</option>';
+			$.each(data, function(i , columns){
+			    var value = columns.codOficina; 
+			    var label = columns.nombre;		
+			    options +='<option value="' + value + '">' + label + '</option>';
+			});	
+			$("#codOficina").html(options);
+		});	
+	}
+};
+
 buscarEstadisticaAtencion = function(){
 	estadistica = {
-		codBanca: $("#bancaCliente").val()/*,
-		codOficina: "",
-		codTerritorio: "",
-		orgDictamen: ""*/
+		codBanca: $("#bancaCliente").val(),
+		codOficina: $("#codOficina").val(),
+		codTerritorio: $("#codTerritorio").val(),
+		orgDictamen: $("#slctDictamen").val()
 	};
 	d1 = $("#inifechaSolicitud").val();
 	d2 = $("#finfechaSolicitud").val();
@@ -78,12 +95,18 @@ $(document).ready(function(){
 		dateFormat : 'dd/mm/yy'
 	});
 
-	EstadisticaAction.cargarComboDictamen(function(data){
-		$("#slctDictamen").html(contenidocombo(data));
+	EstadisticaAction.cargarComboTerritorio(function(data){
+		options = '<option value="-1">TODOS</option>';
+		$.each(data, function(i , columns){
+		    var value = columns.codTerritorio; 
+		    var label = columns.nombre;		
+		    options +='<option value="' + value + '">' + label + '</option>';
+		});	
+		$("#codTerritorio").html(options);
 	});
 	
 	EstadisticaAction.cargarComboBanca(function(data){
-		 options = '<option value="-1">TODOS</option>';
+		options = '<option value="-1">TODOS</option>';
 	    $.each(data, function(i , columns){
 	        var value = columns.codBanca; 
 	        var label = columns.descripcion;		
@@ -94,6 +117,7 @@ $(document).ready(function(){
 	
 	buscarEstadisticaAtencion();
 	
+	$("#codTerritorio").bind("change", buscarOficina);
 	$("#btnConsultar").bind("click", buscarEstadisticaAtencion);
 	$("#btnExcel").bind("click", function(){
 		d1 = $("#inifechaSolicitud").val();
