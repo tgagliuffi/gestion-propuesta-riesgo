@@ -102,7 +102,7 @@ $(document).ready(function(){
 			return;
 		}
 		
-		url = obtenerContexto() + "estadisticas.do?method=generarExcelAsignacion&codBanca=" + $("#bancaCliente").val() + "&fecInicio=" + fechaInicio + "&fecFin=" + fechaFin;
+		url = obtenerContexto() + "estadisticas.do?method=generarExcelAsignacion&codBanca=" + $("#bancaCliente").val() + "&fecInicio=" + fechaInicio + "&fecFin=" + fechaFin + "&title=Solicitudes Asignadas";
 		window.open(url, "_blank");
 	});
 	// $("#btnPDF");

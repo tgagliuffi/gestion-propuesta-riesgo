@@ -71,7 +71,7 @@
 			<td valign="middle">
 				<input type="button" class="buttonGPR"  name="btnConsultar" id="btnConsultar" value="Consultar">
 				<input type="button" class="buttonGPR"  name="btnExcel" id="btnExcel" value="Excel">
-				<input type="button" class="buttonGPR"  name="btnPDF" id="btnPDF" value="PDF">
+				<input type="button" class="buttonGPR"  name="btnPDF" id="btnPDF" value="PDF" style="display: none">
 			</td>	
 		</tr>
 		</table>
