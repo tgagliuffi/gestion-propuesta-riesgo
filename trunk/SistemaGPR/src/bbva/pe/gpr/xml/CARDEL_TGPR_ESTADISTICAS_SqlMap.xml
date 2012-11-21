@@ -6,16 +6,21 @@
 		<result column="DES_BANCA" property="desBanca" jdbcType="VARCHAR" />
 		<result column="DES_ESTADO_SOLICITUD" property="desEstadoSolicitud" jdbcType="VARCHAR" />
 		<result column="NRO_SOLICITUDES" property="nroSolicitudes" jdbcType="DECIMAL" />
+		<result column="ANULADAS" property="anuladas" jdbcType="DECIMAL" />
 		<result column="PRIORIZADAS" property="priorizadas" jdbcType="DECIMAL" />
 		<result column="FUERA_DE_RANGO" property="fueraDeRango" jdbcType="DECIMAL" />
 	</resultMap>
 	<select id="selectAsignacion" resultMap="mapAsignacion" parameterClass="bbva.pe.gpr.bean.Estadistica" >
 		<![CDATA[
-			SELECT COD_BANCA, DES_BANCA, DES_ESTADO_SOLICITUD, COUNT(1) NRO_SOLICITUDES, 0 PRIORIZADAS, 0 FUERA_DE_RANGO
+			SELECT COD_BANCA, DES_BANCA, DES_ESTADO_SOLICITUD
+			  , SUM(DECODE(ESTADO, 1, 1, 0)) NRO_SOLICITUDES
+			  , SUM(DECODE(ESTADO, 1, 0, 1)) ANULADAS
+			  , SUM(DECODE(PRIORIDAD, 'ALTA', DECODE(ESTADO, 1, 0, 1), 'BAJA', DECODE(ESTADO, 1, 0, 1), 0)) PRIORIZADAS
+			  , 0 FUERA_DE_RANGO
 			FROM CARDEL.VDELGPR_STATUS_SOLICITUD
 			WHERE
-				(#codBanca:DECIMAL# IS NULL OR #codBanca:DECIMAL# = -1 OR COD_BANCA = #codBanca:DECIMAL#) AND 
-				(FECHA_INGRESO >= #fechaInicio:DATE# AND FECHA_INGRESO <= #fechaFin:DATE#)
+			  (#codBanca:DECIMAL# IS NULL OR #codBanca:DECIMAL# = -1 OR COD_BANCA = #codBanca:DECIMAL#) AND 
+			  (FECHA_INGRESO >= #fechaInicio:DATE# AND FECHA_INGRESO <= #fechaFin:DATE#)
 			GROUP BY COD_BANCA, DES_BANCA, DES_ESTADO_SOLICITUD
 			ORDER BY COD_BANCA, DES_BANCA, DES_ESTADO_SOLICITUD
 		]]>
@@ -43,6 +48,7 @@
 			  GROUP BY DES_ESTADO_SOLICITUD
 			  ORDER BY DES_ESTADO_SOLICITUD
 			) A
+			UNION ALL SELECT 'ANULADAS' FROM SYS.DUAL
 			UNION ALL SELECT 'PRIORIZADAS' FROM SYS.DUAL
 			UNION ALL SELECT 'FUERA DE RANGO' FROM SYS.DUAL
 		]]>

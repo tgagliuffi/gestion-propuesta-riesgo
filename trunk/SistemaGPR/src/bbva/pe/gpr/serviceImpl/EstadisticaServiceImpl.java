@@ -1,5 +1,6 @@
 package bbva.pe.gpr.serviceImpl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,6 +14,7 @@ import org.apache.log4j.Logger;
 import bbva.pe.gpr.bean.Estadistica;
 import bbva.pe.gpr.dao.EstadisticaDAO;
 import bbva.pe.gpr.service.EstadisticaService;
+import bbva.pe.gpr.util.Constant;
 
 public class EstadisticaServiceImpl implements EstadisticaService {
 
@@ -31,6 +33,7 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 		List<String> colsName = new ArrayList<String>();
 		List<Map<String, Object>> colsModel = new ArrayList<Map<String, Object>>();
 		List<Estadistica> listCabEstadistica;
+		String colName;
 		int i = 0;
 		
 		try {
@@ -53,9 +56,11 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 			for(i = 0; i < listCabEstadistica.size(); i++) {
 				colsName.add(listCabEstadistica.get(i).getDesEstadoSolicitud());
 				
+				colName = "s_" + listCabEstadistica.get(i).getDesEstadoSolicitud().replaceAll(" ", "_").toLowerCase();
+				
 				colModel = new HashMap<String, Object>();
-				colModel.put("index", "s_" + listCabEstadistica.get(i).getDesEstadoSolicitud().replaceAll(" ", "_").toLowerCase());
-				colModel.put("name", "s_" + listCabEstadistica.get(i).getDesEstadoSolicitud().replaceAll(" ", "_").toLowerCase());
+				colModel.put("index", colName);
+				colModel.put("name", colName);
 				colModel.put("width", 100);
 				colModel.put("align", "right");
 				colsModel.add(colModel);
@@ -142,6 +147,8 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 		List<Estadistica> listCabEstadistica;
 		Map<String, Object> item;
 		Map<String, Map<String, Object>> position = new HashMap<String, Map<String,Object>>();
+		BigDecimal tmp = BigDecimal.ZERO;
+		String colName;
 		
 		try {		
 			listEstadistica = estadisticaDAO.selectAsignacion(filtro);
@@ -155,14 +162,27 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 					item = new HashMap<String, Object>();
 					item.put("desBanca", e.getDesBanca());
 					item.put("total", 0);
+					item.put("s_anuladas", 0);
+					item.put("s_priorizadas", 0);
+					item.put("s_fuera_de_rango", 0);
 				}
 
 				for(Estadistica c : listCabEstadistica) {
-					if(c.getDesEstadoSolicitud().equalsIgnoreCase(e.getDesEstadoSolicitud())) {
-						item.put("s_" + c.getDesEstadoSolicitud().replaceAll(" ", "_").toLowerCase(), e.getNroSolicitudes());
+					colName = "s_" + c.getDesEstadoSolicitud().replaceAll(" ", "_").toLowerCase();
+					tmp = Constant.StringToBigDecimal(item.get(colName));
+					if(c.getDesEstadoSolicitud().equalsIgnoreCase("ANULADAS")) {
+						item.put(colName, e.getAnuladas().add(tmp).intValue());
+					} else if(c.getDesEstadoSolicitud().equalsIgnoreCase("PRIORIZADAS")) {
+						item.put(colName, e.getPriorizadas().add(tmp).intValue());
+					} else if(c.getDesEstadoSolicitud().equalsIgnoreCase("FUERA_DE_RANGO")) {
+						item.put(colName, e.getFueraDeRango().add(tmp).intValue());
+					} else if(c.getDesEstadoSolicitud().equalsIgnoreCase(e.getDesEstadoSolicitud())) {
+						tmp = Constant.StringToBigDecimal(item.get("total"));
+						item.put(colName, e.getNroSolicitudes());
+						item.put("total", e.getNroSolicitudes().add(tmp).intValue());
 					} else {
-						if(!item.containsKey("s_" + c.getDesEstadoSolicitud().replaceAll(" ", "_").toLowerCase())) {
-							item.put("s_" + c.getDesEstadoSolicitud().replaceAll(" ", "_").toLowerCase(), 0);
+						if(!item.containsKey(colName)) {
+							item.put(colName, 0);
 						}
 					}
 				}

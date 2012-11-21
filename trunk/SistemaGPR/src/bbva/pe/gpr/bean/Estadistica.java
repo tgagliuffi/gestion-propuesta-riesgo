@@ -14,7 +14,9 @@ public class Estadistica {
 	private String desEstadoSolicitud;
 	private String codDictamen;
 	private String desDictamen;
+	private String orgDictamen;
 	private BigDecimal nroSolicitudes;
+	private BigDecimal anuladas;
 	private BigDecimal priorizadas;
 	private BigDecimal fueraDeRango;
 	private Date fechaInicio;
@@ -92,12 +94,28 @@ public class Estadistica {
 		this.desDictamen = desDictamen;
 	}
 
+	public String getOrgDictamen() {
+		return orgDictamen;
+	}
+
+	public void setOrgDictamen(String orgDictamen) {
+		this.orgDictamen = orgDictamen;
+	}
+
 	public BigDecimal getNroSolicitudes() {
 		return nroSolicitudes;
 	}
 
 	public void setNroSolicitudes(BigDecimal nroSolicitudes) {
 		this.nroSolicitudes = nroSolicitudes;
+	}
+
+	public BigDecimal getAnuladas() {
+		return anuladas;
+	}
+
+	public void setAnuladas(BigDecimal anuladas) {
+		this.anuladas = anuladas;
 	}
 
 	public BigDecimal getPriorizadas() {

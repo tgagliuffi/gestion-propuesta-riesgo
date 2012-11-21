@@ -2,7 +2,7 @@ package bbva.pe.gpr.action;
 
 import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,9 +25,11 @@ import org.jfree.data.general.DefaultPieDataset;
 
 import bbva.pe.gpr.bean.Banca;
 import bbva.pe.gpr.bean.Estadistica;
+import bbva.pe.gpr.bean.MultitablaDetalle;
 import bbva.pe.gpr.context.Context;
 import bbva.pe.gpr.service.CatalogoService;
 import bbva.pe.gpr.service.EstadisticaService;
+import bbva.pe.gpr.util.Constant;
 import bbva.pe.gpr.util.DocumentoExcel;
 import bbva.pe.gpr.util.Grafico;
 
@@ -47,6 +49,10 @@ public class EstadisticaAction extends DispatchAction {
 		return mapping.findForward("asignacion") ;
 	}
 	
+	public ActionForward atencion(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return mapping.findForward("atencion") ;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public ActionForward generarPieChartAsignacion(ActionMapping mapping,
 			ActionForm form, HttpServletRequest request,
@@ -61,6 +67,10 @@ public class EstadisticaAction extends DispatchAction {
 			
 			try {
 				response.setContentType("image/png");
+				response.setHeader("Expires:", "0");
+				response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		        response.setHeader("Pragma", "public");
+				response.setHeader("Content-Disposition", "attachment; filename=" + (new Date()).getTime() + ".png" );
 				out.write(data.get(Integer.parseInt(index)));
 			} catch (Exception e) {
 				logger.error("generarPieChart", e);
@@ -165,13 +175,12 @@ public class EstadisticaAction extends DispatchAction {
 	private Map<String, Object> listarEstadisticasAsignacion(Estadistica e, String fechaInicio, String fechaFin, HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			e.setFechaInicio(new Date(formatter.parse(fechaInicio + " 00:00:00").getTime()));
-			e.setFechaFin(new Date(formatter.parse(fechaFin + " 23:59:59").getTime()));
+			e.setFechaInicio(new java.sql.Date(formatter.parse(fechaInicio + " 00:00:00").getTime()));
+			e.setFechaFin(new java.sql.Date(formatter.parse(fechaFin + " 23:59:59").getTime()));
 			
 			List<Map<String, Object>> data = estadisticaService.selectAsignacion(e);
 			map = estadisticaService.selectCabeceraAsignacion(e);
 			map.put("data", data);
-			
 			
 			request.getSession().setAttribute("graf", grafAsignacion(data));
 			request.getSession().setAttribute("data", map);
@@ -181,6 +190,44 @@ public class EstadisticaAction extends DispatchAction {
 			logger.error("listarEstadisticasAsignacion", ex);
 		}
 		return map;
+	}
+	
+	public Map<String, Object> listarEstadisticasAtencion(Estadistica e, String fechaInicio, String fechaFin) {
+		HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+		return listarEstadisticasAtencion(e, fechaInicio, fechaFin, request);
+	}
+	
+	private Map<String, Object> listarEstadisticasAtencion(Estadistica e, String fechaInicio, String fechaFin, HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			e.setFechaInicio(new java.sql.Date(formatter.parse(fechaInicio + " 00:00:00").getTime()));
+			e.setFechaFin(new java.sql.Date(formatter.parse(fechaFin + " 23:59:59").getTime()));
+			
+			List<Map<String, Object>> data = estadisticaService.selectAtencion(e);
+			map = estadisticaService.selectCabeceraAsignacion(e);
+			map.put("data", data);
+			
+			request.getSession().setAttribute("graf", grafAsignacion(data));
+			request.getSession().setAttribute("data", map);
+			request.getSession().setAttribute("fecInicio", fechaInicio);
+			request.getSession().setAttribute("fecFin", fechaFin);
+		} catch (Exception ex) {
+			logger.error("listarEstadisticasAtencion", ex);
+		}
+		return map;
+	}
+	
+	private List<MultitablaDetalle> cargarCombo(String tabla) {
+		try {
+			return catalogoService.getLstMultitablaDetalle(tabla);
+		} catch (Exception e) {
+			logger.error("Exception DictamenAction.cargarComboProceso: ", e);
+		} 
+		return new ArrayList<MultitablaDetalle>();
+	}
+	
+	public List<MultitablaDetalle> cargarComboDictamen(){
+		return cargarCombo(Constant.TABLA_DICTAMEN);
 	}
 	
 	public List<Banca> cargarComboBanca() {
