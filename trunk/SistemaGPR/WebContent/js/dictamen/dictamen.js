@@ -79,6 +79,16 @@ optionSolicitudDetalle = {
 	caption: "&nbsp;&nbsp;&nbsp;Producto"
 };
 
+// panel_listLogProceso;
+/*
+{name: "codCentral",			index: "codCentral",			width: 1, hidden: true}
+{name: "codMultOperacion",		index: "codMultOperacion",		width: 1, hidden: true}
+{name: "codSolicitudOperacion",	index: "codSolicitudOperacion",	width: 1, hidden: true}
+{name: "desOperacion",			index: "desOperacion",			width: 1, hidden: true}
+{name: "estado",				index: "estado",				width: 1, hidden: true}
+{name: "nroSolicitud",			index: "nroSolicitud",			width: 1, hidden: true}*/
+
+
 dictamen = function(d){
 	if(d != null || d != undefined) {
 		habilitaCheckRating(!(d.ctrlRating == 'I'));
@@ -190,6 +200,8 @@ buscarSolicitud = function(){
 	
 	DictamenAction.buscarSolicitud(parameters, function(data){
 		// debugger;
+		console.log(data);
+		
 		if(data.status) {			
 			configurarGrid("listProducts", data.solicitudDetalle, optionSolicitudDetalle);
 			configurarGrid("listAnalisis", data.analisis, optionAnalisis);

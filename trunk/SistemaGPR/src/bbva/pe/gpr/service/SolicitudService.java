@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.SolicitudDetalle;
+import bbva.pe.gpr.bean.SolicitudOperacion;
 
 public interface SolicitudService{
 	Long registraSolicitud(Solicitud solicitudBean, 
@@ -52,5 +53,7 @@ public interface SolicitudService{
 	int asignarPrioridadSolicitud(String nroSolicitud, 
 			String tipoUpdate) throws Exception;
 	
-	List<SolicitudDetalle> eliminarProducto(String arraySolitcitudes, List<SolicitudDetalle> lstSolicitudDetalle)throws Exception;	
+	List<SolicitudDetalle> eliminarProducto(String arraySolitcitudes, List<SolicitudDetalle> lstSolicitudDetalle)throws Exception;
+	
+	List<SolicitudOperacion> selectOperacionByNroSolicitud(Solicitud s);
 }
