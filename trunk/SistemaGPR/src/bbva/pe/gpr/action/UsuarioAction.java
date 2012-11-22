@@ -460,7 +460,7 @@ public class UsuarioAction  extends DispatchAction{
         if(userSubBanca==null){
 			BancaSub getSubBanca=catalogoService.selectByPrimaryKeyBancaSub(codSubBanca);
 	        if(getSubBanca!=null){
-	    		usuarioRol.setDescripcion(getSubBanca.getCodSubbanca());
+	    		usuarioRol.setDescripcion(getSubBanca.getCodSubanca());
 	        }else{
 	        	usuarioRol.setDescripcion(null);
 	        }
