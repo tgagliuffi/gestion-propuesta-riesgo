@@ -321,7 +321,7 @@ public class DictamenAction extends DispatchAction {
 					}
 					
 					if(sd != null && sd.size() > 0) {
-						if(validacionService.metodoEncapsulado(s) != 1 || superior == 0) {
+						if(validacionService.metodoEncapsulado(s, "") != 1 || superior == 0) {
 							plazo = "El cliente no cumple con la validaci\u00F3n de montos y plazos. Ud. no pude dictaminar esta solicitud, \u00BF Desea enviarlo para su dictamen a un superior \u003F";
 							map.put("status", false);
 							map.put("type", -2);
