@@ -1,6 +1,7 @@
 package bbva.pe.gpr.daoImpl;
 
 import bbva.pe.gpr.bean.Banca;
+import bbva.pe.gpr.bean.BancaSub;
 import bbva.pe.gpr.dao.BancaDAO;
 
 import java.math.BigDecimal;
@@ -53,6 +54,11 @@ public class BancaDAOImpl extends SqlMapClientDaoSupport implements BancaDAO {
 	public List<Banca> getLstBancaByCriteria(Banca record){
     	return   (List<Banca>)getSqlMapClientTemplate().queryForList("CARDEL_TGPR_BANCAS.getLstBancaByCriteria", record);
     }
- 
+    @SuppressWarnings("unchecked")
+	public List<BancaSub> getLstSubBanca(BancaSub bancaSub){
+    	return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_BANCAS.getLstSubBanca", bancaSub);
+    	
+    	
+    }
  
 }

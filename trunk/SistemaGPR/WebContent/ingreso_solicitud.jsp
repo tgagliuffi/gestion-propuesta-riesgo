@@ -98,17 +98,17 @@ $(document).keyup(function(e) {
 		  deleteTblRowAdded('listProducts');
 	  }
 	});
-var myColNames  = ['','','','', 'Descripción Producto', 'Producto Base','Contrato Vinculado', 'Scoring',  'Cod. Pre Evaluador', 'Campaña', 'Tipo', 'Monto Solicitado', 'Plazo (Meses)', 'Monto Garantizado', 'Total'];
-var myDataModel = [
-                    {name : 'codProducto',			index : 'codProducto', 			width : VAL_WIDTH.SMALL, 	editable:true,	editrules: {edithidden:true, required:true}, hidden:true},
-                    {name : 'valBanca',				index : 'valBanca', 			width : VAL_WIDTH.SMALL, 	editable:true,	editrules: {edithidden:true}, hidden:true},
+var myColNames  = ['','','','','', 'Descripción Producto', 'Producto Base','Contrato Vinculado', 'Scoring',  'Cod. Pre Evaluador', 'Campaña', 'Tipo', 'Monto Solicitado', 'Plazo (Meses)', 'Monto Garantizado', 'Total'];
+var myDataModel = [{name : 'codProducto',			index : 'codProducto', 			width : VAL_WIDTH.SMALL, 	editable:true,	editrules: {edithidden:true, required:true}, hidden:true},
+                   {name : 'indice',				index : 'indice', 				editable:true,  hidden:true},
+                   {name : 'valBanca',				index : 'valBanca', 			width : VAL_WIDTH.SMALL, 	editable:true,	editrules: {edithidden:true}, hidden:true},
                     {name : 'valMoneda',			index : 'valMoneda', 			width : VAL_WIDTH.SMALL, 	editable:true,	editrules: {edithidden:true}, hidden:true},
                     {name : 'valMontoTotal',		index : 'valMontoTotal', 		width : VAL_WIDTH.SMALL, 	editable:true,	editrules: {edithidden:true}, hidden:true},
-                    {name : 'desProducto',			index : 'desProducto', 			width : VAL_WIDTH.MED , 	editable:true,	edittype:'custom', 	editoptions: {custom_element: desProductoElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: desProductoFormat, unformat: genericUnFormat},                 
+                    {name : 'desProducto',			index : 'desProducto', 			width : 200, 				editable:true,	edittype:'custom', 	editoptions: {custom_element: desProductoElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: desProductoFormat, unformat: genericUnFormat},                 
                     {name : 'codProdBase',			index : 'codProdBase', 			width : VAL_WIDTH.XLSMALL,	editable:true, 	edittype:'text', 	formatoptions: { disabled: false }, editoptions: {size:10, maxlength: 255}, editrules: {required: true}, align : 'center', readonly: 'readonly'},
-                    {name : 'contratoVinculado',	index : 'contratoVinculado',	width : VAL_WIDTH.MED, 		editable:true,	edittype:'custom',  editoptions: {custom_element: contratoVincElementCustom, custom_value: genericComboValueCustom}, editrules:   {required: true}, align : 'center', formatter: contratoVincFormat, unformat: genericUnFormat},
+                    {name : 'contratoVinculado',	index : 'contratoVinculado',	width : 200,		 		editable:true,	edittype:'custom',  editoptions: {custom_element: contratoVincElementCustom, custom_value: genericComboValueCustom}, editrules:   {required: true}, align : 'center', formatter: contratoVincFormat, unformat: genericUnFormat},
                     {name : 'scoring',				index : 'scoring', 				width : VAL_WIDTH.XLSMALL,  editable:true,	edittype:'text', 	editoptions: {size:10, maxlength: 255}, editrules: {required: true}, align : 'center', readonly: 'readonly'},
-                    {name : 'codPreEvaluador',		index : 'codPreEvaluador', 		width : VAL_WIDTH.SMALL, 	editable:true,	edittype:'text', 	editoptions: {size:10, maxlength: 255}, editrules: {required: true}, align : 'center'},
+                    {name : 'codPreEvaluador',		index : 'codPreEvaluador', 		width : VAL_WIDTH.SMALL, 	editable:true,	edittype:'text', 	editoptions: {size:10, maxlength: 255}, align : 'center'},
                     {name : 'desCampania',			index : 'desCampania', 			width : VAL_WIDTH.VMED, 	editable:true,	edittype:'custom', 	editoptions: {custom_element: campaniaElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: campaniaFormat, unformat: genericUnFormat},
                     {name : 'desTipo',				index : 'desTipo', 				width : VAL_WIDTH.VMED, 	editable:true,	edittype:'custom', 	editoptions: {custom_element: tipoElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: tipoFormat, unformat: genericUnFormat},
                     {name : 'mtoProducto',			index : 'mtoProducto', 			width : VAL_WIDTH.XLSMALL, 	editable:true,	edittype:'text', 	editoptions: {size:10, maxlength: 15, style: 'text-align: right', dataEvents: [{ type: 'change', fn: function (){ getMonto(this.value, 1);}}, { type: 'keypress', fn: function (){ ingresoNumeros(event);}}]}, 	editrules: {required: true, number: true, minValue: 0}, align : 'right'},
@@ -122,15 +122,16 @@ var myColSolicituDetalle  = [ 'Descripción Producto', 'Producto Base','Contrato
 var myDataModelSolicitudDetalle = [ {name : 'desProducto',      	index : 'desProducto',       	width : 200      ,sortable:false},
                                     {name : 'desProdBase',      	index : 'desProdBase',       	width : 120      ,sortable:false},
                                     {name : 'contratoVinculado',  	index : 'contratoVinculado',  	width : 150      ,sortable:false},
-                                    {name : 'scoring',        		index : 'scoring',         		width : 70      ,sortable:false},
+                                    {name : 'scoring',        		index : 'scoring',         		width : 70       ,sortable:false},
                                     {name : 'codPreEvaluador',    	index : 'codPreEvaluador',      width : 100      ,sortable:false},
                                     {name : 'desCampania',      	index : 'desCampania',       	width : 120      ,sortable:false},
-                                    {name : 'desTipo',        		index : 'desTipo',         		width : 80      ,sortable:false},
+                                    {name : 'desTipo',        		index : 'desTipo',         		width : 80       ,sortable:false},
                                     {name : 'mtoProducto',      	index : 'mtoProducto',       	width : 100      ,sortable:false, editoptions: {style: 'text-align: right'}},
-                                    {name : 'plazo',          		index : 'plazo',         		width : 80      ,sortable:false},
+                                    {name : 'plazo',          		index : 'plazo',         		width : 80       ,sortable:false},
                                     {name : 'mtoGarantia',      	index : 'mtoGarantia',       	width : 100      ,sortable:false, editoptions: {style: 'text-align: right'}},
-                                    {name : 'mtoTotalRow',      	index : 'mtoTotalRow',       	width : 60      ,sortable:false, editoptions: {style: 'text-align: right'}}
+                                    {name : 'mtoTotalRow',      	index : 'mtoTotalRow',       	width : 60       ,sortable:false, editoptions: {style: 'text-align: right'}}
                         ];
+
 function setEventsValidationProducto(){
     jQuery("select[name=desProducto]").bind("change",function (evnt){
     	getProductoBaseElementText(this);
@@ -303,7 +304,7 @@ if(call==1){
 }
 
 function mostrarTabla(data){
-	
+
 	var idTableForm = 'listProducts';
 	$('body').append('<div id="paginador_'+idTableForm+'" class="grid"></div>'); 
 	var paginador = "paginador_"+idTableForm;
@@ -507,17 +508,11 @@ function mostrarTablaDetalle(data){
 }
 
 function addProducto(){
-	
 	var codBanca = document.getElementById("codBanca");
 	var codMultMoneda = document.getElementById("codMultMoneda");
-	var mtoTotal = document.getElementById("mtoTotal");
-	var deudaDirecta = document.getElementById("deudaDirecta").value;
-	var deudaIndirecta = document.getElementById("deudaIndirecta").value;
-	var castigo = document.getElementById("castigo").value;
-	var deudaSistemaFinanciero = document.getElementById("deudaSistemaFinanciero").value;
-	var riesgoGrupal = document.getElementById("riesgoGrupal").value;
-	var otroRiesgo = document.getElementById("otroRiesgo").value;
-	
+	IngresoSolicitudAction.setIndice(function(msg){
+		document.getElementsByName("indice")[0].value  = msg;
+	});
 	if(codBanca.value == '-1'){
 		alert("Debe seleccionar una banca para poder agregar un registro.");
 	}else if(codMultMoneda.value == '-1'){
@@ -526,19 +521,11 @@ function addProducto(){
 		var rowid = "-1";
 		var mydataadd = 
 			  [{
+				
 				codProducto			: rowid,
-				valBanca			: codBanca.value,
-                valMoneda			: codMultMoneda.value,
-                valMontoTotal		: mtoTotal.value,
-                valDeudaDirecta		: deudaDirecta,
-                valDeudaIndirecta	: deudaIndirecta,
-                valCastigo			: castigo,
-                valDeudaSisFinan	: deudaSistemaFinanciero,
-                valRiesgoGrupal		: riesgoGrupal,
-                valOtroRiesgo	    : otroRiesgo,
                 desProducto 		: "",
                 codProdBase			: "",
-                contratoVinculado 	: "",
+                contratoVinculado 	: "-1",
                 scoring				: "",			
 				codPreEvaluador 	: "",
 				campania  			: "",
@@ -547,9 +534,7 @@ function addProducto(){
 				plazo  				: "",
 				mtoGarantia  		: "00.00",
 				mtoTotalRow			: "00.00"
-				
-				
-			  }];	
+	  }];	
 		
 		if(lastSelProducto != ''){
 			jQuery('#listProducts').restoreRow(lastSelProducto,true);
@@ -568,13 +553,14 @@ function addProducto(){
 
 function deleteProducto(){
 	var selecciones = buscarSelecciones("listProducts");
+	alert(selecciones);
 	if (selecciones.length == 0){
 		alert('No ha seleccionado ningún elemento para la eliminación.');
 	}else{
 		
 		var ans = confirm('¿Esta seguro que desea eliminar los registros seleccionados?');
 		if(ans){
-			
+			selecciones= selecciones.split('**1-')+'';
 			IngresoSolicitudAction.eliminarProductoAjax(selecciones, function(msg){
 				
 				var paramDelete = '';
@@ -641,6 +627,7 @@ function backAsignacionPrioridad(){
 
 function init(){
 	var formulario = document.getElementById('formSolicitudIngreso');
+	formulario.codCentral.value=formulario.hdnCodCentral.value;
 	consultarProductos('','');
 	mostrarPopUp();
 	consultarProductos();
@@ -660,11 +647,13 @@ function mostrarPopUp(){
 				(screen.height - 500) + ",height=180,width=380,left=" + ((screen.width - 800)/2) + ",resizable=no");
 	}	
 }
+
 function submitPopUp(){
 	 var formulario = document.getElementById('formSolicitudIngreso');
 		formulario.action = rutaContexto+'/ingresoSolicitud.do?method=init&param=continuar';;
 		formulario.submit();
 }
+
 function submitEnviarRiesgos(){
 	 var formulario = document.getElementById('formSolicitudIngreso');
 	 	formulario.condicion.value='ER';
@@ -678,7 +667,25 @@ function submitRechazar(){
 		formulario.submit();
 }
 function limpiaForm(miForm) {
-
+	  $(miForm).find(':input').each(function() {
+          switch(this.type) {
+              case 'password':
+              case 'select-multiple':
+              case 'select-one':
+              case 'text':
+              case 'textarea':
+                  $(this).val('');
+                  break;
+              case 'checkbox':
+              case 'radio':
+                  this.checked = false;
+          }
+      });
+	  jQuery("#listProducts").GridUnload();
+	  IngresoSolicitudAction.removerListaAjax(function(data){
+			mostrarTabla(data);
+		});
+	  
 }
 function update(parametro){
 var formulario = document.getElementById('formSolicitudIngreso');
@@ -701,7 +708,13 @@ var nroSolicitud = formulario.mantener.value;
 	
 	}
 }
-	
+function changeBancSubBanca(objeto){
+	var codBanca = objeto.value;
+	 IngresoSolicitudAction.getLstSubBanca(codBanca, function(data){
+		 dwr.util.removeAllOptions("codSubBanca");
+		 dwr.util.addOptions("codSubBanca", data,'codSubanca','descripcion');
+	});
+}	
 </script>
 	
 </head>
@@ -758,9 +771,9 @@ var nroSolicitud = formulario.mantener.value;
 			<font class="txt-titulo">Código Central</font>&nbsp;
 			
 			<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-			<html:text property="codCentral" styleClass="cajaTexto" styleId="codigoCentral" size="10" maxlength="8" readonly="readonly" value="${Solicitud.codCentral}"></html:text><html:errors property="codCentral"/>
+			<input id="codCentral" class="cajaTexto" name="codCentral" size="10" maxlength="8" readonly="readonly" value="${Solicitud.codCentral}"><html:errors property="codCentral"/>
 			<%}else{%>
-			<html:text property="codCentral" styleClass="cajaTexto" styleId="codigoCentral" size="10" maxlength="8" value="" onkeypress="ingresoNumeros(event);" ></html:text><html:errors property="codCentral"/>
+			<input id="codCentral" class="cajaTexto" name="codCentral" size="10" maxlength="8" value="" onkeypress="ingresoNumeros(event);" value='${solicitudForm.codCentral}'>
 			<%}%>
 			
 			<%if(asigPrioridadIndividual == null && asigAnulacionIndividual == null){%>
@@ -816,9 +829,9 @@ var nroSolicitud = formulario.mantener.value;
 			<font class="fontText">Ruc / DNI *</font>&nbsp;
 			
 			<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>  
-				<html:text property="numeroDocumento" styleClass="cajaTexto" styleId="numeroDocumento" size="27" maxlength="27" value="${Solicitud.numeroDocumento}" readonly="readonly" />
+				<input id="numeroDocumento" class="cajaTexto" name="numeroDocumento" size="27" maxlength="27" value="${Solicitud.numeroDocumento}" readonly="readonly" />
 				<%}else{%>
-				<html:text property="numeroDocumento" styleClass="cajaTexto" styleId="numeroDocumento" size="27" maxlength="27" value="${solicitudForm.numeroDocumento}" readonly="readonly"/>
+				<input id="numeroDocumento" class="cajaTexto" name="numeroDocumento" size="27" maxlength="27" value="${solicitudForm.numeroDocumento}" readonly="readonly"/>
 			<%}%>
 			
 			
@@ -829,9 +842,9 @@ var nroSolicitud = formulario.mantener.value;
        		<font class="fontText">Razon Social / Apellidos y Nombres *</font>&nbsp;
        		
        		<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-       		<html:text property="desSolicitante" styleClass="cajaTexto" styleId="desSolicitante" size="76" maxlength="76" value="${Solicitud.desSolicitante}" readonly="readonly"/>
+       		<input id="desSolicitante" class="cajaTexto" name="desSolicitante" size="76" maxlength="76" value="${Solicitud.desSolicitante}" readonly="readonly"/>
 			<%}else{%>
-			<html:text property="desSolicitante" styleClass="cajaTexto" styleId="desSolicitante" size="76" maxlength="76" value="${solicitudForm.desSolicitante}" readonly="readonly"/>
+			<input id="desSolicitante" class="cajaTexto" name="desSolicitante" size="76" maxlength="76" value="${solicitudForm.desSolicitante}" readonly="readonly"/>
 			<%}%>
        </td>   
 	</tr>
@@ -840,11 +853,11 @@ var nroSolicitud = formulario.mantener.value;
        		<font class="fontText">Oficina Principal *</font>&nbsp;
        		
        		<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-       		<html:text property="codOficina" styleClass="cajaTexto" styleId="codOficina" size="10" maxlength="10" value="${Solicitud.codOficina}" readonly="readonly" />
-       		<html:text property="desOficina" styleClass="cajaTexto" styleId="desOficina" size="40" maxlength="20" value="${Solicitud.desOficina}" readonly="readonly" />&nbsp;&nbsp;
+       		<input id="codOficina" class="cajaTexto" name="codOficina" size="10" maxlength="10" value="${Solicitud.codOficina}" readonly="readonly" />
+       		<input id="desOficina" class="cajaTexto" name="desOficina" size="40" maxlength="20" value="${Solicitud.desOficina}" readonly="readonly" />&nbsp;&nbsp;
 			<%}else{%>
-			<html:text property="codOficina" styleClass="cajaTexto" styleId="codOficina" size="10" maxlength="10" value="${solicitudForm.codOficina}" readonly="readonly"/>
-       		<html:text property="desOficina" styleClass="cajaTexto" styleId="desOficina" size="40" maxlength="20" value="${solicitudForm.desOficina}" readonly="readonly"/>&nbsp;&nbsp;
+			<input id="codOficina" class="cajaTexto" name="codOficina" size="10" maxlength="10" value="${solicitudForm.codOficina}" readonly="readonly"/>
+       		<input id="desOficina" class="cajaTexto" name="desOficina" size="40" maxlength="20" value="${solicitudForm.desOficina}" readonly="readonly"/>&nbsp;&nbsp;
 		
 		    <%}%>
 	   </td>
@@ -852,11 +865,11 @@ var nroSolicitud = formulario.mantener.value;
 			<font class="fontText">Gestor *</font>&nbsp;
 			
 			<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-			<html:text property="gestorCod" styleClass="cajaTexto" styleId="gestorCod" size="10" maxlength="10" value="${Solicitud.gestorCod}" readonly="readonly" />
-       		<html:text property="gestorNom" styleClass="cajaTexto" styleId="gestorNom" size="40" maxlength="20" value="${Solicitud.gestorNom}" readonly="readonly" />
+			<input id="gestorCod" class="cajaTexto" name="gestorCod" size="10" maxlength="10" value="${Solicitud.gestorCod}" readonly="readonly" />
+       		<input id="gestorNom" class="cajaTexto" name="gestorNom" size="40" maxlength="20" value="${Solicitud.gestorNom}" readonly="readonly" />
 			<%}else{%>
-			<html:text property="gestorCod" styleClass="cajaTexto" styleId="gestorCod" size="10" maxlength="10" value="${solicitudForm.gestorCod}" readonly="readonly"/>
-       		<html:text property="gestorNom" styleClass="cajaTexto" styleId="gestorNom" size="40" maxlength="20" value="${solicitudForm.gestorNom}" readonly="readonly"/>
+			<input id="gestorCod" class="cajaTexto" name="gestorCod" size="10" maxlength="10" value="${solicitudForm.gestorCod}" readonly="readonly"/>
+       		<input id="gestorNom" class="cajaTexto" name="gestorNom" size="40" maxlength="20" value="${solicitudForm.gestorNom}" readonly="readonly"/>
 			<%}%>
        </td>
 	</tr>
@@ -866,11 +879,11 @@ var nroSolicitud = formulario.mantener.value;
 			<font class="fontText">Empleador *</font>&nbsp;
 			
 			<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-			<html:text property="empleadorCod" styleClass="cajaTexto" styleId="empleadorCod" size="14" maxlength="10" value="${Solicitud.empleadorCod}" readonly="readonly" />
-       		<html:text property="empleadorNom" styleClass="cajaTexto" styleId="empleadorNom" size="40" maxlength="20" value="${Solicitud.empleadorNom}" readonly="readonly" />
+			<input id="empleadorCod" class="cajaTexto" name="empleadorCod" size="14" maxlength="10" value="${Solicitud.empleadorCod}" readonly="readonly" />
+       		<input id="empleadorNom" class="cajaTexto" name="empleadorNom" size="40" maxlength="20" value="${Solicitud.empleadorNom}" readonly="readonly" />
 			<%}else{%>
-			<html:text property="empleadorCod" styleClass="cajaTexto" styleId="empleadorCod" size="14" maxlength="10" value="${solicitudForm.empleadorCod}" readonly="readonly"/>
-       		<html:text property="empleadorNom" styleClass="cajaTexto" styleId="empleadorNom" size="40" maxlength="20" value="${solicitudForm.empleadorNom}" readonly="readonly"/>
+			<input id="empleadorCod" class="cajaTexto" name="empleadorCod" size="14" maxlength="10" value="${solicitudForm.empleadorCod}" readonly="readonly"/>
+       		<input id="empleadorNom" class="cajaTexto" name="empleadorNom" size="40" maxlength="20" value="${solicitudForm.empleadorNom}" readonly="readonly"/>
 			<%}%>
        </td>
 	</tr>
@@ -931,11 +944,11 @@ var nroSolicitud = formulario.mantener.value;
        <td align="left" valign="middle">
        
        		<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-			<input type="text" name="gerenciaTerritorialCod" class="cajaTexto" id="gerenciaTerritorialCod" size="10" maxlength="10" value='${Solicitud.gerenciaTerritorialCod}' readonly="readonly">
-			<input type="text" name="gerenciaTerritorialNom" class="cajaTexto" id="gerenciaTerritorialNom" size="40" maxlength="20" value='${Solicitud.gerenciaTerritorialNom}' readonly="readonly">&nbsp;&nbsp;
-			<%}else{%>
-			<input type="text" name="gerenciaTerritorialCod" class="cajaTexto" id=gerenciaTerritorialCod size="10" maxlength="10" value='${solicitudForm.gerenciaTerritorialCod}' readonly="readonly">
-			<input type="text" name="gerenciaTerritorialNom" class="cajaTexto" id="gerenciaTerritorialNom" size="40" maxlength="60" value='${solicitudForm.gerenciaTerritorialNom}' readonly="readonly">&nbsp;&nbsp;
+				<input type="text" name="gerenciaTerritorialCod" class="cajaTexto" id="gerenciaTerritorialCod" size="10" maxlength="10" value='${Solicitud.gerenciaTerritorialCod}' readonly="readonly">
+				<input type="text" name="gerenciaTerritorialNom" class="cajaTexto" id="gerenciaTerritorialNom" size="40" maxlength="20" value='${Solicitud.gerenciaTerritorialNom}' readonly="readonly">&nbsp;&nbsp;
+				<%}else{%>
+				<input type="text" name="gerenciaTerritorialCod" class="cajaTexto" id=gerenciaTerritorialCod size="10" maxlength="10" value='${solicitudForm.gerenciaTerritorialCod}' readonly="readonly">
+				<input type="text" name="gerenciaTerritorialNom" class="cajaTexto" id="gerenciaTerritorialNom" size="40" maxlength="60" value='${solicitudForm.gerenciaTerritorialNom}' readonly="readonly">&nbsp;&nbsp;
 			<%}%>
 			
 	   </td>
@@ -955,7 +968,7 @@ var nroSolicitud = formulario.mantener.value;
 	<tr>
        <td align="left" valign="middle">
        <font class="fontText">Banca</font>&nbsp;
-       <html:select property="codBanca" styleId="codBanca" onchange="changeBankListProducts(this);">
+       <html:select property="codBanca" styleId="codBanca" onchange="changeBancSubBanca(this);">
 				<html:option value="-1" >TODOS</html:option>
 				<c:if test="${lstBancas != null}">
 					<c:forEach var="banca" items="${lstBancas}">
@@ -964,6 +977,12 @@ var nroSolicitud = formulario.mantener.value;
 						</html:option>
 					</c:forEach>
 				</c:if>
+			</html:select>
+	   </td>
+	    <td align="left" valign="middle">
+       <font class="fontText">Sub Banca</font>&nbsp;
+       <html:select property="codSubBanca" styleId="codSubBanca" onchange="changeBankListProducts(this);">
+				<html:option value="-1" >TODOS</html:option>
 			</html:select>
 	   </td>
 	   <td align="center" valign="middle">
@@ -996,7 +1015,7 @@ var nroSolicitud = formulario.mantener.value;
 	</div>
 		<%}%>
 	
-   	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1260px;margin: 3px;">
+   	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1260px;margin: 3px;"></div>
 	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
 	<label>Datos de Riesgo del Cliente</label></div>
    	<table>
@@ -1196,10 +1215,9 @@ var nroSolicitud = formulario.mantener.value;
 	
 	</tr>
 	<tr>
-		<td colspan="5" valign="middle">
-		<input type="button" class="buttonGPR"  name="btnGuardar" id="btnGuardar" onclick="guardarSolicitud();" value="Guardar Solicitud">&nbsp;
+		<td colspan="5"><input type="button" class="buttonGPR"  name="btnGuardar" id="btnGuardar" onclick="guardarSolicitud();" value="Guardar Solicitud">&nbsp;
 		<input type="button" class="buttonGPR"  name="btnReset" id="btnReset" onclick='limpiaForm($("#formSolicitudIngreso"));' value="Limpiar Solicitud">&nbsp;
-		<input type="button"   id="btnCondiciones"  class="buttonGPR" value="Observacion" onclick="llamarPopup();">&nbsp;
+		<input type="button"   id="btnCondiciones"  class="buttonGPR" value="Añadir Observacion" onclick="llamarPopup();">&nbsp;
 		<div id="dialog-form" title="Observacion" style="width: 400px">
 		<form>
 	        <center>

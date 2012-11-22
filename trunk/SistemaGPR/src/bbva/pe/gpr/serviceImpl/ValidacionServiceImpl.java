@@ -178,7 +178,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 			return cartasDelegaciones;
 	}
 
-	public int metodoEncapsulado(Solicitud solicitud) {
+	public int metodoEncapsulado(Solicitud solicitud, String usuarioSession) {
 	int valorRetorno=0;
 		if(gerenteOficinaDAO.getValidarUsuario(solicitud.getGestorCod()).equals("1")){
 			//oficina			

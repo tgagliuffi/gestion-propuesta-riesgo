@@ -207,6 +207,11 @@ public class CatalogoServiceImpl implements CatalogoService{
 	        return bancaDAO.getLstBancaByCriteria(record);
 	  }
 	  
+	  public List<BancaSub> getLstSubBanca(BancaSub bancaSub)throws Exception{
+		  bancaSub.setEstado(Constant.ESTADO_ACTIVO);
+		  return bancaDAO.getLstSubBanca(bancaSub);
+	  }
+	  
   /*#####################################################################################################
    * 
    * 									TGPR_PRODUCTO

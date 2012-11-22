@@ -9,7 +9,13 @@
     <result column="FLAG_ASIGNACION" property="flagAsignacion" jdbcType="DECIMAL" />
      <result column="COD_ROL" property="codRol" jdbcType="DECIMAL" />
   </resultMap>
-
+	<resultMap id="baseResultMapSubBancas" class="bbva.pe.gpr.bean.BancaSub" >
+	    <result column="COD_SUBANCA" property="codSubanca" jdbcType="VARCHAR" />
+	    <result column="DESCRIPCION" property="descripcion" jdbcType="VARCHAR" />
+	    <result column="DETALLE" property="detalle" jdbcType="VARCHAR" />
+	    <result column="ESTADO" property="estado" jdbcType="DECIMAL" />
+	    <result column="COD_BANCA" property="codBanca" jdbcType="DECIMAL" />
+	  </resultMap>
   <select id="ibatorgenerated_selectByPrimaryKey" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.Banca" >
     select COD_BANCA, NOMBRE, DESCRIPCION, ESTADO, FLAG_ASIGNACION,COD_ROL
     from CARDEL.TGPR_BANCAS
@@ -106,5 +112,9 @@
 	    ( #flagAsignacion:DECIMAL# IS NULL OR #flagAsignacion:DECIMAL#=-1 OR FLAG_ASIGNACION = #flagAsignacion:DECIMAL#) AND
 	    ( #codRol:DECIMAL# IS NULL OR  #codRol:DECIMAL#=-1 OR COD_ROL = #codRol:DECIMAL#)
   </select>
-
+	<select id="getLstSubBanca" resultMap="baseResultMapSubBancas" parameterClass="bbva.pe.gpr.bean.BancaSub" >
+   select COD_SUBANCA, DESCRIPCION, DETALLE, ESTADO, COD_BANCA
+    from CARDEL.TGPR_BANCA_SUB
+    where  COD_BANCA=#codBanca:DECIMAL# AND ESTADO = 1 
+  </select>
 </sqlMap>

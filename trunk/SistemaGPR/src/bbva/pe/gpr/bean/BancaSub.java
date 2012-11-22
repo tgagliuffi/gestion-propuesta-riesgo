@@ -3,17 +3,17 @@ package bbva.pe.gpr.bean;
 import java.math.BigDecimal;
 
 public class BancaSub {
-    private String codSubbanca;
+    private String  codSubanca;
     private String descripcion;
     private String detalle;
     private BigDecimal estado;
     private BigDecimal codBanca;
-	
-    public String getCodSubbanca() {
-		return codSubbanca;
+    
+	public String getCodSubanca() {
+		return codSubanca;
 	}
-	public void setCodSubbanca(String codSubbanca) {
-		this.codSubbanca = codSubbanca;
+	public void setCodSubanca(String codSubanca) {
+		this.codSubanca = codSubanca;
 	}
 	public String getDescripcion() {
 		return descripcion;
@@ -39,6 +39,6 @@ public class BancaSub {
 	public void setCodBanca(BigDecimal codBanca) {
 		this.codBanca = codBanca;
 	}
-
+	
     
 }

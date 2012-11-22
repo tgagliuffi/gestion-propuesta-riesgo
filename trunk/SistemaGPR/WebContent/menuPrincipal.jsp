@@ -46,8 +46,8 @@ List<Menu> getLstMenu =(List<Menu>)request.getAttribute("getLstMenu");
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
-			<font face="Arial Narrow" size="3" color="#535AA0"><b>
-			&nbsp;&nbsp;&nbsp;<%=usuario%>
+			<font style="font: verdana; font-size: 11px; text-transform: uppercase;"><b>
+			&nbsp;&nbsp;<%=usuario%>
 			</b></font>
 		</td>
 		<td align="right" style="font-family:Arial;font-size:13px"><b>Gestión de Propuestas de Riesgos y Control de Delegaciones</b>&nbsp;&nbsp;&nbsp;

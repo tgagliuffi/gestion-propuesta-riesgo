@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,8 +18,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.directwebremoting.WebContextFactory;
 
-
 import bbva.pe.gpr.bean.Banca;
+import bbva.pe.gpr.bean.BancaSub;
 import bbva.pe.gpr.bean.Campania;
 import bbva.pe.gpr.bean.Contrato;
 import bbva.pe.gpr.bean.MultitablaDetalle;
@@ -248,8 +247,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 			
 			if(solicitudBean!=null){
 				MultitablaDetalle multDetallePersona = catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_NATURALEZA, solicitudBean.getCodMultTipoPersona());
-				
-				
+								
 				usuarioSesion = (IILDPeUsuario)request.getSession(true).getAttribute("USUARIO_SESION");
 				solicitudBean = appRCCService.invokeDeudaSisFinanciero(solicitudBean);
 				solicitudBean = appRCDService.invokeDedudasRCD(solicitudBean);
@@ -291,14 +289,13 @@ public class IngresoSolicitudAction extends DispatchAction {
 				String riesgoActual = UtilGpr.roundUp(solicitudBean.getDeudaDirecta().add(solicitudBean.getDeudaIndirecta()).add(solicitudBean.getDeudaSistemaFinanciero()).add(solicitudBean.getCastigo()).toString(),2);
 				solicitudForm.setRiesgoActual(riesgoActual);
 				solicitudForm.setRiesgoTotal(riesgoActual!=null?riesgoActual:Constant.RESET_MONTO);
-				
-				
-					
+									
 				Banca bancaBean = new Banca();
 				bancaBean.setEstado(new BigDecimal(1));
+			
 				request.getSession().setAttribute("lstBancas", catalogoService.getLstBancaByCriteria(bancaBean));
 				request.getSession().setAttribute("lstMonedas", catalogoService.getLstMultitablaDetalle(Constant.TABLA_MONEDA));
-				
+			
 
 					strMensaje = controlService.mensajeCondicionCliente(solicitudBean);
 					indicadorPopUP = "mostrarContinuar";
@@ -320,6 +317,17 @@ public class IngresoSolicitudAction extends DispatchAction {
 			return mapping.findForward(target);	
 		}
 		return mapping.findForward(target);
+	}
+	
+	public List<BancaSub> getLstSubBanca(String codBanca){
+		BancaSub bancaSubBean = new BancaSub();
+		bancaSubBean.setCodBanca(new BigDecimal(codBanca));
+		try {
+			return catalogoService.getLstSubBanca(bancaSubBean);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<BancaSub>();
 	}
 	
 	public List<Producto> consultarAjax(BigDecimal codBanca){
@@ -356,30 +364,21 @@ public class IngresoSolicitudAction extends DispatchAction {
 		return new ArrayList<Campania>();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public String eliminarProductoAjax(String selecciones){
-			
+		HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();	
 		ReadProperties readProperties = new ReadProperties();
-		
+		List<SolicitudDetalle> lstSolicitudDetalle;
+		int sizeIni = 0,sizeFin = 0;
 		try {
-			
-			StringTokenizer st = new StringTokenizer(selecciones, "**");
-			String concatIds = "";
-			
-			while (st.hasMoreTokens()) {
-				String elemento = st.nextToken();
-				StringTokenizer stComas = new StringTokenizer(elemento, "-");
-				while (stComas.hasMoreTokens()) {
-					stComas.nextToken();
-					if(stComas.hasMoreTokens()){
-						String id = stComas.nextToken();
-						concatIds = concatIds + "'"+id+"',";
-					}
-				}					
+			if(request.getSession().getAttribute("lstDetalleProdSession")!=null){
+				lstSolicitudDetalle = (List<SolicitudDetalle>)request.getSession().getAttribute("lstDetalleProdSession");
+				sizeIni =lstSolicitudDetalle.size();
+				lstSolicitudDetalle = solicitudService.eliminarProducto(selecciones, lstSolicitudDetalle);
+				sizeFin = lstSolicitudDetalle.size();
 			}
-			
-			if(!"".equals(concatIds)){
-				concatIds = concatIds.substring(0, concatIds.length()-1);
-				//productoService.deleteProductsByCode(concatIds);
+
+			if(sizeIni != sizeFin){
 				return readProperties.getProperty("etiqueta.success.delete");
 			}
 			
@@ -414,10 +413,18 @@ public class IngresoSolicitudAction extends DispatchAction {
 		solicitudDetalleBean.setScoring(solicitudForm.getScoring());
 		solicitudDetalleBean.setCodPrevaluador(solicitudForm.getCodPreEvaluador());
 		solicitudDetalleBean.setMtoTotalRow(new BigDecimal(solicitudForm.getMtoTotalRow()));
+		solicitudDetalleBean.setIndice(Integer.parseInt(solicitudForm.getIndice()));
 		
 		if(request.getSession().getAttribute("lstDetalleProdSession")!=null){
 			lstSolicitudDetalle = (List<SolicitudDetalle>)request.getSession().getAttribute("lstDetalleProdSession");
-			lstSolicitudDetalle.add(solicitudDetalleBean);
+			for (int i=0; i<lstSolicitudDetalle.size(); i++) {
+				SolicitudDetalle bean = new SolicitudDetalle();
+				bean = lstSolicitudDetalle.get(i);
+				if(bean.getIndice()==Integer.parseInt(solicitudForm.getIndice())){
+					lstSolicitudDetalle.remove(i);
+				}
+			}
+		    lstSolicitudDetalle.add(solicitudDetalleBean);
 		}else{
 			lstSolicitudDetalle.add(solicitudDetalleBean);
 		}
@@ -426,8 +433,9 @@ public class IngresoSolicitudAction extends DispatchAction {
 		
 		ReadProperties readProperties = new ReadProperties();
 		Map<String, String> mapResult = new HashMap<String, String>();
-		mapResult.put("idGenerado", "1");
+		mapResult.put("idGenerado", solicitudForm.getIndice());
 				
+		solicitudForm.setIndice("");
 		solicitudForm.setGarantia("");
 		solicitudForm.setPlazo("");
 		solicitudForm.setMtoProducto(Constant.RESET_MONTO);
@@ -439,10 +447,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 		solicitudForm.setContratoVinculado("");
 		solicitudForm.setDesProducto("");
 		solicitudForm.setCodProducto("");
-		solicitudForm.setMtoTotal(Constant.RESET_MONTO);
-		solicitudForm.setOtroRiesgo(Constant.RESET_MONTO);
-		solicitudForm.setRiesgoActual(Constant.RESET_MONTO);
-		solicitudForm.setRiesgoTotal(Constant.RESET_MONTO);
+
 		
 		if(mapResult.get("msgError") != null) {
 			response.setStatus(500);
@@ -611,4 +616,37 @@ public class IngresoSolicitudAction extends DispatchAction {
 		 return new ArrayList<SolicitudDetalle>();
 		 }
 	}
+	
+
+	@SuppressWarnings("unchecked")
+	public String setIndice(){
+	List<SolicitudDetalle> lstSolicitudDetalle;
+		HttpServletRequest oRequest = WebContextFactory.get().getHttpServletRequest();
+		int indice=0;
+		String rpta;
+		if(oRequest.getSession().getAttribute("lstDetalleProdSession")!=null){
+			lstSolicitudDetalle = (List<SolicitudDetalle>)oRequest.getSession().getAttribute("lstDetalleProdSession");
+		
+			for (int i = 0; i < lstSolicitudDetalle.size(); i++) {
+				indice++;
+			}
+			indice++;
+		}else{
+			indice++;
+		}
+		rpta = String.valueOf(indice);
+		return rpta;
+	}
+	
+	public List<SolicitudDetalle> removerListaAjax(){
+		 HttpServletRequest oRequest = WebContextFactory.get().getHttpServletRequest();
+		 if(oRequest.getSession().getAttribute("lstDetalleProdSession")!=null){
+			 oRequest.removeAttribute("lstDetalleProdSession");
+			 oRequest.getSession().removeAttribute("lstBancas");
+			 oRequest.getSession().removeAttribute("lstMonedas");
+		 }
+		 return new ArrayList<SolicitudDetalle>();
+		 
+	}
+	
 }
