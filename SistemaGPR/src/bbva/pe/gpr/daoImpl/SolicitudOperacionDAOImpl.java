@@ -1,12 +1,14 @@
 package bbva.pe.gpr.daoImpl;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
+
+import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.SolicitudOperacion;
 import bbva.pe.gpr.bean.SolicitudOperacionKey;
 import bbva.pe.gpr.dao.SolicitudOperacionDAO;
-
-import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 public class SolicitudOperacionDAOImpl extends SqlMapClientDaoSupport implements SolicitudOperacionDAO {
 
@@ -38,6 +40,12 @@ public class SolicitudOperacionDAOImpl extends SqlMapClientDaoSupport implements
 	        return record;
 	   }
 	
+	   @SuppressWarnings("unchecked")
+	   public List<SolicitudOperacion> selectByNroSolicitud(Solicitud s) {
+			List<SolicitudOperacion> record = (List<SolicitudOperacion>) getSqlMapClientTemplate().queryForList("CARDEL_TGPR_SOLICITUD_OPERACIONES.selectByNroSolicitud", s);
+	        return record;
+	   }
+	   
 	   public int updateByPrimaryKeySelective(SolicitudOperacion record) {
 	        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_SOLICITUD_OPERACIONES.ibatorgenerated_updateByPrimaryKeySelective", record);
 	        return rows;

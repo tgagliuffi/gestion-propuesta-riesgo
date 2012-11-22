@@ -19,7 +19,7 @@
     -->
     select COD_SUBANCA, DESCRIPCION, DETALLE, ESTADO, COD_BANCA
     from CARDEL.TGPR_BANCA_SUB
-    where COD_SUBANCA = #codSubbanca:VARCHAR#
+    where COD_SUBANCA = #codSubanca:VARCHAR#
   </select>
   <delete id="ibatorgenerated_deleteByPrimaryKey" parameterClass="bbva.pe.gpr.bean.BancaSub" >
     <!--
@@ -27,7 +27,7 @@
       This element was generated on Tue Oct 09 10:50:13 COT 2012.
     -->
     delete from CARDEL.TGPR_BANCA_SUB
-    where COD_SUBANCA = #codSubbanca:VARCHAR#
+    where COD_SUBANCA = #codSubanca:VARCHAR#
   </delete>
   <insert id="ibatorgenerated_insert" parameterClass="bbva.pe.gpr.bean.BancaSub" >
     <!--
@@ -35,7 +35,7 @@
       This element was generated on Tue Oct 09 10:50:13 COT 2012.
     -->
     insert into CARDEL.TGPR_BANCA_SUB (COD_SUBANCA, DESCRIPCION, DETALLE, ESTADO, COD_BANCA)
-    values (#codSubbanca:VARCHAR#, #descripcion:VARCHAR#, #detalle:VARCHAR#, #estado:DECIMAL#,
+    values (#codSubanca:VARCHAR#, #descripcion:VARCHAR#, #detalle:VARCHAR#, #estado:DECIMAL#,
       #codBanca:DECIMAL#)
   </insert>
   <insert id="ibatorgenerated_insertSelective" parameterClass="bbva.pe.gpr.bean.BancaSub" >
@@ -45,7 +45,7 @@
     -->
     insert into CARDEL.TGPR_BANCA_SUB
     <dynamic prepend="(" >
-      <isNotNull prepend="," property="codSubbanca" >
+      <isNotNull prepend="," property="codSubanca" >
         COD_SUBANCA
       </isNotNull>
       <isNotNull prepend="," property="descripcion" >
@@ -64,8 +64,8 @@
     </dynamic>
     values
     <dynamic prepend="(" >
-      <isNotNull prepend="," property="codSubbanca" >
-        #codSubbanca:VARCHAR#
+      <isNotNull prepend="," property="codSubanca" >
+        #codSubanca:VARCHAR#
       </isNotNull>
       <isNotNull prepend="," property="descripcion" >
         #descripcion:VARCHAR#
@@ -102,7 +102,7 @@
         COD_BANCA = #codBanca:DECIMAL#
       </isNotNull>
     </dynamic>
-    where COD_SUBANCA = #codSubbanca:VARCHAR#
+    where COD_SUBANCA = #codSubanca:VARCHAR#
   </update>
   <update id="ibatorgenerated_updateByPrimaryKey" parameterClass="bbva.pe.gpr.bean.BancaSub" >
     <!--
@@ -114,6 +114,6 @@
       DETALLE = #detalle:VARCHAR#,
       ESTADO = #estado:DECIMAL#,
       COD_BANCA = #codBanca:DECIMAL#
-    where COD_SUBANCA = #codSubbanca:VARCHAR#
+    where COD_SUBANCA = #codSubanca:VARCHAR#
   </update>
 </sqlMap>

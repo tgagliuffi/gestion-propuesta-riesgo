@@ -1,9 +1,12 @@
 package bbva.pe.gpr.serviceImpl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
 
 import bbva.pe.gpr.bean.Asignacion;
 import bbva.pe.gpr.bean.Banca;
@@ -31,6 +34,7 @@ import com.grupobbva.bc.per.tele.ldap.serializable.IILDPeUsuario;
 
 public class SolicitudServiceImpl implements SolicitudService{
 
+	private static Logger logger = Logger.getLogger(SolicitudServiceImpl.class);
 	private SolicitudesDAO solicitudesDAO;
 	private SolicitudDetalleDAO solicitudDetalleDAO;
 	private SolicitudOperacionDAO solicitudOperacionDAO;
@@ -391,5 +395,14 @@ public class SolicitudServiceImpl implements SolicitudService{
 	    		}
 	    	}
 	    	return lstSolicitudDetalle;
+	 }
+	 
+	 public List<SolicitudOperacion> selectOperacionByNroSolicitud(Solicitud s) {
+		 try {
+			 return solicitudOperacionDAO.selectByNroSolicitud(s);
+		 } catch(Exception e) {
+			 logger.error("", e);
+			 return new ArrayList<SolicitudOperacion>() ;
+		 }
 	 }
 }

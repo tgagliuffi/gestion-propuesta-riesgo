@@ -16,6 +16,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.directwebremoting.WebContextFactory;
 
 import bbva.pe.gpr.bean.Analisis;
 import bbva.pe.gpr.bean.Asignacion;
@@ -25,6 +26,7 @@ import bbva.pe.gpr.bean.Funcion;
 import bbva.pe.gpr.bean.MultitablaDetalle;
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.SolicitudDetalle;
+import bbva.pe.gpr.bean.SolicitudOperacion;
 import bbva.pe.gpr.context.Context;
 import bbva.pe.gpr.service.AnalisiService;
 import bbva.pe.gpr.service.AsignacionService;
@@ -170,6 +172,7 @@ public class DictamenAction extends DispatchAction {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<SolicitudDetalle> listSolicitudDetalle = null;
 		List<Analisis> listAnalisis = null;
+		List<SolicitudOperacion> listOperaciones = null;
 		Solicitud s = null;
 		Dictamen d = null;
 		Analisis a = null;
@@ -194,11 +197,14 @@ public class DictamenAction extends DispatchAction {
 					m.setGrupoPersona(s.getGrupoPersona());
 					BigDecimal montoDelegacion = dictaminarService.montoMaxDelegacion(m);
 					
+					listOperaciones = solicitudService.selectOperacionByNroSolicitud(s);
+					
 					map.put("monto_delegacion", montoDelegacion.intValue());
 					map.put("solicitud", s);
 					map.put("solicitudDetalle", listSolicitudDetalle);
 					map.put("dictamen", d);
 					map.put("analisis", listAnalisis);
+					map.put("operaciones", listOperaciones);
 					map.put("hoy", formater.format(new Date()));
 					map.put("status", true);
 				} else {
@@ -221,10 +227,16 @@ public class DictamenAction extends DispatchAction {
 	public Map<String, Object> agregarAnalisis(Analisis row) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Analisis> listAnalisis = null;
+		List<SolicitudOperacion> listOperaciones = null;
+		Solicitud s = null;
 		try {
 			Long result = analisisService.insertarAnalisis(row);
 			if(result != null) {
 				listAnalisis = analisisService.buscarAnalisis(row);
+				
+				s = new Solicitud();
+				s.setNroSolicitud(row.getNroSolicitud());
+				listOperaciones = solicitudService.selectOperacionByNroSolicitud(s);
 				
 				map.put("status", true);
 				if(result == -1) {
@@ -233,6 +245,7 @@ public class DictamenAction extends DispatchAction {
 					map.put("error", "Proceso registrado correctamente.");
 				}
 				map.put("analisis", listAnalisis);
+				map.put("operaciones", listOperaciones);
 			}
 		} catch (Exception e) {
 			logger.error("", e);
@@ -245,13 +258,20 @@ public class DictamenAction extends DispatchAction {
 	public Map<String, Object> eliminarAnalisis(Analisis row) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Analisis> listAnalisis = null;
+		List<SolicitudOperacion> listOperaciones = null;
+		Solicitud s = null;
 		try {
 			if(analisisService.eliminarAnalisis(row) != null) {
 				listAnalisis = analisisService.buscarAnalisis(row);
 				
+				s = new Solicitud();
+				s.setNroSolicitud(row.getNroSolicitud());
+				listOperaciones = solicitudService.selectOperacionByNroSolicitud(s);
+				
 				map.put("status", true);
 				map.put("error", "Proceso eliminado correctamente.");
 				map.put("analisis", listAnalisis);
+				map.put("operaciones", listOperaciones);
 			}
 		} catch (Exception e) {
 			logger.error("", e);
@@ -306,6 +326,8 @@ public class DictamenAction extends DispatchAction {
 	public Map<String, Object> dictaminar(Dictamen row, int superior) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<SolicitudDetalle> sd = null;
+		List<SolicitudOperacion> listOperaciones = null;
+		
 		Solicitud s;
 		String condicion;
 		String plazo;
@@ -321,11 +343,21 @@ public class DictamenAction extends DispatchAction {
 					}
 					
 					if(sd != null && sd.size() > 0) {
-						if(validacionService.metodoEncapsulado(s, "") != 1 || superior == 0) {
-							plazo = "El cliente no cumple con la validaci\u00F3n de montos y plazos. Ud. no pude dictaminar esta solicitud, \u00BF Desea enviarlo para su dictamen a un superior \u003F";
+						HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+						IILDPeUsuario usuario = (IILDPeUsuario) request.getSession().getAttribute("USUARIO_SESION");
+						
+						if(usuario != null && usuario.getUID() != null) {
+							if(validacionService.metodoEncapsulado(s, usuario.getUID()) != 1 || superior == 0) {
+								plazo = "El cliente no cumple con la validaci\u00F3n de montos y plazos. Ud. no pude dictaminar esta solicitud, \u00BF Desea enviarlo para su dictamen a un superior \u003F";
+								map.put("status", false);
+								map.put("type", -2);
+								map.put("error", plazo);
+								return map;
+							}
+						} else {
 							map.put("status", false);
-							map.put("type", -2);
-							map.put("error", plazo);
+							map.put("type", -1);
+							map.put("error", "No se pudo obtener el Id del usuario.");
 							return map;
 						}
 					}
@@ -334,9 +366,13 @@ public class DictamenAction extends DispatchAction {
 				dictaminarService.delete(row);
 				
 				if(dictaminarService.dictaminarSolicitud(row) != null) {
+					
+					listOperaciones = solicitudService.selectOperacionByNroSolicitud(s);
+					
 					map.put("status", true);
 					map.put("type", 1);
 					map.put("error", "Dictamen registrado correctamente.");
+					map.put("operaciones", listOperaciones);
 				}	
 			} else  {
 				map.put("status", false);
@@ -398,5 +434,9 @@ public class DictamenAction extends DispatchAction {
 			logger.error("", e);
 			return null;
 		}
+	}
+	
+	public List<SolicitudOperacion> listarOperaciones(Solicitud s) {
+		return solicitudService.selectOperacionByNroSolicitud(s);
 	}
 }
