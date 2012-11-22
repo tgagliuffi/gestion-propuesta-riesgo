@@ -87,8 +87,7 @@ public class SolicitudForm extends ActionForm {
 	private String flagPopUP;
 	private String strMensajePopUP;
 	private String condicion="init";
-	private String hdnCodCentral;
-	
+	private String hdnCodCentral;	
 	private String valDeudaDirecta;
 	private String valDeudaIndirecta;
 	private String valCastigo;
@@ -100,8 +99,25 @@ public class SolicitudForm extends ActionForm {
 	private String desTipo;
 	private String regEvaluador;
 	private String nomEvaluador;
+	private String indice;
+	private String codSubBanca;
 	
-	
+	public String getCodSubBanca() {
+		return codSubBanca;
+	}
+
+	public void setCodSubBanca(String codSubBanca) {
+		this.codSubBanca = codSubBanca;
+	}
+
+	public String getIndice() {
+		return indice;
+	}
+
+	public void setIndice(String indice) {
+		this.indice = indice;
+	}
+
 	public String getRegEvaluador() {
 		return regEvaluador;
 	}

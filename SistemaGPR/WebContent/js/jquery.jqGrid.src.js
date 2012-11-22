@@ -11197,7 +11197,7 @@ function validaNivel4(idUno,idDos,idTres,idCuatro){
 }
 
 function buscarSelecciones(idTableForm){
-	
+
 	var cadIdsSeleccion="";//es el id de los elementos seleccionados
 	var cuentaNivel1=1;
 	var strCadNivel1="jqg_"+idTableForm+"_XX";//cadena con el nombre del check

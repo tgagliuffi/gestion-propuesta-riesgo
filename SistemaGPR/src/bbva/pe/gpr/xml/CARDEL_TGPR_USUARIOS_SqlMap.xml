@@ -100,7 +100,7 @@
      FROM CARDEL.TCARDEL_USUARIO U WHERE
            (SELECT COUNT(*) FROM CARDEL.TCARDEL_GERENTE G WHERE G.COD_REGISTRO= U.CODIGO_USUARIO AND G.ESTADO !=0) = 0  
 	 </select>
-	 	<select id="getUsuarioMontos" resultMap="lstUsuarioRiesgosResultMap" parameterClass="bbva.pe.gpr.bean.Usuario" >
+	 <select id="getUsuarioMontos" resultMap="lstUsuarioRiesgosResultMap" parameterClass="bbva.pe.gpr.bean.Usuario" >
 	SELECT 
       U.ID_USUARIO,
       U.CODIGO_USUARIO,

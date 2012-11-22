@@ -52,5 +52,5 @@ public interface SolicitudService{
 	int asignarPrioridadSolicitud(String nroSolicitud, 
 			String tipoUpdate) throws Exception;
 	
-		
+	List<SolicitudDetalle> eliminarProducto(String arraySolitcitudes, List<SolicitudDetalle> lstSolicitudDetalle)throws Exception;	
 }

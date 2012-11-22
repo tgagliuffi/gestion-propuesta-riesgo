@@ -27,7 +27,7 @@ public class BancaSubDAOImpl extends SqlMapClientDaoSupport implements BancaSubD
      */
     public int deleteByPrimaryKey(String codSubbanca) {
         BancaSub key = new BancaSub();
-        key.setCodSubbanca(codSubbanca);
+        key.setCodSubanca(codSubbanca);
         int rows = getSqlMapClientTemplate().delete("CARDEL_TGPR_BANCA_SUB.ibatorgenerated_deleteByPrimaryKey", key);
         return rows;
     }
@@ -60,7 +60,7 @@ public class BancaSubDAOImpl extends SqlMapClientDaoSupport implements BancaSubD
      */
     public BancaSub selectByPrimaryKey(String codSubbanca) {
         BancaSub key = new BancaSub();
-        key.setCodSubbanca(codSubbanca);
+        key.setCodSubanca(codSubbanca);
         BancaSub record = (BancaSub) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_BANCA_SUB.ibatorgenerated_selectByPrimaryKey", key);
         return record;
     }

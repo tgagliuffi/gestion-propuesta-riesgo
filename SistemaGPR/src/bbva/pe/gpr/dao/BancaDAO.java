@@ -1,6 +1,8 @@
 package bbva.pe.gpr.dao;
 
 import bbva.pe.gpr.bean.Banca;
+import bbva.pe.gpr.bean.BancaSub;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -12,4 +14,5 @@ public interface BancaDAO {
 	int updateByPrimaryKeySelective(Banca record)throws Exception ;
 	int updateByPrimaryKey(Banca record);
 	List<Banca> getLstBancaByCriteria(Banca record)throws Exception ;
+	List<BancaSub> getLstSubBanca(BancaSub bancaSub);
 }

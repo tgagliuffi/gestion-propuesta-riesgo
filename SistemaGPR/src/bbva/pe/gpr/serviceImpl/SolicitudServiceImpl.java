@@ -375,4 +375,21 @@ public class SolicitudServiceImpl implements SolicitudService{
 	  {
 		  return solicitudesDAO.updateByPrimaryKeySelective(solicitudBean);
 	  }
+	 
+	 public List<SolicitudDetalle> eliminarProducto(String arraySolitcitudes, List<SolicitudDetalle> lstSolicitudDetalle)throws Exception{
+		 arraySolitcitudes = arraySolitcitudes.substring(1, arraySolitcitudes.length());
+	    	String[] arregloSol = arraySolitcitudes.split(",");
+	    	
+	    	
+	    		for(int y=0; y<lstSolicitudDetalle.size(); y++){
+	    			SolicitudDetalle solicitudDetBean = new SolicitudDetalle();
+	    			solicitudDetBean = lstSolicitudDetalle.get(y);
+	    			for (int i=0; i< arregloSol.length; i++){
+	    				if(solicitudDetBean.getIndice()==Integer.parseInt(arregloSol[i])){
+		    				lstSolicitudDetalle.remove(y);
+		    			}
+	    		}
+	    	}
+	    	return lstSolicitudDetalle;
+	 }
 }

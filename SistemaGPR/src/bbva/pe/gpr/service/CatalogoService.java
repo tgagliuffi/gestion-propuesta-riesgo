@@ -33,7 +33,8 @@ public interface CatalogoService {
 	  Banca selectBancaByPrimaryKey(BigDecimal codBanca)throws Exception ;
 	  int updateBancaByPrimaryKeySelective(Banca record)throws Exception ;
 	  List<Banca> getLstBancaByCriteria(Banca record)throws Exception ;
-
+	  List<BancaSub> getLstSubBanca(BancaSub bancaSub)throws Exception;
+	  
   /*#####################################################################################################
    * 
    * 									TGPR_PRODUCTO
