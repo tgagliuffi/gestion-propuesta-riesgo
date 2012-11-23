@@ -9,9 +9,11 @@ import bbva.pe.gpr.bean.Delegacion;
 import bbva.pe.gpr.bean.MultitablaDetalle;
 import bbva.pe.gpr.bean.ProductoDelegacion;
 import bbva.pe.gpr.bean.Solicitud;
-import bbva.pe.gpr.bean.SolicitudDetalle;
+import bbva.pe.gpr.dao.CartasRiesgosDAO;
+import bbva.pe.gpr.dao.GerenteOficinaDAO;
 import bbva.pe.gpr.dao.MultitablaDetalleDAO;
 import bbva.pe.gpr.dao.SolicitudDetalleDAO;
+import bbva.pe.gpr.dao.UsuarioDAO;
 import bbva.pe.gpr.service.ControlService;
 import bbva.pe.gpr.util.Constant;
 
@@ -19,13 +21,22 @@ public class ControlServiceImpl implements ControlService {
 
 	private MultitablaDetalleDAO multitablaDetalleDAO;
 	private SolicitudDetalleDAO solicitudDetalleDAO;
- 	
+ 	private CartasRiesgosDAO    cartasRiesgosDAO;
+    private UsuarioDAO usuarioDAO;
+    private GerenteOficinaDAO gerenteOficinaDAO;
+
 	public ControlServiceImpl(MultitablaDetalleDAO multitablaDetalleDAO,
-							  SolicitudDetalleDAO solicitudDetalleDAO
+							  SolicitudDetalleDAO solicitudDetalleDAO,
+							  CartasRiesgosDAO    cartasRiesgosDAO,
+							  UsuarioDAO usuarioDAO,
+							  GerenteOficinaDAO gerenteOficinaDAO
 							  ) {
 		super();
 		this.multitablaDetalleDAO=multitablaDetalleDAO;
 		this.solicitudDetalleDAO=solicitudDetalleDAO;
+		this.cartasRiesgosDAO=cartasRiesgosDAO;
+		this.usuarioDAO=usuarioDAO;
+		this.gerenteOficinaDAO=gerenteOficinaDAO;
 	}
 	
 	public MultitablaDetalleDAO getMultitablaDetalleDAO() {
@@ -40,7 +51,28 @@ public class ControlServiceImpl implements ControlService {
 	public void setSolicitudDetalleDAO(SolicitudDetalleDAO solicitudDetalleDAO) {
 		this.solicitudDetalleDAO = solicitudDetalleDAO;
 	}
-		
+	public CartasRiesgosDAO getCartasRiesgosDAO() {
+		return cartasRiesgosDAO;
+	}
+
+	public void setCartasRiesgosDAO(CartasRiesgosDAO cartasRiesgosDAO) {
+		this.cartasRiesgosDAO = cartasRiesgosDAO;
+	}
+	public UsuarioDAO getUsuarioDAO() {
+		return usuarioDAO;
+	}
+
+	public void setUsuarioDAO(UsuarioDAO usuarioDAO) {
+		this.usuarioDAO = usuarioDAO;
+	}
+	public GerenteOficinaDAO getGerenteOficinaDAO() {
+		return gerenteOficinaDAO;
+	}
+
+	public void setGerenteOficinaDAO(GerenteOficinaDAO gerenteOficinaDAO) {
+		this.gerenteOficinaDAO = gerenteOficinaDAO;
+	}
+
 	//TODO si retorna 1 paso validacion si retorna 0 no paso validacion
 	public int condicionCliente(Solicitud solicitud) throws Exception {
 		String getBureau = "";
@@ -90,13 +122,13 @@ public class ControlServiceImpl implements ControlService {
       	if(!valorBureau.equals("1")){
       	 bureau=getLstValoresCondicion(Constant.TABLA_BUREAU);
       	}if(!valorBBVA.equals("1")){
-      	 bBVA=getLstValoresCondicion(Constant.TABLA_BUREAU);
+      	 bBVA=getLstValoresCondicion(Constant.TABLA_BBVA);
       	}if(!valorSistemaFin.equals("1")){
-      	 sistemaFin=getLstValoresCondicion(Constant.TABLA_BUREAU);
+      	 sistemaFin=getLstValoresCondicion(Constant.TABLA_SISTEMA_FINANCIERO);
       	}if(!valorRelevaPubl.equals("1")){
-         relevaPub=getLstValoresCondicion(Constant.TABLA_BUREAU);
+         relevaPub=getLstValoresCondicion(Constant.TABLA_RELEVANCIA_PUBLICA);
       	}if(!valorInelegibles.equals("1")){
-        inelegibles=getLstValoresCondicion(Constant.TABLA_BUREAU);
+        inelegibles=getLstValoresCondicion(Constant.TABLA_INELEGIBLES);
       	}
       	mensaje="El cliente no paso las siguientes Condiciones.\n" +
       			"Bureau.\n\t"+ bureau +
@@ -131,37 +163,40 @@ public class ControlServiceImpl implements ControlService {
 	}
 	
 	//TODO si retorna 1 paso validacion si retorna 0 no paso validacion
-		//capturar el metodo que me trae de Delegaciones
-	public int validacionMontosPlazos(List<SolicitudDetalle> solicitud) {
-		Delegacion delegacion =getDelegacion("P013556");
-		List<ProductoDelegacion> getProductos=delegacion.getGetLstProductoDelegacion();
-		int valorRetorno = 0;
-		List<SolicitudDetalle> solicitudDetalle = solicitud;
-		for (int i = 0; i < solicitudDetalle.size(); i++) {
-			for (int y = 0; y < getProductos.size(); y++) {
-				if (solicitudDetalle.get(i).getCodProducto().equals((getProductos.get(y).getCodProducto())) && 
-					solicitudDetalle.get(i).getPlazo()<= getProductos.get(y).getPlazoProducto().intValue()&&
-					solicitudDetalle.get(i).getMtoProducto().intValue() <= getProductos.get(y).getMontoProducto().intValue()
-					){
-				    valorRetorno++;
-				}
-			}
-		}
-		if(solicitudDetalle.size()==valorRetorno){
-			return 1;
-		}
-		    return 0;
-	}
-	
-	//TODO 1 paso y 0 no paso
-	public int validarMontoDelegacion(Solicitud solicitud) {
-		int monto = Integer.parseInt(solicitud.getMtoSolicitud());
-		Delegacion delegacion =getDelegacion("P013556");
-		int montoDelegacion = Integer.parseInt(delegacion.getMontoMaximo());
-		if (monto <= montoDelegacion) {
-			return 1;
-		}else
-			return 0;
+	public int validacionMontosPlazos(Solicitud solicitud,String codGestor) throws Exception {
+
+	 String tipoPersona=usuarioDAO.getTipoPersona(codGestor);
+	 String codCargo=solicitud.getGestorCod();
+	 String codOficina=solicitud.getCodOficina();
+     if(tipoPersona.equals(Constant.USUARIO_RIESGOS)){
+    	 String montoDelegacion=cartasRiesgosDAO.montoDelegacionUsuario(codGestor,solicitud.getGrupoPersona());
+     		if(montoDelegacion.equals("-1")){
+     				String codJefeOficina=usuarioDAO.getJefeOficina(codCargo,codOficina);
+     				String montoJefeOficina="8907";//cartasRiesgosDAO.montoDelegacionUsuario(codJefeOficina,solicitud.getGrupoPersona()); 
+                    BigDecimal getMonto= new BigDecimal(montoJefeOficina);
+     				if (solicitud.getRiesgoTotal().compareTo(getMonto)==0 || solicitud.getRiesgoTotal().compareTo(getMonto)==1){
+                	  return 1;
+     				}
+     		 }
+     	}else if (tipoPersona.equals(Constant.USUARIO_OFICINA)){
+     		
+     		 String montoDelegacion=cartasRiesgosDAO.montoDelegacionUsuario(codGestor,solicitud.getGrupoPersona());
+     		  if(montoDelegacion.equals("-1")){
+     			 String jefeInmediato= jefeInmediato(codGestor, solicitud);
+     			 String monto=cartasRiesgosDAO.montoDelegacionUsuario(jefeInmediato,solicitud.getGrupoPersona());
+     			  BigDecimal getMontos= new BigDecimal(monto);
+     			  if(getMontos.compareTo(solicitud.getRiesgoTotal())==1 || getMontos.compareTo(solicitud.getRiesgoTotal())==0 ){
+     				  return 1;
+     			  }
+     		  }else
+     		  {
+     			  BigDecimal getMontos= new BigDecimal(montoDelegacion);
+     			  if(getMontos.compareTo(solicitud.getRiesgoTotal())==1 || getMontos.compareTo(solicitud.getRiesgoTotal())==0 ){
+     				  return 1;
+     			   }
+     		  }
+     	}
+     	return 0;
 	}
 
 	public Delegacion getDelegacion(String idUsuario) {
@@ -234,4 +269,18 @@ public class ControlServiceImpl implements ControlService {
 	delegacion.setGetLstProductoDelegacion(getLstProductoDelegacion);
 	return delegacion;
 	}
-	} 
+
+
+	public String jefeInmediato(String codUsuario, Solicitud solicitud)throws Exception {
+		String montoMaximo="";
+		for(int i=0;i<10;i++){
+			montoMaximo=cartasRiesgosDAO.montoDelegacionUsuario(codUsuario, solicitud.getGrupoPersona());
+			BigDecimal getMontoRiesgos=new BigDecimal(montoMaximo);
+			if(getMontoRiesgos.compareTo(getMontoRiesgos)==1){
+				break;
+			}
+			codUsuario=usuarioDAO.codJefeInmediatoRiesgos(codUsuario);
+		}
+		return codUsuario;
+	}
+} 
