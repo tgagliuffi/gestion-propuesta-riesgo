@@ -79,6 +79,29 @@ optionSolicitudDetalle = {
 	caption: "&nbsp;&nbsp;&nbsp;Producto"
 };
 
+optionOperacion = {
+		height: 140,
+		width: 855,
+		colNames: ["Codigo Central"
+		    , "Cod. Multi Operacion"
+		    , "Cod Solicitud Operacion"
+		    , "Descr. Operacion"
+		    , "Estado"
+		    , "Nro. Solicitud"],
+		colModel: [
+			  {name: "codCentral",			index: "codCentral",			width: 150}
+			  ,{name: "codMultOperacion",		index: "codMultOperacion",		width: 150}
+			  ,{name: "codSolicitudOperacion",	index: "codSolicitudOperacion",	width: 150}
+			  ,{name: "desOperacion",			index: "desOperacion",			width: 150}
+			  ,{name: "estado",				index: "estado",				width: 150}
+			  ,{name: "nroSolicitud",			index: "nroSolicitud",			width: 150}
+		],
+		caption: "&nbsp;&nbsp;&nbsp;Producto"
+	};
+
+
+
+
 dictamen = function(d){
 	if(d != null || d != undefined) {
 		habilitaCheckRating(!(d.ctrlRating == 'I'));
@@ -177,6 +200,7 @@ validaScoring = function(){
 };
 
 buscarSolicitud = function(){
+	
 	if($("#id_usuario").val() == "-1" || $("#monto_delegacion").val() == "-1") {
 		$("#formAnalisisDictamen").css({"display": "none"});
 		alert($("#error").val());
@@ -185,16 +209,20 @@ buscarSolicitud = function(){
 	
 	parameters = {
 		nroSolicitud: $("#nroSolicitud").val(),
+		//nroSolicitud :  '402',
 		codUsuarioAsigno: $("#id_usuario").val()
 	};
+		
 	
-	DictamenAction.buscarSolicitud(parameters, function(data){
+	DictamenAction.buscarSolicitud(parameters, function(data){	
 		// debugger;
 		console.log(data);
 		
-		if(data.status) {			
+		if(data.status) {
+			
 			configurarGrid("listProducts", data.solicitudDetalle, optionSolicitudDetalle);
 			configurarGrid("listAnalisis", data.analisis, optionAnalisis);
+			configurarGrid("listLogProceso", data.operaciones, optionOperacion);
 			dictamen(data.dictamen);
 			
 			s = data.solicitud;
@@ -263,6 +291,7 @@ buscarSolicitud = function(){
 		
 			validaCondicionesScoring();
 		} else {
+			
 			alert(data.error);/*
 			$("select").attr("disabled", true);
 			$("input:text").attr("disabled", true);
@@ -388,6 +417,15 @@ dictamenEvaluador = function(dictamen) {
 	});
 };
 
+function evaluarPerfil (obj){
+	
+	if($("#nivel").val() != '2' && $(obj).val()== '4') {
+		$("#idDictamen").css({"display": ""});
+	}else{
+		$("#idDictamen").css({"display": "none"});
+	}
+};
+
 dictaminar = function(){
 	rating = 0;
 	if($("#rating_dictamen").val().toUpperCase() == "I") {
@@ -405,7 +443,7 @@ dictaminar = function(){
 		}
 	}
 	
-	dictamen={
+	dictamen={				
 		codMultDictamen: $("#slctDictamen").val(),
 		codMultNivel: $("#slctNivAprob").val(),
 		codMultMoneda: $("#tipoMoneda").val(),
@@ -426,7 +464,8 @@ dictaminar = function(){
 		condicionantes: $("#textCondicionantes").val(),
 		garantias: $("#textGarantia").val(),
 		plazo_reembolso: $("#alReembolso").val(),
-		plazo_vencimiento: $("#alVencimiento").val()
+		plazo_vencimiento: $("#alVencimiento").val(),
+		listaDocumentos: $("#listaDocumentos").val()		
 	};
 
 	if($(this).val()=='Dictaminen Superior') {
@@ -436,7 +475,47 @@ dictaminar = function(){
 	}
 };
 
-$(function(){
+function changeCondicionesScoring(obj){
+	listaDoc = $("#listaDocumentos").val();
+	listaDoc = listaDoc.replace(/^\s*|\s*$/g,"");
+	checkValue = $(obj).val();
+	check = $(obj).attr('checked');
+	
+	if(listaDoc.length == 0 && check == 'checked'){
+		$("#listaDocumentos").attr('value',checkValue);
+	}else if(listaDoc.length == 0 && check == undefined){		
+		$("#listaDocumentos").attr('value','');
+	}else if(listaDoc.length > 0 && check == 'checked'){
+		$("#listaDocumentos").attr('value',listaDoc+','+checkValue);
+	}else if(listaDoc.length > 0 && check == undefined){		
+		listaDoc =  listaDoc.replace(checkValue,"");
+		listaDoc =  listaDoc.replace(",,",",");
+		varR = listaDoc.substring(listaDoc.length-1);
+		varL = listaDoc.substring(0,1);		
+		if(varR == ','){
+			listaDoc = listaDoc.substring(0,listaDoc.length-1);			
+		}
+		if(varL == ','){
+			listaDoc = listaDoc.substring(1);			
+		}
+		
+		$("#listaDocumentos").attr('value',listaDoc);
+	}
+	
+}
+
+function consultarLog(){
+	
+	//var formulario = document.getElementById('asigacionForm');
+	//var codRol = formulario.codRol.value;
+	jQuery("#listEvaluador").GridUnload();
+	AsignacionAction.consultarUsuarioAjax(codRol, function(data){
+		mostrarTablaEvaluador(data);		
+	});
+}
+
+
+$(function(){	
 	$("#tabsDictamen").tabs();
 	$("#dialog-scoring").dialog(optionDialog);
 	$("#dialog-mensaje").dialog(optionDialog);
@@ -444,6 +523,7 @@ $(function(){
 });
 
 $(document).ready(function(){
+
 	$(".buttonGPR").addClass("cmd");
 	$(".cmd").removeClass("buttonGPR");
 	$(".cmd").button();
@@ -480,12 +560,19 @@ $(document).ready(function(){
 		console.log(data);
 		$.each(data, function(i , columns){ 
 			console.log(columns);
-		    options +='<tr><td><input type="checkbox" value="' + columns.codElemento + '" id="_' + columns.codElemento + '">&nbsp;&nbsp;' + columns.strValor + "</td></td>";
+		    options +='<tr><td><input type="checkbox" value="' + columns.codElemento + '" id="_' + columns.codElemento + '" onchange="changeCondicionesScoring(this);">&nbsp;&nbsp;' + columns.strValor + "</td></td>";
 		});
 		$("#listCondiciones").html(options);
 	});
 	
-	if($("#nivel").val() != '1') {
+	$("#btnEliminarAnalisis").bind("click", eliminarAnalisis);
+	$("#btnAgregarAnalisis").bind("click", agregarAnalisis);
+	$("#btnGrabarAnalisis").bind("click", grabarAnalisis);
+	$("#btnCancelarAnalisis").bind("click", function(){
+		habilitarBotonAnalisis(true);
+	});
+	
+	if($("#nivel").val() != '1' && $("#nivel").val() != '2') {
 		$("#btnCondiciones").button("option", "disabled", true);
 		$("#btnCondicionesScoring").button("option", "disabled", true);
 		
@@ -495,15 +582,7 @@ $(document).ready(function(){
 		
 		$("#btnCondicionesScoring").bind("click", function() {
 	        $("#dialog-scoring").dialog("open");
-	    });
-		
-		$("#btnEliminarAnalisis").bind("click", eliminarAnalisis);
-		$("#btnAgregarAnalisis").bind("click", agregarAnalisis);
-		$("#btnGrabarAnalisis").bind("click", grabarAnalisis);
-		
-		$("#btnCancelarAnalisis").bind("click", function(){
-			habilitarBotonAnalisis(true);
-		});
+	    });		
 		
 		$("#slctDictamen").bind("change", validaCondicionesScoring);
 		
@@ -515,7 +594,11 @@ $(document).ready(function(){
 		$("#rating_dictamen").bind("change", validaRating);
 		$("#ctrlScoring_dictamen").bind("change", validaScoring);
 	} else {
-		$("#tabsDictamen").css({"display": "none"});
+		//alert('nivel: '+ $("#nivel").val() );
+		$("#idDictamen").css({"display": "none"});
+		$("#cboProceso").attr("onchange", "evaluarPerfil(this);");
+		
+		
 	}
 
 	buscarSolicitud();
