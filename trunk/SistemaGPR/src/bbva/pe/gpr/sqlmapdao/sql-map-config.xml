@@ -33,12 +33,10 @@
 	    <sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_SOLICITUD_DETALLES_SqlMap.xml"/>
 	    <sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_GARANTIA_DETALLES_SqlMap.xml" />
 	    <sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_USUARIO_OFICINA_SqlMap.xml" />
-	    <sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_GERENTE_OFICINA_SqlMap.xml" />
-	    <sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_GERENTE_RIESGOS_SqlMap.xml" />
 	    <sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_SOLICITUD_RECHAZADA_SqlMap.xml" />
 	    <sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_ESTADISTICAS_SqlMap.xml" />
 	    <sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_USUARIO_SUBANCAS_SqlMap.xml" />
 	    <sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_BANCA_SUB_SqlMap.xml" />
-	    
+	    <sqlMap resource="bbva/pe/gpr/xml/CARDEL_TGPR_RIESGOS_SqlMap.xml" />   
 	    
 </sqlMapConfig>
