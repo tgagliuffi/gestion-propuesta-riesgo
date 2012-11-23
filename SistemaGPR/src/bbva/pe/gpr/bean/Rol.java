@@ -3,6 +3,7 @@ package bbva.pe.gpr.bean;
 import java.math.BigDecimal;
 
 public class Rol {
+	private BigDecimal codRolHdn;
     private BigDecimal codRol;
 	private String descripcion;
 	private String referencia;
@@ -32,6 +33,10 @@ public class Rol {
 	public void setEstado(BigDecimal estado) {
 		this.estado = estado;
 	}
-	
-
+	public BigDecimal getCodRolHdn() {
+		return codRolHdn;
+	}
+	public void setCodRolHdn(BigDecimal codRolHdn) {
+		this.codRolHdn = codRolHdn;
+	}
 }
