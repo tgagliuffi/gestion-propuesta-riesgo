@@ -2,11 +2,13 @@ package bbva.pe.gpr.service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import bbva.pe.gpr.bean.Banca;
 import bbva.pe.gpr.bean.BancaSub;
 import bbva.pe.gpr.bean.Campania;
 import bbva.pe.gpr.bean.Funcion;
+import bbva.pe.gpr.bean.FuncionRol;
 import bbva.pe.gpr.bean.Multitabla;
 import bbva.pe.gpr.bean.MultitablaDetalle;
 import bbva.pe.gpr.bean.MultitablaDetalleKey;
@@ -116,7 +118,6 @@ public interface CatalogoService {
 	  int getDeleteUsuario(String codUsuario)throws Exception ;
 	  List<Usuario> getLstUsuariosRiesgo(Usuario usuarioBean) throws Exception ;
 	  Usuario getUsuarioMontos(Usuario usuarioBean)throws Exception; 
-  
   /*#####################################################################################################
    * 
    * 	                             TGPR_ROLES
@@ -124,6 +125,8 @@ public interface CatalogoService {
    *##################################################################################################### */
 	  public  List<Rol> getLstRolesByCriteria(Rol rolBean)throws Exception;
 	  public Rol getRolSelectByPrimaryKey(BigDecimal codRol)throws Exception;
+	  public Map<String, String> saveRol(String codRolHdn, String codRol, String desRol,String refeRol)throws Exception;
+	  List<Rol> getLsRoles()throws Exception;
   /*#####################################################################################################
    * 
    * 	                               TGPR_OFICINA_ASIGNADA
@@ -139,10 +142,9 @@ public interface CatalogoService {
    * 	
    *                         TGPR_GERENTE_OFICINA
    *##################################################################################################### */
-	  String getValidarUsuario(String codUsuario);
 	  String getJefeInmediatoOficina(String codUsuario);
 	  String getJefeInmediatoRiesgo(String codUsuario);
-	  String getUsuarioVerificar(String codUsuario);
+	  String getUsuarioTipo(String codUsuario);
    /*#####################################################################################################
 	   * 
 	   * 	
@@ -155,6 +157,7 @@ public interface CatalogoService {
 		   *                         TGPR_FUNCIONES
 	*##################################################################################################### */
 	  public  List<Funcion> getLstFuncionByCriteria(Funcion funcionBean)throws Exception;
+	  List<Funcion> getLstRolesFuncion(String codRol)throws Exception;
 		/*#####################################################################################################
 	   * 
 	   * 	
@@ -163,4 +166,6 @@ public interface CatalogoService {
 	  public UsuarioSubanca selectByPrimaryKey(UsuarioSubancaKey key);
 	  public BancaSub selectByPrimaryKeyBancaSub(String codSubbanca);
 	  public void insert(UsuarioSubanca record);
+	  public void saveRolFunciones(FuncionRol record);
+	  public String rolFuncionExistente(FuncionRol record);
 }
