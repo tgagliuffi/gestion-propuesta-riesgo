@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import bbva.pe.gpr.bean.Asignacion;
 import bbva.pe.gpr.bean.Banca;
+
 import bbva.pe.gpr.bean.MultitablaDetalle;
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.SolicitudDetalle;
@@ -146,6 +147,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 		return 0;
 	}
 	public int asignacionAutomatica(Solicitud solicitudBean) throws Exception {
+
 		Banca bancaBean;
 		bancaBean = bancaDAO.selectByPrimaryKey(solicitudBean.getCodBanca());
 		if(bancaBean != null){

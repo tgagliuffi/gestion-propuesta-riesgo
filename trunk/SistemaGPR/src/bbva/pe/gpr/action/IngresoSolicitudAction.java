@@ -113,11 +113,6 @@ public class IngresoSolicitudAction extends DispatchAction {
 		solicitudBean.setDeudaSistemaFinanciero(new BigDecimal(solicitudForm.getDeudaSistemaFinanciero()));
 		solicitudBean.setScorating(solicitudForm.getScorating());
 		solicitudBean.setRating(solicitudForm.getRating());
-		/*solicitudBean.setReelevancia(solicitudForm.getRelevPublica1()!=null?solicitudForm.getRelevPublica1():Constant.STR_VACIO + 
-									 solicitudForm.getRelevPublica1()!=null?solicitudForm.getRelevPublica1():Constant.STR_VACIO +
-									 solicitudForm.getRelevPublica1()!=null?solicitudForm.getRelevPublica1():Constant.STR_VACIO + 
-									 solicitudForm.getRelevPublica1()!=null?solicitudForm.getRelevPublica1():Constant.STR_VACIO +
-									 solicitudForm.getRelevPublica1()!=null?solicitudForm.getRelevPublica1():Constant.STR_VACIO);*/
 		solicitudBean.setReelevancia(solicitudForm.getReelevancia());
 		solicitudBean.setClasificacion(solicitudForm.getClasificacion());	
 		solicitudBean.setOficinaAltaCod(solicitudForm.getOficinaAltaCod());
@@ -129,7 +124,9 @@ public class IngresoSolicitudAction extends DispatchAction {
 		solicitudBean.setRiesgoActual(new BigDecimal(solicitudForm.getRiesgoActual()));
 		solicitudBean.setRiesgoGrupal(new BigDecimal(solicitudForm.getRiesgoGrupal()));
 		solicitudBean.setFechaIngreso(new Date());	
+		solicitudBean.setCodSubanca(solicitudForm.getSubBanca());
 		solicitudBean.setCodBanca(new BigDecimal(solicitudForm.getCodBanca()));
+		
 		solicitudBean.setCodMultMoneda(solicitudForm.getCodMultMoneda());
 		solicitudForm.setFlagPopUP(Constant.STR_VACIO);
 		MultitablaDetalle multDetalleMoneda = catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_MONEDA, solicitudForm.getCodMultMoneda());
@@ -149,11 +146,13 @@ public class IngresoSolicitudAction extends DispatchAction {
 			}else{
 				MultitablaDetalle multitablaDetalleBean = null;
 				multitablaDetalleBean = catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_ESTADOS_SOLCITUD, Constant.ESTADO_SOLICITUD_PENDIENTE);
-			if(solicitudForm.getCondicion().equals("ER")){
-				if(multitablaDetalleBean!=null){
-					solicitudBean.setEstadoSolicitud(Constant.ESTADO_SOLICITUD_PENDIENTE);
-			}
-			
+				
+				if(solicitudForm.getCondicion().equals("ER")){
+					if(multitablaDetalleBean!=null){
+						solicitudBean.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD+
+														 Constant.CHAR_GUION+
+														 Constant.ESTADO_SOLICITUD_PENDIENTE);
+				}
 				nroSolicitud = solicitudService.registraSolicitud(solicitudBean, lstSolicitudDetalle);
 				if(nroSolicitud != new Long(0)){
 					
@@ -179,7 +178,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 					strMensaje = "Sucedio un error en el ingreso de Solicitud.";				
 				}
 			}else if(solicitudForm.getCondicion().equals("R")){
-				solicitudBean.setEstadoSolicitud(Constant.ESTADO_SOLICITUD_RECHAZADO);
+				solicitudBean.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD+Constant.CHAR_GUION+Constant.ESTADO_SOLICITUD_RECHAZADO);
 				nroSolicitud = solicitudService.registraSolicitud(solicitudBean, lstSolicitudDetalle);
 				catalogoService.insertSolicitudRechazada(solicitudBean);
 				solicitudForm = (SolicitudForm)form;	
@@ -190,7 +189,8 @@ public class IngresoSolicitudAction extends DispatchAction {
 			
 				
 			}else{
-				solicitudBean.setEstadoSolicitud(Constant.ESTADO_SOLICITUD_PENDIENTE);
+				solicitudBean.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD+
+						 Constant.CHAR_GUION+Constant.ESTADO_SOLICITUD_PENDIENTE);
 				if(controlService.validacionMontosPlazos(lstSolicitudDetalle)==1){
 					nroSolicitud = solicitudService.registraSolicitud(solicitudBean, lstSolicitudDetalle);
 					if(solicitudService.updateDictaminaEnOficina(solicitudBean)>0){
@@ -206,6 +206,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 					}
 				}else{
 					solicitudForm.setFlagPopUP("envioRiesgos");
+		
 					if(request.getSession().getAttribute("lstDetalleProdSession")!=null){
 						List<SolicitudDetalle> lstDetalleProdSession = (List<SolicitudDetalle>)request.getSession().getAttribute("lstDetalleProdSession");
 						request.getSession().setAttribute("lstDetalleProdSession", lstDetalleProdSession);
@@ -285,7 +286,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 				solicitudForm.setEjecutivoCtaCod(usuarioSesion.getUID());
 				solicitudForm.setEjecutivoCtaNom(usuarioSesion.getApellido1() + Constant.ESPACIO + usuarioSesion.getApellido2() + Constant.ESPACIO + usuarioSesion.getNombre());
 				solicitudForm.setStrFechaIngreso(UtilDate.fechaActual());		
-				solicitudForm.setCodBanca(solicitudBean.getCodBanca()!=null?solicitudBean.getCodBanca().toString():Constant.RESET_COMBO);
+				solicitudForm.setCodBanca(solicitudBean.getCodSubanca()!=null?solicitudBean.getCodSubanca():Constant.RESET_COMBO);
 				String riesgoActual = UtilGpr.roundUp(solicitudBean.getDeudaDirecta().add(solicitudBean.getDeudaIndirecta()).add(solicitudBean.getDeudaSistemaFinanciero()).add(solicitudBean.getCastigo()).toString(),2);
 				solicitudForm.setRiesgoActual(riesgoActual);
 				solicitudForm.setRiesgoTotal(riesgoActual!=null?riesgoActual:Constant.RESET_MONTO);
@@ -389,7 +390,6 @@ public class IngresoSolicitudAction extends DispatchAction {
 			return readProperties.getProperty("etiqueta.error.delete");
 		}
 	}
-	
 	
 	@SuppressWarnings("unchecked")
 	public ActionForward guardarProductoAjax(ActionMapping mapping, ActionForm form,

@@ -43,9 +43,7 @@
 <body>
 
 <form name="formEstadicticaAtencion" method="post">
-	<div style="background-color: #0066bb;height: 20px;line-height: 20px;">
-		<font face="Arial Narrow" size=3 color="#FFFFFF"><b style="font-size: 12px;">&nbsp;&nbsp;&nbsp;Módulo de Estadísticas de atención de solicitudes</b></font>
-	</div>
+
 	<br/>
 	<div style="padding: 5px;">
 		<table style="width: 900px" border="0" cellspacing="0" cellpadding="0">

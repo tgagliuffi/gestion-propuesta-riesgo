@@ -103,9 +103,9 @@ function mostrarMensaje(valor){
 function estadoFormat(cellvalue, options, rowObject)
 {	
 	if(cellvalue == '1')
-		return "<img src='imagenes/verde.png' border='0' height='18'/><input type='hidden' id='hidEstado_" + rowObject['nroSolicitud'] + "' value='" + cellvalue + "'/>";
+		return "<img src='imagenes/boton_verde.png' border='0' height='18'/><input type='hidden' id='hidEstado_" + rowObject['nroSolicitud'] + "' value='" + cellvalue + "'/>";
 	else if(cellvalue == '0')
-		return "<img src='imagenes/rojo.gif' border='0' height='18'/><input type='hidden' id='hidEstado_" + rowObject['nroSolicitud'] + "' value='" + cellvalue + "'/>";
+		return "<img src='imagenes/boton_rojo.png' border='0' height='18'/><input type='hidden' id='hidEstado_" + rowObject['nroSolicitud'] + "' value='" + cellvalue + "'/>";
 	else 
 		return "";			
 } 
@@ -283,10 +283,7 @@ optionDialog = {
  	 	<input type="hidden" id="hdnRegistro" name="hdnRegistro" value=''></input>
  	 	<input type="hidden" id="strMensajePopUP" name="strMensajePopUP" value=''></input>
  	 	
-	<div style="background-color: #0066bb;">
-		<font face="Arial Narrow" size=3 color="#FFFFFF">&nbsp;Módulo de Asignación Individual</font>
-	</div>
-
+	
 	<br/>
 		<table width="1200px" height="100%" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>	

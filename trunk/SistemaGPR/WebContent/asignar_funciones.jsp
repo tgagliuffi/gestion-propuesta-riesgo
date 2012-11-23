@@ -24,6 +24,7 @@
 	<script type="text/javascript" src='<%= request.getContextPath()%>/dwr/interface/UsuarioAction.js'></script>
 	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/engine.js'></script>
 	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/util.js'></script>
+	<script src="<%=request.getContextPath()%>/js/script.js" type="text/javascript"></script>
 <script type="text/javascript">
 var rutaContexto1 = location.pathname;
 var rutaContexto2 = "<%=request.getContextPath()%>";
@@ -101,9 +102,7 @@ function agregarFuncion(){
 <html:hidden property="codUsuario" styleId="codUsuario"/>
 <html:hidden property="codRol" styleId="codRol" value="${getRol.codRol}"/>
 <br/>
-	<div style="background-color: #0066bb;">
-		<font face="Arial Narrow" size=3 color="#FFFFFF"><b>&nbsp;Módulo Asignacion de Funciones</b></font>
-	</div>
+	
 	<br/>
 	<a href="javascript:btnRegresar();" class="buttonGPR">REGRESAR</a>
 	<br/><br/>

@@ -29,26 +29,30 @@ List<Rol> getLstRoles = (List<Rol>)request.getAttribute("getLstRoles");
 	<script type="text/javascript" src='<%= request.getContextPath()%>/dwr/interface/UsuarioAction.js'></script>
 	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/engine.js'></script>
 	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/util.js'></script>
+	<script src="<%=request.getContextPath()%>/js/script.js" type="text/javascript"></script>
 <script type="text/javascript">
 var rutaContexto1 = location.pathname;
 var rutaContexto2 = "<%=request.getContextPath()%>";
 var rutaContexto  = rutaContexto1.substr(0, rutaContexto1.indexOf(rutaContexto2)) + rutaContexto2;
 
-var myColNamesUsuario  = ['','Codigo Usuario','Nombre','SubBancas','Roles','Acciones'];
+var myColNamesUsuario  = ['','Codigo Usuario','Nombre','SubBancas','Roles','Editar', 'Eliminar'];
 var myDataModelUsuario= [  
                      {name : 'codigoUsuario', 	index : 'codigoUsuario', width : VAL_WIDTH.SMALL	,hidden : true},
                      {name : 'codigoUsuario', 	index : 'codigoUsuario', width : VAL_WIDTH.XLSMALL	},
                      {name : 'nombres',			index : 'nombres', 		 width : VAL_WIDTH.SMALL	},
                      {name : 'codUsuarioCreacion',	index : 'codUsuarioCreacion',width : VAL_WIDTH.LMED},
                      {name : 'codUsuarioModificacion',index : 'codUsuarioModificacion', width : VAL_WIDTH.SMALL },
-                     {name : 'codigoUsuario',	index : 'codigoUsuario', width : VAL_WIDTH.VSMALL,  	formatter: accionesFormat, sortable: false, align:'center'}
-                    ];
+                     {name : 'codigoUsuario',	index : 'codigoUsuario', width : VAL_WIDTH.VSMALL,  	formatter: accionesFormatEditar, sortable: false, align:'center'},
+                     {name : 'codigoUsuario',	index : 'codigoUsuario', width : VAL_WIDTH.VSMALL,  	formatter: accionesFormatEliminar, sortable: false, align:'center'}
+                      
+                     ];
 
-function accionesFormat(cellvalue, options, rowObject){
-	return "<a title=\"Ver Detalle\" href=\"javascript:verDetalleReg('"+cellvalue+"');\"><img src=\"imagenes/detalle2.png\" border=\"0\" height=\"18\"></a>&nbsp;"+
-	"<a title=\"Eliminar\" href=\"javascript:anularRegistro('"+cellvalue+"');\"><img src=\"imagenes/eliminar.png\" border=\"0\" height=\"18\"></a>";
+function accionesFormatEditar(cellvalue, options, rowObject){
+	return "<a title=\"Ver Detalle\" href=\"javascript:verDetalleReg('"+cellvalue+"');\"><img src=\"imagenes/OpmDetalle.png\" border=\"0\" height=\"18\"></a>&nbsp;";
 }
-
+function accionesFormatEliminar(cellvalue, options, rowObject){
+	return "<a title=\"Eliminar\" href=\"javascript:anularRegistro('"+cellvalue+"');\"><img src=\"imagenes/editclear.png\" border=\"0\" height=\"18\"></a>";
+}
 function verDetalleReg(code){
 	var formulario = document.getElementById('usuarioForm');
 	formulario.action =rutaContexto+'/usuarioAction.do?method=configuracionUsuario&codUsuarios='+code;
@@ -127,26 +131,23 @@ function cargaMasiva(){
 </head>
 <body onload="consultarUsuario();">
 <html:form styleId="usuarioForm" method="post" enctype="multipart/form-data">
-		<div style="background-color: #0066bb;">
-		<font face="Arial Narrow" size=3 color="#FFFFFF"><b>&nbsp;Módulo de Parametría del Usuario</b></font>
-	</div>
 
 	<br/>
-		<fieldset style="width: 830px">
-   	<legend>
-   	<font class="fontText">
-   	
-   	</font></legend>
-	<table style="width: 800px" border="0" cellspacing="0" cellpadding="0">
+	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 920px;margin: 3px;">
+			<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+				<label>Datos de la Solicitud</label>
+			</div>
+			<table style="width: 900px;padding: 5px;" border="0" cellspacing="0">
+				
 	<tr>
 		<td valign="middle">
-			<font class="fontText"><b>Registro</b></font>
+			<font class="fontText">Registro</font>
 		</td>
 		<td valign="middle">
  		<html:text property="codUsuario" styleId="codUsuario" size="14" maxlength="14"/>
 		</td>
 		<td valign="middle">
-			<font class="fontText"><b>SubBanca</b></font>
+			<font class="fontText">SubBanca</font>
 		</td>
 		<td valign="middle">
 		 	<html:select property="codBanca" styleId="codBanca">
@@ -160,7 +161,7 @@ function cargaMasiva(){
 		</html:select>	
 	 	</td>
 		<td align="right" valign="middle">
-			<font class="fontText"><b>Roles</b></font>&nbsp;			
+			<font class="fontText">Roles</font>&nbsp;			
 		</td>
 		<td valign="middle">
 	  	<html:select property="codCargo" styleId="codCargo">
@@ -176,19 +177,19 @@ function cargaMasiva(){
 	</tr>
 	<tr>
 		<td valign="middle">
-			<font class="fontText"><b>Nombres</b></font>
+			<font class="fontText">Nombres</font>
 		</td>
 		<td valign="middle">
 		   	<html:text property="nombre"  styleId="nombre" size="28" maxlength="255"/>				
 		</td>
 		<td valign="middle">
-<!-- 			<font class="fontText"><b>A. Paterno</b></font> -->
+<!-- 			<font class="fontText">A. Paterno</font> -->
 		</td>
 		<td valign="middle">
 <%-- 		   	<html:text property="apePaterno"  styleId="apePaterno" size="28" maxlength="255"/>				 --%>
 		</td>
 		<td align="right" valign="middle">
-<!-- 			<font class="fontText"><b>A. Materno</b></font>&nbsp; -->
+<!-- 			<font class="fontText">A. Materno</font>&nbsp; -->
 		</td>
 		<td valign="middle">
 <%-- 		   	<html:text property="apeMaterno"  styleId="apeMaterno" size="28" maxlength="255"/>				 --%>
@@ -198,7 +199,7 @@ function cargaMasiva(){
 	<td>&nbsp;</td>
 	</tr>
 	</table>
-	</fieldset>
+	</div>
 	<br>
 			<a href="javascript:consultarUsuario();" class="buttonGPR">BUSCAR</a>
 <!-- 			<a href="javascript:nuevoUsuario();" class="buttonGPR">NUEVO</a> -->

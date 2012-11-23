@@ -42,7 +42,7 @@ var rutaContexto1 = location.pathname;
 var rutaContexto2 = "<%=request.getContextPath()%>";
 var rutaContexto  = rutaContexto1.substr(0, rutaContexto1.indexOf(rutaContexto2)) + rutaContexto2;
 
-var myColNames  = ['','Solicitud', 'Fecha', 'Central', 'Cliente', 'Moneda', 'Monto Sol.', 'Riesgo Act.', 'Riesgo Tot.', 'Prioridad', /*'Fuera de Rango', */'Estado',''];
+var myColNames  = ['','Solicitud', 'Fecha', 'Central', 'Cliente', 'Moneda', 'Monto Sol.', 'Riesgo Act.', 'Riesgo Tot.', 'Prioridad', /*'Fuera de Rango', */'Estado','Editar', 'Anular'];
 
 var myDataModel = [ {name : 'nroSolicitud',				width : VAL_WIDTH.SMALL, hidden : true	},
                     {name : 'nroSolicitud',				index : 'nroSolicitud', 		width : VAL_WIDTH.XLSMALL      ,sortable:false},
@@ -56,20 +56,23 @@ var myDataModel = [ {name : 'nroSolicitud',				width : VAL_WIDTH.SMALL, hidden :
                     {name : 'prioridad',			index : 'prioridad', 			width : VAL_WIDTH.XLSMALL,  formatter: prioridadFormat, sortable: false},
                     //{name : 'fueraRango',			index : 'fueraRango', 			width : VAL_WIDTH.XLSMALL	},
                     {name : 'estado',			index : 'estado', 			width : VAL_WIDTH.XLSMALL,  	formatter: estadoFormat, sortable: false, align:'center'},
-                    {name : 'nroSolicitud',			index : 'hdnCodigo', 			width : VAL_WIDTH.XLSMALL,  	formatter: btnOpcionFormat, sortable: false, align:'center'}                                        
-                   ];
+                    {name : 'nroSolicitud',			index : 'hdnCodigo', 			width : VAL_WIDTH.XLSMALL,  	formatter: btnOpcionFormatEdit, sortable: false, align:'center'},                                        
+                    {name : 'nroSolicitud',			index : 'hdnCodigo', 			width : VAL_WIDTH.XLSMALL,  	formatter: btnOpcionFormatAnular, sortable: false, align:'center'}                                        
+                    
+                    ];
                    
-function btnOpcionFormat(cellvalue, options, rowObject){
-	return "<a title='Prioridad Individual' href='javascript:editPrioridad("+cellvalue+");'><img src='imagenes/detalle.gif' border='0' height='18'></a>&nbsp;"+
-	"<a title='Anulación Individual' href='javascript:editAnular("+cellvalue+");'><img src='imagenes/detalle.gif' border='0' height='18'></a>";
+function btnOpcionFormatEdit(cellvalue, options, rowObject){
+	return "<a title='Prioridad Individual' href='javascript:editPrioridad("+cellvalue+");'><img src='imagenes/OpmDetalle.png' border='0' height='18'></a>";
 }
-
+function btnOpcionFormatAnular(cellvalue, options, rowObject){
+	return "<a title='Anulación Individual' href='javascript:editAnular("+cellvalue+");'><img src='imagenes/editclear.png' border='0' height='18'></a>";
+}
 function estadoFormat(cellvalue, options, rowObject)
 {	
 	if(cellvalue == '1')
-		return "<img src='imagenes/verde.png' border='0' height='18'/><input type='hidden' id='hidEstado_" + rowObject['nroSolicitud'] + "' value='" + cellvalue + "'/>";
+		return "<img src='imagenes/boton_verde.png' border='0' height='18'/><input type='hidden' id='hidEstado_" + rowObject['nroSolicitud'] + "' value='" + cellvalue + "'/>";
 	else if(cellvalue == '0')
-		return "<img src='imagenes/rojo.gif' border='0' height='18'/><input type='hidden' id='hidEstado_" + rowObject['nroSolicitud'] + "' value='" + cellvalue + "'/>";
+		return "<img src='imagenes/boton_rojo.png' border='0' height='18'/><input type='hidden' id='hidEstado_" + rowObject['nroSolicitud'] + "' value='" + cellvalue + "'/>";
 	else 
 		return "";			
 }
@@ -260,21 +263,22 @@ function procesarAnulacion()
 
 <form id="formAsigPrioridad" method="post">
 
-	<div style="background-color: #0066bb;">
-		<font face="Arial Narrow" size=3 color="#FFFFFF"><b>&nbsp;Módulo de Asignación de Prioridad en las Solicitudes</b></font>
-	</div>
-
+	
 	<br/>
-	<table style="width: 600px" border="0" cellspacing="0" cellpadding="0">
+	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 920px;margin: 3px;">
+	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+	<label>Datos de la Solicitud</label>
+	</div>
+	<table style="width: 900px;padding: 5px;" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td valign="middle">
-			<font class="fontText"><b>Código Central</b></font>
+			<font class="fontText">Código Central</font>
 		</td>
 		<td valign="middle">
 			<input type="text" name="codigoCentral" class="cajaTexto" id="codigoCentral" size="10" maxlength="8">
 		</td>
 		<td valign="middle">
-			<font class="fontText"><b>Número Solicitud</b></font>
+			<font class="fontText">Número Solicitud</font>
 		</td>
 		<td valign="middle">
 			<input type="text" name="numSolicitud" class="cajaTexto" id="numSolicitud" size="10" maxlength="8">
@@ -282,7 +286,7 @@ function procesarAnulacion()
 	</tr>
 	<tr>
 		<td valign="middle">
-			<font class="fontText"><b>Fecha Solicitud</b></font>
+			<font class="fontText">Fecha Solicitud</font>
 		</td>
 		<td valign="middle">
 			<input type="text" name="inifechaSolicitud" class="cajaTexto" id="inifechaSolicitud" size="10" maxlength="8">&nbsp;al&nbsp;
@@ -292,7 +296,7 @@ function procesarAnulacion()
 			<input type="button" class="buttonGPR"  name="btnConsultar" id="btnConsultar" value="Consultar" onclick="consultarSolicitud();">
 		</td>	
 	</tr>
-	</table>
+	</table></div>
 	
 	<br/>
 	<table id="listSolicitud" class="grid">

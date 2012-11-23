@@ -46,13 +46,13 @@ List<Menu> getLstMenu =(List<Menu>)request.getAttribute("getLstMenu");
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
-			<font style="font: verdana; font-size: 11px; text-transform: uppercase;"><b>
+			<font style="font: verdana; font-size: 11px; text-transform: uppercase;" class="txt-titulo"><b>
 			&nbsp;&nbsp;<%=usuario%>
 			</b></font>
 		</td>
 		<td align="right" style="font-family:Arial;font-size:13px"><b>Gestión de Propuestas de Riesgos y Control de Delegaciones</b>&nbsp;&nbsp;&nbsp;
 		<br/><br/>
-		<a href="index.jsp" target="_top" class="buttonOHC">SALIR</a>&nbsp;&nbsp;&nbsp;
+		<a href="index.jsp" target="_top" class="txt-titulo">SALIR</a>&nbsp;&nbsp;&nbsp;
 		</td>
 	</tr>
 	</table>

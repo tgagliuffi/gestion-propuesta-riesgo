@@ -541,11 +541,11 @@ function compare_dates(fecha, fecha2)
          
     }   
 } 
-/*
+
 $(document).ready(function(){
 	$(".buttonGPR").addClass("cmd");
 	$(".cmd").removeClass("buttonGPR");
 	$(".cmd").button();
 });
-*/
+
 

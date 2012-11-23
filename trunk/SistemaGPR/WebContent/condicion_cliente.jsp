@@ -30,6 +30,7 @@ List<MultitablaDetalle> usuarioInele = (List<MultitablaDetalle>)request.getAttri
 	<script src="<%=request.getContextPath()%>/js/jquery-1.7.1.js" type="text/javascript"></script>	
 	<script src="<%=request.getContextPath()%>/js/i18n/grid.locale-es.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/script.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 function save_condicion(){
@@ -64,9 +65,7 @@ function save_condicion(){
 <body>
 <html:form method="post" action="condicionCliente.do?method=listarCondicion">
 <input type="hidden"/>
-<div style="background-color: #0066bb;">
-		<font face="Arial Narrow" size=3 color="#FFFFFF"><b>&nbsp;Condiciones del Cliente</b></font>
-	</div>
+
 	<br>
 	<br>
 	<table>

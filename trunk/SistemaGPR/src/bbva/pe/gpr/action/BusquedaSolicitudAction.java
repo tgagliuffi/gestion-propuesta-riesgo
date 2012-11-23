@@ -94,7 +94,7 @@ public class BusquedaSolicitudAction extends DispatchAction {
 		Solicitud solicitudBean = new Solicitud();
 		solicitudBean.setAsignacionBean(new Asignacion());
 		if(codBanca != null  && !codBanca.equalsIgnoreCase(Constant.STR_VACIO) && !codBanca.equalsIgnoreCase("-1")){
-			solicitudBean.setCodBanca(new BigDecimal(codBanca));
+			solicitudBean.setCodSubanca(codBanca);
 		}if(codOficina!=null && !codOficina.equalsIgnoreCase(Constant.STR_VACIO)){
 			solicitudBean.setCodOficina(codOficina);
 		}if(desOficina!=null && !desOficina.equalsIgnoreCase(Constant.STR_VACIO) ){
@@ -108,7 +108,7 @@ public class BusquedaSolicitudAction extends DispatchAction {
 		}if(fechaIngresoFin!=null && !fechaIngresoFin.equalsIgnoreCase(Constant.STR_VACIO)){
 			solicitudBean.setFechaIngresoFin(UtilDate.stringToUtilDate(fechaIngresoFin, null));
 		}if(codEstadoMult!=null && !codEstadoMult.equalsIgnoreCase(Constant.STR_VACIO) && !codEstadoMult.equalsIgnoreCase("-1")){
-			solicitudBean.setEstado(new BigDecimal(codEstadoMult));
+			solicitudBean.setEstadoSolicitud(codEstadoMult.substring(0, 4)+Constant.CHAR_GUION+codEstadoMult.substring(4, 9));
 		}if(codRol != null && !codRol.equalsIgnoreCase(Constant.STR_VACIO) && !codRol.equalsIgnoreCase("-1")){
 			solicitudBean.getAsignacionBean().setCodRol(new BigDecimal(codRol));
 		}if(regEvaluador != null && !regEvaluador.equalsIgnoreCase(Constant.STR_VACIO)){
@@ -143,7 +143,7 @@ public class BusquedaSolicitudAction extends DispatchAction {
 		SolicitudForm solicitudForm = (SolicitudForm)form;
 		Solicitud solicitudBean = new Solicitud();
 		if(solicitudForm.getCodBanca() != null  && !solicitudForm.getCodBanca().equalsIgnoreCase(Constant.STR_VACIO) && !solicitudForm.getCodBanca().equalsIgnoreCase("-1")){
-			solicitudBean.setCodBanca(new BigDecimal(solicitudForm.getCodBanca()));
+			solicitudBean.setCodSubanca(solicitudForm.getCodBanca());
 		}if(solicitudForm.getCodOficina()!=null && !solicitudForm.getCodOficina().equalsIgnoreCase(Constant.STR_VACIO)){
 			solicitudBean.setCodOficina(solicitudForm.getCodOficina());
 		}if(solicitudForm.getDesOficina() !=null && !solicitudForm.getDesOficina().equalsIgnoreCase(Constant.STR_VACIO) ){

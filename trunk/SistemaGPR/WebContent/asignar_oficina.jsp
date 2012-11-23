@@ -25,7 +25,7 @@
 	<script type="text/javascript" src='<%= request.getContextPath()%>/dwr/interface/AsignarOficinaAction.js'></script>
 	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/engine.js'></script>
 	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/util.js'></script>
-
+	<script src="<%=request.getContextPath()%>/js/script.js" type="text/javascript"></script>
 <%
 List<Banca> getLstBanca = (List<Banca>)request.getAttribute("getLstBanca");
 List<Rol> getLstRoles = (List<Rol>)request.getAttribute("getLstRoles");
@@ -114,9 +114,7 @@ function limpiarUsuario(){
 </head>
 <body onload="consultarUsuario()">
 <html:form styleId="asignarOficinaForm" action="asignarOficina.do?method=listarAsignarOficina" >
-	<div style="background-color: #0066bb;">
-		<font face="Arial Narrow" size=3 color="#FFFFFF" class=""><b>&nbsp;Parametria de Evaluadores/Dictaminadores </b></font>
-	</div>
+	
 	<br/>
 	<fieldset style="width: 830px">
    	<legend>
