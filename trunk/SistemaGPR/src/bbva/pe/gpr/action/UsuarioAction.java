@@ -99,7 +99,6 @@ public class UsuarioAction  extends DispatchAction{
 	}
 	
 	public ActionForward configuracionUsuario(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
 			try {
 				String strMensaje="";
 				String codUsuario=request.getParameter("codUsuarios");
@@ -190,6 +189,7 @@ public class UsuarioAction  extends DispatchAction{
 			List<FuncionRol> getLstFuncionRol= seguridadService.getLstFuncionRol(funcionRolBean);
 			return getLstFuncionRol;
 		} catch (Exception e) {
+			System.out.print(""+e.getMessage());
 			return new ArrayList<FuncionRol>();
 		}
 	}
@@ -204,7 +204,6 @@ public class UsuarioAction  extends DispatchAction{
         return "Grabo";
 		} catch (Exception e) {
 			System.out.print(""+e.getMessage());
-			System.out.print(""+e.getCause());
 		   return e.getMessage();
 		}
 	}
@@ -228,7 +227,7 @@ public class UsuarioAction  extends DispatchAction{
 			catalogoService.deleteOficinaAsignada(concatIds);
 			return "Eliminado";
 		} catch (Exception e) {
-			System.out.print(""+e.getLocalizedMessage());
+		   System.out.print(""+e.getLocalizedMessage());
 		   return e.getLocalizedMessage();
 		}
 	}
@@ -239,7 +238,6 @@ public class UsuarioAction  extends DispatchAction{
 	     rows=catalogoService.getDeleteUsuario(codUsuario);
 		return "No existe";
 		} catch (Exception e) {
-			System.out.print(""+e.getMessage());
 			System.out.print(""+e.getCause());
 		   return e.getMessage();
 		}
@@ -432,9 +430,7 @@ public class UsuarioAction  extends DispatchAction{
 		return error;
 	}
 	
-	private UsuarioRol crearObjectoUsuario(Map<Integer, Object> parameter)
-			throws IILDPeExcepcion {
-
+	private UsuarioRol crearObjectoUsuario(Map<Integer, Object> parameter)throws IILDPeExcepcion {
 		UsuarioRol usuarioRol =new UsuarioRol();
 		Object value = null;
 		String codRegistro = null;
@@ -445,7 +441,6 @@ public class UsuarioAction  extends DispatchAction{
 		if (codRegistro.substring(0,1).equals("0")&&codRegistro.length()==7){
 			codRegistro = "P"+codRegistro.substring(1,7);
 		}
-		
 		value = parameter.get(Constant.POSICION_COD_ROL);
 		codRol = (value != null ? value.toString() : null);
 		
@@ -465,7 +460,6 @@ public class UsuarioAction  extends DispatchAction{
 	        	usuarioRol.setDescripcion(null);
 	        }
         }
-        
         UsuarioRol usuario=new UsuarioRol();
 		usuario.setCodRol(new BigDecimal(codRol));
 		usuario.setCodUsuario(codRegistro);
@@ -477,7 +471,6 @@ public class UsuarioAction  extends DispatchAction{
 	        }else{
 	        	usuarioRol.setCodRol(null);
 	     }
-	        
 	    Usuario getLstusuario=catalogoService.selectUsuarioByPrimaryKey(codRegistro);
 		if(getLstusuario!=null){
 			usuarioRol.setCodUsuario(getLstusuario.getCodigoUsuario());
@@ -610,6 +603,7 @@ public class UsuarioAction  extends DispatchAction{
 		response.getOutputStream().flush();
 		return null;
 	}
+	
 	public void descargarLogError(ActionMapping mapping,ActionForm form, HttpServletRequest request,HttpServletResponse response) throws Exception {
 	    
 		File file;		
