@@ -72,14 +72,14 @@ function save_condicion(){
 
 	<br>
 	<br>
-	<table>
+	
+	<table style="width: 1300px" border="0" cellspacing="0" cellpadding="0">
     <tr>
-    <td>
-	<fieldset style="width:120px">
-   		<legend>
-  			<font class="fontText">
-   			<b>Bureau</b>
-   			</font></legend>
+    <td valign="top">
+	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 80px;margin: 3px;">
+			<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+				<label>BUREAU</label>
+			</div>
    			<%if(!usuarioBureau.isEmpty() && usuarioBureau!=null) {%>
     			<% for(int i=0;i<usuarioBureau.size();i++) {%>
 	            <% if(usuarioBureau.get(i).getNumberValor()!=null) {%>
@@ -92,19 +92,14 @@ function save_condicion(){
 				<% }%>
 				<%}%> 
 		   <br/>
-	</fieldset>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</div>		
 	 </td>
-   <td>
-	<fieldset style="width:160px">
-   		<legend>
-  			<font class="fontText">
-   				<b>Clasificacion BBVA</b>
-   			</font></legend>
+   <td valign="top">
+	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 240px;margin: 3px;">
+			<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+				<label>CLASIFICACION BBVA</label>
+			</div>
+	
 			<%if(!usuarioBbva.isEmpty() && usuarioBbva!=null) {%>
 				<% for(int i=0;i<usuarioBbva.size();i++) {%>
 	            <% if(usuarioBbva.get(i).getNumberValor()!=null) {%>
@@ -117,20 +112,14 @@ function save_condicion(){
 				<% }%>
 				<%} %>
 	<br/>
-	</fieldset>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</div>
+  
 </td>
-<td>
-	<fieldset style="width:180px">
-   		<legend>
-  			<font class="fontText">
-   				<b>Clasificacion S. Financiero</b>
-   			</font></legend>
+<td valign="top">
+	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 250px;margin: 3px;">
+			<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+				<label>CLASIFICACION SIS. FINANCIERO</label>
+			</div>
 	    	<%if(!usuarioSiFinan.isEmpty() && usuarioSiFinan!=null) {%>
 	            <% for(int i=0;i<usuarioSiFinan.size();i++) {%>
     			<% if(usuarioSiFinan.get(i).getNumberValor()!=null) {%>
@@ -143,21 +132,14 @@ function save_condicion(){
 				<% }%>
 				<% }%>
 	<br/>
-	</fieldset>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</div>
+           
 </td>  
-<td>
-	<fieldset style="width:130px">
-   		<legend>
-  			<font class="fontText">
-   				<b>Relevancia Publica</b>
-   			</font></legend>
+<td valign="top">
+	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 290px;margin: 3px;">
+			<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+				<label>RELEVANCIA PUBLICA</label>
+			</div>
 	    	<%if(!usuarioRelPub.isEmpty() && usuarioRelPub != null ) {%>
 	            <% for(int i=0;i<usuarioRelPub.size();i++) {%>
    			<% if(usuarioRelPub.get(i).getNumberValor()!=null) {%>
@@ -170,21 +152,14 @@ function save_condicion(){
 				<% }%>				
 				<% }%>
 	<br/>
-	</fieldset>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</div>           
 
 </td>
-<td>
-	<fieldset style="width:120px">
-   		<legend>
-  			<font class="fontText">
-   				<b>Inelegibles</b>
-   			</font></legend>
+<td valign="top">
+	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 120px;margin: 3px;">
+			<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+				<label>INELEGIBLE</label>
+			</div>
 	    	<%if(!usuarioInele.isEmpty() && usuarioInele!=null) {%>
 	            <% for(int i=0;i<usuarioInele.size();i++) {%>
     			<% if(usuarioInele.get(i).getNumberValor()!=null) {%>	    
@@ -197,25 +172,22 @@ function save_condicion(){
 				<% }%>
 <% }%>
 	<br/>
-	</fieldset>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</div>	</fieldset>
+           
 	</td>
 	</tr>
 	</table>
 	</html:form>
 	<table>
+
 	<tr>
 	<td >
-<!-- 		<a href="javascript:save_condicion();" class="buttonGPR"></a> -->
+	<input type="button" class="buttonGPR" name="btnConsultar" id="btnConsultar" value="GRABAR" onclick="save_condicion();">
+
 	</td>
     </tr>
     </table>
-	<input type="button" class="buttonGPR" name="btnConsultar" id="btnConsultar" value="GRABAR" onclick="save_condicion();">
-
+    	</div>
+	
 </body>
 </html>
