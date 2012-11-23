@@ -138,4 +138,10 @@
     where COD_MULTITABLA = #codMultitabla:VARCHAR# AND  NUMBER_VALOR!=0 AND ESTADO!=0 
   </select>
 
+  <select id="getMensaje" resultClass="string" parameterClass="string" >
+    SELECT STR_VALOR
+    FROM CARDEL.TGPR_MULTITABLA_DETALLE
+    where COD_ELEMENTO = #value#
+  </select>
+
 </sqlMap>
