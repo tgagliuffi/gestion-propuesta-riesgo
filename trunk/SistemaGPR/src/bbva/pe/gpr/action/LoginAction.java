@@ -69,16 +69,16 @@ public class LoginAction extends DispatchAction {
 				operador = catalogoService.selectUsuarioByPrimaryKey(reg);
 				 List<Menu> getListadoMenu=seguridadService.getListadoMenu(reg);
 				if(operador!=null && getListadoMenu !=null){
-					String saludo = null;
+					String saludo = null, image=null;
 					saludo = (usuario.getSexo().equals(Constant.FEMENINO)?"Bienvenida : ":"Bienvenido : ");
+					image =  (usuario.getSexo().equals(Constant.FEMENINO)?"female.png":"male.png");
 					request.getSession(true).setAttribute("USUARIO_SESION", usuario);
+					request.getSession(true).setAttribute("USUARIO_IMG", image);
 		        	request.getSession(true).setAttribute("REGISTRO_USUARIO_LOGUEADO", usuario.getUID());
 		        	request.getSession(true).setAttribute("USUARIO_NOMBRE",saludo + usuario.getApellido1() + Constant.ESPACIO + usuario.getApellido2() + Constant.ESPACIO + usuario.getNombre());
 		        	request.getSession(true).setAttribute("FECHA_ACTUAL","HOY DÍA ES : "+ UtilDate.fechaActual());
 		        	target = "success";
-    		        //TODO: FALTA PERFILAR USUARIO
-		        	
-		              request.setAttribute("getLstMenu",getListadoMenu);
+    		        request.setAttribute("getLstMenu",getListadoMenu);
     		    }else{
 					request.getSession(true).setAttribute("STR_MENSAJE", "Usuario sin Privliegios.");
 					target = "failure";
