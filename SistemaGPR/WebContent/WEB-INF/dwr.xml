@@ -41,6 +41,9 @@
 		<create creator="new" javascript="EstadisticaAction">
       		<param name="class" value="bbva.pe.gpr.action.EstadisticaAction"/>
     	</create>
+		<create creator="new" javascript="RolAction">
+      		<param name="class" value="bbva.pe.gpr.action.RolAction"/>
+    	</create>
 	
 		<convert converter="bean" match="bbva.pe.gpr.bean.Usuario"/>
 		<convert converter="bean" match="bbva.pe.gpr.bean.Oficina"/>

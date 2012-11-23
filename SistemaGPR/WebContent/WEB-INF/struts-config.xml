@@ -13,7 +13,9 @@
 		<form-bean name="asignarOficinaForm" type="bbva.pe.gpr.form.AsignarOficinaForm" />
 		<form-bean name="ProductoForm"	type="bbva.pe.gpr.form.ProductoForm"></form-bean>
 		<form-bean name="usuarioForm"	type="bbva.pe.gpr.form.UsuarioForm"></form-bean>
-		<form-bean name="asigacionForm" type="bbva.pe.gpr.form.AsignacionForm"></form-bean>		
+		<form-bean name="asigacionForm" type="bbva.pe.gpr.form.AsignacionForm"></form-bean>
+		<form-bean name="rolesForm" type="bbva.pe.gpr.form.RolesForm"></form-bean>
+		
 	</form-beans>
 
 	<global-exceptions></global-exceptions>
@@ -84,6 +86,12 @@
 			parameter="method" input="/asignacion_individual.jsp">
 			<forward name="success" path="/asignacion_individual.jsp"></forward>
 		</action>
+		<action name="rolesForm" path="/rolAction" type="bbva.pe.gpr.action.RolAction" 
+			parameter="method">
+			<forward name="creaRol" path="/roles.jsp"></forward>
+			<forward name="rolFunciones" path="/rol_funciones.jsp"></forward>
+		</action>
+		
 	</action-mappings>
 	<message-resources parameter="MessageResource"></message-resources>	
 </struts-config>
