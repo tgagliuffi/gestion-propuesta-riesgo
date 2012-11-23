@@ -85,4 +85,12 @@
 	    ( #estado:VARCHAR# IS NULL OR ESTADO = #estado:VARCHAR#) 
   </select>
 
+   <select id="getLstRolesFunciones" resultClass="bbva.pe.gpr.bean.Funcion" parameterClass="string">
+		SELECT f.cod_funcion as codFuncion,
+		f.descripcion  as nombre 
+		FROM  CARDEL.TGPR_FUNCION_ROLES fr 
+		JOIN tgpr_funciones f on fr.cod_funcion=f.cod_funcion
+		WHERE cod_rol=#value#
+  </select>
+
 </sqlMap>
