@@ -146,7 +146,9 @@
 			<constructor-arg index="10" ref="solicitudRechazadaDAOImpl"></constructor-arg>
 			<constructor-arg index="11" ref="funcionDAO"></constructor-arg>
 			<constructor-arg index="12" ref="usuarioSubancaDAOImpl"></constructor-arg>
-			<constructor-arg index="13" ref="bancaSubDAOImpl"></constructor-arg>			
+			<constructor-arg index="13" ref="bancaSubDAOImpl"></constructor-arg>	
+			<constructor-arg index="14" ref="funcionRolDAO"></constructor-arg>	
+					
 		
 	</bean>
 	<bean id="seguridadServiceImpl" class="bbva.pe.gpr.serviceImpl.SeguridadServiceImpl">
@@ -193,6 +195,10 @@
 	<bean id="controlServiceImpl" class="bbva.pe.gpr.serviceImpl.ControlServiceImpl">
 			<constructor-arg index="0" ref="multitablaDetalleDAO"></constructor-arg>
 			<constructor-arg index="1" ref="solicitudDetalleDAO"></constructor-arg>
+			<constructor-arg index="2" ref="cartasRiesgosDAO"></constructor-arg>
+			<constructor-arg index="3" ref="usuarioDAO"></constructor-arg>
+			<constructor-arg index="4" ref="gerenteOficinaDAOImpl"></constructor-arg>
+
 	</bean>
 	<bean id="validacionServiceImpl" class="bbva.pe.gpr.serviceImpl.ValidacionServiceImpl">
 			<constructor-arg index="0" ref="solicitudDetalleDAO"></constructor-arg>
