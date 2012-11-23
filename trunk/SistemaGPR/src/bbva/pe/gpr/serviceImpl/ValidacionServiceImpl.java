@@ -111,12 +111,12 @@ public class ValidacionServiceImpl implements ValidacionService {
 					return 0;	
 	}
 
-	public int riesgoPorRating(Solicitud solicitud) {
+	public int riesgoPorRating(Solicitud solicitud,String codUsuario) {
 		int valorRetorno=0;
 		List<SolicitudDetalle> getLstSolicitudDetalles = solicitudDetalleDAO.getListSolicitudDetalleForId(solicitud);		
 			for(SolicitudDetalle solicitudes:getLstSolicitudDetalles){
 				//cartas delegacion
-				BigDecimal montoRiesgos=cartasRiesgosDAO.montDelegacion(solicitud.getGestorCod(),solicitud.getGrupoPersona());
+				BigDecimal montoRiesgos=cartasRiesgosDAO.montDelegacionRating(codUsuario,solicitud.getRating());
 				BigDecimal montoSolicitud=solicitudes.getMtoProducto();
 				 if((montoRiesgos.compareTo(montoSolicitud)==0 || montoRiesgos.compareTo(montoSolicitud)==1)){
 							valorRetorno++;
@@ -128,12 +128,12 @@ public class ValidacionServiceImpl implements ValidacionService {
 			    	return 0;
 	}
 
-	public int riesgoSinRating(Solicitud solicitud) {
+	public int riesgoSinRating(Solicitud solicitud,String codUsuario) {
 		int valorRetorno=0;
 		List<SolicitudDetalle> getLstSolicitudDetalles = solicitudDetalleDAO.getListSolicitudDetalleForId(solicitud);		
 			for(SolicitudDetalle solicitudes:getLstSolicitudDetalles){
 				//cartas delegacion
-				BigDecimal montoRiesgos=cartasRiesgosDAO.montDelegacion(solicitud.getGestorCod(),solicitud.getGrupoPersona());			
+				BigDecimal montoRiesgos=cartasRiesgosDAO.montDelegacionSinRating(codUsuario,solicitud.getGrupoPersona());			
 				BigDecimal montoSolicitud=solicitudes.getMtoProducto();
 				if((montoRiesgos.compareTo(montoSolicitud)==0 || montoRiesgos.compareTo(montoSolicitud)==1)){
 							valorRetorno++;
@@ -145,10 +145,10 @@ public class ValidacionServiceImpl implements ValidacionService {
 					return 0;	
 	}
 
-	public int riesgoPersonaNatural(Solicitud solicitud) {
+	public int riesgoPersonaNatural(Solicitud solicitud,String codUsuario) {
 		int valorRetorno=0;
 		List<SolicitudDetalle> getLstSolicitudDetalles = solicitudDetalleDAO.getListSolicitudDetalleForId(solicitud);		
-		List<ProductoDelegacion> getLstProducto=cartasRiesgosDAO.getDelegacionPersonaNatural(solicitud.getGestorCod());
+		List<ProductoDelegacion> getLstProducto=cartasRiesgosDAO.getDelegacionPersonaNatural(codUsuario);
 				for (int i = 0; i < getLstSolicitudDetalles.size(); i++) {
 					for (int y = 0; y < getLstProducto.size(); y++) {
 						if (getLstSolicitudDetalles.get(i).getCodProducto().equals((getLstProducto.get(y).getCodProducto())) && 
@@ -178,18 +178,19 @@ public class ValidacionServiceImpl implements ValidacionService {
 			return cartasDelegaciones;
 	}
 
-	public int metodoEncapsulado(Solicitud solicitud, String usuarioSession) {
+	public int metodoEncapsulado(Solicitud solicitud,String codUsuario) {
 	int valorRetorno=0;
-		if(gerenteOficinaDAO.getValidarUsuario(solicitud.getGestorCod()).equals("1")){
-			//oficina			
+	//TODO verificar
+		if(gerenteOficinaDAO.getUsuarioTipo(codUsuario).equals(Constant.USUARIO_OFICINA)){
+			//oficina
 			if(solicitud.getGrupoPersona().equals(Constant.GRUPO_CON_RATING)){
-			valorRetorno=riesgoPorRating(solicitud);	
+			valorRetorno=riesgoPorRating(solicitud,codUsuario);	
 			}else if(solicitud.getGrupoPersona().equals(Constant.GRUPO_SIN_RATING)){
-			valorRetorno=riesgoSinRating(solicitud);					
+			valorRetorno=riesgoSinRating(solicitud,codUsuario);					
 			}else if(solicitud.getGrupoPersona().equals(Constant.GRUPO_PER_NATUAL)){
-			valorRetorno=riesgoPersonaNatural(solicitud);	
+			valorRetorno=riesgoPersonaNatural(solicitud,codUsuario);	
 			}
-		}else{
+		}else if (gerenteOficinaDAO.getUsuarioTipo(codUsuario).equals(Constant.USUARIO_RIESGOS)){
 			//riesgos
 			if(solicitud.getGrupoPersona().equals(Constant.GRUPO_CON_RATING)){
 			//valorRetorno=riesgoPorRating(solicitud);	
