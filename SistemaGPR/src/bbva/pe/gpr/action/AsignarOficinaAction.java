@@ -28,11 +28,9 @@ import bbva.pe.gpr.util.Constant;
 public class AsignarOficinaAction extends DispatchAction {
 	private static Logger logger = Logger.getLogger(AsignarOficinaAction.class);
 	private CatalogoService catalogoService; 
-	//private SeguridadService seguridadService;
 	
 	public AsignarOficinaAction() {
 		catalogoService = (CatalogoService)Context.getInstance().getBean("catalogoService");
-		//seguridadService = (SeguridadService)Context.getInstance().getBean("seguridadService");
 	}
 	
 	public ActionForward listarAsignarOficina(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -66,6 +64,7 @@ public class AsignarOficinaAction extends DispatchAction {
 		request.setAttribute("getLstTerritorio",catalogoService.getLstTerritorioByCriteria(territorio));
 		}catch (Exception e) {
 			System.out.print("Error " + e.getLocalizedMessage());
+			logger.error("AsignarOficinaAction.listarTerritorioOficina", e);
 		}
 		return mapping.findForward("parametriaEvaluador");
 	}
@@ -73,7 +72,6 @@ public class AsignarOficinaAction extends DispatchAction {
 	public List<Usuario> consultarAjax(String codUsuario,String nombreUsuario ,String codBanca,Long codRol) {
 		Usuario user = new Usuario();
 		user.setEstado("1");
-
 		try {
 			 if(codUsuario!=null && codUsuario !=""){
 			 user.setCodigoUsuario("%"+codUsuario+"%");
@@ -94,9 +92,11 @@ public class AsignarOficinaAction extends DispatchAction {
 		    List<Usuario> getLstUser = catalogoService.getLstUsuario(user);
 			return getLstUser;
 			 } catch (Exception e) {
+		logger.error("AsignarOficinaAction.listarTerritorioOficina", e);		 
 			return new ArrayList<Usuario>();
+			 }
 	}
-}
+	
 	public List<Oficina> consultarOficinaAjax(BigDecimal valor) {
 		try {
 			Oficina oficina = new Oficina();
@@ -123,6 +123,7 @@ public class AsignarOficinaAction extends DispatchAction {
 		    return new ArrayList<UsuarioOficina>();
 		}
 	}
+	
 	public List<Territorio> consultarTerritorioAjax() {
 		try {
 			Territorio territorio = new Territorio();
@@ -130,7 +131,7 @@ public class AsignarOficinaAction extends DispatchAction {
 			List<Territorio> getLstOficinaAsignada=catalogoService.getLstTerritorioByCriteria(territorio);
 			return getLstOficinaAsignada;
 		    } catch (Exception e){
-			System.out.print(""+e.getMessage());
+		    logger.error("AsignarOficinaAction.listarTerritorioOficina", e);
 		    return new ArrayList<Territorio>();
 		}
 	}
@@ -142,18 +143,16 @@ public class AsignarOficinaAction extends DispatchAction {
 			oficinaAsignada.setCod_usuario(codigoUsuario);
 			oficinaAsignada.setEstado(Constant.ESTADO_ACTIVO);
 			
-			if(catalogoService.getValidarUsuario(codigoUsuario).equals("1")){
+			if(catalogoService.getUsuarioTipo(codigoUsuario).equals(Constant.USUARIO_OFICINA)){
 			return "Oficina";				
 			}else{
 				catalogoService.saveOficinaAsignada(oficinaAsignada);						
 				return "No existe";
 			}
 		} catch (Exception e) {
-			System.out.print(""+e.getMessage());
-			System.out.print(""+e.getCause());
+			logger.error("AsignarOficinaAction.listarTerritorioOficina", e);
 		   return e.getMessage();
 		}
-
 	}
 	
 	public String eliminarOficinaAsignadaAjax(String codOficina){
@@ -175,7 +174,7 @@ public class AsignarOficinaAction extends DispatchAction {
 			catalogoService.deleteOficinaAsignada(concatIds);
 			return "Eliminado";
 		} catch (Exception e) {
-			System.out.print(""+e.getLocalizedMessage());
+			logger.error("AsignarOficinaAction.listarTerritorioOficina", e);
 		   return e.getLocalizedMessage();
 		}
 	}	
