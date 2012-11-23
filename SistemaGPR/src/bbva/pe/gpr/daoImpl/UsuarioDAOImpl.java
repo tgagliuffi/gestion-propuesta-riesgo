@@ -1,6 +1,8 @@
 package bbva.pe.gpr.daoImpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
@@ -74,4 +76,23 @@ public class UsuarioDAOImpl extends SqlMapClientDaoSupport implements UsuarioDAO
         Usuario record = (Usuario) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_USUARIOS.getUsuarioMontos", usuarioBean);
         return record;
     }
+
+	public String getTipoPersona(String codUsuario) {
+	       Usuario record = (Usuario) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_USUARIOS.getTipoPersona", codUsuario);
+	        return record.getCodigoUsuario();
+	}
+	
+	public String getJefeOficina(String codCargo,String codOficina) {
+		Map<String, String> map= new HashMap<String, String>();
+		map.put("codCargo", codCargo);
+		map.put("CodOficina", codOficina);
+		
+	       Usuario record = (Usuario) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_USUARIOS.getJefeOficina", map);
+	        return record.getCodigoUsuario();
+	}
+
+	public String codJefeInmediatoRiesgos(String codUsuario) {
+	       Usuario record = (Usuario) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_USUARIOS.getJefeInmediatoRiesgos", codUsuario);
+	        return record.getCodigoUsuario();
+	}
 }
