@@ -59,6 +59,7 @@
 		<convert converter="bean" match="bbva.pe.gpr.bean.Analisis"/>  
 		<convert converter="bean" match="bbva.pe.gpr.bean.Dictamen"/>
 		<convert converter="bean" match="bbva.pe.gpr.bean.Banca"/>
+		<convert converter="bean" match="bbva.pe.gpr.bean.BancaSub"/>
 		<convert converter="bean" match="bbva.pe.gpr.bean.Funcion"/>
 		<convert converter="bean" match="bbva.pe.gpr.bean.Rol"/>
 		<convert converter="bean" match="bbva.pe.gpr.bean.Estadistica"/>

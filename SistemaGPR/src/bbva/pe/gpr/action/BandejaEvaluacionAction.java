@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.directwebremoting.WebContextFactory;
 
 import bbva.pe.gpr.bean.Asignacion;
 import bbva.pe.gpr.bean.Delegacion;
@@ -58,9 +59,12 @@ public class BandejaEvaluacionAction extends DispatchAction {
 	public Map<String, Object> buscarSolicitud(Asignacion uid) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Asignacion> listAsignacion = null;
+		HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+		IILDPeUsuario bean = (IILDPeUsuario)request.getSession().getAttribute("USUARIO_SESION");
 		
 		try {
 			if(uid != null) {
+				uid.setCodUsuario(bean.getUID());
 				Delegacion delegacion = controlService.getDelegacion(uid.getCodUsuario());
 				listAsignacion = asignacionService.getLstAsignaciones(uid);
 				

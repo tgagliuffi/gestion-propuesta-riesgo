@@ -24,6 +24,7 @@
 	<script type="text/javascript" src='<%= request.getContextPath()%>/dwr/interface/AsignarOficinaAction.js'></script>
 	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/engine.js'></script>
 	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/util.js'></script>
+	<script src="<%=request.getContextPath()%>/js/script.js" type="text/javascript"></script>
 <%
 List<Territorio> getLstOficina = (List<Territorio>)request.getAttribute("getLstTerritorio");
 %>
@@ -139,9 +140,7 @@ function eliminarOficina(){
 <html:form styleId="asignarOficinaForm" method="post" >
 <html:hidden property="codAsignar" value="${getUsuario.codAsignar}" styleId="codUsuario"/>
 <br/>
-	<div style="background-color: #0066bb;">
-		<font face="Arial Narrow" size=3 color="#FFFFFF"><b>&nbsp;Módulo Asignacion de Oficinas</b></font>
-	</div>
+
 	<br/>
 	<a href="javascript:btnRegresar();" class="buttonGPR">REGRESAR</a>
 	<br/><br/>

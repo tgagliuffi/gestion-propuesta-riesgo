@@ -57,12 +57,12 @@ public class Constant {
 	public static final String NOMBRE_LOG = "LOG_APP_GPR.LOG";
 	
 	public static final String ESTADO_SOLICITUD_PENDIENTE = "15001";
-	public static final String ESTADO_SOLICITUD_RECHAZADO = "15002";
-
-	public static final String ESTADO_SOLICITUD_ASIGNADO = "15003";
-	public static final String ESTADO_SOLICITUD_EVALUANDO = "15004";
-	public static final String ESTADO_SOLICITUD_DICTAMINADO = "15005";
-	public static final String ESTADO_SOLICITUD_ANULADO = "15006";
+	public static final String ESTADO_SOLICITUD_ASIGNADO = "15002";
+	public static final String ESTADO_SOLICITUD_ANALISIS = "15003";
+	public static final String ESTADO_SOLICITUD_DICTAMINADO_ = "15004";
+	public static final String ESTADO_SOLICITUD_RECHAZADO = "15005";
+	public static final String ESTADO_SOLICITUD_ANULADO_ = "15006";
+	
 	
 	public static final String PRIORIDAD_BAJA = "BAJA";
 	public static final String PRIORIDAD_NORMAL = "NORMAL";
@@ -81,6 +81,7 @@ public class Constant {
 
 	public static final String DICTAMEN = "4";
 	public static final String USUARIO_OFICINA = "1";
+	
 	public static final String USUARIO_RIESGOS = "2";
     public static final int TOTAL_POSICIONES_CARGA_MASIVA=3;
     public static final int POSICION_COD_REGISTRO = 0;

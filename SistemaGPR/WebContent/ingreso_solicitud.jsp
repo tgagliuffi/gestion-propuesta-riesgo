@@ -31,7 +31,8 @@
 	<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/util/formatters.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/script.js" type="text/javascript"></script>
-		<script src="<%=request.getContextPath()%>/js/util.gpr.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/util.gpr.js" type="text/javascript"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/solicitud/ingresoSolicitud.js"></script>
 	
 <script type="text/javascript">
 
@@ -55,6 +56,8 @@ optionDialog = {
 }; 
 	
 $(function() {
+	
+	$("#tabsPrincipal").tabs();
     $("#fechaIngreso").datepicker({dateFormat: 'dd/mm/yy'});
     $("#dialog-form").dialog(optionDialog);
 });
@@ -510,13 +513,19 @@ function mostrarTablaDetalle(data){
 function addProducto(){
 	var codBanca = document.getElementById("codBanca");
 	var codMultMoneda = document.getElementById("codMultMoneda");
+	
 	IngresoSolicitudAction.setIndice(function(msg){
 		document.getElementsByName("indice")[0].value  = msg;
 	});
+
 	if(codBanca.value == '-1'){
 		alert("Debe seleccionar una banca para poder agregar un registro.");
-	}else if(codMultMoneda.value == '-1'){
+		codBanca.focus();
+		return false;
+	}if(codMultMoneda.value == '-1'){
 		alert("Debe seleccionar una moneda para poder agregar un registro.");
+		codMultMoneda.focus();
+		return false;
 	}else{
 		var rowid = "-1";
 		var mydataadd = 
@@ -575,9 +584,12 @@ function deleteProducto(){
 }
 
 function changeBankListProducts(obj){
+	var formulario = document.getElementById('formSolicitudIngreso');
+	formulario.hdnSubBanca.value = obj.value;
+	var codBanca = formulario.codBanca.value;
 	if(valBancaGeneric == ''){
-		valBancaGeneric = obj.value;
-	}else if(valBancaGeneric != obj.value){
+		valBancaGeneric = codBanca;
+	}else if(valBancaGeneric != codBanca){
 		var tabla = document.getElementById("listProducts");
 	  	var tablaBody = tabla.getElementsByTagName("tbody")[0];
 	  	var filas = tablaBody.getElementsByTagName("tr");
@@ -634,17 +646,18 @@ function init(){
 	if(formulario.mantener.value!=''){
 		consultarDetalle();
 	}
+	setSubBanca();
+
 }
 function mostrarPopUp(){
 	var formulario = document.getElementById('formSolicitudIngreso');
 	if(formulario.flagPopUP.value=='mostrarContinuar'){
 		formulario.condicion.value = '1';
-		window.open('ingreso_solicitud_mensaje.jsp','windowAsigMensaje', "scrollbars=0,scrolling=no,top=" +
-				(screen.height - 500) + ",height=180,width=300,left=" + ((screen.width - 800)/2) + ",resizable=no");
+		$("#mensaje_cliente").html($("#strMensajePopUP").val());
+		$("#valCondicionCliente").dialog("open");		
 	}if(formulario.flagPopUP.value=='envioRiesgos'){
 		formulario.condicion.value = '2';
-		window.open('ingreso_solicitud_mensaje.jsp','EnviarRiesgos', "scrollbars=0,scrolling=no,top=" +
-				(screen.height - 500) + ",height=180,width=380,left=" + ((screen.width - 800)/2) + ",resizable=no");
+		$("#valMontoPlazos").dialog("open");
 	}	
 }
 
@@ -652,6 +665,8 @@ function submitPopUp(){
 	 var formulario = document.getElementById('formSolicitudIngreso');
 		formulario.action = rutaContexto+'/ingresoSolicitud.do?method=init&param=continuar';;
 		formulario.submit();
+		
+		
 }
 
 function submitEnviarRiesgos(){
@@ -685,6 +700,9 @@ function limpiaForm(miForm) {
 	  IngresoSolicitudAction.removerListaAjax(function(data){
 			mostrarTabla(data);
 		});
+		 dwr.util.removeAllOptions("codSubBanca");
+		 dwr.util.removeAllOptions("codBanca");
+		 dwr.util.removeAllOptions("codMultMoneda");
 	  
 }
 function update(parametro){
@@ -708,13 +726,34 @@ var nroSolicitud = formulario.mantener.value;
 	
 	}
 }
-function changeBancSubBanca(objeto){
-	var codBanca = objeto.value;
-	 IngresoSolicitudAction.getLstSubBanca(codBanca, function(data){
-		 dwr.util.removeAllOptions("codSubBanca");
-		 dwr.util.addOptions("codSubBanca", data,'codSubanca','descripcion');
+
+function changeBancSubBanca(codBanca, codSubBanca){
+	
+	var formulario = document.getElementById('formSolicitudIngreso');
+	formulario.hdnBanca.value = codBanca;
+	 IngresoSolicitudAction.getLstSubBanca(codBanca, function(data) {
+	
+		 dwr.util.removeAllOptions("subBanca");
+		 dwr.util.addOptions("subBanca", data,'codSubanca','descripcion');
+		 if(codSubBanca!=null) {
+			 setValueComboBox(codSubBanca);
+		 }
 	});
-}	
+}
+function setValueComboBox(value){
+	 $("#subBanca").val(value);
+}
+function setSubBanca(){
+	
+	var formulario = document.getElementById('formSolicitudIngreso');
+	if(formulario.hdnBanca.value!='-1' && formulario.hdnBanca.value!=''){
+		var banca = formulario.hdnBanca.value;
+		var subBanca = formulario.hdnSubBanca.value;
+		changeBancSubBanca(banca, subBanca);
+	}
+	
+}
+
 </script>
 	
 </head>
@@ -726,12 +765,11 @@ function changeBancSubBanca(objeto){
 	<input type="hidden" id="strMensajePopUP" name="strMensajePopUP" value='${solicitudForm.strMensajePopUP}'></input>
 	<input type="hidden" id="codMultTipoPersona" name="codMultTipoPersona" value='${solicitudForm.codMultTipoPersona}'></input>
 	<input type="hidden" id="mantener" name="mantener" value='${Solicitud.nroSolicitud}'></input>
+	<input type="hidden" id="hdnSubBanca" name="hdnSubBanca" value='${solicitudForm.hdnSubBanca}'></input>
+	<input type="hidden" id="hdnBanca" name="hdnBanca" value='${solicitudForm.hdnBanca}'></input>
 	
 	<input type="hidden" id="condicion" name=condicion value=''></input>	
-	<div style="background-color: #0066bb;">
-		<font face="Arial Narrow" size=3 color="#FFFFFF">&nbsp;Módulo de Ingreso de la Solicitud</font>
-	</div>
-
+	
 	<%if(asigPrioridadIndividual != null){%>
 	<br/>
 	<input type="button" class="buttonGPR"  name="btnRegresar" id="btnRegresar" onclick="backAsignacionPrioridad();" value="Regresar">&nbsp;
@@ -890,7 +928,7 @@ function changeBancSubBanca(objeto){
 	</table>
 	</div>
 
-   	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 860px;margin: 3px;">
+   	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 860px;margin: 3px; margin-top: 10px;">
 	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
 	<label>Datos de la Oficina y Ejecutivo</label>
 	</div>
@@ -957,18 +995,21 @@ function changeBancSubBanca(objeto){
 	</table>
 	</div>
 	<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-	
-		<table id="listProductsDetalle" class="grid" width="1300px;">
-		</table>
+			<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1280px;margin: 3px;">
+			<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+			<label>Datos drl Producto</label></div>
+				<table id="listProductsDetalle" class="grid" width="1300px;">
+				</table>
+			</div>
 	<%}else{%>
-	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1280px;margin: 3px;">
+	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1280px;margin: 3px;margin-top: 10px;">
 	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
 	<label>Datos drl Producto</label></div>
 	<table style="width: 1280px;">	
 	<tr>
        <td align="left" valign="middle">
        <font class="fontText">Banca</font>&nbsp;
-       <html:select property="codBanca" styleId="codBanca" onchange="changeBancSubBanca(this);">
+       <html:select property="codBanca" styleId="codBanca" onchange="changeBancSubBanca(this.value, null);">
 				<html:option value="-1" >TODOS</html:option>
 				<c:if test="${lstBancas != null}">
 					<c:forEach var="banca" items="${lstBancas}">
@@ -981,7 +1022,7 @@ function changeBancSubBanca(objeto){
 	   </td>
 	    <td align="left" valign="middle">
        <font class="fontText">Sub Banca</font>&nbsp;
-       <html:select property="codSubBanca" styleId="codSubBanca" onchange="changeBankListProducts(this);">
+       <html:select property="subBanca" styleId="subBanca" onchange="changeBankListProducts(this);">
 				<html:option value="-1" >TODOS</html:option>
 			</html:select>
 	   </td>
@@ -1006,8 +1047,8 @@ function changeBancSubBanca(objeto){
 	</tr>
 	</table>
 
-	<a href="javascript:deleteProducto();" class="buttonGPR">ELIMINAR</a>&nbsp;
-	<a href="javascript:addProducto();" class="buttonGPR">AGREGAR</a>
+	<a href="javascript:deleteProducto();" class="buttonGPR">Eliminar</a>&nbsp;
+	<a href="javascript:addProducto();" class="buttonGPR">Agregar</a>
 	
 	<br/><br/>
 	<table id="listProducts" class="grid" width="1300px;">
@@ -1015,7 +1056,7 @@ function changeBancSubBanca(objeto){
 	</div>
 		<%}%>
 	
-   	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1260px;margin: 3px;"></div>
+   	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1260px;margin: 3px;margin-top: 10px;"></div>
 	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
 	<label>Datos de Riesgo del Cliente</label></div>
    	<table>
@@ -1227,7 +1268,31 @@ function changeBancSubBanca(objeto){
 	</div>
 	</tr>
 	</table>
-	
+	<div id="valCondicionCliente"  title="Condiciones del Cliente" style="width: 400px">
+	<form>
+			<div class="ui-widget ui-widget-content ui-corner-all" style="margin: 2px;">
+				<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+		            <label>&nbsp;&nbsp;&nbsp;Condiciones del Cliente</label>
+		        </div>
+		<table style="text-align: center;">
+			<tr><td class="txt-titulo" colspan="2" align="left">Cliente No cumplio las siguientes validaciones : </td></tr>
+			<tr><td colspan="2" id="mensaje_cliente"> </td></tr>			
+		</table></div></form>
+	</div>
+	<div id="valMontoPlazos"  title="Condiciones de la solicitud" style="width: 400px">
+	<form>
+			<div class="ui-widget ui-widget-content ui-corner-all" style="margin: 2px;">
+				<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+		            <label>&nbsp;&nbsp;&nbsp;Validacion de Monto y Plazos</label>
+		        </div>
+		<table style="text-align: center;">
+			<tr><td class=".txt-titulo">La solicitud no cumplio las siguientes validaciones : </td></tr>
+			<tr>
+				<td>Solicitud será enviada a riesgos</td>
+			</tr>
+			
+		</table></div></form>
+	</div>
 </html:form>
 <script type="text/javascript">
 function llamarPopup(){

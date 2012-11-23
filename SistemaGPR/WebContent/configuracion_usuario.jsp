@@ -106,9 +106,6 @@ function asignarRoles(){
 </head>
 <body onload="consultarSolicitud();">
 <form name="usuarioForm" id="usuarioForm" method="post">
-	<div style="background-color: #0066bb;">
-		<font face="Arial Narrow" size=3 color="#FFFFFF"><b>&nbsp;Módulo del Detalle de la Parametría del Usuario</b></font>
-	</div>
 	<br/>
 	<br>
 	<a href="javascript:viewParamUsuarioMain();" class="buttonGPR">REGRESAR</a>

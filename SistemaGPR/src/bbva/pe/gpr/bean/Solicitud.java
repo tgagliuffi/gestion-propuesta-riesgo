@@ -16,7 +16,6 @@ public class Solicitud {
     private String mtoSolicitud;
     private BigDecimal riesgoActual;
     private BigDecimal riesgoTotal;
-    private String desBanca;
     private String oficinaAltaCod;
     private String oficinaAltaNom;
     private BigDecimal otroRiesgo;
@@ -35,7 +34,6 @@ public class Solicitud {
     private String desOficina;
     private String gerenciaTerritorialCod;
     private String gerenciaTerritorialNom;    
-    private BigDecimal codBanca;
     private String codMultMoneda;
     private String rating;
     private String clasificacion;
@@ -73,7 +71,9 @@ public class Solicitud {
 	private String relevPublica5;
 	
 	private String grupoPersona;
-	
+    private String desBanca;
+    private String codSubanca;
+    private BigDecimal codBanca;
 	public Long getNroSolicitud() {
 		return nroSolicitud;
 	}
@@ -134,12 +134,6 @@ public class Solicitud {
 	public void setRiesgoTotal(BigDecimal riesgoTotal) {
 		this.riesgoTotal = riesgoTotal;
 	}
-	public String getDesBanca() {
-		return desBanca;
-	}
-	public void setDesBanca(String desBanca) {
-		this.desBanca = desBanca;
-	}
 	public String getOficinaAltaCod() {
 		return oficinaAltaCod;
 	}
@@ -151,6 +145,12 @@ public class Solicitud {
 	}
 	public void setOficinaAltaNom(String oficinaAltaNom) {
 		this.oficinaAltaNom = oficinaAltaNom;
+	}
+	public BigDecimal getOtroRiesgo() {
+		return otroRiesgo;
+	}
+	public void setOtroRiesgo(BigDecimal otroRiesgo) {
+		this.otroRiesgo = otroRiesgo;
 	}
 	public String getHdnCodigo() {
 		return hdnCodigo;
@@ -229,12 +229,6 @@ public class Solicitud {
 	}
 	public void setGerenciaTerritorialNom(String gerenciaTerritorialNom) {
 		this.gerenciaTerritorialNom = gerenciaTerritorialNom;
-	}
-	public BigDecimal getCodBanca() {
-		return codBanca;
-	}
-	public void setCodBanca(BigDecimal codBanca) {
-		this.codBanca = codBanca;
 	}
 	public String getCodMultMoneda() {
 		return codMultMoneda;
@@ -428,17 +422,28 @@ public class Solicitud {
 	public void setRelevPublica5(String relevPublica5) {
 		this.relevPublica5 = relevPublica5;
 	}
-	public BigDecimal getOtroRiesgo() {
-		return otroRiesgo;
-	}
-	public void setOtroRiesgo(BigDecimal otroRiesgo) {
-		this.otroRiesgo = otroRiesgo;
-	}
 	public String getGrupoPersona() {
 		return grupoPersona;
 	}
 	public void setGrupoPersona(String grupoPersona) {
 		this.grupoPersona = grupoPersona;
 	}
-
+	public String getDesBanca() {
+		return desBanca;
+	}
+	public void setDesBanca(String desBanca) {
+		this.desBanca = desBanca;
+	}
+	public String getCodSubanca() {
+		return codSubanca;
+	}
+	public void setCodSubanca(String codSubanca) {
+		this.codSubanca = codSubanca;
+	}
+	public BigDecimal getCodBanca() {
+		return codBanca;
+	}
+	public void setCodBanca(BigDecimal codBanca) {
+		this.codBanca = codBanca;
+	}
 }

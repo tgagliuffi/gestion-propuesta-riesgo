@@ -49,29 +49,31 @@
 		<input type="hidden" name="id_usuario" id="id_usuario" value="${requestScope.id_usuario}"/>
 		<input type="hidden" name="monto_delegacion" id="monto_delegacion" value="${requestScope.monto_delegacion}"/>
 		<input type="hidden" name="error" id="error" value="${requestScope.error}"/>
-		<div style="background-color: #0066bb;height: 20px;line-height: 20px;">
-			<font face="Arial Narrow" size=3 color="#FFFFFF"><b style="font-size: 12px;">&nbsp;&nbsp;Módulo de Bandeja del Evaluador</b></font>
-		</div>
+		
 		<br />
-		<table class="ui-widget" style="width: 800px" border="0" cellspacing="0" cellpadding="0">
+		<div class="ui-widget ui-widget-content ui-corner-all" style="width: 920px;margin: 3px;">
+			<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+			<label>Datos de la Solicitud</label>
+			</div>
+		<table class="ui-widget" style="width: 900px; padding: 5px;" border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td valign="middle"><font class="fontText" size="3"
-					color="#000080"><b>Código Central</b></font></td>
+					color="#000080">Código Central</font></td>
 				<td valign="middle">
 					<input type="text" name="codigoCentral" class="cajaTexto" id="codigoCentral" size="14" maxlength="14" value="${requestScope.codCliente}">
 				</td>
 				<td valign="middle"><font class="fontText" size="3"
-					color="#000080"><b>Número Solicitud</b></font></td>
+					color="#000080">Número Solicitud</font></td>
 				<td valign="middle"><input type="text" name="numSolicitud"
 					class="cajaTexto" id="numSolicitud" size="14" maxlength="14">
 				</td>
 				<td align="right" valign="middle"><input type="checkbox"
 					name="stFueraRango" class="cajaTexto" id="stFueraRango">&nbsp;
-					<font class="fontText" size="3" color="#000080"><b>Solicitudes Fuera de Rango</b></font></td>
+					<font class="fontText" size="3" color="#000080">Solicitudes Fuera de Rango</font></td>
 			</tr>
 			<tr>
 				<td valign="middle"><font class="fontText" size="3"
-					color="#000080"><b>Fecha Solicitud</b></font></td>
+					color="#000080">Fecha Solicitud</font></td>
 				<td valign="middle"><input type="text" name="inifechaSolicitud"
 					class="cajaTexto" id="inifechaSolicitud" size="14" maxlength="14">&nbsp;al&nbsp;
 					<input type="text" name="finfechaSolicitud" class="cajaTexto"
@@ -81,9 +83,9 @@
 					<input type="button" class="buttonGPR" name="btnAtender" id="btnAtender" value="Atender">
 				</td>
 			</tr>
-		</table>
+		</table></div>
 		<br />
-		<div id="panel_listSolicitud" style="padding-left: 10px; margin-left: 10px;">
+		<div id="panel_listSolicitud" style="padding-left: 5px;">
 			<table id="paginador_listSolicitud" class="grid"></table>
 			<table id="listSolicitud" class="grid"></table>
 		</div>

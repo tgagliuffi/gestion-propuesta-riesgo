@@ -27,8 +27,15 @@ public class Asignacion extends AsignacionKey{
 	private Date fechaIngreso;
 	
 	private String estadoAsignacion;
+	private String usuarioAsignado;
 	
 	
+	public String getUsuarioAsignado() {
+		return usuarioAsignado;
+	}
+	public void setUsuarioAsignado(String usuarioAsignado) {
+		this.usuarioAsignado = usuarioAsignado;
+	}
 	public String getNombre() {
 		return nombre;
 	}

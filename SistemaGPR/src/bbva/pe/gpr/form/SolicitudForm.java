@@ -100,14 +100,33 @@ public class SolicitudForm extends ActionForm {
 	private String regEvaluador;
 	private String nomEvaluador;
 	private String indice;
-	private String codSubBanca;
+	private String subBanca;
+	private String hdnSubBanca;
+	private String hdnBanca;
 	
-	public String getCodSubBanca() {
-		return codSubBanca;
+	
+	public String getHdnSubBanca() {
+		return hdnSubBanca;
 	}
 
-	public void setCodSubBanca(String codSubBanca) {
-		this.codSubBanca = codSubBanca;
+	public void setHdnSubBanca(String hdnSubBanca) {
+		this.hdnSubBanca = hdnSubBanca;
+	}
+
+	public String getHdnBanca() {
+		return hdnBanca;
+	}
+
+	public void setHdnBanca(String hdnBanca) {
+		this.hdnBanca = hdnBanca;
+	}
+
+	public String getSubBanca() {
+		return subBanca;
+	}
+
+	public void setSubBanca(String subBanca) {
+		this.subBanca = subBanca;
 	}
 
 	public String getIndice() {
@@ -839,6 +858,10 @@ public class SolicitudForm extends ActionForm {
 		relevPublica3=Constant.STR_VACIO;
 		relevPublica4=Constant.STR_VACIO;
 		relevPublica5=Constant.STR_VACIO;
+		
+		hdnBanca=Constant.STR_VACIO;
+		hdnSubBanca=Constant.STR_VACIO;
+		
 		super.reset(mapping, request);
 	}
 

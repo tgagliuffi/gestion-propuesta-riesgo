@@ -61,7 +61,7 @@
     <result column="GERENCIA_TERRITORIAL_COD" property="gerenciaTerritorialCod" jdbcType="VARCHAR" />
     <result column="GERENCIA_TERRITORIAL_NOM" property="gerenciaTerritorialNom" jdbcType="VARCHAR" />
     <result column="FECHA_INGRESO" property="fechaIngreso" jdbcType="DATE" />
-    <result column="COD_BANCA" property="codBanca" jdbcType="DECIMAL" />
+    <result column="COD_SUBANCA" property="codSubanca" jdbcType="VARCHAR" />
     <result column="COD_MULT_MONEDA" property="codMultMoneda" jdbcType="DECIMAL" />
     <result column="RATING" property="rating" jdbcType="VARCHAR" />
     <result column="CLASIFICACION" property="clasificacion" jdbcType="VARCHAR" />
@@ -111,7 +111,7 @@
     <result column="GERENCIA_TERRITORIAL_COD" property="gerenciaTerritorialCod" jdbcType="VARCHAR" />
     <result column="GERENCIA_TERRITORIAL_NOM" property="gerenciaTerritorialNom" jdbcType="VARCHAR" />
     <result column="FECHA_INGRESO" property="fechaIngreso" jdbcType="DATE" />
-    <result column="COD_BANCA" property="codBanca" jdbcType="DECIMAL" />
+    <result column="COD_SUBANCA" property="codSubanca" jdbcType="VARCHAR" />
     <result column="COD_MULT_MONEDA" property="codMultMoneda" jdbcType="DECIMAL" />
     <result column="RATING" property="rating" jdbcType="VARCHAR" />
     <result column="CLASIFICACION" property="clasificacion" jdbcType="VARCHAR" />
@@ -138,7 +138,7 @@
     select NRO_SOLICITUD, COD_CENTRAL, COD_MULT_TIPO_PERSONA, NUMERO_DOCUMENTO, DES_SOLICITANTE,
       COD_OFICINA, GESTOR_COD, GESTOR_NOM, EMPLEADOR_COD, EMPLEADOR_NOM, EJECUTIVO_CTA_COD,
       EJECUTIVO_CTA_NOM, OFICINA_ALTA_COD, OFICINA_ALTA_NOM, GERENCIA_TERRITORIAL_COD,
-      GERENCIA_TERRITORIAL_NOM, FECHA_INGRESO, COD_BANCA, COD_MULT_MONEDA, RATING, CLASIFICACION,
+      GERENCIA_TERRITORIAL_NOM, FECHA_INGRESO, COD_SUBANCA, COD_MULT_MONEDA, RATING, CLASIFICACION,
       REELEVANCIA, DEUDA_DIRECTA, DEUDA_INDIRECTA, CASTIGO, DEUDA_SISTEMA_FINANCIERO, RIESGO_GRUPAL,
       RIESGO_ACTUAL, RIESGO_TOTAL, PREFIJO_INGRESO, ESTADO, LUGAR_DICTAMINA, PRIORIDAD, SCORATING,
       SCORING, LISTA_DOCUMENTOS, REVISADO_SUB_GERENTE, ESTADO_SOLICITUD, GRUPO_PERSONA
@@ -156,7 +156,7 @@
     insert into CARDEL.TGPR_SOLICITUDES (NRO_SOLICITUD, COD_CENTRAL, COD_MULT_TIPO_PERSONA,
       NUMERO_DOCUMENTO, DES_SOLICITANTE, COD_OFICINA, GESTOR_COD, GESTOR_NOM, EMPLEADOR_COD,
       EMPLEADOR_NOM, EJECUTIVO_CTA_COD, EJECUTIVO_CTA_NOM, OFICINA_ALTA_COD, OFICINA_ALTA_NOM,
-      GERENCIA_TERRITORIAL_COD, GERENCIA_TERRITORIAL_NOM, FECHA_INGRESO, COD_BANCA, COD_MULT_MONEDA,
+      GERENCIA_TERRITORIAL_COD, GERENCIA_TERRITORIAL_NOM, FECHA_INGRESO, COD_SUBANCA, COD_MULT_MONEDA,
       RATING, CLASIFICACION, REELEVANCIA, DEUDA_DIRECTA, DEUDA_INDIRECTA, CASTIGO,
       DEUDA_SISTEMA_FINANCIERO, RIESGO_GRUPAL, RIESGO_ACTUAL, RIESGO_TOTAL, PREFIJO_INGRESO, ESTADO,
       LUGAR_DICTAMINA, PRIORIDAD, SCORATING, SCORING, ESTADO_SOLICITUD, LISTA_DOCUMENTOS, REVISADO_SUB_GERENTE, GRUPO_PERSONA)
@@ -165,7 +165,7 @@
       #gestorCod:VARCHAR#, #gestorNom:VARCHAR#, #empleadorCod:VARCHAR#, #empleadorNom:VARCHAR#,
       #ejecutivoCtaCod:VARCHAR#, #ejecutivoCtaNom:VARCHAR#, #oficinaAltaCod:VARCHAR#,
       #oficinaAltaNom:VARCHAR#, #gerenciaTerritorialCod:VARCHAR#, #gerenciaTerritorialNom:VARCHAR#,
-      #fechaIngreso:DATE#, #codBanca:DECIMAL#, #codMultMoneda:DECIMAL#, #rating:VARCHAR#,
+      #fechaIngreso:DATE#, #codSubanca:VARCHAR#, #codMultMoneda:DECIMAL#, #rating:VARCHAR#,
       #clasificacion:VARCHAR#, #reelevancia:VARCHAR#, #deudaDirecta:VARCHAR#,
       #deudaIndirecta:VARCHAR#, #castigo:VARCHAR#, #deudaSistemaFinanciero:VARCHAR#,
       #riesgoGrupal:VARCHAR#, #riesgoActual:VARCHAR#, #riesgoTotal:VARCHAR#,
@@ -230,8 +230,8 @@
       <isNotNull prepend="," property="fechaIngreso" >
         FECHA_INGRESO
       </isNotNull>
-      <isNotNull prepend="," property="codBanca" >
-        COD_BANCA
+      <isNotNull prepend="," property="codSubanca" >
+        COD_SUBANCA
       </isNotNull>
       <isNotNull prepend="," property="codMultMoneda" >
         COD_MULT_MONEDA
@@ -345,8 +345,8 @@
       <isNotNull prepend="," property="fechaIngreso" >
         #fechaIngreso:DATE#
       </isNotNull>
-      <isNotNull prepend="," property="codBanca" >
-        #codBanca:DECIMAL#
+      <isNotNull prepend="," property="codSubanca" >
+        #codSubanca:VARCHAR#
       </isNotNull>
       <isNotNull prepend="," property="codMultMoneda" >
         #codMultMoneda:DECIMAL#
@@ -466,8 +466,8 @@
       <isNotNull prepend="," property="fechaIngreso" >
         FECHA_INGRESO = #fechaIngreso:DATE#
       </isNotNull>
-      <isNotNull prepend="," property="codBanca" >
-        COD_BANCA = #codBanca:DECIMAL#
+      <isNotNull prepend="," property="codSubanca" >
+        COD_SUBANCA = #codSubanca:VARCHAR#
       </isNotNull>
       <isNotNull prepend="," property="codMultMoneda" >
         COD_MULT_MONEDA = #codMultMoneda:DECIMAL#
@@ -551,7 +551,7 @@
       GERENCIA_TERRITORIAL_COD = #gerenciaTerritorialCod:VARCHAR#,
       GERENCIA_TERRITORIAL_NOM = #gerenciaTerritorialNom:VARCHAR#,
       FECHA_INGRESO = #fechaIngreso:DATE#,
-      COD_BANCA = #codBanca:DECIMAL#,
+      COD_SUBANCA = #codSubanca:VARCHAR#,
       COD_MULT_MONEDA = #codMultMoneda:DECIMAL#,
       RATING = #rating:VARCHAR#,
       CLASIFICACION = #clasificacion:VARCHAR#,
@@ -576,9 +576,9 @@
   </update>
   
   <select id="getLstSolicitudByCriteria" resultMap="resultMapSelectByCriteria" parameterClass="bbva.pe.gpr.bean.Solicitud">
-  		SELECT 
-        S.NUMERO_DOCUMENTO,
-        S.OFICINA_ALTA_COD,
+  	SELECT 
+      S.NUMERO_DOCUMENTO,
+      S.OFICINA_ALTA_COD,
       S.OFICINA_ALTA_NOM,
       S.GESTOR_COD,
       S.GESTOR_NOM,
@@ -595,32 +595,36 @@
       S.CLASIFICACION,    
       S.COD_OFICINA,
       O.NOMBRE AS DES_OFICINA,  
-    S.PRIORIDAD,
-    S.ESTADO,
-    S.NRO_SOLICITUD, TO_CHAR(S.FECHA_INGRESO,'DD/MM/YYYY') AS STR_FECHA_INGRESO, S.COD_CENTRAL,
-    (SELECT STR_VALOR FROM CARDEL.TGPR_MULTITABLA_DETALLE MD WHERE
-     MD.COD_MULTITABLA = SUBSTR(S.COD_MULT_TIPO_PERSONA,1, 4) AND MD.COD_ELEMENTO = SUBSTR(S.COD_MULT_TIPO_PERSONA,6, LENGTH(S.COD_MULT_TIPO_PERSONA))) DES_MULT_TIPO_PERSONA,
-    S.DES_SOLICITANTE, 
-    S.GRUPO_PERSONA,
-    S.COD_MULT_MONEDA,
-    (SELECT MD1.COD_ELEMENTO FROM CARDEL.TGPR_MULTITABLA_DETALLE MD1 WHERE
-    MD1.COD_MULTITABLA = SUBSTR(S.COD_MULT_MONEDA,1, 4) AND MD1.COD_ELEMENTO = SUBSTR(S.COD_MULT_MONEDA,6, 3)) DES_MULT_MONEDA,
-    SUM(SD.MTO_PRODUCTO) MTO_SOLICITUD, 
-    S.RIESGO_GRUPAL,
-    S.RIESGO_ACTUAL,
-    CARDEL.PCARDEL_COMMON.SUMAR(SUM(SD.MTO_PRODUCTO), NVL(S.RIESGO_ACTUAL, 0)) RIESGO_TOTAL,
-    B.NOMBRE DES_BANCA, 
-    S.OFICINA_ALTA_COD, S.OFICINA_ALTA_NOM, S.REELEVANCIA,
-    SUM(NVL(SD.MTO_GARANTIA, 0)) OTRO_RIESGO, S.ESTADO_SOLICITUD
-    FROM 
-    CARDEL.TGPR_SOLICITUDES S LEFT JOIN  CARDEL.TGPR_ASIGNACIONES ASG 
-    ON ASG.NRO_SOLICITUD = S.NRO_SOLICITUD,
-    CARDEL.TGPR_SOLICITUD_DETALLES SD, CARDEL.TGPR_BANCAS B, CARDEL.TGPR_OFICINAS O
-    WHERE SD.NRO_SOLICITUD= S.NRO_SOLICITUD AND
-    S.COD_BANCA = B.COD_BANCA  AND  S.COD_OFICINA = O.COD_OFICINA AND
-      S.ESTADO = 1 AND
+      S.PRIORIDAD,
+      S.ESTADO,
+      S.NRO_SOLICITUD, TO_CHAR(S.FECHA_INGRESO,'DD/MM/YYYY') AS STR_FECHA_INGRESO, S.COD_CENTRAL,
+         (SELECT STR_VALOR FROM CARDEL.TGPR_MULTITABLA_DETALLE MD WHERE
+          MD.COD_MULTITABLA = SUBSTR(S.COD_MULT_TIPO_PERSONA,1, 4) AND MD.COD_ELEMENTO = SUBSTR(S.COD_MULT_TIPO_PERSONA,6, LENGTH(S.COD_MULT_TIPO_PERSONA))) DES_MULT_TIPO_PERSONA,
+      S.DES_SOLICITANTE, 
+      S.GRUPO_PERSONA,
+      S.COD_MULT_MONEDA,
+      (SELECT MD1.COD_ELEMENTO FROM CARDEL.TGPR_MULTITABLA_DETALLE MD1 WHERE
+      MD1.COD_MULTITABLA = SUBSTR(S.COD_MULT_MONEDA,1, 4) AND MD1.COD_ELEMENTO = SUBSTR(S.COD_MULT_MONEDA,6, 3)) DES_MULT_MONEDA,
+      SUM(SD.MTO_PRODUCTO) MTO_SOLICITUD, 
+      S.RIESGO_GRUPAL,
+      S.RIESGO_ACTUAL,
+      CARDEL.PCARDEL_COMMON.SUMAR(SUM(SD.MTO_PRODUCTO), NVL(S.RIESGO_ACTUAL, 0)) RIESGO_TOTAL,
+      B.NOMBRE DES_BANCA, 
+      S.OFICINA_ALTA_COD, S.OFICINA_ALTA_NOM, S.REELEVANCIA,
+      SUM(NVL(SD.MTO_GARANTIA, 0)) OTRO_RIESGO, 
+      CARDEL.pcardel_common.fn_get_value_multitabla(S.ESTADO_SOLICITUD) ESTADO_SOLICITUD
+      FROM 
+      CARDEL.TGPR_SOLICITUDES S LEFT JOIN  CARDEL.TGPR_ASIGNACIONES ASG 
+      ON ASG.NRO_SOLICITUD = S.NRO_SOLICITUD,
+      CARDEL.TGPR_SOLICITUD_DETALLES SD, CARDEL.TGPR_BANCAS B, CARDEL.TGPR_BANCA_SUB SB, CARDEL.TGPR_OFICINAS O
+      WHERE 
+      SD.NRO_SOLICITUD= S.NRO_SOLICITUD 
+    	AND S.COD_SUBANCA = SB.COD_SUBANCA 
+    	AND SB.COD_BANCA = B.COD_BANCA
+    	AND S.COD_OFICINA = O.COD_OFICINA
+    	AND S.ESTADO = 1 AND
 		( #nroSolicitud:DECIMAL# IS NULL OR #nroSolicitud:DECIMAL# = -1 OR S.NRO_SOLICITUD = #nroSolicitud:DECIMAL#) AND
-	    ( #codBanca:DECIMAL# IS NULL OR #codBanca:DECIMAL# = -1 OR  S.COD_BANCA = #codBanca:DECIMAL#) AND
+	    ( #codSubanca:VARCHAR# IS NULL OR #codSubanca:VARCHAR# = -1 OR  S.COD_SUBANCA = #codSubanca:VARCHAR#) AND
 	    ( #codCentral:VARCHAR# IS NULL OR #codCentral:VARCHAR# = '' OR S.COD_CENTRAL = UPPER(#codCentral:VARCHAR#)) AND
 	    ( #oficinaAltaCod:VARCHAR# IS NULL OR #oficinaAltaCod:VARCHAR# = '-1' OR S.OFICINA_ALTA_COD = UPPER(#oficinaAltaCod:VARCHAR#)) AND
 	    ( #oficinaAltaNom:VARCHAR# IS NULL OR #oficinaAltaNom:VARCHAR# = ''  OR S.OFICINA_ALTA_NOM LIKE UPPER(#oficinaAltaNom:VARCHAR#)) AND
@@ -628,7 +632,8 @@
 	    ( #estado:DECIMAL# IS NULL OR #estado:DECIMAL# = -1 OR S.ESTADO = #estado:DECIMAL#) AND 
 	    ( #asignacionBean.codUsuario:VARCHAR# IS NULL OR #asignacionBean.codUsuario:VARCHAR# = '' OR ASG.COD_USUARIO = UPPER(#asignacionBean.codUsuario:VARCHAR#)) AND
 	    ( #asignacionBean.nombre:VARCHAR# IS NULL OR #asignacionBean.nombre:VARCHAR# = '' OR ASG.NOMBRE LIKE UPPER(#asignacionBean.nombre:VARCHAR#)) AND
-	    ( #asignacionBean.codRol:DECIMAL# IS NULL OR #asignacionBean.codRol:DECIMAL# = -1 OR ASG.COD_ROL = #asignacionBean.codRol:DECIMAL#) 
+	    ( #asignacionBean.codRol:DECIMAL# IS NULL OR #asignacionBean.codRol:DECIMAL# = -1 OR ASG.COD_ROL = #asignacionBean.codRol:DECIMAL#) AND
+	  	( #estadoSolicitud:VARCHAR# IS NULL OR #estadoSolicitud:VARCHAR# = '' OR S.ESTADO_SOLICITUD = #estadoSolicitud:VARCHAR#) 
 	    GROUP BY (S.NRO_SOLICITUD, S.FECHA_INGRESO, S.COD_CENTRAL, S.DES_SOLICITANTE,S.RIESGO_ACTUAL, S.RIESGO_TOTAL, B.NOMBRE, 
 		S.OFICINA_ALTA_COD, S.OFICINA_ALTA_NOM, S.COD_MULT_TIPO_PERSONA, S.COD_MULT_MONEDA,S.NUMERO_DOCUMENTO,S.OFICINA_ALTA_COD,S.OFICINA_ALTA_NOM,GESTOR_COD,GESTOR_NOM,
 		EMPLEADOR_COD,EMPLEADOR_NOM,GERENCIA_TERRITORIAL_COD,GERENCIA_TERRITORIAL_NOM,EJECUTIVO_CTA_COD,EJECUTIVO_CTA_NOM,DEUDA_DIRECTA,DEUDA_INDIRECTA,CASTIGO,DEUDA_SISTEMA_FINANCIERO

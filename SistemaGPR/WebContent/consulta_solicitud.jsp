@@ -57,25 +57,25 @@ var rutaContexto2 = "<%=request.getContextPath()%>";
 			.indexOf(rutaContexto2))
 			+ rutaContexto2;
 
-	var myColNames = [ 'Nro Solicitud', 'Fecha Ingreso', 'Codigo Central',
-			'Tipo Persona', 'Cliente', 'Moneda', 'Monto Solicitud',
-			'Riesgo Actual', 'Riesgo Total', 'Banca', 'Codigo oficina',
-			'Nombre Oficina', 'Estado', '' ];
+	var myColNames = [ 'Nro Solicitud', 'Fecha Ingreso', 'Cod Central',
+			'Tipo Persona', 'Cliente', 'Moneda', 'Mto Solicitud',
+			'Riesgo Actual', 'Riesgo Total', 'Banca', 'Cod oficina',
+			'Nombre Oficina', 'Estado Solicitud', 'E. Actual', 'Detalle' ];
 
 	var myDataModel = [ {
 		name : 'nroSolicitud',
 		index : 'nroSolicitud',
-		width : 310,
+		width : 214,
 		sortable : false
 	}, {
 		name : 'strFechaIngreso',
 		index : 'strFechaIngreso',
-		width : 380,
+		width : 230,
 		sortable : false
 	}, {
 		name : 'codCentral',
 		index : 'codCentral',
-		width : 360,
+		width : 200,
 		sortable : false
 	}, {
 		name : 'desMultTipoPersona',
@@ -85,37 +85,40 @@ var rutaContexto2 = "<%=request.getContextPath()%>";
 	}, {
 		name : 'desSolicitante',
 		index : 'desSolicitante',
-		width : 700,
+		width : 400,
 		sortable : false
 	}, {
 		name : 'desMultMoneda',
 		index : 'desMultMoneda',
-		width : 220,
+		width : 180,
 		sortable : false
 	}, {
 		name : 'mtoSolicitud',
 		index : 'mtoSolicitud',
-		width : 340,
-		sortable : false
+		width : 320,
+		sortable : false,
+		align : 'right'
 	}, {
 		name : 'riesgoActual',
 		index : 'riesgoActual',
-		width : 300,
-		sortable : false
+		width : 240,
+		sortable : false,
+		align : 'right'
 	}, {
 		name : 'riesgoTotal',
 		index : 'riesgoTotal',
-		width : 300,
-		sortable : false
+		width : 240,
+		sortable : false,
+		align : 'right'
 	}, {
 		name : 'desBanca',
 		index : 'desBanca',
-		width : 400,
+		width : 320,
 		sortable : false
 	}, {
 		name : 'oficinaAltaCod',
 		index : 'oficinaAltaCod',
-		width : 340,
+		width : 200,
 		sortable : false
 	}, {
 		name : 'oficinaAltaNom',
@@ -123,9 +126,15 @@ var rutaContexto2 = "<%=request.getContextPath()%>";
 		width : 500,
 		sortable : false
 	}, {
+		name : 'estadoSolicitud',
+		index : 'estadoSolicitud',
+		width : 260,
+		sortable : false,
+		align : 'center'
+	},{
 		name : 'estado',
 		index : 'estado',
-		width : VAL_WIDTH.XLSMALL,
+		width : 140,
 		formatter : estadoFormat,
 		sortable : false,
 		align : 'center'
@@ -140,9 +149,9 @@ var rutaContexto2 = "<%=request.getContextPath()%>";
 
 	function estadoFormat(cellvalue, options, rowObject) {
 		if (cellvalue == '1')
-			return "<img src='imagenes/verde.png' border='0' height='18'/><input type='hidden' id='hidEstado_" + rowObject['nroSolicitud'] + "' value='" + cellvalue + "'/>";
+			return "<img src='imagenes/boton_verde.png' border='0' height='18'/><input type='hidden' id='hidEstado_" + rowObject['nroSolicitud'] + "' value='" + cellvalue + "'/>";
 		else if (cellvalue == '0')
-			return "<img src='imagenes/rojo.gif' border='0' height='18'/><input type='hidden' id='hidEstado_" + rowObject['nroSolicitud'] + "' value='" + cellvalue + "'/>";
+			return "<img src='imagenes/boton_rojo.png' border='0' height='18'/><input type='hidden' id='hidEstado_" + rowObject['nroSolicitud'] + "' value='" + cellvalue + "'/>";
 		else
 			return "";
 	}
@@ -161,7 +170,7 @@ var rutaContexto2 = "<%=request.getContextPath()%>";
 			weight : 1200,
 			colNames : myColNames,
 			colModel : myDataModel,
-			width : 1200,
+			width : 1300,
 			rowList : [ 5, 10, 15, 20, 25 ],
 			rowNum : 10,
 			pager : paginador,
@@ -203,7 +212,7 @@ var rutaContexto2 = "<%=request.getContextPath()%>";
 	function btnOpcionFormat(cellvalue, options, rowObject) {
 		return "<a title='Detalle Consulta' href='javascript:showDetalle("
 				+ cellvalue
-				+ ");'><img src='imagenes/detalle.gif' border='0' height='18'></a>";
+				+ ");'><img src='imagenes/OpmDetalle.png' border='0' height='18'></a>";
 	}
 
 	function showDetalle(codigo) {
@@ -225,19 +234,12 @@ var rutaContexto2 = "<%=request.getContextPath()%>";
 
 	<html:form styleId="solicitudForm"
 		action="busquedaSolicitudAction.do?method=listarSolicitud">
-
-		<div style="background-color: #0066bb;">
-			<font face="Arial Narrow" size=3 color="#FFFFFF"><b>Módulo
-					de Consulta de Solicitudes</b>
-			</font>
-		</div>
-
 		<br />
-		<fieldset style="width: 830px">
-			<legend>
-				<font class="fontText"><b> Datos de la Solicitud</b> </font>
-			</legend>
-			<table style="width: 800px" border="0" cellspacing="0"
+		<div class="ui-widget ui-widget-content ui-corner-all" style="width: 920px;margin: 3px;">
+			<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+				<label>Datos de la Solicitud</label>
+			</div>
+			<table style="width: 900px;padding: 5px;" border="0" cellspacing="0"
 				cellpadding="0">
 				<tr>
 					<td align="left" valign="middle"><font class="fontText">Banca</font>
@@ -262,12 +264,12 @@ var rutaContexto2 = "<%=request.getContextPath()%>";
 					</td>
 				</tr>
 				<tr>
-					<td align="left" valign="middle"><font class="fontText">Codigo
+					<td align="left" valign="middle"><font class="fontText">Código
 							Central</font></td>
 					<td align="left" valign="middle"><input type="text"
 						name="codCentral" class="cajaTexto" id="codCentral" size="30"
 						maxlength="30"></td>
-					<td align="left" valign="middle"><font class="fontText">Numero
+					<td align="left" valign="middle"><font class="fontText">Número
 							de Solicitud</font></td>
 					<td align="left" valign="middle"><input type="text"
 						name="nroSolicitud" class="cajaTexto" id="nroSolicitud" size="54"
@@ -302,13 +304,12 @@ var rutaContexto2 = "<%=request.getContextPath()%>";
 						</html:select></td>
 				</tr>
 			</table>
-		</fieldset>
-
-		<fieldset style="width: 830px">
-			<legend>
-				<font class="fontText"><b> Datos del Evaluador</b> </font>
-			</legend>
-			<table style="width: 700px" border="0" cellspacing="0"
+		</div>
+		<div class="ui-widget ui-widget-content ui-corner-all" style="width: 920px;margin: 3px;margin-top: 10px;">
+			<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+				<label>Datos del Evaluador</label>
+			</div>
+			<table style="width: 900px;padding: 5px;" border="0" cellspacing="0"
 				cellpadding="0">
 				<tr>
 
@@ -338,7 +339,7 @@ var rutaContexto2 = "<%=request.getContextPath()%>";
 						id="nomEvaluador" size="93" maxlength="93"></td>
 				</tr>
 			</table>
-		</fieldset>
+		</div>
 
 		<br />
 		<input type="button" class="buttonGPR" name="btnConsultar"
@@ -348,8 +349,8 @@ var rutaContexto2 = "<%=request.getContextPath()%>";
 		<br />
 		<br />
 
-		<table id="listSolicitud" class="grid">
-		</table>
+		<table id="listSolicitud" class="grid" width="1300px;">
+		</table> 
 	</html:form>
 </body>
 </html>

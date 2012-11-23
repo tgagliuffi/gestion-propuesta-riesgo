@@ -73,9 +73,7 @@ public class AsignacionServiceImpl  implements AsignacionService {
     	Solicitud solicitudBean = null;
     	arraySolitcitudes = arraySolitcitudes.substring(1, arraySolitcitudes.length());
     	String[] arregloSol = arraySolitcitudes.split(",");
-    	MultitablaDetalle multitablaDetalleBean = null;
-		multitablaDetalleBean = multitablaDetalleDAO.selectByPrimaryKey(Constant.TABLA_ESTADOS_SOLCITUD, Constant.ESTADO_SOLICITUD_ASIGNADO);
-		
+    	
     	for (int i=0; i< arregloSol.length; i++){
     		solicitudBean = new Solicitud();
     		solicitudBean.setAsignacionBean(new Asignacion());
@@ -90,11 +88,11 @@ public class AsignacionServiceImpl  implements AsignacionService {
     		asignacionBean.setNombre(usuarioBean.getNombres());
     		asignacionBean.setNroSolicitud(solicitudBean.getNroSolicitud());
     		asignacionBean.setPrioridad(solicitudBean.getPrioridad());
-    		asignacionBean.setEstadoAsignacion(multitablaDetalleBean.getStrValor());
+    		asignacionBean.setEstadoAsignacion(Constant.TABLA_ESTADOS_SOLCITUD+Constant.CHAR_GUION+Constant.ESTADO_SOLICITUD_ASIGNADO);
     		//asignacionBean.setMtoDelegacionMax(mtoDelegacionMax)
     		if(asignacionDAO.insert(asignacionBean)!=null){
         		ingresaSolicitudOperacion(asignacionBean, Constant.TABLA_PROCESO, Constant.MULT_PROCESO_ASIGNAR);
-        		solicitudBean.setEstadoSolicitud(multitablaDetalleBean.getStrValor());
+        		solicitudBean.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD+Constant.CHAR_GUION+Constant.ESTADO_SOLICITUD_ASIGNADO);
 				solicitudesDAO.updateByPrimaryKeySelective(solicitudBean);
         		if(asignacionBean.getStrMensaje()!=null){
         			solicitudMensajeDAO.insert(seteaMensajeBean(asignacionBean));
