@@ -35,6 +35,7 @@ import bbva.pe.gpr.service.AsignacionService;
 import bbva.pe.gpr.service.CatalogoService;
 import bbva.pe.gpr.service.ControlService;
 import bbva.pe.gpr.service.SolicitudService;
+import bbva.pe.gpr.service.ValidacionService;
 import bbva.pe.gpr.serviceImpl.AplicativoPersonasServiceImpl;
 import bbva.pe.gpr.serviceImpl.AplicativoRCCServiceImpl;
 import bbva.pe.gpr.serviceImpl.AplicativoRCDServiceImpl;
@@ -57,6 +58,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 	AplicativoRCDService appRCDService;
 	AplicativoRCCService appRCCService;
 	AsignacionService asignacionService;
+	ValidacionService validacionService;
 	
 	public IngresoSolicitudAction() {
 		asignacionService = (AsignacionService)Context.getInstance().getBean("asignacionService");
@@ -66,6 +68,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 		appPersonasService = new AplicativoPersonasServiceImpl();
 		appRCDService = new AplicativoRCDServiceImpl();
 		appRCCService = new AplicativoRCCServiceImpl();
+		validacionService = (ValidacionService)Context.getInstance().getBean("validacionService");
 	}
 	
 	public ActionForward init(ActionMapping mapping, ActionForm form,
@@ -132,11 +135,11 @@ public class IngresoSolicitudAction extends DispatchAction {
 		MultitablaDetalle multDetalleMoneda = catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_MONEDA, solicitudForm.getCodMultMoneda());
 		solicitudBean.setDesMultMoneda((multDetalleMoneda!=null?multDetalleMoneda.getStrValor():Constant.VALOR_NO_ENCONTRADO));				
 		solicitudBean.setCodMultMoneda(multDetalleMoneda.getCodMultitabla()!=null?multDetalleMoneda.getCodMultitabla()+Constant.CHAR_GUION+multDetalleMoneda.getCodElemento():null);
-		
-		
+		IILDPeUsuario usuarioSession;
+		usuarioSession = (IILDPeUsuario)request.getSession(true).getAttribute("USUARIO_SESION");
 		List<SolicitudDetalle> lstSolicitudDetalle = (List<SolicitudDetalle>)request.getSession().getAttribute("lstDetalleProdSession");
 		Long nroSolicitud= new Long(0);
-		solicitudBean.setPrefijoIngreso(catalogoService.getValidarUsuario(solicitudBean.getGestorCod())=="1"?"OFICINA":"RIESGOS");
+		solicitudBean.setPrefijoIngreso(catalogoService.getUsuarioTipo(usuarioSession.getUID())=="1"?"OFICINA":"RIESGOS");
 	
 		try {
 			if(lstSolicitudDetalle==null){
@@ -191,26 +194,32 @@ public class IngresoSolicitudAction extends DispatchAction {
 			}else{
 				solicitudBean.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD+
 						 Constant.CHAR_GUION+Constant.ESTADO_SOLICITUD_PENDIENTE);
-				if(controlService.validacionMontosPlazos(lstSolicitudDetalle)==1){
-					nroSolicitud = solicitudService.registraSolicitud(solicitudBean, lstSolicitudDetalle);
-					if(solicitudService.updateDictaminaEnOficina(solicitudBean)>0){
-						indMensaje = Constant.MSJ_ALERT;
-						strMensaje = "Se ha ingresado la solicitud " + nroSolicitud + ". Requiere asignación en oficina";
-						solicitudForm = (SolicitudForm)form;	
-						solicitudForm.reset(mapping, request);
-						request.getSession().removeAttribute("lstDetalleProdSession");
-					}else{
-						
-						indMensaje = Constant.MSJ_ERROR;
-						strMensaje = "Sucedio un error en el momento de asignar la solicitud " + nroSolicitud + ". a oficina";	
-					}
+				if(validacionService.metodoEncapsulado(solicitudBean, usuarioSession.getUID())==1){
+							if(controlService.validacionMontosPlazos(solicitudBean, usuarioSession.getUID())==1){
+							nroSolicitud = solicitudService.registraSolicitud(solicitudBean, lstSolicitudDetalle);
+									if(solicitudService.updateDictaminaEnOficina(solicitudBean)>0){
+										indMensaje = Constant.MSJ_ALERT;
+										strMensaje = "Se ha ingresado la solicitud " + nroSolicitud + ". Requiere asignación en oficina";
+										solicitudForm = (SolicitudForm)form;	
+										solicitudForm.reset(mapping, request);
+										request.getSession().removeAttribute("lstDetalleProdSession");
+									}else{
+										
+										indMensaje = Constant.MSJ_ERROR;
+										strMensaje = "Sucedio un error en el momento de asignar la solicitud " + nroSolicitud + ". a oficina";	
+									}
+							}else{
+								solicitudForm.setFlagPopUP("envioRiesgos");
+								if(request.getSession().getAttribute("lstDetalleProdSession")!=null){
+									List<SolicitudDetalle> lstDetalleProdSession = (List<SolicitudDetalle>)request.getSession().getAttribute("lstDetalleProdSession");
+									request.getSession().setAttribute("lstDetalleProdSession", lstDetalleProdSession);
+								}
+							}
 				}else{
 					solicitudForm.setFlagPopUP("envioRiesgos");
-		
-					if(request.getSession().getAttribute("lstDetalleProdSession")!=null){
-						List<SolicitudDetalle> lstDetalleProdSession = (List<SolicitudDetalle>)request.getSession().getAttribute("lstDetalleProdSession");
-						request.getSession().setAttribute("lstDetalleProdSession", lstDetalleProdSession);
-						
+						if(request.getSession().getAttribute("lstDetalleProdSession")!=null){
+							List<SolicitudDetalle> lstDetalleProdSession = (List<SolicitudDetalle>)request.getSession().getAttribute("lstDetalleProdSession");
+							request.getSession().setAttribute("lstDetalleProdSession", lstDetalleProdSession);
 					}
 				}
 			}
