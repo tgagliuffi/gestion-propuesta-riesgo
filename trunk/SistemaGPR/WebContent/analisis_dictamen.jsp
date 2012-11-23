@@ -201,7 +201,7 @@
 						</tr> 
 					</table>
 				</div>
-				<div align="center" class="ui-widget ui-widget-content ui-corner-all" style="width: 99%;margin: 3px;">
+				<div id="idDictamen" align="center" class="ui-widget ui-widget-content ui-corner-all" style="width: 99%;margin: 3px;">
 					<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
 			            <label>Dictaminación</label>
 			        </div>
@@ -588,6 +588,7 @@
 					<tr><td><input type="checkbox"/>&nbsp;Condicion 1</td></tr>
 				</table>
 			</div>
+			<input type="hidden" id="listaDocumentos" > 
 		</form>
 	</div>
 
