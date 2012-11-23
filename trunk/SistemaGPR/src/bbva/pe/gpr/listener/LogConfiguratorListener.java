@@ -40,10 +40,8 @@ public class LogConfiguratorListener implements ServletContextListener {
 		prop.setProperty("log4j.appender.CONSOLE", "org.apache.log4j.ConsoleAppender");
 		prop.setProperty("log4j.appender.CONSOLE.layout", "org.apache.log4j.PatternLayout");
 		prop.setProperty("log4j.appender.CONSOLE.layout.ConversionPattern", "[%d{yyyy-MM-dd HH:mm:ss}] - [%5p] (%C{1}.%M:%L) - %m%n");
-		prop.setProperty("log4j.appender.LOGFILE", "org.apache.log4j.DailyRollingFileAppender");
-		//TODO zzzKEN CONFIGURACION DE LOG
-		//prop.setProperty("log4j.appender.LOGFILE.file", par.getStrValor()  + Constant.NOMBRE_LOG);// /de/iist/online/pe/web/log/IIST.log
-		prop.setProperty("log4j.appender.LOGFILE.file", "D:\\logs\\Java\\GPR\\" + Constant.NOMBRE_LOG);// /de/iist/online/pe/web/log/IIST.log
+		prop.setProperty("log4j.appender.LOGFILE", "org.apache.log4j.DailyRollingFileAppender");		
+		prop.setProperty("log4j.appender.LOGFILE.file", par.getStrValor()  + Constant.NOMBRE_LOG);// /de/iist/online/pe/web/log/IIST.log		
 		prop.setProperty("log4j.appender.LOGFILE.DatePattern", "'.'yyyy-MM-dd'.log'");
 		prop.setProperty("log4j.appender.LOGFILE.append", "true");
 		prop.setProperty("log4j.appender.LOGFILE.layout", "org.apache.log4j.PatternLayout");
