@@ -304,4 +304,14 @@
 					</props>
 				</property>
 	</bean>	
+	<bean id="validacionService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+				<property name="transactionManager"><ref bean="transactionManager" /></property>
+				<property name="target"><ref bean="validacionServiceImpl" /></property>
+				<property name="transactionAttributes">
+					<props>
+						<prop key="select*">PROPAGATION_REQUIRED,readOnly</prop>
+						<prop key="*">PROPAGATION_REQUIRED</prop>
+					</props>
+				</property>
+	</bean>	
 </beans>
