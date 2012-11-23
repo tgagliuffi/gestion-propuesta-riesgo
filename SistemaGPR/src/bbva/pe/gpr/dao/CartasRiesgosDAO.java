@@ -7,6 +7,8 @@ import bbva.pe.gpr.bean.ProductoDelegacion;
 
 public interface CartasRiesgosDAO {
 
-	BigDecimal montDelegacion(String codUsuario,String grupoPersona);
+	BigDecimal montDelegacionSinRating(String codUsuario,String grupoPersona);
+	BigDecimal montDelegacionRating(String codUsuario,String escala);
 	List<ProductoDelegacion> getDelegacionPersonaNatural(String codUsuario);
+	String montoDelegacionUsuario(String codUsuario,String tipoPersona);
 }
