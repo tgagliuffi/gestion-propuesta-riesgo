@@ -24,11 +24,11 @@ public class AplicativoPersonasServiceImpl implements AplicativoPersonasService{
 			solicitudBean.setGestorNom("SANDRA NIRSA ARENAS ALVAREZ");
 			
 			solicitudBean.setCondicionCliente(new CondicionCliente());
-			solicitudBean.getCondicionCliente().setBbvaa("40 CPP");
+			solicitudBean.getCondicionCliente().setBbvaa("NOR");
 			solicitudBean.getCondicionCliente().setBureau("G1");
-			solicitudBean.getCondicionCliente().setInelegible("INELEGIBLES");
-			solicitudBean.getCondicionCliente().setRelevPubli("SIN RELEVANCIA");
-			solicitudBean.getCondicionCliente().setSistFinan("20 DUDOSO");
+			solicitudBean.getCondicionCliente().setInelegible("409");
+			solicitudBean.getCondicionCliente().setRelevPubli("405");
+			solicitudBean.getCondicionCliente().setSistFinan("PER");
 			
 			
 		}else if(codCentral.substring(0, 1).equalsIgnoreCase("2")){
@@ -43,11 +43,11 @@ public class AplicativoPersonasServiceImpl implements AplicativoPersonasService{
 			solicitudBean.setGestorCod("B23");
 			solicitudBean.setGestorNom("SANDRA NIRSA ARENAS	ALVAREZ");
 			
-			solicitudBean.getCondicionCliente().setBbvaa("40 CPP");
+			solicitudBean.getCondicionCliente().setBbvaa("NOR");
 			solicitudBean.getCondicionCliente().setBureau("G1");
-			solicitudBean.getCondicionCliente().setInelegible("INELEGIBLES");
-			solicitudBean.getCondicionCliente().setRelevPubli("SIN RELEVANCIA");
-			solicitudBean.getCondicionCliente().setSistFinan("20 DUDOSO");
+			solicitudBean.getCondicionCliente().setInelegible("409");
+			solicitudBean.getCondicionCliente().setRelevPubli("405");
+			solicitudBean.getCondicionCliente().setSistFinan("PER");
 						
 			
 		}else{
