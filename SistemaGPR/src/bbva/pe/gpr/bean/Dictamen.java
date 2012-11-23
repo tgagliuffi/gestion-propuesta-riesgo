@@ -25,6 +25,7 @@ public class Dictamen extends DictamenKey {
 	private String plazoReembolso;
 	private String garantias;
 	private String condicionantes;
+	private String listaDocumentos;
 
 	public String getCodMultNivel() {
 		return codMultNivel;
@@ -158,4 +159,11 @@ public class Dictamen extends DictamenKey {
 	public void setCondicionantes(String condicionantes) {
 		this.condicionantes = condicionantes;
 	}
+	public String getListaDocumentos() {
+		return listaDocumentos;
+	}
+	public void setListaDocumentos(String listaDocumentos) {
+		this.listaDocumentos = listaDocumentos;
+	}
+	
 }
