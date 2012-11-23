@@ -49,4 +49,8 @@ public class FuncionDAOImpl extends SqlMapClientDaoSupport implements FuncionDAO
 	public List<Funcion> getLstFuncionByCriteria(Funcion record) throws Exception{
     	return   (List<Funcion>)getSqlMapClientTemplate().queryForList("CARDEL_TGPR_FUNCIONES.getLstFuncionByCriteria", record);
     }
+
+	public List<Funcion> getLstRolesFunciones(String codRol) throws Exception {
+	 	return   (List<Funcion>)getSqlMapClientTemplate().queryForList("CARDEL_TGPR_FUNCIONES.getLstRolesFunciones", codRol);
+	  }
 }
