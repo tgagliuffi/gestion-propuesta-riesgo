@@ -12,4 +12,5 @@ public interface FuncionDAO {
     int updateByPrimaryKeySelective(Funcion record);
     int updateByPrimaryKey(Funcion record);
     List<Funcion> getLstFuncionByCriteria(Funcion record) throws Exception;
+    List<Funcion> getLstRolesFunciones(String codRol)throws Exception;
 }
