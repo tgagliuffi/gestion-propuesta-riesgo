@@ -17,4 +17,5 @@ public interface MultitablaDetalleDAO {
 	String lstMultitablaDetalle(HashMap< String, String> getValores)throws Exception ;
 	int updateCondicionCliente(MultitablaDetalle record)throws Exception ;
 	List<MultitablaDetalle> getLstValoresCondicion(String codMult );
+	String getDescripcion(String codigo)throws Exception ;
 }

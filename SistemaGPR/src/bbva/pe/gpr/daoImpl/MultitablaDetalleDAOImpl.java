@@ -67,4 +67,8 @@ public class MultitablaDetalleDAOImpl extends SqlMapClientDaoSupport implements 
 	public List<MultitablaDetalle> getLstValoresCondicion(String codMult) {
 		return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_MULTITABLA_DETALLE.getLstMultitablaMensaje", codMult);
 	}
+
+	public String getDescripcion(String codigo) throws Exception {
+		return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_MULTITABLA_DETALLE.getMensaje", codigo).get(0).toString();
+	}
 }

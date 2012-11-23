@@ -120,22 +120,33 @@ public class ControlServiceImpl implements ControlService {
 		String valorRelevaPubl=metodoGenericoCondCliente(Constant.TABLA_RELEVANCIA_PUBLICA, getRelPub);
 		String valorInelegibles=metodoGenericoCondCliente(Constant.TABLA_INELEGIBLES, getInele);
       	if(!valorBureau.equals("1")){
-      	 bureau=getLstValoresCondicion(Constant.TABLA_BUREAU);
+      	 bureau=multitablaDetalleDAO.getDescripcion(getBureau);
       	}if(!valorBBVA.equals("1")){
-      	 bBVA=getLstValoresCondicion(Constant.TABLA_BBVA);
+      	 bBVA=multitablaDetalleDAO.getDescripcion(getBbva);
       	}if(!valorSistemaFin.equals("1")){
-      	 sistemaFin=getLstValoresCondicion(Constant.TABLA_SISTEMA_FINANCIERO);
-      	}if(!valorRelevaPubl.equals("1")){
-         relevaPub=getLstValoresCondicion(Constant.TABLA_RELEVANCIA_PUBLICA);
-      	}if(!valorInelegibles.equals("1")){
-        inelegibles=getLstValoresCondicion(Constant.TABLA_INELEGIBLES);
+      	 sistemaFin=multitablaDetalleDAO.getDescripcion(getSiFinan);
+      	}if(valorRelevaPubl.equals("1")){
+         relevaPub="NO PASO";
+      	}if(valorInelegibles.equals("1")){
+        inelegibles="NO PASO";
       	}
-      	mensaje="El cliente no paso las siguientes Condiciones.\n" +
-      			"Bureau.\n\t"+ bureau +
-      			"BBVA.\n\t"+ bBVA +
-      			"Sistema Financiero.\n\t"+sistemaFin+
-      			"Relevancia Publica.\n\t"+ relevaPub+ 
-      			"Inelegibles.\n\t"+inelegibles;
+        mensaje ="<table> " +
+       	         "<tr>" + "<td align=left>"+ "BUREAU"+"</td>"+
+      	         "<td align=right>"+ bureau+ "</td>"+
+        		 "</tr> "+
+        		 "<tr>" + "<td align=left>"+ "CLASIFICACION BBVA"+"</td>"+
+	        	 "<td align=right>"+ bBVA+ "</td>"+
+	             "</tr> "+
+	             "<tr>" + "<td align=left>"+ "CLASIFICACION Siste. Financiero"+"</td>"+
+	             "<td align=right>"+ sistemaFin+ "</td>"+
+	             "</tr> "+
+	             "<tr>" + "<td align=left>"+ "RELEVANCIA"+"</td>"+
+	             "<td align=right>"+ relevaPub+ "</td>"+	
+	             "</tr> "+
+	             "<tr>" + "<td align=left>"+ "INELEGIBLES"+"</td>"+
+	             "<td align=right>"+ inelegibles+ "</td>"+
+	             "</tr> "+
+        		 "</table>";
 	     return mensaje;
     }
 	
