@@ -72,8 +72,7 @@
   <update id="ibatorgenerated_updateByPrimaryKey" parameterClass="bbva.pe.gpr.bean.Rol" >
     update CARDEL.TGPR_ROLES
     set DESCRIPCION = #descripcion:VARCHAR#,
-      REFERENCIA = #referencia:VARCHAR#,
-      ESTADO = #estado:DECIMAL#
+      REFERENCIA = #referencia:VARCHAR#
     where COD_ROL = #codRol:DECIMAL#
   </update>
   <select id="getLstRolesByCriteria" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.Rol" >
@@ -83,4 +82,26 @@
 	    ( #referencia:VARCHAR# IS NULL OR #referencia:VARCHAR#='' OR REFERENCIA = #referencia:VARCHAR#) AND
 	    ( #estado:DECIMAL# IS NULL OR #estado:DECIMAL#=-1 OR ESTADO=#estado:DECIMAL#)	   
   </select>
+ <select id="getRoles" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.Rol" >
+   select * from CARDEL.TGPR_ROLES WHERE
+    	(COD_ROL=#codRol:DECIMAL#) AND
+	    ( #estado:DECIMAL# IS NULL OR #estado:DECIMAL#=-1 OR ESTADO=#estado:DECIMAL#)	   
+  </select>
+  <select id="getLstRoles" resultClass="bbva.pe.gpr.bean.Rol">
+   	SELECT 
+   	COD_ROL AS codRolHdn,
+   	COD_ROL AS codRol,
+   	DESCRIPCION AS descripcion,
+   	REFERENCIA  AS referencia
+   	FROM
+   	CARDEL.TGPR_ROLES WHERE 
+   	ESTADO!=0
+   </select>
+   
+   <update id="updateRol" parameterClass="bbva.pe.gpr.bean.Rol">
+	  UPDATE CARDEL.TGPR_ROLES set 
+      DESCRIPCION = #descripcion:VARCHAR#,
+      REFERENCIA = #referencia:VARCHAR#
+      WHERE COD_ROL = #codRolHdn:DECIMAL#
+  </update>  
 </sqlMap>
