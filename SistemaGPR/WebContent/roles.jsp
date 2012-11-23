@@ -8,17 +8,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/buttonOHC.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/ui.jqgrid.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/redmond/jquery-ui-1.8.2.custom.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/gpr_style.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/buttonGPR.css" />
+
+
+	<link rel="stylesheet" type="text/css" media="screen" 	href="<%=request.getContextPath()%>/css/ui.jqgrid.css" />
+	<link rel="stylesheet" type="text/css" media="screen" 	href="<%=request.getContextPath()%>/css/redmond/jquery-ui-1.8.2.custom.css" />
+	<link rel="stylesheet" type="text/css" media="screen"  	href="<%=request.getContextPath()%>/css/gpr_style.css" />
+	<link rel="stylesheet" type="text/css" media="screen" 	href="<%=request.getContextPath()%>/css/buttonGPR.css" />
 	
-	<script src="<%=request.getContextPath()%>/js/script.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/util/gridUtil.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/jquery-1.7.1.js" type="text/javascript"></script>	
-	<script src="<%=request.getContextPath()%>/js/i18n/grid.locale-es.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/util.gpr.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery-1.7.1.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery-ui.js" 	type="text/javascript"></script>
+
+	<script src="<%=request.getContextPath()%>/js/util/gridUtil.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/i18n/grid.locale-es.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/util/formatters.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/script.js" 	type="text/javascript"></script>
 	<script type="text/javascript" src='<%= request.getContextPath()%>/dwr/interface/RolAction.js'></script>
 	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/engine.js'></script>
 	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/util.js'></script>
@@ -195,7 +200,7 @@ function mostrarTabla(data){
 			deleteTblRowAdded(idTableForm);
         },
 		editurl		: rutaContexto+'/rolAction.do?method=guardarCanalAjax',
-	    caption		: "Listado de Canales",
+	    caption		: "Listado de Roles",
 		data 	 	: data,
 		datatype 	: "local",
 		height   	: "100%",
@@ -267,9 +272,8 @@ function asignarFunciones(){
 		<table width="100%">
 			<tr>
 				<td align="left" valign="middle">
-					<a href="#" onclick="addCanal();" class="buttonOHC">CREAR</a>&nbsp;&nbsp;
-					<a href="#" onclick="asignarFunciones();" class="buttonOHC">ASIGNAR FUNCIONES</a>&nbsp;&nbsp;
-<!-- 					<a href="#" onclick="deleteCanal();" class="buttonOHC">ELIMINAR</a>&nbsp;&nbsp; -->
+				<input type="button" class="buttonGPR" name="btnConsultar" id="btnConsultar" value="CREAR ROLES" onclick="addCanal();">
+				<input type="button" class="buttonGPR" name="btnConsultar" id="btnConsultar" value="ASIGNAR FUNCIONES" onclick="asignarFunciones();">
 			</tr>
 		</table>
 		</fieldset>

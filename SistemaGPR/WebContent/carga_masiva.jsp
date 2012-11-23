@@ -7,11 +7,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/buttonOHC.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/ui.jqgrid.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/redmond/jquery-ui-1.8.2.custom.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/gpr_style.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/buttonGPR.css" />
+	<link rel="stylesheet" type="text/css" media="screen" 	href="<%=request.getContextPath()%>/css/ui.jqgrid.css" />
+	<link rel="stylesheet" type="text/css" media="screen" 	href="<%=request.getContextPath()%>/css/redmond/jquery-ui-1.8.2.custom.css" />
+	<link rel="stylesheet" type="text/css" media="screen"  	href="<%=request.getContextPath()%>/css/gpr_style.css" />
+	<link rel="stylesheet" type="text/css" media="screen" 	href="<%=request.getContextPath()%>/css/buttonGPR.css" />
+	
+	<script src="<%=request.getContextPath()%>/js/util.gpr.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery-1.7.1.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery-ui.js" 	type="text/javascript"></script>
+
+	<script src="<%=request.getContextPath()%>/js/util/gridUtil.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/i18n/grid.locale-es.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/util/formatters.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/script.js" 	type="text/javascript"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%String valor=(String)request.getAttribute("listaLog"); %>
@@ -58,7 +67,7 @@ function regresar(){
    	Carga Masiva
    	</font>
    	</legend>
-   	    <a href="javascript:descargarPlantilla();">DESCARGAR PLANTILLA</a>
+   	     <input type="button" class="buttonGPR" name="btnConsultar" id="btnConsultar" value="DESCARGAR PLANTILLA" onclick="descargarPlantilla();">
    	    <br/>
    	    <br/>
    		<html:file property="file" />
@@ -66,12 +75,12 @@ function regresar(){
    <br/>
    <% if(valor!=null){ %>
    <% if(valor.equals("1")){ %>
-      	<a href="javascript:descargarLogError();">DESCARGAR LOG DE ERRORES</a>
+   <input type="button" class="buttonGPR" name="btnConsultar" id="btnConsultar" value="DESCARGAR LOG DE ERRORES" onclick="descargarLogError();">
    <%} %> 
    <%} %>
    <br/>
    <br/>   
- 		<a href="javascript:cargaMasiva();" class="buttonGPR">CARGA MASIVA</a>
+   <input type="button" class="buttonGPR" name="btnConsultar" id="btnConsultar" value="CARGA MASIVA" onclick="cargaMasiva();">
     <br/>
     <br/>
 
