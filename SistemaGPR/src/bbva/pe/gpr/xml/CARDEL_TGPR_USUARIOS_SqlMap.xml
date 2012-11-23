@@ -120,4 +120,19 @@
            (SELECT COUNT(*) FROM CARDEL.TCARDEL_GERENTE G WHERE G.COD_REGISTRO= U.CODIGO_USUARIO AND G.ESTADO !=0) = 0  AND
         CODIGO_USUARIO = #codigoUsuario:VARCHAR#
 	 </select>
+	 <select id="getTipoPersona" resultClass="bbva.pe.gpr.bean.Usuario" parameterClass="string">
+	 SELECT flg_aplicacion as codigoUsuario FROM CARDEL.TCARDEL_USUARIO  
+	 WHERE codigo_usuario=#value#
+	 </select>
+<!-- 	 tablas de oficina cardel -->
+	 <select id="getJefeOficina" resultClass="bbva.pe.gpr.bean.Usuario" parameterClass="map">
+		 SELECT codusu as codigoUsuario 
+		 FROM   IIWX.LDAPPERU2 t where
+		 t.codcargo=#codCargo# and codofi=#CodOficina#
+	 </select>
+	 <select id="getJefeInmediatoRiesgos" resultClass="bbva.pe.gpr.bean.Usuario" parameterClass="String">
+		 SELECT codusujefe as codigoUsuario 
+		 FROM   IIWX.LDAPPERU2 t where
+		 t.codusu=#value#
+	 </select>
 </sqlMap>
