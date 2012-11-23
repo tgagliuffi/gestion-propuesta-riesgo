@@ -17,4 +17,7 @@ public interface UsuarioDAO {
 	int getDeleteUsuario(String codUsuario)throws Exception ;
 	List<Usuario> getLstUsuariosRiesgo(Usuario usuarioBean) throws Exception ;
 	Usuario getUsuarioMontos(Usuario usuarioBean);
+	String getTipoPersona(String codUsuario);
+	String getJefeOficina(String codCargo,String codOficina);
+	String codJefeInmediatoRiesgos(String codUsuario);
 }
