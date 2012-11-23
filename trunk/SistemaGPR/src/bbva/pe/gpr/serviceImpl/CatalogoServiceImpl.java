@@ -2,11 +2,13 @@ package bbva.pe.gpr.serviceImpl;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import bbva.pe.gpr.bean.Banca;
 import bbva.pe.gpr.bean.BancaSub;
 import bbva.pe.gpr.bean.Campania;
 import bbva.pe.gpr.bean.Funcion;
+import bbva.pe.gpr.bean.FuncionRol;
 import bbva.pe.gpr.bean.Multitabla;
 import bbva.pe.gpr.bean.MultitablaDetalle;
 import bbva.pe.gpr.bean.MultitablaDetalleKey;
@@ -22,6 +24,7 @@ import bbva.pe.gpr.bean.UsuarioSubancaKey;
 import bbva.pe.gpr.dao.BancaDAO;
 import bbva.pe.gpr.dao.BancaSubDAO;
 import bbva.pe.gpr.dao.FuncionDAO;
+import bbva.pe.gpr.dao.FuncionRolDAO;
 import bbva.pe.gpr.dao.GerenteOficinaDAO;
 import bbva.pe.gpr.dao.MultitablaDAO;
 import bbva.pe.gpr.dao.MultitablaDetalleDAO;
@@ -52,6 +55,7 @@ public class CatalogoServiceImpl implements CatalogoService{
       private FuncionDAO funcionDAO; 
       private UsuarioSubancaDAO usuarioSubancaDAO;
       private BancaSubDAO bancaSubDAO; 
+      private FuncionRolDAO funcionRolDAO; 
 
 	public CatalogoServiceImpl(
 			  BancaDAO bancaDAO,
@@ -67,7 +71,8 @@ public class CatalogoServiceImpl implements CatalogoService{
 			  SolicitudRechazadaDAO solicitudRechazadaDAO,
 			  FuncionDAO funcionDAO,
 			  UsuarioSubancaDAO usuarioSubancaDAO,
-			  BancaSubDAO bancaSubDAO
+			  BancaSubDAO bancaSubDAO,
+			  FuncionRolDAO funcionRolDAO
 			  ) {
 		  super();
 		  this.bancaDAO=bancaDAO;
@@ -84,6 +89,7 @@ public class CatalogoServiceImpl implements CatalogoService{
 		  this.funcionDAO=funcionDAO;
 		  this.usuarioSubancaDAO=usuarioSubancaDAO;
 		  this.bancaSubDAO=bancaSubDAO;
+		  this.funcionRolDAO=funcionRolDAO;
 	  }
 
 	public BancaDAO getBancaDAO(){return bancaDAO;}
@@ -179,7 +185,13 @@ public class CatalogoServiceImpl implements CatalogoService{
 	  	public void setBancaSubDAO(BancaSubDAO bancaSubDAO) {
 	  		this.bancaSubDAO = bancaSubDAO;
 	  	}
+		public FuncionRolDAO getFuncionRolDAO() {
+			return funcionRolDAO;
+		}
 
+		public void setFuncionRolDAO(FuncionRolDAO funcionRolDAO) {
+			this.funcionRolDAO = funcionRolDAO;
+		}
 
 	/*#####################################################################################################
    * 
@@ -410,6 +422,9 @@ public class CatalogoServiceImpl implements CatalogoService{
 	 public Rol getRolSelectByPrimaryKey(BigDecimal codRol) throws Exception {
 			return rolDAO.selectByPrimaryKey(codRol);
 	}
+	public Map<String, String> saveRol(String codRolHdn, String codRol,String desRol, String refeRol) throws Exception {
+			return rolDAO.saveRol(codRolHdn, codRol, desRol, refeRol);
+    }
  /*#####################################################################################################
    *  
    *                TGPR_OFICINA_ASIGNADA
@@ -440,9 +455,9 @@ public class CatalogoServiceImpl implements CatalogoService{
 	   * 
 	   *##################################################################################################### */
 
-	public String getValidarUsuario(String codUsuario) {
-		return gerenteOficinaDAO.getValidarUsuario(codUsuario);
-	}
+//	public String getValidarUsuario(String codUsuario) {
+//		return gerenteOficinaDAO.getValidarUsuario(codUsuario);
+//	}
 	 /*#####################################################################################################
 	   *  
 	   *                TGPR_SOLICITUD_RECHAZADA
@@ -469,16 +484,6 @@ public class CatalogoServiceImpl implements CatalogoService{
 		return gerenteOficinaDAO.getJefeInmediatoRiesgo(codUsuario);
 	}
 
-	public String getUsuarioVerificar(String codUsuario) {
-		String valor=gerenteOficinaDAO.getValidarUsuarioRiesgos(codUsuario);
-		String valorOficina=gerenteOficinaDAO.getValidarUsuario(codUsuario);
-		if(valor.equals("1")){
-			return Constant.USUARIO_OFICINA;
-		}else{
-			return Constant.USUARIO_RIESGOS;
-		}
-	}
-
 	public UsuarioSubanca selectByPrimaryKey(UsuarioSubancaKey key) {
 		return usuarioSubancaDAO.selectByPrimaryKey(key);
 	}
@@ -490,5 +495,32 @@ public class CatalogoServiceImpl implements CatalogoService{
 	public void insert(UsuarioSubanca record) {
      usuarioSubancaDAO.insert(record);
 	}
-    
+
+	public List<Rol> getLsRoles() throws Exception {
+		return rolDAO.getLstRol();
+	}
+
+	public String getUsuarioTipo(String codUsuario) {
+		return gerenteOficinaDAO.getUsuarioTipo(codUsuario);
+	}
+
+	public String getTipoPersona(String codUsuario) throws Exception {
+		return getUsuarioTipo(codUsuario);
+	}
+
+	public List<Funcion> getLstRolesFuncion(String codRol) throws Exception {
+		return funcionDAO.getLstRolesFunciones(codRol);
+	}
+
+	public void saveRolFunciones(FuncionRol record) {
+		funcionRolDAO.insert(record);
+	}
+
+	public String rolFuncionExistente(FuncionRol record) {
+		FuncionRol funcion=funcionRolDAO.selectByPrimaryKey(record);
+		if(funcion==null){
+			return "0";
+		}
+			return "1";
+	}  
 }
