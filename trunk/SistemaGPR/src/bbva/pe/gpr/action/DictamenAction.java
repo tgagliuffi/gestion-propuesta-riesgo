@@ -232,20 +232,27 @@ public class DictamenAction extends DispatchAction {
 		try {
 			Long result = analisisService.insertarAnalisis(row);
 			if(result != null) {
-				listAnalisis = analisisService.buscarAnalisis(row);
-				
-				s = new Solicitud();
-				s.setNroSolicitud(row.getNroSolicitud());
-				listOperaciones = solicitudService.selectOperacionByNroSolicitud(s);
-				
-				map.put("status", true);
-				if(result == -1) {
-					map.put("error", "Este proceso ya fue registrado.");
+				s = obtenerSolicitud(row.getNroSolicitud());
+				s.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD+Constant.CHAR_GUION+Constant.ESTADO_SOLICITUD_ANALISIS);
+				if(solicitudService.updateDictaminaEnOficina(s) != 0) {
+					listAnalisis = analisisService.buscarAnalisis(row);
+					
+					s = new Solicitud();
+					s.setNroSolicitud(row.getNroSolicitud());
+					listOperaciones = solicitudService.selectOperacionByNroSolicitud(s);
+					
+					map.put("status", true);
+					if(result == -1) {
+						map.put("error", "Este proceso ya fue registrado.");
+					} else {
+						map.put("error", "Proceso registrado correctamente.");
+					}
+					map.put("analisis", listAnalisis);
+					map.put("operaciones", listOperaciones);
 				} else {
-					map.put("error", "Proceso registrado correctamente.");
+					map.put("status", false);
+					map.put("error", "No se pudo actualizar el estado de la solicitud");
 				}
-				map.put("analisis", listAnalisis);
-				map.put("operaciones", listOperaciones);
 			}
 		} catch (Exception e) {
 			logger.error("", e);
@@ -333,6 +340,8 @@ public class DictamenAction extends DispatchAction {
 		String plazo;
 		try {
 			s = obtenerSolicitud(row.getNroSolicitud());
+			s.setListaDocumentos(row.getListaDocumentos());
+			s.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD+Constant.CHAR_GUION+Constant.ESTADO_SOLICITUD_DICTAMINADO_);
 			if(solicitudService.updateDictaminaEnOficina(s) != 0) {
 				if(s != null) {
 					sd = solicitudService.getListSolicitudDetalleForId(s);
