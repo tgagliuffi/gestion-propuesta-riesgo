@@ -31,6 +31,8 @@ $(function() {
 });
 <%
 String usuario = (String)request.getSession().getAttribute("USUARIO_NOMBRE");
+String img = (String)request.getSession().getAttribute("USUARIO_IMG");
+String fecha = (String)request.getSession().getAttribute("FECHA_ACTUAL");
 List<Menu> getLstMenu =(List<Menu>)request.getAttribute("getLstMenu");
 %>
 </script>
@@ -45,21 +47,24 @@ List<Menu> getLstMenu =(List<Menu>)request.getAttribute("getLstMenu");
 	</table>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-		<td>
-			<font style="font: verdana; font-size: 11px; text-transform: uppercase;" class="txt-titulo"><b>
-			&nbsp;&nbsp;<%=usuario%>
-			</b></font>
-		</td>
-		<td align="right" style="font-family:Arial;font-size:13px"><b>Gestión de Propuestas de Riesgos y Control de Delegaciones</b>&nbsp;&nbsp;&nbsp;
-		<br/><br/>
-		<a href="index.jsp" target="_top" class="txt-titulo">SALIR</a>&nbsp;&nbsp;&nbsp;
+		<td colspan="4" align="right" width="100%" style="font-family:Arial;font-size:13px;text-align: right;"><b>Gestión de Propuestas de Riesgos y Control de Delegaciones</b>
+	</tr>
+	<tr>
+		<td> 
+		<div style="float: left;text-align: left;width: 85%">
+			<font style="font: verdana; font-size: 11px; text-transform: uppercase;" class="txt-titulo">
+			<img src="imagenes/<%=img%>" border="0">
+			<b><%=usuario%></b></font>
+		</div>
+	<!-- 	<div style="float: left;text-align: right;"><img src="imagenes/exit.png" border="0" onclick=""></div>
+		<div style="float: left;text-align: right;"><img src="imagenes/calendar.png" border="0" onclick=""><font><%=fecha%></font></div> -->
 		</td>
 	</tr>
 	</table>
 </form>
 <%if(getLstMenu != null && !getLstMenu.isEmpty()){ %>
 	
-<div class="demo">
+<div class="demo" style="padding-top: 3px;">
 	<div id="tabs">
 		<ul>		
 			<%for(int i=0;i<getLstMenu.size();i++){	%>
