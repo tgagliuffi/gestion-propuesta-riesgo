@@ -8,35 +8,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/ui.jqgrid.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/redmond/jquery-ui-1.8.2.custom.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/gpr_style.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/buttonGPR.css" />
-
-	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/engine.js'></script>
-	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/util.js'></script>
-	<script type="text/javascript" src='<%= request.getContextPath()%>/dwr/interface/JDate.js'></script>
-	<script type="text/javascript" src='<%= request.getContextPath()%>/dwr/interface/BandejaEvaluacionAction.js'></script>
-
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.7.1.js" ></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-ui.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/util/gridUtil.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/i18n/grid.locale-es.js"></script>
-	<%-- <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js"></script> --%>
+	<link rel="stylesheet" type="text/css" media="screen" 	href="<%=request.getContextPath()%>/css/ui.jqgrid.css" />
+	<link rel="stylesheet" type="text/css" media="screen" 	href="<%=request.getContextPath()%>/css/redmond/jquery-ui-1.8.2.custom.css" />
+	<link rel="stylesheet" type="text/css" media="screen"  	href="<%=request.getContextPath()%>/css/gpr_style.css" />
+	<link rel="stylesheet" type="text/css" media="screen" 	href="<%=request.getContextPath()%>/css/buttonGPR.css" />
 	
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/01_jquery.layout.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/02_grid.locale-es.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/03_ui.multiselect.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/04_jquery.jqGrid.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/05_jquery.tablednd.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/06_jquery.contextmenu.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/07_grid.addons.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/08_grid.postext.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/09_grid.setcolumns.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jqGrid/10_jquery.searchFilter.js"></script>
-	
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/dictamen/general.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/dictamen/bandejaEvaluador.js"></script>
+	<script src="<%=request.getContextPath()%>/js/util.gpr.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery-1.7.1.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery-ui.js" 	type="text/javascript"></script>
+
+	<script src="<%=request.getContextPath()%>/js/util/gridUtil.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/i18n/grid.locale-es.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/util/formatters.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/script.js" 	type="text/javascript"></script>
 	
 	<style>
 		input.cajaTexto {

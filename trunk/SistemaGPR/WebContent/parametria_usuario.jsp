@@ -15,17 +15,20 @@ List<Rol> getLstRoles = (List<Rol>)request.getAttribute("getLstRoles");
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/buttonOHC.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/ui.jqgrid.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/redmond/jquery-ui-1.8.2.custom.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/gpr_style.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/buttonGPR.css" />
+     <link rel="stylesheet" type="text/css" media="screen" 	href="<%=request.getContextPath()%>/css/ui.jqgrid.css" />
+	<link rel="stylesheet" type="text/css" media="screen" 	href="<%=request.getContextPath()%>/css/redmond/jquery-ui-1.8.2.custom.css" />
+	<link rel="stylesheet" type="text/css" media="screen"  	href="<%=request.getContextPath()%>/css/gpr_style.css" />
+	<link rel="stylesheet" type="text/css" media="screen" 	href="<%=request.getContextPath()%>/css/buttonGPR.css" />
 	
-	<script src="<%=request.getContextPath()%>/js/util/formatters.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/util/gridUtil.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/jquery-1.7.1.js" type="text/javascript"></script>	
-	<script src="<%=request.getContextPath()%>/js/i18n/grid.locale-es.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/util.gpr.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery-1.7.1.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery-ui.js" 	type="text/javascript"></script>
+
+	<script src="<%=request.getContextPath()%>/js/util/gridUtil.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/i18n/grid.locale-es.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/util/formatters.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/script.js" 	type="text/javascript"></script>
 	<script type="text/javascript" src='<%= request.getContextPath()%>/dwr/interface/UsuarioAction.js'></script>
 	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/engine.js'></script>
 	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/util.js'></script>
@@ -201,10 +204,9 @@ function cargaMasiva(){
 	</table>
 	</div>
 	<br>
-			<a href="javascript:consultarUsuario();" class="buttonGPR">BUSCAR</a>
-<!-- 			<a href="javascript:nuevoUsuario();" class="buttonGPR">NUEVO</a> -->
-			<a href="javascript:limpiarConsultarUsuario();" class="buttonGPR">LIMPIAR</a>
-			<a href="javascript:cargaMasiva();" class="buttonGPR">CARGA MASIVA</a>
+	<input type="button" class="buttonGPR" name="btnConsultar" id="btnConsultar" value="BUSCAR" onclick="consultarUsuario();">
+	<input type="button" class="buttonGPR" name="btnConsultar" id="btnConsultar" value="LIMPIAR" onclick="limpiarConsultarUsuario();">
+	<input type="button" class="buttonGPR" name="btnConsultar" id="btnConsultar" value="CARGA MASIVA" onclick="cargaMasiva();">
 	<br/>
 	<br>
 </html:form>

@@ -8,19 +8,20 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/ui.jqgrid.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/redmond/jquery-ui-1.8.2.custom.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/gpr_style.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="<%=request.getContextPath()%>/css/buttonGPR.css" />
-
-	<!-- frk: incluir estos archivos cuando se quiera implementar el componente calendario y demas funciones jquery -->
-	<script src="<%=request.getContextPath()%>/js/jquery-1.7.1.js" type="text/javascript"></script>	
-	<script src="<%=request.getContextPath()%>/js/jquery-ui.js" type="text/javascript"></script>
+	 <link rel="stylesheet" type="text/css" media="screen" 	href="<%=request.getContextPath()%>/css/ui.jqgrid.css" />
+	<link rel="stylesheet" type="text/css" media="screen" 	href="<%=request.getContextPath()%>/css/redmond/jquery-ui-1.8.2.custom.css" />
+	<link rel="stylesheet" type="text/css" media="screen"  	href="<%=request.getContextPath()%>/css/gpr_style.css" />
+	<link rel="stylesheet" type="text/css" media="screen" 	href="<%=request.getContextPath()%>/css/buttonGPR.css" />
 	
-	<script src="<%=request.getContextPath()%>/js/util/gridUtil.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/i18n/grid.locale-es.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js" type="text/javascript"></script>
-	<script src="<%=request.getContextPath()%>/js/util/formatters.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/util.gpr.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery-1.7.1.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery-ui.js" 	type="text/javascript"></script>
+
+	<script src="<%=request.getContextPath()%>/js/util/gridUtil.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/i18n/grid.locale-es.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/util/formatters.js" 	type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/script.js" 	type="text/javascript"></script>
 	<script type="text/javascript" src='<%= request.getContextPath()%>/dwr/interface/UsuarioAction.js'></script>
 	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/engine.js'></script>
 	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/util.js'></script>
@@ -122,7 +123,7 @@ function asignarRoles(){
 		</td>
 		<td valign="middle">
 			<input type="text" name="codUsuarios" class="cajaTexto" id="codUsuarios" size="14" maxlength="14" value="${getUsuario.UID}">&nbsp;		
-			<input type="button" name="btnCargar" id="btnCargar" value="Cargar" onclick="cargarUsuarioLdap();">
+<!-- 			<input type="button" name="btnCargar" id="btnCargar" value="Cargar" onclick="cargarUsuarioLdap();"> -->
 		</td>
 		<td valign="middle">
 			<font class="fontText"><b>SubBanca</b></font>
@@ -198,7 +199,7 @@ function asignarRoles(){
 	</tr>
 	<tr>
 	<td>
-		<a href="javascript:asignarRoles();" class="buttonGPR">ASIGNAR ROLES</a>	
+	<input type="button" class="buttonGPR" name="btnConsultar" id="btnConsultar" value="ASIGNAR ROLES" onclick="asignarRoles();">
 	</td>
 	</tr>
 	</table>
