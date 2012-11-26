@@ -181,8 +181,8 @@ public class ValidacionServiceImpl implements ValidacionService {
 	public int metodoEncapsulado(Solicitud solicitud,String codUsuario) {
 	int valorRetorno=0;
 	//TODO verificar
-		if(gerenteOficinaDAO.getUsuarioTipo(codUsuario).equals(Constant.USUARIO_OFICINA)){
-			//oficina
+		if(gerenteOficinaDAO.getUsuarioTipo(codUsuario).equals("R")){
+			//RIESGO
 			if(solicitud.getGrupoPersona().equals(Constant.GRUPO_CON_RATING)){
 			valorRetorno=riesgoPorRating(solicitud,codUsuario);	
 			}else if(solicitud.getGrupoPersona().equals(Constant.GRUPO_SIN_RATING)){
@@ -190,8 +190,8 @@ public class ValidacionServiceImpl implements ValidacionService {
 			}else if(solicitud.getGrupoPersona().equals(Constant.GRUPO_PER_NATUAL)){
 			valorRetorno=riesgoPersonaNatural(solicitud,codUsuario);	
 			}
-		}else if (gerenteOficinaDAO.getUsuarioTipo(codUsuario).equals(Constant.USUARIO_RIESGOS)){
-			//riesgos
+		}else if (gerenteOficinaDAO.getUsuarioTipo(codUsuario).equals("O")){
+			//OFICINA
 			if(solicitud.getGrupoPersona().equals(Constant.GRUPO_CON_RATING)){
 			//valorRetorno=riesgoPorRating(solicitud);	
 			}else if(solicitud.getGrupoPersona().equals(Constant.GRUPO_SIN_RATING)){
@@ -202,4 +202,79 @@ public class ValidacionServiceImpl implements ValidacionService {
 		}
 			return valorRetorno;
 	}
+
+	public int metodoEncapsuladoIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle, String codUsuario) {
+		int valorRetorno=0;
+		//TODO verificar
+			if(gerenteOficinaDAO.getUsuarioTipo(codUsuario).equals("R")){
+				//RIESGO
+				if(solicitud.getGrupoPersona().equals(Constant.GRUPO_CON_RATING)){
+				valorRetorno=riesgoPorRatingIngresoSolicitud(solicitudDetalle,codUsuario);
+				}else if(solicitud.getGrupoPersona().equals(Constant.GRUPO_SIN_RATING)){
+				valorRetorno=riesgoSinRatingIngresoSolicitud(solicitudDetalle,codUsuario);					
+				}else if(solicitud.getGrupoPersona().equals(Constant.GRUPO_PER_NATUAL)){
+				valorRetorno=riesgoPersonaNaturalIngresoSolicitud(solicitudDetalle,codUsuario);	
+				}
+			}else if (gerenteOficinaDAO.getUsuarioTipo(codUsuario).equals("O")){
+				//OFICINA
+				if(solicitud.getGrupoPersona().equals(Constant.GRUPO_CON_RATING)){
+				//valorRetorno=riesgoPorRating(solicitud);	
+				}else if(solicitud.getGrupoPersona().equals(Constant.GRUPO_SIN_RATING)){
+				//valorRetorno=riesgoSinRating(solicitud);					
+				}else if(solicitud.getGrupoPersona().equals(Constant.GRUPO_PER_NATUAL)){
+				//valorRetorno=riesgoPersonaNatural(solicitud);	
+				}
+			}
+				return valorRetorno;
+	}
+
+	public int riesgoPorRatingIngresoSolicitud(List<SolicitudDetalle> solicitudDetalle, String codUsuario) {
+		int valorRetorno=0;
+		BigDecimal montoRiesgos=cartasRiesgosDAO.montDelegacionRating(codUsuario,Constant.GRUPO_CON_RATING);
+		for(SolicitudDetalle solicitudes:solicitudDetalle){
+				//cartas delegacion
+		BigDecimal montoSolicitud=solicitudes.getMtoProducto();
+		if((montoRiesgos.compareTo(montoSolicitud)==0 || montoRiesgos.compareTo(montoSolicitud)==1)){
+							valorRetorno++;
+				}
+			}
+			    if(solicitudDetalle.size() == valorRetorno) {
+			    	return 1;
+			    } else
+			    	return 0;
+	}
+
+	public int riesgoSinRatingIngresoSolicitud(List<SolicitudDetalle> solicitudDetalle, String codUsuario) {
+		int valorRetorno=0;
+		BigDecimal montoRiesgos=cartasRiesgosDAO.montDelegacionSinRating(codUsuario,Constant.GRUPO_SIN_RATING);			
+		for(SolicitudDetalle solicitudes:solicitudDetalle){
+				//cartas delegacion
+				BigDecimal montoSolicitud=solicitudes.getMtoProducto();
+				if((montoRiesgos.compareTo(montoSolicitud)==0 || montoRiesgos.compareTo(montoSolicitud)==1)){
+							valorRetorno++;
+				}
+			}
+				if (solicitudDetalle.size() == valorRetorno) {
+					return 1;
+				} else
+					return 0;	
+		}
+
+	public int riesgoPersonaNaturalIngresoSolicitud(List<SolicitudDetalle> solicitudDetalle, String codUsuario) {
+		int valorRetorno=0;
+		List<ProductoDelegacion> getLstProducto=cartasRiesgosDAO.getDelegacionPersonaNatural(codUsuario);
+				for (int i = 0; i < solicitudDetalle.size(); i++) {
+					for (int y = 0; y < getLstProducto.size(); y++) {
+						if (solicitudDetalle.get(i).getCodProducto().equals((getLstProducto.get(y).getCodProducto())) && 
+						   (solicitudDetalle.get(i).getMtoProducto().compareTo(getLstProducto.get(y).getMontoProducto())==0 ||
+						    solicitudDetalle.get(i).getMtoProducto().compareTo(getLstProducto.get(y).getMontoProducto())==1)){
+						    valorRetorno++;
+						}
+				   }
+		     }
+		if(solicitudDetalle.size() == valorRetorno) {
+			    return 1;
+			} else
+			    return 0;	
+		}
 }
