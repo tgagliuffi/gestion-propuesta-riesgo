@@ -418,8 +418,7 @@ dictamenEvaluador = function(dictamen) {
 };
 
 function evaluarPerfil (obj){
-	
-	if($("#nivel").val() != '2' && $(obj).val()== '4') {
+	if($("#nivel").val() == '2' && $(obj).val()== '4') {
 		$("#idDictamen").css({"display": ""});
 	}else{
 		$("#idDictamen").css({"display": "none"});
@@ -572,7 +571,7 @@ $(document).ready(function(){
 		habilitarBotonAnalisis(true);
 	});
 	
-	if($("#nivel").val() != '1' && $("#nivel").val() != '2') {
+	
 		$("#btnCondiciones").button("option", "disabled", true);
 		$("#btnCondicionesScoring").button("option", "disabled", true);
 		
@@ -593,13 +592,12 @@ $(document).ready(function(){
 		$("#btnDictaminar").bind("click", dictaminar);
 		$("#rating_dictamen").bind("change", validaRating);
 		$("#ctrlScoring_dictamen").bind("change", validaScoring);
-	} else {
-		//alert('nivel: '+ $("#nivel").val() );
+		
+	if($("#nivel").val() != '3') {
+
 		$("#idDictamen").css({"display": "none"});
 		$("#cboProceso").attr("onchange", "evaluarPerfil(this);");
-		
-		
-	}
+	} 
 
 	buscarSolicitud();
 });
