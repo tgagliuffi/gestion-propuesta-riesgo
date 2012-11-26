@@ -179,18 +179,17 @@ public class ControlServiceImpl implements ControlService {
 	 String tipoPersona=usuarioDAO.getTipoPersona(codGestor);
 	 String codCargo=solicitud.getGestorCod();
 	 String codOficina=solicitud.getCodOficina();
-     if(tipoPersona.equals(Constant.USUARIO_RIESGOS)){
+     if(tipoPersona.equals("O")){
     	 String montoDelegacion=cartasRiesgosDAO.montoDelegacionUsuario(codGestor,solicitud.getGrupoPersona());
      		if(montoDelegacion.equals("-1")){
      				String codJefeOficina=usuarioDAO.getJefeOficina(codCargo,codOficina);
-     				String montoJefeOficina="8907";//cartasRiesgosDAO.montoDelegacionUsuario(codJefeOficina,solicitud.getGrupoPersona()); 
+     				String montoJefeOficina=cartasRiesgosDAO.montoDelegacionUsuario(codJefeOficina,solicitud.getGrupoPersona()); 
                     BigDecimal getMonto= new BigDecimal(montoJefeOficina);
-     				if (solicitud.getRiesgoTotal().compareTo(getMonto)==0 || solicitud.getRiesgoTotal().compareTo(getMonto)==1){
+     				if (getMonto.compareTo(solicitud.getRiesgoTotal())==0 || getMonto.compareTo(solicitud.getRiesgoTotal())==1){
                 	  return 1;
      				}
      		 }
-     	}else if (tipoPersona.equals(Constant.USUARIO_OFICINA)){
-     		
+     	}else if (tipoPersona.equals("R")){
      		 String montoDelegacion=cartasRiesgosDAO.montoDelegacionUsuario(codGestor,solicitud.getGrupoPersona());
      		  if(montoDelegacion.equals("-1")){
      			 String jefeInmediato= jefeInmediato(codGestor, solicitud);
@@ -287,10 +286,13 @@ public class ControlServiceImpl implements ControlService {
 		for(int i=0;i<10;i++){
 			montoMaximo=cartasRiesgosDAO.montoDelegacionUsuario(codUsuario, solicitud.getGrupoPersona());
 			BigDecimal getMontoRiesgos=new BigDecimal(montoMaximo);
-			if(getMontoRiesgos.compareTo(getMontoRiesgos)==1){
+			if(getMontoRiesgos.compareTo(solicitud.getRiesgoTotal())==1 || getMontoRiesgos.compareTo(solicitud.getRiesgoTotal())==0) {
 				break;
 			}
 			codUsuario=usuarioDAO.codJefeInmediatoRiesgos(codUsuario);
+			if(codUsuario==null){
+				return codUsuario;
+			}
 		}
 		return codUsuario;
 	}
