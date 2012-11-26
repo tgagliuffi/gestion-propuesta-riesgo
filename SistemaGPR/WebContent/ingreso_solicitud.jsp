@@ -230,42 +230,41 @@ function consultarProductos(operation, message){
 
 
 function getMonto(value, call){
-	
 	var pdeudaDirecta = "00.00";  
-		if(document.getElementsByName('deudaDirecta')[0]!='undefined')
+		if(document.getElementsByName('deudaDirecta').length>0)
 		{pdeudaDirecta = document.getElementsByName('deudaDirecta')[0].value;}
 	
 	var pdeudaIndirecta = "00.00";
-		if(document.getElementsByName('deudaIndirecta')[0]!='undefined')
+		if(document.getElementsByName('deudaIndirecta').length>0)
 		{pdeudaIndirecta=document.getElementsByName('deudaIndirecta')[0].value;}
 	
 	var pdeudaCastigo = "00.00";
-		if( document.getElementsByName('castigo')[0]!='undefined')
+		if( document.getElementsByName('castigo').length>0)
 		{pdeudaCastigo = document.getElementsByName('castigo')[0].value;}
 	
 	var pdeudaSisFinanciero = "00.00";
-		if(document.getElementsByName('deudaSistemaFinanciero')[0]!='undefined')
+		if(document.getElementsByName('deudaSistemaFinanciero').length>0)
 		{pdeudaSisFinanciero = document.getElementsByName('deudaSistemaFinanciero')[0].value;}
 	
 	var pRiesgoGrupal = "00.00";
-		if(document.getElementsByName('riesgoGrupal')[0]!='undefined')
+		if(document.getElementsByName('riesgoGrupal').length>0)
 		{ pRiesgoGrupal = document.getElementsByName('riesgoGrupal')[0].value;}
 	
 	var pMtoGarantia = "00.00";
-		if(document.getElementsByName('mtoGarantia')[0]!='undefined')
+		if(document.getElementsByName('mtoGarantia').length>0)
 		{pMtoGarantia = document.getElementsByName('mtoGarantia')[0].value;}
 	
 	var pMtoProducto = "00.00";
-		if(document.getElementsByName('mtoProducto')[0]!='undefined')
+		if(document.getElementsByName('mtoProducto').length>0)
 		{pMtoProducto = document.getElementsByName('mtoProducto')[0].value;}
 	
 	var pOtroRiesgo = "00.00";
-		if(document.getElementsByName('otroRiesgo')[0]!='undefined'){
+		if(document.getElementsByName('otroRiesgo').length>0){
 		pOtroRiesgo = document.getElementsByName('otroRiesgo')[0].value;
 	}
 	
 	var pMtoTotalProd = "00.00";
-		if(document.getElementsByName('mtoTotal')[0]!='undefined')
+		if(document.getElementsByName('mtoTotal').length>0)
 		{pMtoTotalProd = document.getElementsByName('mtoTotal')[0].value;}
 
 if(call==1){
