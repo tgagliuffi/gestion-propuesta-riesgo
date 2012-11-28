@@ -43,28 +43,28 @@ public class MultitablaDetalleDAOImpl extends SqlMapClientDaoSupport implements 
         return rows;
     }
 
-    public int updateByPrimaryKey(MultitablaDetalle record) {
+    public int updateByPrimaryKey(MultitablaDetalle record)  throws Exception{
         int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_MULTITABLA_DETALLE.ibatorgenerated_updateByPrimaryKey", record);
         return rows;
     }
     
     @SuppressWarnings("unchecked")
-	public List<MultitablaDetalle> getLstMultitablaDetalle(String codMult) {
+	public List<MultitablaDetalle> getLstMultitablaDetalle(String codMult) throws Exception {
         List<MultitablaDetalle> lista = ( List<MultitablaDetalle>) getSqlMapClientTemplate().queryForList("DELGPR_TGPR_MULTITABLA_DETALLE.getLstMultitabla", codMult);
         return lista;
     }
     
-    public String lstMultitablaDetalle(HashMap<String, String> getValores) {
+    public String lstMultitablaDetalle(HashMap<String, String> getValores) throws Exception {
 		return  getSqlMapClientTemplate().queryForList("DELGPR_TGPR_MULTITABLA_DETALLE.getCountData", getValores).get(0).toString();
 	}
 
-	public int updateCondicionCliente(MultitablaDetalle record) {
+	public int updateCondicionCliente(MultitablaDetalle record)  throws Exception{
 	    int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_MULTITABLA_DETALLE.updatedCondicionCliente", record);
         return rows;
     }
 
 	@SuppressWarnings("unchecked")
-	public List<MultitablaDetalle> getLstValoresCondicion(String codMult) {
+	public List<MultitablaDetalle> getLstValoresCondicion(String codMult) throws Exception {
 		return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_MULTITABLA_DETALLE.getLstMultitablaMensaje", codMult);
 	}
 
@@ -72,7 +72,7 @@ public class MultitablaDetalleDAOImpl extends SqlMapClientDaoSupport implements 
 		return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_MULTITABLA_DETALLE.getMensaje", codigo).get(0).toString();
 	}
 	
-	public int update(MultitablaDetalle record) {
+	public int update(MultitablaDetalle record) throws Exception {
 	    int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_MULTITABLA_DETALLE.updated", record);
         return rows;
     }
