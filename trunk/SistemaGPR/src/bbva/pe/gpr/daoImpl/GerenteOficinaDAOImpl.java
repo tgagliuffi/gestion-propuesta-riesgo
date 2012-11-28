@@ -13,24 +13,24 @@ public class GerenteOficinaDAOImpl extends SqlMapClientDaoSupport implements
 		super();
 	}
 
-	public String getJefeInmediatoOficina(String codUsuario) {
-		if(!getSqlMapClientTemplate().queryForList("CARDEL_TGPR_RIESGOS.getJefeInmediatoOficina", codUsuario).isEmpty()){
-			return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_RIESGOS.getJefeInmediatoOficina", codUsuario).get(0).toString();
+	public String getJefeInmediatoOficina(String codUsuario) throws Exception{
+		if(!getSqlMapClientTemplate().queryForList("DELGPR_TGPR_RIESGOS.getJefeInmediatoOficina", codUsuario).isEmpty()){
+			return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_RIESGOS.getJefeInmediatoOficina", codUsuario).get(0).toString();
 		}else{
 			return "";
 		}    
 	}
 
-	public String getJefeInmediatoRiesgo(String codUsuario) {
-		if(!getSqlMapClientTemplate().queryForList("CARDEL_TGPR_RIESGOS.getJefeInmediatoRiesgo", codUsuario).isEmpty()){
-			return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_RIESGOS.getJefeInmediatoRiesgo", codUsuario).get(0).toString();
+	public String getJefeInmediatoRiesgo(String codUsuario) throws Exception{
+		if(!getSqlMapClientTemplate().queryForList("DELGPR_TGPR_RIESGOS.getJefeInmediatoRiesgo", codUsuario).isEmpty()){
+			return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_RIESGOS.getJefeInmediatoRiesgo", codUsuario).get(0).toString();
 		}else{
 			return "";
 		}
 	}
 
-	public String getUsuarioTipo(String codUsuario) {
-		Usuario record = (Usuario) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_USUARIOS.getTipoPersona", codUsuario);
+	public String getUsuarioTipo(String codUsuario)throws Exception {
+		Usuario record = (Usuario) getSqlMapClientTemplate().queryForObject("CARDEL_TCARDEL_USUARIOS.getTipoPersona", codUsuario);
 	    return record.getCodigoUsuario();	
 	    }
 }
