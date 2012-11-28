@@ -90,16 +90,16 @@ public class ControlServiceImpl implements ControlService {
 		if (	metodoGenericoCondCliente(Constant.TABLA_BUREAU, getBureau).equals("1")&& 
 				metodoGenericoCondCliente(Constant.TABLA_BBVA, getBbva).equals("1") && 
 				metodoGenericoCondCliente(Constant.TABLA_SISTEMA_FINANCIERO, getSiFinan).equals("1") && 
-				metodoGenericoCondCliente(Constant.TABLA_RELEVANCIA_PUBLICA, getRelPub).equals("1") && 
-				metodoGenericoCondCliente(Constant.TABLA_INELEGIBLES, getInele).equals("1")) {
+				metodoGenericoCondCliente(Constant.TABLA_RELEVANCIA_PUBLICA, getRelPub).equals("0") && 
+				metodoGenericoCondCliente(Constant.TABLA_INELEGIBLES, getInele).equals("0")) {
 				return 1;
 			} else
 				return 0;
 	}
 	
 	public String mensajeCondicionCliente(Solicitud solicitud ) throws Exception{
-		String mensaje="",bureau=Constant.NO_APTO,bBVA=Constant.NO_APTO,sistemaFin=Constant.NO_APTO,relevaPub="",inelegibles="";
-		String getBureau = "",getBbva = "",getSiFinan = "",getRelPub = "",getInele = "";
+		String mensaje=Constant.STR_VACIO,bureau=Constant.NO_APTO,bBVA=Constant.NO_APTO,sistemaFin=Constant.NO_APTO,relevaPub=Constant.STR_VACIO,inelegibles=Constant.STR_VACIO;
+		String getBureau = Constant.STR_VACIO,getBbva =Constant.STR_VACIO,getSiFinan =Constant.STR_VACIO,getRelPub =Constant.STR_VACIO,getInele = Constant.STR_VACIO;
 
 		    getBureau = (solicitud.getCondicionCliente().getBureau()!=null?solicitud.getCondicionCliente().getBureau():"");
 			getBbva = (solicitud.getCondicionCliente().getBbvaa()!=null?solicitud.getCondicionCliente().getBbvaa():"");
@@ -112,27 +112,27 @@ public class ControlServiceImpl implements ControlService {
 		String valorSistemaFin=metodoGenericoCondCliente(Constant.TABLA_SISTEMA_FINANCIERO, getSiFinan);
 		String valorRelevaPubl=metodoGenericoCondCliente(Constant.TABLA_RELEVANCIA_PUBLICA, getRelPub);
 		String valorInelegibles=metodoGenericoCondCliente(Constant.TABLA_INELEGIBLES, getInele);
-      	if(!getBureau.equals("")){
+      	if(!getBureau.equals(Constant.STR_VACIO)){
     		if(!valorBureau.equals("1")){
     	      	 bureau=multitablaDetalleDAO.getDescripcion(getBureau);
     		}else bureau=Constant.APTO;
       	}
-    	if(!getBbva.equals("")){
+    	if(!getBbva.equals(Constant.STR_VACIO)){
     		if(!valorBBVA.equals("1")){
     			bBVA=multitablaDetalleDAO.getDescripcion(getBbva);
     		}else bBVA=Constant.APTO;
 		}
-    	if(!getSiFinan.equals("")){
+    	if(!getSiFinan.equals(Constant.STR_VACIO)){
     		if(!valorSistemaFin.equals("1")){
     			sistemaFin=multitablaDetalleDAO.getDescripcion(getSiFinan);
     		}else sistemaFin=Constant.APTO;
     	}
-    	if(!getRelPub.equals("")){
+    	if(!getRelPub.equals(Constant.STR_VACIO)){
     		if(valorRelevaPubl.equals("1")){
     			relevaPub=Constant.NO_APTO;
     		}else relevaPub=Constant.APTO;
     	}
-    	if(!valorInelegibles.equals("")){
+    	if(!valorInelegibles.equals(Constant.STR_VACIO)){
     		if(valorInelegibles.equals("1")){
     			inelegibles=Constant.NO_APTO;
     		}else inelegibles=Constant.APTO;

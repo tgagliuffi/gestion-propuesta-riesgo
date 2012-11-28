@@ -57,10 +57,12 @@ public class ValidacionServiceImpl implements ValidacionService {
 		 		Garantia garantia=garantiaDAO.getProductoGarantia(solicitudes.getCodProducto().toString());
 		 		if(garantia!=null){
 		 			GarantiaDetalle garantiaDetalle=garantiaDetalleDAO.garantiaDetalle(garantia.getCodGarantia().toString());
+		 			if(garantiaDetalle!=null){
 			 		codDetalle=garantiaDetalle.getCodConfiguracion();
 			 		CartasDelegaciones cartasDelegaciones=getCartasOficinaRating(solicitud.getRating(),codUsuario,codDetalle.toString());    
 			 		montoOficina=(cartasDelegaciones.getMontos()!=null?cartasDelegaciones.getMontos():BigDecimal.ZERO);
 			 		plazoOficina=(cartasDelegaciones.getPlazos());
+		 		}
 		 		}
 		 //cartas delegacion
 		 		BigDecimal montoSolicitud=solicitudes.getMtoProducto();
@@ -85,10 +87,12 @@ public class ValidacionServiceImpl implements ValidacionService {
 		 		Garantia garantia=garantiaDAO.getProductoGarantia(solicitudes.getCodProducto().toString());
 		 		if(garantia!=null){
 		 			GarantiaDetalle garantiaDetalle=garantiaDetalleDAO.garantiaDetalle(garantia.getCodGarantia().toString());
+		 			if(garantiaDetalle!=null){
 			 		codDetalle=garantiaDetalle.getCodConfiguracion();
 			 		CartasDelegaciones cartasDelegaciones=getCartasOficinaRating(solicitud.getRating(),codUsuario,codDetalle.toString());    
 			 		montoOficina=(cartasDelegaciones.getMontos()!=null?cartasDelegaciones.getMontos():BigDecimal.ZERO);
 			 		plazoOficina=(cartasDelegaciones.getPlazos());
+		 		}
 		 		}
 		 //cartas delegacion
 		 		BigDecimal montoSolicitud=solicitudes.getMtoProducto();
@@ -112,11 +116,13 @@ public class ValidacionServiceImpl implements ValidacionService {
 				Garantia garantia=garantiaDAO.getProductoGarantia(solicitudes.getCodProducto().toString());
 				if(garantia!=null){
 		 			GarantiaDetalle garantiaDetalle=garantiaDetalleDAO.garantiaDetalle(garantia.getCodGarantia().toString());
+		 			if(garantiaDetalle!=null){
 			 		codDetalle=garantiaDetalle.getCodConfiguracion();
 			 		CartasDelegaciones cartasDelegaciones=getCartasOficinaRating(solicitud.getRating(),codUsuario,codDetalle.toString());    
 			 		montoOficina=(cartasDelegaciones.getMontos()!=null?cartasDelegaciones.getMontos():BigDecimal.ZERO);
 			 		plazoOficina=(cartasDelegaciones.getPlazos());
 		 		}
+				}
 				BigDecimal montoSolicitud=solicitudes.getMtoProducto();
 				int plazoSolicitud=solicitudes.getPlazo();
 						if((montoOficina.compareTo(montoSolicitud)==0 || montoOficina.compareTo(montoSolicitud)==1) && plazoSolicitud <= plazoOficina){
