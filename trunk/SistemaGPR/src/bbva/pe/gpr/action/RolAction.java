@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -23,7 +24,7 @@ import bbva.pe.gpr.util.Constant;
 import bbva.pe.gpr.util.ReadProperties;
 
 public class RolAction extends DispatchAction{
-
+	private static Logger logger = Logger.getLogger(RolAction.class);
 	private CatalogoService catalogoService; 
 	public RolAction() {
 		catalogoService = (CatalogoService)Context.getInstance().getBean("catalogoService");
@@ -43,7 +44,7 @@ public class RolAction extends DispatchAction{
 	
 	public ActionForward guardarCanalAjax(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-			
+			try {
 		    RolesForm rolesForm =(RolesForm)form;
 		    String codRolHdn=rolesForm.getCodRolHdn();
 			String codRol = rolesForm.getCodRol();
@@ -58,6 +59,9 @@ public class RolAction extends DispatchAction{
 				response.setStatus(500);
 				response.getWriter().write(readProperties.getProperty(mapResult.get("msgError")));
 			}
+			}catch (Exception e) {
+				logger.error("RolAction.guardarCanalAjax", e);
+			}
 			return null;
 		}
 	
@@ -71,6 +75,7 @@ public class RolAction extends DispatchAction{
 		request.setAttribute("getRolForm",rolForm);
 		}catch (Exception e) {
 			System.out.print("Error " + e.getLocalizedMessage());
+			logger.error("RolAction.listarRolesFunciones", e);
 		}
 		return mapping.findForward("rolFunciones");
 	}
