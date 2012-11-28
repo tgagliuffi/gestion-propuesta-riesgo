@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -19,6 +20,7 @@ import bbva.pe.gpr.util.Constant;
 import bbva.pe.gpr.util.JSONObject;
 
 public class CondicionClienteAction extends DispatchAction {
+	private static Logger logger = Logger.getLogger(CondicionClienteAction.class);
 	private CatalogoService catalogoService;
 	
 	public CondicionClienteAction() {
@@ -26,7 +28,7 @@ public class CondicionClienteAction extends DispatchAction {
 	}
 
 	public ActionForward listarCondicion(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+		try{
 		List<MultitablaDetalle> multitablaDetalleBBVA = catalogoService.getLstMultitablaDetalle(Constant.TABLA_BBVA);
 		request.setAttribute("multitablaDetalleBBVA", multitablaDetalleBBVA);
 
@@ -41,7 +43,9 @@ public class CondicionClienteAction extends DispatchAction {
 
 		List<MultitablaDetalle> multitablaDetalleInele = catalogoService.getLstMultitablaDetalle(Constant.TABLA_INELEGIBLES);
 		request.setAttribute("multitablaDetalleInele", multitablaDetalleInele);
-
+ 		}catch (Exception e) {
+ 			logger.error("CondicionClienteAction.listarCondicion", e);
+ 		}
 		return mapping.findForward("condicionCliente");
 	}
 
@@ -109,6 +113,7 @@ public class CondicionClienteAction extends DispatchAction {
 		} catch (Exception e) {
 			jsonObjectRoot.put("success", false);
 			jsonObjectRoot.put("message", e.getCause());
+			logger.error("CondicionClienteAction.actualizarCondicion", e);
 		}
 		out.print(jsonObjectRoot.toString());
 		out.flush();
