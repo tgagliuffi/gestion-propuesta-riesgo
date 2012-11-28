@@ -9,7 +9,6 @@ public interface ControlService {
 	int condicionCliente(Solicitud solicitud)throws Exception;
 	int validacionMontosPlazos(Solicitud solicitud,String codGestor )throws Exception;
 	String metodoGenericoCondCliente(String codMultiTabla, String codValor)throws Exception;
-	String getLstValoresCondicion(String codMultiTabla)throws Exception;
 	Delegacion getDelegacion(String idUsuario)throws Exception;
 	String jefeInmediato(String codUsuario,Solicitud solicitud)throws Exception;
 }
