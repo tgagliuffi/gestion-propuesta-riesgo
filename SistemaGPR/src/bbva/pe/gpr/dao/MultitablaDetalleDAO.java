@@ -18,4 +18,5 @@ public interface MultitablaDetalleDAO {
 	int updateCondicionCliente(MultitablaDetalle record)throws Exception ;
 	List<MultitablaDetalle> getLstValoresCondicion(String codMult );
 	String getDescripcion(String codigo)throws Exception ;
+	int update(MultitablaDetalle record)throws Exception;
 }
