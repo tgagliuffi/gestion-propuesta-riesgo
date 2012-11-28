@@ -142,11 +142,14 @@ public class AsignarOficinaAction extends DispatchAction {
 			oficinaAsignada.setCod_oficina(codOficina);
 			oficinaAsignada.setCod_usuario(codigoUsuario);
 			oficinaAsignada.setEstado(Constant.ESTADO_ACTIVO);
-			
-			if(catalogoService.getUsuarioTipo(codigoUsuario).equals(Constant.USUARIO_OFICINA)){
+			String tipo=(catalogoService.getUsuarioTipo(codigoUsuario)!=null?catalogoService.getUsuarioTipo(codigoUsuario):"");
+			if(tipo.equals(Constant.USUARIO_OFICINA)){
 			return "Oficina";				
 			}else{
-				catalogoService.saveOficinaAsignada(oficinaAsignada);						
+				String asignacion=catalogoService.getOficinaAsignadaExiste(oficinaAsignada);
+				if(!asignacion.equals("1")){
+				 catalogoService.saveOficinaAsignada(oficinaAsignada);						
+				 }
 				return "No existe";
 			}
 		} catch (Exception e) {
