@@ -278,7 +278,7 @@ public class CatalogoServiceImpl implements CatalogoService{
 	    return oficinaDAO.updateByPrimaryKeySelective(record);
 	  }
     
-	  public List<Oficina> getLstOficinaxTerritorio(Oficina oficina) {
+	  public List<Oficina> getLstOficinaxTerritorio(Oficina oficina) throws Exception {
 		return oficinaDAO.getLstOficinaxTerritorio(oficina);
 	  }
 
