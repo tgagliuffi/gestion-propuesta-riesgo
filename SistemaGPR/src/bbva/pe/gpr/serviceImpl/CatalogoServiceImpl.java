@@ -480,11 +480,11 @@ public class CatalogoServiceImpl implements CatalogoService{
 		 return funcionDAO.getLstFuncionByCriteria(funcionBean);
 	 }
 
-	public String getJefeInmediatoOficina(String codUsuario) {
+	public String getJefeInmediatoOficina(String codUsuario) throws Exception{
 		return gerenteOficinaDAO.getJefeInmediatoOficina(codUsuario);
 	}
 
-	public String getJefeInmediatoRiesgo(String codUsuario) {
+	public String getJefeInmediatoRiesgo(String codUsuario)throws Exception {
 		return gerenteOficinaDAO.getJefeInmediatoRiesgo(codUsuario);
 	}
 
@@ -504,7 +504,7 @@ public class CatalogoServiceImpl implements CatalogoService{
 		return rolDAO.getLstRol();
 	}
 
-	public String getUsuarioTipo(String codUsuario) {
+	public String getUsuarioTipo(String codUsuario) throws Exception{
 		return gerenteOficinaDAO.getUsuarioTipo(codUsuario);
 	}
 
