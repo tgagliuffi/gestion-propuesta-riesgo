@@ -370,8 +370,12 @@ public class CatalogoServiceImpl implements CatalogoService{
 		int rows=multitablaDetalleDAO.updateCondicionCliente(record);
 	    return rows;
 	  }
-	
-  
+
+	  public int update(MultitablaDetalle record) throws Exception {
+		int rows=multitablaDetalleDAO.update(record);
+		return rows;
+	  }  
+      
   /*#####################################################################################################
    * 
    * 	
@@ -522,5 +526,5 @@ public class CatalogoServiceImpl implements CatalogoService{
 			return "0";
 		}
 			return "1";
-	}  
+	}
 }
