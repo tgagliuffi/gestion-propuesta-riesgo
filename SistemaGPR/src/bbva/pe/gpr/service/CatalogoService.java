@@ -142,9 +142,9 @@ public interface CatalogoService {
    * 	
    *                         TGPR_GERENTE_OFICINA
    *##################################################################################################### */
-	  String getJefeInmediatoOficina(String codUsuario);
-	  String getJefeInmediatoRiesgo(String codUsuario);
-	  String getUsuarioTipo(String codUsuario);
+	  String getJefeInmediatoOficina(String codUsuario)throws Exception;
+	  String getJefeInmediatoRiesgo(String codUsuario)throws Exception;
+	  String getUsuarioTipo(String codUsuario)throws Exception;
    /*#####################################################################################################
 	   * 
 	   * 	
