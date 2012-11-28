@@ -60,7 +60,7 @@ public interface CatalogoService {
 	  public void insertSelective(Oficina record)throws Exception ;
 	  public Oficina selectByPrimaryKey(String codOficina)throws Exception ;
 	  public int updateByPrimaryKeySelective(Oficina record)throws Exception ;
-	  List<Oficina> getLstOficinaxTerritorio(Oficina oficina);
+	  List<Oficina> getLstOficinaxTerritorio(Oficina oficina)throws Exception ;
 	  List<Oficina> getLstOficinaByCriteria(Oficina record)throws Exception ;
   
   /*#####################################################################################################
