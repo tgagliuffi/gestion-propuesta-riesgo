@@ -53,10 +53,45 @@ public class CondicionClienteAction extends DispatchAction {
 		try {
 			String idChecked = request.getParameter("idChecked");
 			String idNochecked = request.getParameter("idNochecked");
+			String idCheckedBbva = request.getParameter("idCheckedBbva");
+			String idNocheckedBbva = request.getParameter("idNocheckedBbva");
+			String idCheckedSisFi = request.getParameter("idCheckedSisFi");
+			String idNoCheckedSisFi = request.getParameter("idNoCheckedSisFi");
 
 			String[] idElementoSelect = idChecked.split(",");
 			String[] idElementoNoSelect = idNochecked.split(",");
-
+			String[] idElementoSelectBbva = idCheckedBbva.split(",");
+			String[] idElementoNoSelectBbva = idNocheckedBbva.split(",");
+			String[] idElementoSelectSisFi = idCheckedSisFi.split(",");
+			String[] idElementoNoSelectSisFi = idNoCheckedSisFi.split(",");
+			for (String idValor : idElementoSelectBbva) {
+				MultitablaDetalle multitablaDetalle = new MultitablaDetalle();
+				multitablaDetalle.setCodElemento(idValor);
+				multitablaDetalle.setNumberValor(new BigDecimal(1));
+				multitablaDetalle.setCodMultitabla(Constant.TABLA_BBVA);
+				catalogoService.update(multitablaDetalle);
+			}
+			for (String idValorN : idElementoNoSelectBbva) {
+				MultitablaDetalle multitablaDetalle = new MultitablaDetalle();
+				multitablaDetalle.setCodElemento(idValorN);
+				multitablaDetalle.setNumberValor(new BigDecimal(0));
+				multitablaDetalle.setCodMultitabla(Constant.TABLA_BBVA);				
+				catalogoService.update(multitablaDetalle);
+			}
+			for (String idValor : idElementoSelectSisFi) {
+				MultitablaDetalle multitablaDetalle = new MultitablaDetalle();
+				multitablaDetalle.setCodElemento(idValor);
+				multitablaDetalle.setNumberValor(new BigDecimal(1));
+				multitablaDetalle.setCodMultitabla(Constant.TABLA_SISTEMA_FINANCIERO);
+				catalogoService.update(multitablaDetalle);
+			}
+			for (String idValorN : idElementoNoSelectSisFi) {
+				MultitablaDetalle multitablaDetalle = new MultitablaDetalle();
+				multitablaDetalle.setCodElemento(idValorN);
+				multitablaDetalle.setNumberValor(new BigDecimal(0));
+				multitablaDetalle.setCodMultitabla(Constant.TABLA_SISTEMA_FINANCIERO);				
+				catalogoService.update(multitablaDetalle);
+			}
 			for (String idValor : idElementoSelect) {
 				MultitablaDetalle multitablaDetalle = new MultitablaDetalle();
 				multitablaDetalle.setCodElemento(idValor);
