@@ -45,7 +45,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 	public GerenteOficinaDAO getGerenteOficinaDAO() {return gerenteOficinaDAO;}
 	public void setGerenteOficinaDAO(GerenteOficinaDAO gerenteOficinaDAO) {this.gerenteOficinaDAO = gerenteOficinaDAO;}
 
-	public int oficinaConRating(Solicitud solicitud,String codUsuario) {
+	public int oficinaConRating(Solicitud solicitud,String codUsuario)  throws Exception{
 		int valorRetorno=0,plazoOficina=0;
 		BigDecimal codDetalle=BigDecimal.ZERO;
 		BigDecimal montoOficina=BigDecimal.ZERO;
@@ -77,7 +77,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 		 				return 0;			
 	}
 
-	public int oficinaSinRating(Solicitud solicitud,String codUsuario) {
+	public int oficinaSinRating(Solicitud solicitud,String codUsuario) throws Exception {
 			
 		int valorRetorno=0,plazoOficina=0;
 		BigDecimal codDetalle=BigDecimal.ZERO;
@@ -107,7 +107,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 		 				return 0;	
 	}
 
-	public int oficinaPersonaNatural(Solicitud solicitud,String codUsuario) {
+	public int oficinaPersonaNatural(Solicitud solicitud,String codUsuario) throws Exception {
 		int valorRetorno=0,plazoOficina=0;
 		BigDecimal codDetalle=BigDecimal.ZERO;
 		BigDecimal montoOficina=BigDecimal.ZERO;
@@ -135,7 +135,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 					return 0;	
 	}
 
-	public int riesgoPorRating(Solicitud solicitud,String codUsuario) {
+	public int riesgoPorRating(Solicitud solicitud,String codUsuario) throws Exception {
 		int valorRetorno=0;
 		List<SolicitudDetalle> getLstSolicitudDetalles = solicitudDetalleDAO.getListSolicitudDetalleForId(solicitud);
 		if (getLstSolicitudDetalles.size()<=0){
@@ -155,7 +155,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 			    	return 0;
 	}
 
-	public int riesgoSinRating(Solicitud solicitud,String codUsuario) {
+	public int riesgoSinRating(Solicitud solicitud,String codUsuario) throws Exception {
 		int valorRetorno=0;
 		List<SolicitudDetalle> getLstSolicitudDetalles = solicitudDetalleDAO.getListSolicitudDetalleForId(solicitud);
 		if (getLstSolicitudDetalles.size()<=0){
@@ -175,7 +175,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 					return 0;	
 	}
 
-	public int riesgoPersonaNatural(Solicitud solicitud,String codUsuario) {
+	public int riesgoPersonaNatural(Solicitud solicitud,String codUsuario) throws Exception {
 		int valorRetorno=0;
 		List<SolicitudDetalle> getLstSolicitudDetalles = solicitudDetalleDAO.getListSolicitudDetalleForId(solicitud);
 		if (getLstSolicitudDetalles.size()<=0){
@@ -200,7 +200,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 			    return 0;	
 	}
 
-	public int riesgoPorRatingIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle, String codUsuario) {	
+	public int riesgoPorRatingIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle, String codUsuario) throws Exception {	
 		int valorRetorno=0;
 		//cartas delegacion
 		BigDecimal montoRiesgos=cartasRiesgosDAO.montDelegacionRating(codUsuario,solicitud.getRating());
@@ -216,7 +216,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 			    	return 0;
 	}
 
-	public int riesgoSinRatingIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle, String codUsuario) {
+	public int riesgoSinRatingIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle, String codUsuario) throws Exception {
 		int valorRetorno=0;
 		//cartas delegacion
 		BigDecimal montoRiesgos=cartasRiesgosDAO.montDelegacionSinRating(codUsuario,Constant.GRUPO_SIN_RATING);			
@@ -232,7 +232,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 					return 0;	
 		}
 
-	public int riesgoPersonaNaturalIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle, String codUsuario) {
+	public int riesgoPersonaNaturalIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle, String codUsuario) throws Exception {
 		int valorRetorno=0;
 		List<ProductoDelegacion> getLstProducto=cartasRiesgosDAO.getDelegacionPersonaNatural(codUsuario);
 		if(getLstProducto.size()<=0){
@@ -254,7 +254,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 		}
 
 
-	public int oficinaPorRatingIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle, String codUsuario) {
+	public int oficinaPorRatingIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle, String codUsuario)  throws Exception{
 		int valorRetorno=0;
 		BigDecimal codDetalle=BigDecimal.ZERO;
 		BigDecimal montoOficina=BigDecimal.ZERO;
@@ -283,7 +283,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 	}
 
 
-	public int oficinaSinRatingIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle, String codUsuario) {
+	public int oficinaSinRatingIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle, String codUsuario) throws Exception {
 		int valorRetorno=0;
 		BigDecimal codDetalle=BigDecimal.ZERO;
 		BigDecimal montoOficina=BigDecimal.ZERO;
@@ -311,7 +311,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 		 				return 0;
 	}
 
-	public int oficinaPersonaNaturalIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle, String codUsuario) {
+	public int oficinaPersonaNaturalIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle, String codUsuario)  throws Exception{
 		int valorRetorno=0;
 		List<ProductoDelegacion> getLstProducto=cartasRiesgosDAO.getDelegacionPersonaNatural(codUsuario);
 		if(getLstProducto.size()<=0){
@@ -332,7 +332,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 			    return 0;	
 	}
 	
-	public int metodoEncapsulado(Solicitud solicitud,String codUsuario) {
+	public int metodoEncapsulado(Solicitud solicitud,String codUsuario) throws Exception {
 		int valorRetorno=0;
 		String tipopersona=gerenteOficinaDAO.getUsuarioTipo(codUsuario);
 		String grupo=solicitud.getGrupoPersona();
@@ -361,7 +361,7 @@ public class ValidacionServiceImpl implements ValidacionService {
 				return valorRetorno;
 		}
 	
-	public int metodoEncapsuladoIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle, String codUsuario) {
+	public int metodoEncapsuladoIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle, String codUsuario) throws Exception {
 		int valorRetorno=0;
 		String tipopersona=gerenteOficinaDAO.getUsuarioTipo(codUsuario);
 		String grupo=solicitud.getGrupoPersona();
