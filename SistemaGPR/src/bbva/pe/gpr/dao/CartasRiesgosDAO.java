@@ -7,8 +7,8 @@ import bbva.pe.gpr.bean.ProductoDelegacion;
 
 public interface CartasRiesgosDAO {
 
-	BigDecimal montDelegacionSinRating(String codUsuario,String grupoPersona);
-	BigDecimal montDelegacionRating(String codUsuario,String escala);
-	List<ProductoDelegacion> getDelegacionPersonaNatural(String codUsuario);
-	String montoDelegacionUsuario(String codUsuario,String tipoPersona);
+	BigDecimal montDelegacionSinRating(String codUsuario,String grupoPersona) throws Exception;
+	BigDecimal montDelegacionRating(String codUsuario,String escala) throws Exception;
+	List<ProductoDelegacion> getDelegacionPersonaNatural(String codUsuario) throws Exception;
+	String montoDelegacionUsuario(String codUsuario,String tipoPersona) throws Exception;
 }
