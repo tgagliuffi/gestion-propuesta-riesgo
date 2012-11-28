@@ -21,7 +21,7 @@ public class CartasRiesgoDAOImpl extends SqlMapClientDaoSupport implements Carta
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<ProductoDelegacion> getDelegacionPersonaNatural(String codUsuario) {
+	public List<ProductoDelegacion> getDelegacionPersonaNatural(String codUsuario) throws Exception {
     	Map parm = new HashMap();
     	parm.put("codUsuario", codUsuario);
 		getSqlMapClientTemplate().queryForList("DELGPR_TGPR_RIESGOS.getLstProductoPersonaNatural",parm);
@@ -29,7 +29,7 @@ public class CartasRiesgoDAOImpl extends SqlMapClientDaoSupport implements Carta
          return lista;
 	}
 
-	public BigDecimal montDelegacionSinRating(String codUsuario,String grupoPersona) {
+	public BigDecimal montDelegacionSinRating(String codUsuario,String grupoPersona) throws Exception {
 		Solicitud solicitud= new Solicitud();
 		solicitud.setGestorCod(codUsuario);
 		solicitud.setGrupoPersona(grupoPersona);
@@ -40,7 +40,7 @@ public class CartasRiesgoDAOImpl extends SqlMapClientDaoSupport implements Carta
 		return user.getMtoMaxDelegacion();
 	}
 
-	public BigDecimal montDelegacionRating(String codUsuario, String escala) {
+	public BigDecimal montDelegacionRating(String codUsuario, String escala) throws Exception {
 		Solicitud solicitud= new Solicitud();
 		solicitud.setGestorCod(codUsuario);
 		solicitud.setGrupoPersona(escala);
@@ -51,7 +51,7 @@ public class CartasRiesgoDAOImpl extends SqlMapClientDaoSupport implements Carta
 		return 	user.getMtoMaxDelegacion();
 	}
 	
-	public String montoDelegacionUsuario(String codUsuario,String tipoPersona) {
+	public String montoDelegacionUsuario(String codUsuario,String tipoPersona) throws Exception {
 		Solicitud solicitud= new Solicitud();
 		solicitud.setGestorCod(codUsuario);
 		solicitud.setGrupoPersona(tipoPersona);
