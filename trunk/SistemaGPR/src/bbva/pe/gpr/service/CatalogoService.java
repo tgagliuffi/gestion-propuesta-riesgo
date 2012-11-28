@@ -102,7 +102,7 @@ public interface CatalogoService {
 	  public int updateMultitablaDTByPrimaryKeySelective(MultitablaDetalle record)throws Exception ;	  
 	  public List<MultitablaDetalle> getLstMultitablaDetalle(String codMult)throws Exception ;
 	  int updateCondicionCliente(MultitablaDetalle record)throws Exception ;
-  
+      int update(MultitablaDetalle record)throws Exception ; 
   /*#####################################################################################################
    * 
    * 								TGPR_USUARIO
