@@ -39,7 +39,32 @@ List<MultitablaDetalle> usuarioInele = (List<MultitablaDetalle>)request.getAttri
 <script type="text/javascript">
 function save_condicion(){
 	var idChecked = '';
-	   var idNochecked='';
+	var idNochecked='';
+	var idCheckedBbva = '';
+	var idNocheckedBbva='';
+	var idCheckedSisFi = '';
+	var idNocheckedSisFi='';
+
+       $("input:checkbox[name^='checkBbva']").each(function(index,e){
+           var $this = $(this);
+           if($this.is(":checked")){
+               var v = $this.attr("id");
+               idCheckedBbva += v +',';
+           	}else{
+        	    var g = $this.attr("id");
+        	    idNocheckedBbva += g +',';
+           		 }
+           });
+       $("input:checkbox[name^='checkSisFin']").each(function(index,e){
+           var $this = $(this);
+           if($this.is(":checked")){
+               var v = $this.attr("id");
+               idCheckedSisFi += v +',';
+           	}else{
+        	    var g = $this.attr("id");
+        	    idNocheckedSisFi += g +',';
+           		 }
+           });
        $("input:checkbox[name^='checkCliente']").each(function(index,e){
            var $this = $(this);
            if($this.is(":checked")){
@@ -50,12 +75,17 @@ function save_condicion(){
                 idNochecked += g +',';
            		 }
            });
+       
        $.ajax({
            url: "condicionCliente.do?method=actualizarCondicion",
            type: "POST",
            data: { 
         	   idChecked:idChecked,
-        	   idNochecked:idNochecked
+        	   idNochecked:idNochecked,
+        	   idCheckedBbva:idCheckedBbva,
+        	   idNocheckedBbva:idNocheckedBbva,
+        	   idCheckedSisFi:idCheckedSisFi,
+        	   idNoCheckedSisFi:idNocheckedSisFi
         	   },
            cache: false,
            success: function (response,request) {
@@ -104,9 +134,9 @@ function save_condicion(){
 				<% for(int i=0;i<usuarioBbva.size();i++) {%>
 	            <% if(usuarioBbva.get(i).getNumberValor()!=null) {%>
     			    <% if(usuarioBbva.get(i).getNumberValor().intValue()==1) {%>
-     				<input type="checkbox" name="checkCliente" class="cajaTexto" id="<%= usuarioBbva.get(i).getCodElemento() %>" checked="checked"><%=usuarioBbva.get(i).getStrValor()%><br>
+     				<input type="checkbox" name="checkBbva" class="cajaTexto" id="<%= usuarioBbva.get(i).getCodElemento() %>" checked="checked"><%=usuarioBbva.get(i).getStrValor()%><br>
 				    <% } else {%>
-				    <input type="checkbox" name="checkCliente" class="cajaTexto" id="<%= usuarioBbva.get(i).getCodElemento() %>" ><%=usuarioBbva.get(i).getStrValor()%><br>
+				    <input type="checkbox" name="checkBbva" class="cajaTexto" id="<%= usuarioBbva.get(i).getCodElemento() %>" ><%=usuarioBbva.get(i).getStrValor()%><br>
 				    <%}   %>     				
 				<% }%>
 				<% }%>
@@ -124,9 +154,9 @@ function save_condicion(){
 	            <% for(int i=0;i<usuarioSiFinan.size();i++) {%>
     			<% if(usuarioSiFinan.get(i).getNumberValor()!=null) {%>
     			    <% if(usuarioSiFinan.get(i).getNumberValor().intValue()==1) {%>
-     				<input type="checkbox" name="checkCliente" class="cajaTexto" id="<%= usuarioSiFinan.get(i).getCodElemento() %>" checked="checked"><%=usuarioSiFinan.get(i).getStrValor()%><br>
+     				<input type="checkbox" name="checkSisFin" class="cajaTexto" id="<%= usuarioSiFinan.get(i).getCodElemento() %>" checked="checked"><%=usuarioSiFinan.get(i).getStrValor()%><br>
 				    <% } else {%>
-				    <input type="checkbox" name="checkCliente" class="cajaTexto" id="<%= usuarioSiFinan.get(i).getCodElemento() %>"><%=usuarioSiFinan.get(i).getStrValor()%><br>
+				    <input type="checkbox" name="checkSisFin" class="cajaTexto" id="<%= usuarioSiFinan.get(i).getCodElemento() %>"><%=usuarioSiFinan.get(i).getStrValor()%><br>
 				    <%}   %>     				
 				<% }%>
 				<% }%>
