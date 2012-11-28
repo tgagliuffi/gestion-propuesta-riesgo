@@ -25,7 +25,7 @@ public class SeguridadServiceImpl implements SeguridadService {
 	private FuncionRolDAO funcionRolDAO;
 	private MenuDAO menuDAO;
 	private MenuRolDAO menuRolDAO;
-
+    
 	public SeguridadServiceImpl(FuncionDAO funcionDAO, RolDAO rolDAO,
 			UsuarioRolDAO usuarioRolDAO, FuncionRolDAO funcionRolDAO,
 			MenuDAO menuDAO, MenuRolDAO menuRolDAO) {
@@ -117,6 +117,7 @@ public class SeguridadServiceImpl implements SeguridadService {
 	public void saveUsuarioRol(String codUsuario, String codRoles)
 			throws Exception {
 		UsuarioRol usuarioRol = new UsuarioRol();
+		int valor=0;
 		String[] valores = codRoles.split(",");
 		for (String idRoles : valores) {
 			if (!idRoles.equals("")) {
@@ -124,8 +125,11 @@ public class SeguridadServiceImpl implements SeguridadService {
 				usuarioRol.setEstado(Constant.ESTADO_ACTIVO);
 				usuarioRol.setCodUsuario(codUsuario);
 				usuarioRol.setDescripcion("ingreso");
+			UsuarioRol user=usuarioRolDAO.selectByPrimaryKey(usuarioRol);
+			if(user==null){
 				usuarioRolDAO.insertSelective(usuarioRol);
-			}
+				}
+				}
 		}
 	}
 
