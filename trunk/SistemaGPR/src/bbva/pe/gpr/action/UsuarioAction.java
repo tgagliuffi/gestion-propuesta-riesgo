@@ -19,6 +19,7 @@ import java.util.Vector;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -54,6 +55,7 @@ import com.grupobbva.bc.per.tele.ldap.comunes.IILDPeExcepcion;
 import com.grupobbva.bc.per.tele.ldap.serializable.IILDPeUsuario;
 
 public class UsuarioAction  extends DispatchAction{
+	private static Logger logger = Logger.getLogger(UsuarioAction.class);
 	private CatalogoService catalogoService; 
 	private SeguridadService seguridadService;
 	
@@ -73,6 +75,7 @@ public class UsuarioAction  extends DispatchAction{
 			request.setAttribute("getLstRoles", catalogoService.getLstRolesByCriteria(rolBean));
 			}catch (Exception e) {
 				System.out.print("Error " + e.getLocalizedMessage());
+				logger.error("Exception UsuarioAction.listarUsuarios: " + e.getMessage());
 			}
 		return mapping.findForward("parametriaUsuario");
 	}
@@ -94,6 +97,7 @@ public class UsuarioAction  extends DispatchAction{
 		    List<Usuario> getLstUser = catalogoService.getLstUsuario(user);
 			return getLstUser;
 		    } catch (Exception e) {
+		    	logger.error("Exception UsuarioAction.consultarAjax: " + e.getMessage());
 			return new ArrayList<Usuario>();
 		}
 	}
@@ -111,6 +115,7 @@ public class UsuarioAction  extends DispatchAction{
 			    request.setAttribute("mensaje",strMensaje); 
 			}catch (Exception e) {
 				System.out.print("Error " + e.getLocalizedMessage());
+				logger.error("Exception UsuarioAction.configuracionUsuario: " + e.getMessage());
 			}
 		return mapping.findForward("configuracionUsuario");
 	}
@@ -130,6 +135,7 @@ public class UsuarioAction  extends DispatchAction{
 			return getLstFuncion;
 		    } catch (Exception e){
 			System.out.print(""+e.getMessage());
+			logger.error("Exception UsuarioAction.consultarFuncionAjax: " + e.getMessage());
 		    return new ArrayList<Funcion>();
 		}
 	}
@@ -141,6 +147,7 @@ public class UsuarioAction  extends DispatchAction{
 			List<Rol> getLstRoles= catalogoService.getLstRolesByCriteria(rolBean);
 			return getLstRoles;
 		    } catch (Exception e){
+		    logger.error("Exception UsuarioAction.consultarRolesAjax: " + e.getMessage());
 			System.out.print(""+e.getMessage());
 		    return new ArrayList<Rol>();
 		}
@@ -158,6 +165,7 @@ public class UsuarioAction  extends DispatchAction{
 		usuarioForm.setNombre(getLstUser.get(0).getNombres());
 		request.setAttribute("getUsuario",usuarioForm);
 		}catch (Exception e) {
+			logger.error("Exception UsuarioAction.listarRol: " + e.getMessage());
 			System.out.print("Error " + e.getLocalizedMessage());
 		}
 		return mapping.findForward("asignarRol");
@@ -176,6 +184,7 @@ public class UsuarioAction  extends DispatchAction{
 		usuarioForm.setDescripcionRol((getLstRoles.get(0).getDescripcion()));
 		request.setAttribute("getRol",usuarioForm);
 		}catch (Exception e) {
+			logger.error("Exception UsuarioAction.listarFunciones: " + e.getMessage());
 			System.out.print("Error " + e.getLocalizedMessage());
 		}
 		return mapping.findForward("asignarFunciones");		
@@ -189,6 +198,7 @@ public class UsuarioAction  extends DispatchAction{
 			List<FuncionRol> getLstFuncionRol= seguridadService.getLstFuncionRol(funcionRolBean);
 			return getLstFuncionRol;
 		} catch (Exception e) {
+			logger.error("Exception UsuarioAction.getLstFuncionRol: " + e.getMessage());
 			System.out.print(""+e.getMessage());
 			return new ArrayList<FuncionRol>();
 		}
@@ -203,6 +213,7 @@ public class UsuarioAction  extends DispatchAction{
         seguridadService.saveFuncionRol(funcionRolBean);
         return "Grabo";
 		} catch (Exception e) {
+			logger.error("Exception UsuarioAction.saveFuncionRolAjax: " + e.getMessage());
 			System.out.print(""+e.getMessage());
 		   return e.getMessage();
 		}
@@ -227,6 +238,7 @@ public class UsuarioAction  extends DispatchAction{
 			catalogoService.deleteOficinaAsignada(concatIds);
 			return "Eliminado";
 		} catch (Exception e) {
+			logger.error("Exception UsuarioAction.eliminarFuncionRolAjax: " + e.getMessage());
 		   System.out.print(""+e.getLocalizedMessage());
 		   return e.getLocalizedMessage();
 		}
@@ -238,6 +250,7 @@ public class UsuarioAction  extends DispatchAction{
 	     rows=catalogoService.getDeleteUsuario(codUsuario);
 		return "No existe";
 		} catch (Exception e) {
+			logger.error("Exception UsuarioAction.deleteUsuario: " + e.getMessage());
 			System.out.print(""+e.getCause());
 		   return e.getMessage();
 		}
@@ -254,6 +267,7 @@ public class UsuarioAction  extends DispatchAction{
        }else
     	   return "No Existe";
 		} catch (Exception e) {
+			logger.error("Exception UsuarioAction.validarExisteBD: " + e.getMessage());
 			System.out.print(""+e.getCause());
 		   return e.getMessage();
 		}
@@ -278,6 +292,7 @@ public class UsuarioAction  extends DispatchAction{
 			 }
 		}
 		catch (Exception e) {
+			logger.error("Exception UsuarioAction.cargarRegistroMasivo: " + e.getMessage());
 		}
 		return mapping.findForward("cargaMasiva");		
 	}
@@ -395,6 +410,7 @@ public class UsuarioAction  extends DispatchAction{
 		}
 		
 		}catch (Exception e) {
+			logger.error("Exception UsuarioAction.cargarRegistroMasivo: " + e.getMessage());
 	    log.debug(e.getLocalizedMessage());
 		}
 	}
@@ -480,6 +496,7 @@ public class UsuarioAction  extends DispatchAction{
 			usuarioRol.setEstado(Constant.ESTADO_ACTIVO);
 			}
 			}catch (Exception e) {
+				logger.error("Exception UsuarioAction.crearObjectoUsuario: " + e.getMessage());
         System.out.print(""+e.getLocalizedMessage());
 		}
 			return usuarioRol;
@@ -558,6 +575,7 @@ public class UsuarioAction  extends DispatchAction{
 		concatIds = concatIds.substring(0, concatIds.length()-1);
 		seguridadService.saveUsuarioRol(codUsuario,concatIds);
 		}catch (Exception e){
+			logger.error("Exception UsuarioAction.saveUsuarioRol: " + e.getMessage());
 			System.out.print(""+e.getLocalizedMessage());
 		}
 	return "";
@@ -572,7 +590,8 @@ public class UsuarioAction  extends DispatchAction{
     }	
     
     public void saveUsuarioSubBancaCargaMasiva(List<UsuarioRol> getLstUSuarioSuBanca) throws Exception{
-   	 if(!getLstUSuarioSuBanca.isEmpty()){
+   	 try {
+    	if(!getLstUSuarioSuBanca.isEmpty()){
    		  for (UsuarioRol usuarioSubBanca:getLstUSuarioSuBanca){
    		      UsuarioSubanca usuario= new UsuarioSubanca();
    		      usuario.setCodSubanca(usuarioSubBanca.getDescripcion());
@@ -581,10 +600,13 @@ public class UsuarioAction  extends DispatchAction{
    			  catalogoService.insert(usuario);
    		   }
    	 	}
+   	 	}catch (Exception e) {
+   		logger.error("Exception UsuarioAction.saveUsuarioSubBancaCargaMasiva: " + e.getMessage());
+   	 }
        }	
     
 	public ActionForward descargarPlantillaExcel(ActionMapping mapping,ActionForm form, HttpServletRequest request,HttpServletResponse response) throws Exception {
-	    
+	    try {
 		File file;
 	    String rutaPlantilla= catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_CONFIGURACIONES, "16002").getStrValor() +"PLANTILLA_ASIGNAR_ROL.xls";  
 		file = new File(rutaPlantilla);
@@ -601,11 +623,14 @@ public class UsuarioAction  extends DispatchAction{
 		response.getOutputStream().write(baos.toByteArray());
 		response.getOutputStream().close();
 		response.getOutputStream().flush();
+	    }catch (Exception e) {
+	    	logger.error("Exception UsuarioAction.descargarPlantillaExcel: " + e.getMessage());
+		}
 		return null;
 	}
 	
 	public void descargarLogError(ActionMapping mapping,ActionForm form, HttpServletRequest request,HttpServletResponse response) throws Exception {
-	    
+	    try {
 		File file;		
 		String getNombre=(String)request.getSession().getAttribute("FILE_LOG_ERROR_MASIVO");
 		file = new File(getNombre);
@@ -621,7 +646,10 @@ public class UsuarioAction  extends DispatchAction{
 		response.setHeader("Content-Disposition", "attachment; filename=LogError.xls");
 		response.getOutputStream().write(baos.toByteArray());
 		response.getOutputStream().close();
-		response.getOutputStream().flush();;
+		response.getOutputStream().flush();
+	    }catch (Exception e) {
+	    	logger.error("Exception UsuarioAction.descargarLogError: " + e.getMessage());
+		}
 	}
    
 }
