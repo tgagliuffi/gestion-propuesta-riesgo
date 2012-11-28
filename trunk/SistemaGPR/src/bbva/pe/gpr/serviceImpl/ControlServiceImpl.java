@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import bbva.pe.gpr.bean.Delegacion;
-import bbva.pe.gpr.bean.MultitablaDetalle;
 import bbva.pe.gpr.bean.ProductoDelegacion;
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.dao.CartasRiesgosDAO;
@@ -99,37 +98,45 @@ public class ControlServiceImpl implements ControlService {
 	}
 	
 	public String mensajeCondicionCliente(Solicitud solicitud ) throws Exception{
-		String mensaje="",bureau="Apto\n",bBVA="Apto\n",sistemaFin="Apto\n",relevaPub="Apto\n",inelegibles="Apto\n";
-		String getBureau = "";
-		String getBbva = "";
-		String getSiFinan = "";
-		String getRelPub = "";
-		String getInele = "";
-		
-		if(solicitud.getCondicionCliente() != null) {
-			getBureau = solicitud.getCondicionCliente().getBureau();
-			getBbva = solicitud.getCondicionCliente().getBbvaa();
-			getSiFinan = solicitud.getCondicionCliente().getSistFinan();
-			getRelPub = solicitud.getCondicionCliente().getRelevPubli();
-			getInele = solicitud.getCondicionCliente().getInelegible();
-		}
-		
+		String mensaje="",bureau=Constant.NO_APTO,bBVA=Constant.NO_APTO,sistemaFin=Constant.NO_APTO,relevaPub="",inelegibles="";
+		String getBureau = "",getBbva = "",getSiFinan = "",getRelPub = "",getInele = "";
+
+		    getBureau = (solicitud.getCondicionCliente().getBureau()!=null?solicitud.getCondicionCliente().getBureau():"");
+			getBbva = (solicitud.getCondicionCliente().getBbvaa()!=null?solicitud.getCondicionCliente().getBbvaa():"");
+			getSiFinan =(solicitud.getCondicionCliente().getSistFinan()!=null?solicitud.getCondicionCliente().getSistFinan():"");
+			getRelPub = (solicitud.getCondicionCliente().getRelevPubli()!=null?solicitud.getCondicionCliente().getRelevPubli():"");
+			getInele = (solicitud.getCondicionCliente().getInelegible()!=null?solicitud.getCondicionCliente().getInelegible():"");
+	
 	    String valorBureau=metodoGenericoCondCliente(Constant.TABLA_BUREAU, getBureau);
 		String valorBBVA=metodoGenericoCondCliente(Constant.TABLA_BBVA, getBbva);
 		String valorSistemaFin=metodoGenericoCondCliente(Constant.TABLA_SISTEMA_FINANCIERO, getSiFinan);
 		String valorRelevaPubl=metodoGenericoCondCliente(Constant.TABLA_RELEVANCIA_PUBLICA, getRelPub);
 		String valorInelegibles=metodoGenericoCondCliente(Constant.TABLA_INELEGIBLES, getInele);
-      	if(!valorBureau.equals("1")){
-      	 bureau=multitablaDetalleDAO.getDescripcion(getBureau);
-      	}if(!valorBBVA.equals("1")){
-      	 bBVA=multitablaDetalleDAO.getDescripcion(getBbva);
-      	}if(!valorSistemaFin.equals("1")){
-      	 sistemaFin=multitablaDetalleDAO.getDescripcion(getSiFinan);
-      	}if(valorRelevaPubl.equals("1")){
-         relevaPub="NO PASO";
-      	}if(valorInelegibles.equals("1")){
-        inelegibles="NO PASO";
+      	if(!getBureau.equals("")){
+    		if(!valorBureau.equals("1")){
+    	      	 bureau=multitablaDetalleDAO.getDescripcion(getBureau);
+    		}else bureau=Constant.APTO;
       	}
+    	if(!getBbva.equals("")){
+    		if(!valorBBVA.equals("1")){
+    			bBVA=multitablaDetalleDAO.getDescripcion(getBbva);
+    		}else bBVA=Constant.APTO;
+		}
+    	if(!getSiFinan.equals("")){
+    		if(!valorSistemaFin.equals("1")){
+    			sistemaFin=multitablaDetalleDAO.getDescripcion(getSiFinan);
+    		}else sistemaFin=Constant.APTO;
+    	}
+    	if(!getRelPub.equals("")){
+    		if(valorRelevaPubl.equals("1")){
+    			relevaPub=Constant.NO_APTO;
+    		}else relevaPub=Constant.APTO;
+    	}
+    	if(!valorInelegibles.equals("")){
+    		if(valorInelegibles.equals("1")){
+    			inelegibles=Constant.NO_APTO;
+    		}else inelegibles=Constant.APTO;
+    	}
         mensaje ="<table> " +
        	         "<tr>" + "<td align=left>"+ "BUREAU"+"</td>"+
       	         "<td align=right>"+ bureau+ "</td>"+
@@ -152,7 +159,7 @@ public class ControlServiceImpl implements ControlService {
 	
 	//TODO si retorna 1 paso validacion si retorna 0 no paso validacion
 	public String metodoGenericoCondCliente(String codMultiTabla, String codValor) throws Exception {
-		String valorRetorno="";
+		String valorRetorno="0";
 		HashMap<String, String> hashDatosGenericos = new HashMap<String, String>();
 		hashDatosGenericos.put("codMultiTabla", codMultiTabla);
 		hashDatosGenericos.put("codValor", codValor);
@@ -163,37 +170,34 @@ public class ControlServiceImpl implements ControlService {
 		}
 		return valorRetorno;
 	}
-
-	public String getLstValoresCondicion(String codMultiTabla) {
-		String valores="";
-		List<MultitablaDetalle> getLstMulti=multitablaDetalleDAO.getLstValoresCondicion(codMultiTabla); 
-		for (MultitablaDetalle multi:getLstMulti){
-			valores += multi.getStrValor()+",";
-		}
-		return valores+"\n";
-	}
 	
 	//TODO si retorna 1 paso validacion si retorna 0 no paso validacion
 	public int validacionMontosPlazos(Solicitud solicitud,String codGestor) throws Exception {
 
 	 String tipoPersona=usuarioDAO.getTipoPersona(codGestor);
+	 BigDecimal getMonto=BigDecimal.ZERO;
 	 String codCargo=solicitud.getGestorCod();
 	 String codOficina=solicitud.getCodOficina();
      if(tipoPersona.equals("O")){
     	 String montoDelegacion=cartasRiesgosDAO.montoDelegacionUsuario(codGestor,solicitud.getGrupoPersona());
-     		if(montoDelegacion.equals("-1")){
+     		if(montoDelegacion.equals("0")){
      				String codJefeOficina=usuarioDAO.getJefeOficina(codCargo,codOficina);
-     				String montoJefeOficina=cartasRiesgosDAO.montoDelegacionUsuario(codJefeOficina,solicitud.getGrupoPersona()); 
-                    BigDecimal getMonto= new BigDecimal(montoJefeOficina);
+     				String montoJefeOficina=cartasRiesgosDAO.montoDelegacionUsuario(codJefeOficina,solicitud.getGrupoPersona());
+     				if(!montoJefeOficina.equals("")){
+                       getMonto= new BigDecimal(montoJefeOficina);     					
+     				}
      				if (getMonto.compareTo(solicitud.getRiesgoTotal())==0 || getMonto.compareTo(solicitud.getRiesgoTotal())==1){
                 	  return 1;
      				}
      		 }
      	}else if (tipoPersona.equals("R")){
+     		String monto="0";
      		 String montoDelegacion=cartasRiesgosDAO.montoDelegacionUsuario(codGestor,solicitud.getGrupoPersona());
-     		  if(montoDelegacion.equals("-1")){
+     		  if(montoDelegacion.equals("0")){
      			 String jefeInmediato= jefeInmediato(codGestor, solicitud);
-     			 String monto=cartasRiesgosDAO.montoDelegacionUsuario(jefeInmediato,solicitud.getGrupoPersona());
+     			 if(!jefeInmediato.equals("")){
+         			  monto=cartasRiesgosDAO.montoDelegacionUsuario(jefeInmediato,solicitud.getGrupoPersona());     				 
+     			 }
      			  BigDecimal getMontos= new BigDecimal(monto);
      			  if(getMontos.compareTo(solicitud.getRiesgoTotal())==1 || getMontos.compareTo(solicitud.getRiesgoTotal())==0 ){
      				  return 1;
@@ -290,9 +294,6 @@ public class ControlServiceImpl implements ControlService {
 				break;
 			}
 			codUsuario=usuarioDAO.codJefeInmediatoRiesgos(codUsuario);
-			if(codUsuario==null){
-				return codUsuario;
-			}
 		}
 		return codUsuario;
 	}
