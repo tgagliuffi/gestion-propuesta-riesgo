@@ -87,6 +87,8 @@ public class Constant {
     public static final int POSICION_COD_REGISTRO = 0;
 	public static final int POSICION_COD_ROL = 1;
 	public static final int POSICION_COD_SUBBANCA = 2;
+	public static String NO_APTO="No Paso";
+	public static String APTO="Paso";
 	
 	public static BigDecimal StringToBigDecimal(Object value) {
 		double arg = 0;
