@@ -31,6 +31,7 @@ public class GerenteOficinaDAOImpl extends SqlMapClientDaoSupport implements
 
 	public String getUsuarioTipo(String codUsuario)throws Exception {
 		Usuario record = (Usuario) getSqlMapClientTemplate().queryForObject("CARDEL_TCARDEL_USUARIOS.getTipoPersona", codUsuario);
+		if(record==null){ return "";}else
 	    return record.getCodigoUsuario();	
 	    }
 }
