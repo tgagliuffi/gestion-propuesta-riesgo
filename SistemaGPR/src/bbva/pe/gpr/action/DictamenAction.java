@@ -76,7 +76,7 @@ public class DictamenAction extends DispatchAction {
 
 	public ActionForward index(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) {
-		String imagen = "rojo";
+		String imagen = "boton_rojo";
 		IILDPeUsuario jefe;
 		IILDPeUsuario usuario = (IILDPeUsuario) request.getSession().getAttribute("USUARIO_SESION");
 		if (usuario != null) {
@@ -87,7 +87,7 @@ public class DictamenAction extends DispatchAction {
 				
 				if(nivel != null) {
 					if(Constant.EVALUADOR.compareTo(nivel.getCodFuncion()) != 0) {
-						imagen = "verde";
+						imagen = "boton_verde";
 					}
 					
 					jefe = obtenerJefeSuperior(usuario.getUID());

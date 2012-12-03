@@ -1,5 +1,6 @@
 package bbva.pe.gpr.action;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +67,7 @@ public class BandejaEvaluacionAction extends DispatchAction {
 			if(uid != null) {
 				uid.setCodUsuario(bean.getUID());
 				Delegacion delegacion = controlService.getDelegacion(uid.getCodUsuario());
+				uid.setMtoDelegacionMax(new BigDecimal(delegacion.getMontoMaximo()));
 				listAsignacion = asignacionService.getLstAsignaciones(uid);
 				
 				map.put("monto_delegacion", delegacion.getMontoMaximo());
