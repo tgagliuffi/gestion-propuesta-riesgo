@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.SolicitudDetalle;
+import bbva.pe.gpr.bean.SolicitudMensaje;
 import bbva.pe.gpr.bean.SolicitudOperacion;
 
 public interface SolicitudService{
@@ -52,8 +53,14 @@ public interface SolicitudService{
 	
 	int asignarPrioridadSolicitud(String nroSolicitud, 
 			String tipoUpdate) throws Exception;
-	
+
 	List<SolicitudDetalle> eliminarProducto(String arraySolitcitudes, List<SolicitudDetalle> lstSolicitudDetalle)throws Exception;
 	
-	List<SolicitudOperacion> selectOperacionByNroSolicitud(Solicitud s);
+	List<SolicitudOperacion> selectOperacionByNroSolicitud(Solicitud s) throws Exception;
+	
+	String validaGrupoPersona(String tipoPersona, String numDocumento, String rating) throws Exception;
+	
+	 List<SolicitudMensaje> getListMessagesAjax(SolicitudMensaje record) throws Exception;
+	 
+
 }
