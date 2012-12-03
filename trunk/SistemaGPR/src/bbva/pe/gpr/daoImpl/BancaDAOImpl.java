@@ -19,44 +19,44 @@ public class BancaDAOImpl extends SqlMapClientDaoSupport implements BancaDAO {
     public int deleteByPrimaryKey(BigDecimal codBanca) {
         Banca key = new Banca();
         key.setCodBanca(codBanca);
-        int rows = getSqlMapClientTemplate().delete("CARDEL_TGPR_BANCAS.ibatorgenerated_deleteByPrimaryKey", key);
+        int rows = getSqlMapClientTemplate().delete("DELGPR_TGPR_BANCAS.ibatorgenerated_deleteByPrimaryKey", key);
         return rows;
     }
 
     public void insert(Banca record) {
-        getSqlMapClientTemplate().insert("CARDEL_TGPR_BANCAS.ibatorgenerated_insert", record);
+        getSqlMapClientTemplate().insert("DELGPR_TGPR_BANCAS.ibatorgenerated_insert", record);
     }
 
     
     public void insertSelective(Banca record) {
-        getSqlMapClientTemplate().insert("CARDEL_TGPR_BANCAS.ibatorgenerated_insertSelective", record);
+        getSqlMapClientTemplate().insert("DELGPR_TGPR_BANCAS.ibatorgenerated_insertSelective", record);
     }
 
     public Banca selectByPrimaryKey(BigDecimal codBanca) {
         Banca key = new Banca();
         key.setCodBanca(codBanca);
-        Banca record = (Banca) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_BANCAS.ibatorgenerated_selectByPrimaryKey", key);
+        Banca record = (Banca) getSqlMapClientTemplate().queryForObject("DELGPR_TGPR_BANCAS.ibatorgenerated_selectByPrimaryKey", key);
         return record;
     }
 
     
     public int updateByPrimaryKeySelective(Banca record) {
-        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_BANCAS.ibatorgenerated_updateByPrimaryKeySelective", record);
+        int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_BANCAS.ibatorgenerated_updateByPrimaryKeySelective", record);
         return rows;
     }
 
     public int updateByPrimaryKey(Banca record) {
-        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_BANCAS.ibatorgenerated_updateByPrimaryKey", record);
+        int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_BANCAS.ibatorgenerated_updateByPrimaryKey", record);
         return rows;
     }
     
     @SuppressWarnings("unchecked")
 	public List<Banca> getLstBancaByCriteria(Banca record){
-    	return   (List<Banca>)getSqlMapClientTemplate().queryForList("CARDEL_TGPR_BANCAS.getLstBancaByCriteria", record);
+    	return   (List<Banca>)getSqlMapClientTemplate().queryForList("DELGPR_TGPR_BANCAS.getLstBancaByCriteria", record);
     }
     @SuppressWarnings("unchecked")
 	public List<BancaSub> getLstSubBanca(BancaSub bancaSub){
-    	return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_BANCAS.getLstSubBanca", bancaSub);
+    	return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_BANCAS.getLstSubBanca", bancaSub);
     	
     	
     }

@@ -14,36 +14,36 @@ public class UsuarioRolDAOImpl extends SqlMapClientDaoSupport implements Usuario
     }
 
     public int deleteByPrimaryKey(UsuarioRolKey key) {
-        int rows = getSqlMapClientTemplate().delete("CARDEL_TGPR_USUARIO_ROLES.ibatorgenerated_deleteByPrimaryKey", key);
+        int rows = getSqlMapClientTemplate().delete("DELGPR_TGPR_USUARIO_ROLES.ibatorgenerated_deleteByPrimaryKey", key);
         return rows;
     }
 
     public void insert(UsuarioRol record) {
-        getSqlMapClientTemplate().insert("CARDEL_TGPR_USUARIO_ROLES.ibatorgenerated_insert", record);
+        getSqlMapClientTemplate().insert("DELGPR_TGPR_USUARIO_ROLES.ibatorgenerated_insert", record);
     }
 
     public void insertSelective(UsuarioRol record) {
-        getSqlMapClientTemplate().insert("CARDEL_TGPR_USUARIO_ROLES.ibatorgenerated_insertSelective", record);
+        getSqlMapClientTemplate().insert("DELGPR_TGPR_USUARIO_ROLES.ibatorgenerated_insertSelective", record);
     }
 
     public UsuarioRol selectByPrimaryKey(UsuarioRolKey key) {
-        UsuarioRol record = (UsuarioRol) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_USUARIO_ROLES.ibatorgenerated_selectByPrimaryKey", key);
+        UsuarioRol record = (UsuarioRol) getSqlMapClientTemplate().queryForObject("DELGPR_TGPR_USUARIO_ROLES.ibatorgenerated_selectByPrimaryKey", key);
         return record;
     }
 
     public int updateByPrimaryKeySelective(UsuarioRol record) {
-        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_USUARIO_ROLES.ibatorgenerated_updateByPrimaryKeySelective", record);
+        int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_USUARIO_ROLES.ibatorgenerated_updateByPrimaryKeySelective", record);
         return rows;
     }
 
     public int updateByPrimaryKey(UsuarioRol record) {
-        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_USUARIO_ROLES.ibatorgenerated_updateByPrimaryKey", record);
+        int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_USUARIO_ROLES.ibatorgenerated_updateByPrimaryKey", record);
         return rows;
     }
 
 	@SuppressWarnings("unchecked")
 	public int getUsuarioAsignadoRol(UsuarioRol record) {
-		UsuarioRol getUsuarioRoL=(UsuarioRol)getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_USUARIO_ROLES.getUsuarioRolAsignado", record);
+		UsuarioRol getUsuarioRoL=(UsuarioRol)getSqlMapClientTemplate().queryForObject("DELGPR_TGPR_USUARIO_ROLES.getUsuarioRolAsignado", record);
 		if(getUsuarioRoL!=null){
 			return 1;
 		}else{

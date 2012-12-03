@@ -17,39 +17,39 @@ public class GarantiaDetalleDAOImpl extends SqlMapClientDaoSupport implements Ga
     }
 
     public int deleteByPrimaryKey(GarantiaDetalleKey key) {
-        int rows = getSqlMapClientTemplate().delete("CARDEL_TGPR_GARANTIA_DETALLES.ibatorgenerated_deleteByPrimaryKey", key);
+        int rows = getSqlMapClientTemplate().delete("DELGPR_TGPR_GARANTIA_DETALLES.ibatorgenerated_deleteByPrimaryKey", key);
         return rows;
     }
 
     public void insert(GarantiaDetalle record) {
-        getSqlMapClientTemplate().insert("CARDEL_TGPR_GARANTIA_DETALLES.ibatorgenerated_insert", record);
+        getSqlMapClientTemplate().insert("DELGPR_TGPR_GARANTIA_DETALLES.ibatorgenerated_insert", record);
     }
 
     public void insertSelective(GarantiaDetalle record) {
-        getSqlMapClientTemplate().insert("CARDEL_TGPR_GARANTIA_DETALLES.ibatorgenerated_insertSelective", record);
+        getSqlMapClientTemplate().insert("DELGPR_TGPR_GARANTIA_DETALLES.ibatorgenerated_insertSelective", record);
     }
 
     public GarantiaDetalle selectByPrimaryKey(GarantiaDetalleKey key) {
-        GarantiaDetalle record = (GarantiaDetalle) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_GARANTIA_DETALLES.ibatorgenerated_selectByPrimaryKey", key);
+        GarantiaDetalle record = (GarantiaDetalle) getSqlMapClientTemplate().queryForObject("DELGPR_TGPR_GARANTIA_DETALLES.ibatorgenerated_selectByPrimaryKey", key);
         return record;
     }
 
     public int updateByPrimaryKeySelective(GarantiaDetalle record) {
-        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_GARANTIA_DETALLES.ibatorgenerated_updateByPrimaryKeySelective", record);
+        int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_GARANTIA_DETALLES.ibatorgenerated_updateByPrimaryKeySelective", record);
         return rows;
     }
 
     public int updateByPrimaryKey(GarantiaDetalle record) {
-        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_GARANTIA_DETALLES.ibatorgenerated_updateByPrimaryKey", record);
+        int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_GARANTIA_DETALLES.ibatorgenerated_updateByPrimaryKey", record);
         return rows;
     }
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	public HashMap<String,BigDecimal> getlstProdGaranDeta(SolicitudDetalle bean) {
-		return (HashMap)getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_GARANTIA_DETALLES.getlstProdGaranDeta",bean);
+		return (HashMap)getSqlMapClientTemplate().queryForObject("DELGPR_TGPR_GARANTIA_DETALLES.getlstProdGaranDeta",bean);
 	}
 
 	public GarantiaDetalle garantiaDetalle(String codGarantia) {
-		return (GarantiaDetalle)getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_GARANTIA_DETALLES.getGarantiaDetalle",codGarantia);
+		return (GarantiaDetalle)getSqlMapClientTemplate().queryForObject("DELGPR_TGPR_GARANTIA_DETALLES.getGarantiaDetalle",codGarantia);
 	}
 }

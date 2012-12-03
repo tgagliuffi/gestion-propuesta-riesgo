@@ -16,35 +16,35 @@ public class TerritorioDAOImpl extends SqlMapClientDaoSupport implements Territo
     public int deleteByPrimaryKey(BigDecimal codTerritorio) {
         Territorio key = new Territorio();
         key.setCodTerritorio(codTerritorio);
-        int rows = getSqlMapClientTemplate().delete("CARDEL_TGPR_TERRITORIOS.ibatorgenerated_deleteByPrimaryKey", key);
+        int rows = getSqlMapClientTemplate().delete("DELGPR_TGPR_TERRITORIOS.ibatorgenerated_deleteByPrimaryKey", key);
         return rows;
     }
     public void insert(Territorio record) {
-        getSqlMapClientTemplate().insert("CARDEL_TGPR_TERRITORIOS.ibatorgenerated_insert", record);
+        getSqlMapClientTemplate().insert("DELGPR_TGPR_TERRITORIOS.ibatorgenerated_insert", record);
     }
 
     public void insertSelective(Territorio record) {
-        getSqlMapClientTemplate().insert("CARDEL_TGPR_TERRITORIOS.ibatorgenerated_insertSelective", record);
+        getSqlMapClientTemplate().insert("DELGPR_TGPR_TERRITORIOS.ibatorgenerated_insertSelective", record);
     }
 
     public Territorio selectByPrimaryKey(BigDecimal codTerritorio) {
         Territorio key = new Territorio();
         key.setCodTerritorio(codTerritorio);
-        Territorio record = (Territorio) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_TERRITORIOS.ibatorgenerated_selectByPrimaryKey", key);
+        Territorio record = (Territorio) getSqlMapClientTemplate().queryForObject("DELGPR_TGPR_TERRITORIOS.ibatorgenerated_selectByPrimaryKey", key);
         return record;
     }
     public int updateByPrimaryKeySelective(Territorio record) {
-        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_TERRITORIOS.ibatorgenerated_updateByPrimaryKeySelective", record);
+        int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_TERRITORIOS.ibatorgenerated_updateByPrimaryKeySelective", record);
         return rows;
     }
 
     public int updateByPrimaryKey(Territorio record) {
-        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_TERRITORIOS.ibatorgenerated_updateByPrimaryKey", record);
+        int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_TERRITORIOS.ibatorgenerated_updateByPrimaryKey", record);
         return rows;
     }
 
    @SuppressWarnings("unchecked")
  	public List<Territorio> getLstTerritorioByCriteria(Territorio record) throws Exception {
- 		return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_TERRITORIOS.getLstTerritorioByCriteria",record);
+ 		return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_TERRITORIOS.getLstTerritorioByCriteria",record);
  	}
 }

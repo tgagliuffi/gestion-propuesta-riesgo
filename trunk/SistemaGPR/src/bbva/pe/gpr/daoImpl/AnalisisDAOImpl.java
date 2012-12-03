@@ -15,42 +15,42 @@ public class AnalisisDAOImpl extends SqlMapClientDaoSupport implements AnalisisD
     }
 
     public int deleteByPrimaryKey(AnalisisKey key) throws Exception{
-        int rows = getSqlMapClientTemplate().delete("CARDEL_TGPR_ANALISIS.ibatorgenerated_deleteByPrimaryKey", key);
+        int rows = getSqlMapClientTemplate().delete("DELGPR_TGPR_ANALISIS.ibatorgenerated_deleteByPrimaryKey", key);
         return rows;
     }
 
     public Long insert(Analisis record)throws Exception {
-    	Long rst = (Long)  getSqlMapClientTemplate().insert("CARDEL_TGPR_ANALISIS.ibatorgenerated_insert", record);
+    	Long rst = (Long)  getSqlMapClientTemplate().insert("DELGPR_TGPR_ANALISIS.ibatorgenerated_insert", record);
     	return rst;
     }
 
     public void insertSelective(Analisis record) throws Exception{
-    	getSqlMapClientTemplate().insert("CARDEL_TGPR_ANALISIS.ibatorgenerated_insertSelective", record);
+    	getSqlMapClientTemplate().insert("DELGPR_TGPR_ANALISIS.ibatorgenerated_insertSelective", record);
     }
 
     public Analisis selectByPrimaryKey(AnalisisKey key) throws Exception{
-        Analisis record = (Analisis) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_ANALISIS.ibatorgenerated_selectByPrimaryKey", key);
+        Analisis record = (Analisis) getSqlMapClientTemplate().queryForObject("DELGPR_TGPR_ANALISIS.ibatorgenerated_selectByPrimaryKey", key);
         return record;
     }
 
     public int updateByPrimaryKeySelective(Analisis record) throws Exception {
-        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_ANALISIS.ibatorgenerated_updateByPrimaryKeySelective", record);
+        int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_ANALISIS.ibatorgenerated_updateByPrimaryKeySelective", record);
         return rows;
     }
 
     public int updateByPrimaryKey(Analisis record) throws Exception {
-        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_ANALISIS.ibatorgenerated_updateByPrimaryKey", record);
+        int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_ANALISIS.ibatorgenerated_updateByPrimaryKey", record);
         return rows;
     }
 
 	@SuppressWarnings("unchecked")
 	public List<Analisis> selectByNroSolicitud(AnalisisKey key) throws Exception {
-        return (List<Analisis>) getSqlMapClientTemplate().queryForList("CARDEL_TGPR_ANALISIS.selectByNroSolicitud", key);
+        return (List<Analisis>) getSqlMapClientTemplate().queryForList("DELGPR_TGPR_ANALISIS.selectByNroSolicitud", key);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Analisis> selectByAnalisis(Analisis analisis) throws Exception {
-        return (List<Analisis>) getSqlMapClientTemplate().queryForList("CARDEL_TGPR_ANALISIS.selectByAnalisis", analisis);
+        return (List<Analisis>) getSqlMapClientTemplate().queryForList("DELGPR_TGPR_ANALISIS.selectByAnalisis", analisis);
 	}
 
 }
