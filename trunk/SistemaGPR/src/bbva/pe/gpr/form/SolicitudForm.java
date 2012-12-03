@@ -103,7 +103,7 @@ public class SolicitudForm extends ActionForm {
 	private String subBanca;
 	private String hdnSubBanca;
 	private String hdnBanca;
-	
+	private String hdnStrMensaje; 
 	
 	public String getHdnSubBanca() {
 		return hdnSubBanca;
@@ -801,8 +801,15 @@ public class SolicitudForm extends ActionForm {
 	public void setRelevancia(String relevancia) {
 		this.relevancia = relevancia;
 	}
+	
+	public String getHdnStrMensaje() {
+		return hdnStrMensaje;
+	}
 
-	@Override
+	public void setHdnStrMensaje(String hdnStrMensaje) {
+		this.hdnStrMensaje = hdnStrMensaje;
+	}
+
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
 		nroSolicitud=Constant.STR_VACIO;
 		codCentral = Constant.STR_VACIO;
@@ -861,7 +868,7 @@ public class SolicitudForm extends ActionForm {
 		
 		hdnBanca=Constant.STR_VACIO;
 		hdnSubBanca=Constant.STR_VACIO;
-		
+		hdnStrMensaje=Constant.STR_VACIO;
 		super.reset(mapping, request);
 	}
 

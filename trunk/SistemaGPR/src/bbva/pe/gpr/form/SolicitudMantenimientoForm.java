@@ -843,7 +843,7 @@ public class SolicitudMantenimientoForm extends ActionForm
 	}
 
 
-	@Override
+	
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
 		nroSolicitud=Constant.STR_VACIO;
 		codCentral = Constant.STR_VACIO;

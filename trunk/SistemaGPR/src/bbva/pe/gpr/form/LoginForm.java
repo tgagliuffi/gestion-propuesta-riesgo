@@ -13,7 +13,7 @@ public class LoginForm extends ActionForm {
 	private String userName;
 	private String password;
 	
-	@Override
+	
 	public ActionErrors validate(ActionMapping mapping,
 			HttpServletRequest request) {
 	
