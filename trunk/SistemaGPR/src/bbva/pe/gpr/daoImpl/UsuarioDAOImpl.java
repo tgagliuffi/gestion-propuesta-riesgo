@@ -53,7 +53,6 @@ public class UsuarioDAOImpl extends SqlMapClientDaoSupport implements UsuarioDAO
     	return  (List<Usuario>)getSqlMapClientTemplate().queryForList("CARDEL_TCARDEL_USUARIOS.getLstUsuarios",usuarioBean);
     }
 
- 	@Override
 	public int updateOficinaAsignada(Usuario record) throws Exception {
 		int rows=getSqlMapClientTemplate().update("CARDEL_TCARDEL_USUARIOS.getAsignarOficina",record);
 		return rows;
