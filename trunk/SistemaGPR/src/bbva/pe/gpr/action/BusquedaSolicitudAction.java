@@ -26,6 +26,8 @@ import bbva.pe.gpr.bean.Banca;
 import bbva.pe.gpr.bean.Rol;
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.SolicitudDetalle;
+import bbva.pe.gpr.bean.SolicitudMensaje;
+import bbva.pe.gpr.bean.SolicitudOperacion;
 import bbva.pe.gpr.context.Context;
 import bbva.pe.gpr.form.SolicitudForm;
 import bbva.pe.gpr.service.CatalogoService;
@@ -241,5 +243,29 @@ public class BusquedaSolicitudAction extends DispatchAction {
 		return null;
 	}
 	
+	public List<SolicitudOperacion> listOperationsAjax(String nroSolicitud) throws Exception 
+	{
+		try {
+			Solicitud solicitudBean = new Solicitud();
+			solicitudBean.setNroSolicitud(Long.parseLong(nroSolicitud));
+			List<SolicitudOperacion> lstSolicitudDetalle = solicitudService.selectOperacionByNroSolicitud(solicitudBean);
+			return lstSolicitudDetalle;
+		}catch (Exception e) {
+			logger.error("BusquedaSolicitudAction.consultarSolicitudAjax " +e);
+			return new  ArrayList<SolicitudOperacion>();
+		}
+	}
 	
+	public List<SolicitudMensaje> listMessagesAjax(String nroSolicitud) throws Exception 
+	{
+		try {
+			SolicitudMensaje solicitudBean = new SolicitudMensaje();
+			solicitudBean.setNroSolicitud(Long.parseLong(nroSolicitud));
+			List<SolicitudMensaje> lstSolicitudDetalle = solicitudService.getListMessagesAjax(solicitudBean);
+			return lstSolicitudDetalle;
+		}catch (Exception e) {
+			logger.error("BusquedaSolicitudAction.listMessagesAjax " +e);
+			return new  ArrayList<SolicitudMensaje>();
+		}
+	}
 }

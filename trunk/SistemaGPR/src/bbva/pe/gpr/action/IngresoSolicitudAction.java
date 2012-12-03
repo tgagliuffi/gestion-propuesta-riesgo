@@ -74,6 +74,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 	public ActionForward init(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+		System.out.println("ENTRA INIT");
 		request.getSession().removeAttribute("lstDetalleProdSession");
 		String target = "success";	
 		SolicitudForm solicitudForm = (SolicitudForm)form;	
@@ -98,7 +99,12 @@ public class IngresoSolicitudAction extends DispatchAction {
 		Solicitud solicitudBean = new Solicitud();
 		String indMensaje = null;
 		String strMensaje = null;
+		IILDPeUsuario usuarioSesion = (IILDPeUsuario)request.getSession(true).getAttribute("USUARIO_SESION");
 		
+		solicitudBean.setCodUsuarioSession(usuarioSesion.getUID());
+		solicitudBean.setNomUsuarioSession(usuarioSesion.getNombre()+ Constant.ESPACIO +  
+										   usuarioSesion.getApellido1() + Constant.ESPACIO +
+										   usuarioSesion.getApellido2());
 		solicitudBean.setCodCentral(solicitudForm.getHdnCodCentral());
 		solicitudBean.setNumeroDocumento(solicitudForm.getNumeroDocumento());
 		solicitudBean.setDesSolicitante(solicitudForm.getDesSolicitante());								
@@ -140,7 +146,10 @@ public class IngresoSolicitudAction extends DispatchAction {
 		List<SolicitudDetalle> lstSolicitudDetalle = (List<SolicitudDetalle>)request.getSession().getAttribute("lstDetalleProdSession");
 		Long nroSolicitud= new Long(0);
 		solicitudBean.setPrefijoIngreso(catalogoService.getUsuarioTipo(usuarioSession.getUID())=="1"?"OFICINA":"RIESGOS");
-	
+		solicitudBean.setGrupoPersona(solicitudService.validaGrupoPersona(solicitudBean.getCodMultTipoPersona(), solicitudBean.getNumeroDocumento(), solicitudBean.getRating()));
+		solicitudBean.setMtoSolicitud(solicitudForm.getMtoTotal()!=null?new BigDecimal(solicitudForm.getMtoTotal()):new BigDecimal(0));
+		solicitudBean.setRiesgoTotal((solicitudBean.getRiesgoActual()!=null?solicitudBean.getRiesgoActual():new BigDecimal(0)).add(solicitudBean.getMtoSolicitud()!=null?solicitudBean.getMtoSolicitud():new BigDecimal(0)));
+		solicitudBean.setStrMensaje(solicitudForm.getHdnStrMensaje());
 		try {
 			if(lstSolicitudDetalle==null){
 				indMensaje = Constant.MSJ_ALERT;
@@ -164,7 +173,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 							solicitudForm.reset(mapping, request);
 							request.getSession().removeAttribute("lstDetalleProdSession");
 							indMensaje = Constant.MSJ_ALERT;
-							strMensaje = "Se ha ingresado la solicitud " + nroSolicitud + ". La cúal fue enviada a riegos.";	
+							strMensaje = "Se ha ingresado la solicitud " + nroSolicitud + ". La cúal fue enviada a riesgos.";	
 						}else{
 							solicitudForm = (SolicitudForm)form;	
 							solicitudForm.reset(mapping, request);
@@ -194,7 +203,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 			}else{
 				solicitudBean.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD+
 						 Constant.CHAR_GUION+Constant.ESTADO_SOLICITUD_PENDIENTE);
-				if(validacionService.metodoEncapsulado(solicitudBean, usuarioSession.getUID())==1){
+				if(validacionService.metodoEncapsuladoIngresoSolicitud(solicitudBean, lstSolicitudDetalle,usuarioSession.getUID())==1){
 							if(controlService.validacionMontosPlazos(solicitudBean, usuarioSession.getUID())==1){
 							nroSolicitud = solicitudService.registraSolicitud(solicitudBean, lstSolicitudDetalle);
 									if(solicitudService.updateDictaminaEnOficina(solicitudBean)>0){
@@ -332,46 +341,60 @@ public class IngresoSolicitudAction extends DispatchAction {
 	public List<BancaSub> getLstSubBanca(String codBanca){
 		BancaSub bancaSubBean = new BancaSub();
 		bancaSubBean.setCodBanca(new BigDecimal(codBanca));
+		List<BancaSub> lstSubBanca =  new ArrayList<BancaSub>();
 		try {
-			return catalogoService.getLstSubBanca(bancaSubBean);
+			BancaSub subanca = new BancaSub();
+			subanca.setCodBanca(new BigDecimal(-1));
+			subanca.setDescripcion(Constant.SELECCIONE);
+			lstSubBanca.add(subanca);
+			for (BancaSub bancaSub : catalogoService.getLstSubBanca(bancaSubBean)) {
+				lstSubBanca.add(bancaSub);
+			}		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ArrayList<BancaSub>();
+		return lstSubBanca;
 	}
 	
 	public List<Producto> consultarAjax(BigDecimal codBanca){
+		List<Producto> lstProducto = new ArrayList<Producto>();
 		try {
 			Producto productoBean = new Producto();
-			List<Producto> lstProducto = new ArrayList<Producto>();
 			productoBean.setCodProducto(new BigDecimal(-1));
-			productoBean.setDescripcion("-- Seleccionar un producto --");
+			productoBean.setDescripcion(Constant.SELECCIONE);
 			lstProducto.add(productoBean);
 			
 			if(codBanca!=null && !(codBanca.compareTo(new BigDecimal(-1))==0)){
 				productoBean = new Producto();
 				productoBean.setCodBanca(codBanca);
 				productoBean.setEstado(Constant.ESTADO_ACTIVO);
-				lstProducto = catalogoService.getLstProductoByCriteria(productoBean);
-				return lstProducto;
+				for (Producto producto : catalogoService.getLstProductoByCriteria(productoBean)) {
+					lstProducto.add(producto);
+				}
 			}
 		
 		} catch (Exception e) {
 			logger.error("Exception ProductoAction.consultarAjax: " + e.getMessage());
 		} 
-		return new ArrayList<Producto>();
+		return lstProducto;
 	}
 	
 	public List<Campania> cargarCampaniasAjax(){
-		
+		List<Campania> lstCampanias = new ArrayList<Campania>();
 		try {
 			Campania campaniaBean = new Campania();
+			campaniaBean.setCodCampania(new Long(-1));
+			campaniaBean.setNombre(Constant.SELECCIONE);
+			lstCampanias.add(campaniaBean);
+			campaniaBean = new Campania();
 			campaniaBean.setEstado(Constant.ESTADO_ACTIVO);
-			return catalogoService.getlstCampaniaByCriteria(campaniaBean);
+			for (Campania campania : catalogoService.getlstCampaniaByCriteria(campaniaBean)) {
+				lstCampanias.add(campania);
+			}
 		} catch (Exception e) {
 			logger.error("Exception ProductoAction.cargarCampaniasAjax: " + e.getMessage());
 		} 
-		return new ArrayList<Campania>();
+		return lstCampanias;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -538,14 +561,21 @@ public class IngresoSolicitudAction extends DispatchAction {
 	}
 	
 	public List<MultitablaDetalle> cargarTipos(){
+		List<MultitablaDetalle> lstTipo = new ArrayList<MultitablaDetalle>();
 		try {
 				MultitablaDetalle multitablaDetalleBean = new MultitablaDetalle();
+				multitablaDetalleBean.setCodElemento("-1");
+				multitablaDetalleBean.setStrValor(Constant.SELECCIONE);
+				lstTipo.add(multitablaDetalleBean);
 				multitablaDetalleBean.setEstado(Constant.ESTADO_ACTIVO);
-				return catalogoService.getLstMultitablaDetalle(Constant.TABLA_TIPOS);
+				for (MultitablaDetalle mtBean : catalogoService.getLstMultitablaDetalle(Constant.TABLA_TIPOS)) {
+					lstTipo.add(mtBean);
+				}
+
 		} catch (Exception e) {
 			logger.error("Exception ProductoAction.consultarAjax: " + e.getMessage());
 		} 
-		return new ArrayList<MultitablaDetalle>();
+		return lstTipo;
 	}
 
 	public BigDecimal getProductoBaseAjax(BigDecimal codProducto){

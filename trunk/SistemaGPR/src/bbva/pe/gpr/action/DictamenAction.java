@@ -229,6 +229,13 @@ public class DictamenAction extends DispatchAction {
 		List<Analisis> listAnalisis = null;
 		List<SolicitudOperacion> listOperaciones = null;
 		Solicitud s = null;
+		HttpServletRequest oRequest = WebContextFactory.get().getHttpServletRequest();
+		IILDPeUsuario usuarioSesion = (IILDPeUsuario)oRequest.getSession(true).getAttribute("USUARIO_SESION");
+		
+		row.setCodUsuarioSession(usuarioSesion.getUID());
+		row.setNomUsuarioSession(usuarioSesion.getNombre()+ Constant.ESPACIO +  
+										   usuarioSesion.getApellido1() + Constant.ESPACIO +
+										   usuarioSesion.getApellido2());
 		try {
 			Long result = analisisService.insertarAnalisis(row);
 			if(result != null) {
@@ -306,14 +313,17 @@ public class DictamenAction extends DispatchAction {
 	
 	public Map<String, Object> dictaminarSuperior(Dictamen row, Solicitud s) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+		 HttpServletRequest oRequest = WebContextFactory.get().getHttpServletRequest();
+		 
+		 IILDPeUsuario usuarioSesion = (IILDPeUsuario)oRequest.getSession(true).getAttribute("USUARIO_SESION");
+		 String nombre = usuarioSesion.getNombre()+ Constant.ESPACIO +  usuarioSesion.getApellido1() + Constant.ESPACIO + usuarioSesion.getApellido2();
 		try {
 			map = dictaminar(row, 1);
 			
 			if(((Long) map.get("type")).longValue() > 0) {
 				String uid = s.getGestorCod();
 				IILDPeUsuario jefe = responsableSuperior(s);
-				if(asignacionService.asignarSolicitudMasiva("," + s.getNroSolicitud(), jefe.getUID(), uid)<=0){
+				if(asignacionService.asignarSolicitudMasiva("," + s.getNroSolicitud(), jefe.getUID(), uid, nombre)<=0){
 					map.put("status", false);
 					map.put("type", -1);
 					map.put("error", "No se pudo completar la asignaci\u00F3n al responsable superior.");
@@ -341,6 +351,9 @@ public class DictamenAction extends DispatchAction {
 		try {
 			s = obtenerSolicitud(row.getNroSolicitud());
 			s.setListaDocumentos(row.getListaDocumentos());
+			HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+			IILDPeUsuario usuario = (IILDPeUsuario) request.getSession().getAttribute("USUARIO_SESION");
+			
 			s.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD+Constant.CHAR_GUION+Constant.ESTADO_SOLICITUD_DICTAMINADO_);
 			if(solicitudService.updateDictaminaEnOficina(s) != 0) {
 				if(s != null) {
@@ -352,8 +365,8 @@ public class DictamenAction extends DispatchAction {
 					}
 					
 					if(sd != null && sd.size() > 0) {
-						HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
-						IILDPeUsuario usuario = (IILDPeUsuario) request.getSession().getAttribute("USUARIO_SESION");
+						request = WebContextFactory.get().getHttpServletRequest();
+						usuario = (IILDPeUsuario) request.getSession().getAttribute("USUARIO_SESION");
 						
 						if(usuario != null && usuario.getUID() != null) {
 							if(validacionService.metodoEncapsulado(s, usuario.getUID()) != 1 || superior == 0) {
@@ -371,7 +384,10 @@ public class DictamenAction extends DispatchAction {
 						}
 					}
 				}
-				
+				row.setCodUsuarioSession(usuario.getUID());
+				row.setNomUsuarioSession(usuario.getNombre()+ Constant.ESPACIO +  
+						usuario.getApellido1() + Constant.ESPACIO +
+												   usuario.getApellido2());
 				dictaminarService.delete(row);
 				
 				if(dictaminarService.dictaminarSolicitud(row) != null) {
@@ -446,6 +462,11 @@ public class DictamenAction extends DispatchAction {
 	}
 	
 	public List<SolicitudOperacion> listarOperaciones(Solicitud s) {
-		return solicitudService.selectOperacionByNroSolicitud(s);
+		try {
+			return solicitudService.selectOperacionByNroSolicitud(s);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<SolicitudOperacion>();
 	}
 }
