@@ -2,7 +2,6 @@ package bbva.pe.gpr.daoImpl;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
-import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.Usuario;
 import bbva.pe.gpr.dao.GerenteOficinaDAO;
 
