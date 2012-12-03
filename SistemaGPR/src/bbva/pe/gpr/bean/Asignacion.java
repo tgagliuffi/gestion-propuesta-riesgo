@@ -29,6 +29,8 @@ public class Asignacion extends AsignacionKey{
 	private String estadoAsignacion;
 	private String usuarioAsignado;
 	
+	private String codUsuarioSession;
+    private String nomUsuarioSession;
 	
 	public String getUsuarioAsignado() {
 		return usuarioAsignado;
@@ -155,6 +157,18 @@ public class Asignacion extends AsignacionKey{
 	}
 	public void setEstadoAsignacion(String estadoAsignacion) {
 		this.estadoAsignacion = estadoAsignacion;
+	}
+	public String getCodUsuarioSession() {
+		return codUsuarioSession;
+	}
+	public void setCodUsuarioSession(String codUsuarioSession) {
+		this.codUsuarioSession = codUsuarioSession;
+	}
+	public String getNomUsuarioSession() {
+		return nomUsuarioSession;
+	}
+	public void setNomUsuarioSession(String nomUsuarioSession) {
+		this.nomUsuarioSession = nomUsuarioSession;
 	}
 	
 }

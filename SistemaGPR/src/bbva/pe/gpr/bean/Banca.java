@@ -1,9 +1,12 @@
 package bbva.pe.gpr.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Banca {
-    private BigDecimal codBanca;
+public class Banca implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	private BigDecimal codBanca;
     private String nombre;
     private String descripcion;
     private BigDecimal estado;
