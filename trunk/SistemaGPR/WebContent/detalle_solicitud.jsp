@@ -30,6 +30,7 @@
 	<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/util/formatters.js" type="text/javascript"></script>
 	<script src="<%=request.getContextPath()%>/js/script.js" type="text/javascript"></script>
+	<script src="<%=request.getContextPath()%>/js/solicitud/detalleSolicitud.js" type="text/javascript"></script>
 	
 <script type="text/javascript">
 $(function() {
@@ -51,21 +52,22 @@ var rutaContexto1 = location.pathname;
 var rutaContexto2 = "<%=request.getContextPath()%>";
 var rutaContexto  = rutaContexto1.substr(0, rutaContexto1.indexOf(rutaContexto2)) + rutaContexto2;
 
-var myColSolicituDetalle  = [ 'Descripción Producto', 'Producto Base','Contrato Vinculado', 'Scoring',  'Cod. Pre Evaluador', 'Campaña', 'Tipo', 'Monto Solicitado', 'Plazo (Meses)', 'Monto Garantizado', 'Total'];
+var myColSolicituDetalle  = [ 'Producto', 'Producto Base','Contrato Vinculado', 'Scoring',  'Cod. Pre Evaluador', 'Campaña', 'Tipo', 'Mto Solicitado', 'Plazo (Meses)', 'Mto Garantizado', 'Total'];
 
-var myDataModelSolicitudDetalle = [ {name : 'desProducto',      	index : 'desProducto',       	width : 200      ,sortable:false},
-                                    {name : 'desProdBase',      	index : 'desProdBase',       	width : 120      ,sortable:false},
-                                    {name : 'contratoVinculado',  	index : 'contratoVinculado',  	width : 150      ,sortable:false},
-                                    {name : 'scoring',        		index : 'scoring',         		width : 70      ,sortable:false},
+var myDataModelSolicitudDetalle = [ {name : 'desProducto',      	index : 'desProducto',       	width : 150      ,sortable:false},
+                                    {name : 'desProdBase',      	index : 'desProdBase',       	width : 100      ,sortable:false},
+                                    {name : 'contratoVinculado',  	index : 'contratoVinculado',  	width : 110      ,sortable:false},
+                                    {name : 'scoring',        		index : 'scoring',         		width : 70       ,sortable:false},
                                     {name : 'codPreEvaluador',    	index : 'codPreEvaluador',      width : 100      ,sortable:false},
                                     {name : 'desCampania',      	index : 'desCampania',       	width : 120      ,sortable:false},
-                                    {name : 'desTipo',        		index : 'desTipo',         		width : 80      ,sortable:false},
-                                    {name : 'mtoProducto',      	index : 'mtoProducto',       	width : 100      ,sortable:false, editoptions: {style: 'text-align: right'}},
-                                    {name : 'plazo',          		index : 'plazo',         		width : 80      ,sortable:false},
-                                    {name : 'mtoGarantia',      	index : 'mtoGarantia',       	width : 100      ,sortable:false, editoptions: {style: 'text-align: right'}},
-                                    {name : 'mtoTotalRow',      	index : 'mtoTotalRow',       	width : 60      ,sortable:false, editoptions: {style: 'text-align: right'}}
+                                    {name : 'desTipo',        		index : 'desTipo',         		width : 80       ,sortable:false},
+                                    {name : 'mtoProducto',      	index : 'mtoProducto',       	width : 80      ,sortable:false, editoptions: {style: 'text-align: right'}},
+                                    {name : 'plazo',          		index : 'plazo',         		width : 80       ,sortable:false},
+                                    {name : 'mtoGarantia',      	index : 'mtoGarantia',       	width : 80      ,sortable:false, editoptions: {style: 'text-align: right'}},
+                                    {name : 'mtoTotalRow',      	index : 'mtoTotalRow',       	width : 60       ,sortable:false, editoptions: {style: 'text-align: right'}}
                         ];
-                    			
+
+                                     
 function consultarUsuario(){
 	var formulario = document.getElementById('formSolicitudIngreso');
 	var nroSolicitud = formulario.nroSolicitud.value;
@@ -82,17 +84,17 @@ function mostrarTabla(data){
 	jQuery("#listProducts").jqGrid(
 	{
 		beforeSelectRow: function(){},
-		caption		: "Listado de Usuarios",
+		caption		: "Listado de Productos",
 		data 	 	: data,
 		datatype 	: "local",
 		height   	: "100%",
-		weight 	 	: 1000,
+		width 	 	: 1250,
 		colNames 	: myColSolicituDetalle,
 		colModel 	: myDataModelSolicitudDetalle,
 		rowList 	: [5,10,15,20],
 		rowNum 		: 10, 
 		viewrecords : true,
-		multiselect : true,			
+		multiselect : false,			
 		subGrid    	: false,
 		jsonReader : { repeatitems: false },
 		footerrow  	: false,
@@ -108,10 +110,11 @@ function regresarBusquedaSolicitud(){
 	formulario.action =rutaContexto+'/busquedaSolicitudAction.do?method=listarSolicitud';
 	formulario.submit();
 }
+
 </script>
 	
 </head>
-<body onload="consultarUsuario();">
+<body onload="consultarUsuario();listarOperaciones();listarMensajes();">
 <html:form method="post" action="ingresoSolicitud.do?method=init" styleId="formSolicitudIngreso">
 	<br/>
 	<a href="javascript:regresarBusquedaSolicitud();" class="buttonGPR">REGRESAR</a>
@@ -127,11 +130,9 @@ function regresarBusquedaSolicitud(){
 	</table>
 	<br/>
 	
-	<fieldset style="width: 830px">
-   	<legend>
-   	<font class="fontText">
-   	Datos del Cliente
-   	</font></legend>
+	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 860px;margin: 3px;">
+	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+	<label>Datos del Cliente</label></div>
 	<table>	
 	<tr>
 		<td colspan="2" valign="middle">
@@ -172,13 +173,12 @@ function regresarBusquedaSolicitud(){
        </td>
 	</tr>
 	</table>
-	</fieldset>
+	</div>
 	
-	<fieldset style="width: 830px">
-   	<legend>
-   	<font class="fontText">
-   	Datos de la Oficina y Ejecutivo
-   	</font></legend>
+	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 860px;margin: 3px; margin-top: 10px;">
+	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+	<label>Datos de la Oficina y Ejecutivo</label>
+	</div>
 	<table>	
 	<tr>
        <td align="left" valign="middle">
@@ -214,182 +214,148 @@ function regresarBusquedaSolicitud(){
 	   <td align="right" valign="middle">&nbsp;</td>
 	</tr>
 	</table>
-	</fieldset>
+	</div>
 	
-	<fieldset style="width: 1260px;">
-   	<legend>
-   	<font class="txt-titulo">
-   	Datos del Producto
-   	</font></legend>
+	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1260px;margin: 3px;margin-top: 10px;">
+	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+	<label>Datos drl Producto</label></div>
 	
-	<table id="listProducts" class="grid" style="width: 1190px;"></table>
+	<table id="listProducts" class="grid" style="width: 1240px;margin: 5px;"></table>
 
-	</fieldset>
+	</div>
 	
-	<fieldset style="width: 1200px; padding-left: 10px; padding-right: 10px; padding-top: 10px;padding-bottom: 10px;">
-   	<legend>
-   	<font class="fontText">
-   	Datos de Riesgo del Cliente
-   	</font></legend>
+	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1260px;margin: 3px;margin-top: 10px;">
+	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
+	<label>Datos de Riesgo del Cliente</label></div>
    	
    	<table>
    	<tr>
-   	
-   	<td valign="top">
-	<table>	
-	<tr>
-		<td valign="middle">
-        	<font class="fontText">Rating*</font>
-        </td>
-        <td valign="middle">        	
-        	<input value="${Solicitud.rating}" class="cajaTexto" size="19" readonly="readonly"/>       		
-        </td>
-    </tr>
-    <tr>
-		<td>
-        	<font class="fontText">Scorating*</font>
-        </td>
-        <td valign="middle">
-        	<input value="${Solicitud.scorating}" class="cajaTexto" size="19" readonly="readonly"/> 
-        </td>
-    </tr>
-    <tr>
-       <td valign="middle">
-       		<font class="fontText">Clasificación del Cliente *</font>
-       </td>
-       <td valign="middle">
-       		<input value="${Solicitud.clasificacion}" class="cajaTexto" size="19" readonly="readonly"/> 
-       </td>
-	</tr>
-	</table>
-	</td>
+   		<td valign="top">
+			<table>	
+			<tr>
+				<td valign="middle"><font class="fontText">Rating*</font></td>
+		        <td valign="middle"><input value="${Solicitud.rating}" class="cajaTexto" size="19" readonly="readonly"/></td>
+		    </tr>
+		    <tr>
+				<td><font class="fontText">Scorating*</font></td>
+		        <td valign="middle"><input value="${Solicitud.scorating}" class="cajaTexto" size="19" readonly="readonly"/></td>
+		    </tr>
+		    <tr>
+		       <td valign="middle"><font class="fontText">Clasificación del Cliente *</font></td>
+		       <td valign="middle"><input value="${Solicitud.clasificacion}" class="cajaTexto" size="19" readonly="readonly"/></td>
+			</tr>
+			</table>
+		</td>
+		<td valign="top">
+			<table>	
+			<tr>
+				<td valign="middle">
+		        	<font class="fontText">Relevancia Pública *</font><br/>
+		        	
+		        	<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
+					<input type="text" name="relevPublica1" class="cajaTexto" id="relevPublica1" size="60" maxlength="19" value='${Solicitud.relevPublica1}' readonly="readonly"><br/>
+					<input type="text" name="relevPublica2" class="cajaTexto" id="relevPublica2" size="60" maxlength="19" value='${Solicitud.relevPublica2}' readonly="readonly"><br/>
+					<input type="text" name="relevPublica3" class="cajaTexto" id="relevPublica3" size="60" maxlength="19" value='${Solicitud.relevPublica3}' readonly="readonly"><br/>
+					<input type="text" name="relevPublica4" class="cajaTexto" id="relevPublica4" size="60" maxlength="19" value='${Solicitud.relevPublica4}' readonly="readonly"><br/>
+					<input type="text" name="relevPublica5" class="cajaTexto" id="relevPublica5" size="60" maxlength="19" value='${Solicitud.relevPublica5}' readonly="readonly">
+					<%}else{%>
+					<input type="text" name="relevPublica1" class="cajaTexto" id="relevPublica1" size="60" maxlength="100"  value='${Solicitud.relevPublica1}' readonly="readonly"><br/>
+					<input type="text" name="relevPublica2" class="cajaTexto" id="relevPublica2" size="60" maxlength="100"  value='${Solicitud.relevPublica2}' readonly="readonly"><br/>
+					<input type="text" name="relevPublica3" class="cajaTexto" id="relevPublica3" size="60" maxlength="100"  value='${Solicitud.relevPublica3}' readonly="readonly"><br/>
+					<input type="text" name="relevPublica4" class="cajaTexto" id="relevPublica4" size="60" maxlength="100"  value='${Solicitud.relevPublica4}' readonly="readonly"><br/>
+					<input type="text" name="relevPublica5" class="cajaTexto" id="relevPublica5" size="60" maxlength="100"  value='${Solicitud.relevPublica5}' readonly="readonly">
+					<%}%>
+							
+		       </td>
+		    </tr>
+			</table>
+		</td>
 	
 	<td valign="top">
-	<table>	
-	<tr>
-		<td valign="middle">
-        	<font class="fontText">Relevancia Pública *</font><br/>
-        	
-        	<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-			<input type="text" name="relevPublica1" class="cajaTexto" id="relevPublica1" size="60" maxlength="19" value='${Solicitud.relevPublica1}' readonly="readonly"><br/>
-			<input type="text" name="relevPublica2" class="cajaTexto" id="relevPublica2" size="60" maxlength="19" value='${Solicitud.relevPublica2}' readonly="readonly"><br/>
-			<input type="text" name="relevPublica3" class="cajaTexto" id="relevPublica3" size="60" maxlength="19" value='${Solicitud.relevPublica3}' readonly="readonly"><br/>
-			<input type="text" name="relevPublica4" class="cajaTexto" id="relevPublica4" size="60" maxlength="19" value='${Solicitud.relevPublica4}' readonly="readonly"><br/>
-			<input type="text" name="relevPublica5" class="cajaTexto" id="relevPublica5" size="60" maxlength="19" value='${Solicitud.relevPublica5}' readonly="readonly">
-			<%}else{%>
-			<input type="text" name="relevPublica1" class="cajaTexto" id="relevPublica1" size="60" maxlength="100"  value='${Solicitud.relevPublica1}' readonly="readonly"><br/>
-			<input type="text" name="relevPublica2" class="cajaTexto" id="relevPublica2" size="60" maxlength="100"  value='${Solicitud.relevPublica2}' readonly="readonly"><br/>
-			<input type="text" name="relevPublica3" class="cajaTexto" id="relevPublica3" size="60" maxlength="100"  value='${Solicitud.relevPublica3}' readonly="readonly"><br/>
-			<input type="text" name="relevPublica4" class="cajaTexto" id="relevPublica4" size="60" maxlength="100"  value='${Solicitud.relevPublica4}' readonly="readonly"><br/>
-			<input type="text" name="relevPublica5" class="cajaTexto" id="relevPublica5" size="60" maxlength="100"  value='${Solicitud.relevPublica5}' readonly="readonly">
-			<%}%>
-					
-       </td>
-    </tr>
-	</table>
+				<table>	
+				<tr>
+					<td valign="middle"><font class="fontText">Deuda Directa *</font></td>
+			        <td valign="middle"><input value="${Solicitud.deudaDirecta}" class="cajaTexto" size="19" readonly="readonly" style="text-align: right;"/> </td>
+				</tr>
+				<tr>
+					<td valign="middle"><font class="fontText">Deuda Indirecta *</font></td>
+					<td valign="middle"><input value="${Solicitud.deudaIndirecta}" class="cajaTexto" size="19" readonly="readonly" style="text-align: right;"/></td>
+				</tr>
+				<tr>
+					<td valign="middle"><font class="fontText">Deuda Castigo *</font></td>
+					<td valign="middle"><input value="${Solicitud.castigo}" class="cajaTexto" size="19" readonly="readonly" style="text-align: right;"/>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle"><font class="fontText">Deuda en el Sistema Financiero *</font></td>
+					<td valign="middle"><input value="${Solicitud.deudaSistemaFinanciero}" class="cajaTexto" size="19" readonly="readonly" style="text-align: right;"/>
+			       </td>
+			    </tr>
+				</table>
 	</td>
-	
 	<td valign="top">
-	<table>	
-	<tr>
-		<td valign="middle">
-        	<font class="fontText">Deuda Directa *</font>
-        </td>
-        <td valign="middle">
-        	<input value="${Solicitud.deudaDirecta}" class="cajaTexto" size="19" readonly="readonly" style="text-align: right;"/> 
-		</td>
-	</tr>
-	<tr>
-		<td valign="middle">
-			<font class="fontText">Deuda Indirecta *</font>
-		</td>
-		<td valign="middle">
-			<input value="${Solicitud.deudaIndirecta}" class="cajaTexto" size="19" readonly="readonly" style="text-align: right;"/>
-		</td>
-	</tr>
-	<tr>
-		<td valign="middle">
-			<font class="fontText">Deuda Castigo *</font>
-		</td>
-		<td valign="middle">
-			<input value="${Solicitud.castigo}" class="cajaTexto" size="19" readonly="readonly" style="text-align: right;"/>
-		</td>
-	</tr>
-	<tr>
-		<td valign="middle">
-			<font class="fontText">Deuda en el Sistema Financiero *</font>
-		</td>
-		<td valign="middle">
-			<input value="${Solicitud.deudaSistemaFinanciero}" class="cajaTexto" size="19" readonly="readonly" style="text-align: right;"/>
-       </td>
-    </tr>
-	</table>
+				<table>	
+				<tr>
+					<td valign="middle"><font class="fontText">Otros Riesgos</font></td>
+			        <td valign="middle">
+			        
+			        	<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
+						<input type="text" name="otroRiesgo" class="cajaTexto" id="otroRiesgo" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.otroRiesgo}' readonly="readonly"style="text-align: right;">
+						<%}else{%>
+						<input type="text" name="otroRiesgo" class="cajaTexto" id="otroRiesgo" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.otroRiesgo}' onblur="calcularRiesgoActual(this);" style="text-align: right;">
+						<%}%>        
+						
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle"><font class="fontText">Riesgo Grupal</font></td>
+					<td valign="middle">
+						<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
+						<input type="text" name="riesgoGrupal" class="cajaTexto" id="riesgoGrupal" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.riesgoGrupal}'  readonly="readonly" style="text-align: right;">
+						<%}else{%>
+						<input type="text" name="riesgoGrupal" class="cajaTexto" id="riesgoGrupal" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.riesgoGrupal}' readonly="readonly" style="text-align: right;">
+						<%}%>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle"><font class="fontText">Riesgo Actual</font></td>
+					<td valign="middle">
+						<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
+						<input type="text" name="riesgoActual" class="cajaTexto" id="riesgoActual" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.riesgoActual}' readonly="readonly" style="text-align: right;">
+						<%}else{%>
+						<input type="text" name="riesgoActual" class="cajaTexto" id="riesgoActual" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.riesgoActual}' style="text-align: right;">
+						<%}%>
+					</td>
+				</tr>
+				<tr>
+					<td valign="middle"><font class="fontText">Riesgo Total</font></td>
+					<td valign="middle">
+						<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
+						<input type="text" name="riesgoTotal" class="cajaTexto" id="riesgoTotal" size="19" maxlength="19"  onkeypress="ingresoNumeros(event);" readonly="readonly" style="text-align: right;">
+						<%}else{%>
+						<input type="text" name="riesgoTotal" class="cajaTexto" id="riesgoTotal" size="19" maxlength="19"  value='${solicitudForm.riesgoTotal}'  onkeypress="ingresoNumeros(event);" readonly="readonly" style="text-align: right;">
+						<%}%>
+			       </td>
+			    </tr>
+			  
+				</table>
 	</td>
-	
-	<td valign="top">
-	<table>	
-	<tr>
-		<td valign="middle">
-        	<font class="fontText">Otros Riesgos</font>
-        </td>
-        <td valign="middle">
-        
-        	<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-			<input type="text" name="otroRiesgo" class="cajaTexto" id="otroRiesgo" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.otroRiesgo}' readonly="readonly"style="text-align: right;">
-			<%}else{%>
-			<input type="text" name="otroRiesgo" class="cajaTexto" id="otroRiesgo" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.otroRiesgo}' onblur="calcularRiesgoActual(this);" style="text-align: right;">
-			<%}%>        
-			
-		</td>
 	</tr>
-	<tr>
-		<td valign="middle">
-			<font class="fontText">Riesgo Grupal</font>
-		</td>
-		<td valign="middle">
-			
-			<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-			<input type="text" name="riesgoGrupal" class="cajaTexto" id="riesgoGrupal" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.riesgoGrupal}'  readonly="readonly" style="text-align: right;">
-			<%}else{%>
-			<input type="text" name="riesgoGrupal" class="cajaTexto" id="riesgoGrupal" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.riesgoGrupal}' readonly="readonly" style="text-align: right;">
-			<%}%>
-		</td>
-	</tr>
-	<tr>
-		<td valign="middle">
-			<font class="fontText">Riesgo Actual</font>
-		</td>
-		<td valign="middle">
-			
-			<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-			<input type="text" name="riesgoActual" class="cajaTexto" id="riesgoActual" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.riesgoActual}' readonly="readonly" style="text-align: right;">
-			<%}else{%>
-			<input type="text" name="riesgoActual" class="cajaTexto" id="riesgoActual" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.riesgoActual}' style="text-align: right;">
-			<%}%>
-			
-		</td>
-	</tr>
-	<tr>
-		<td valign="middle">
-			<font class="fontText">Riesgo Total</font>
-		</td>
-		<td valign="middle">
-			
-			<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-			<input type="text" name="riesgoTotal" class="cajaTexto" id="riesgoTotal" size="19" maxlength="19"  onkeypress="ingresoNumeros(event);" readonly="readonly" style="text-align: right;">
-			<%}else{%>
-			<input type="text" name="riesgoTotal" class="cajaTexto" id="riesgoTotal" size="19" maxlength="19"  value='${solicitudForm.riesgoTotal}'  onkeypress="ingresoNumeros(event);" readonly="readonly" style="text-align: right;">
-			<%}%>
-       </td>
-    </tr>
+	</table></div>
+	<table>
+			  <tr>
+			    	<td>
+			    		<input type="button" id="btnOperaciones" class="buttonGPR"  name="btnOperaciones" onclick='mostrarOperacion();' value="Ver Operaciones">&nbsp;
+						<input type="button" id="btnMensajes"  class="buttonGPR" name="btnMensajes" value="Ver Mensajes" onclick='mostrarMensajes();'>&nbsp;
+			    	</td>
+			    </tr>
 	</table>
-	</td>
-	
-	</tr>
-	</table>
-	</fieldset>
-	<table id="listUsuarios">
-	</table>
+	<div  id="valOperaciones"  title="Operaciones de la solictud" style="width: 600px">
+		<table id="listOperations" class="grid" style="width: 480px;"></table>
+	</div>
+	<div  id="valMensajes"  title="Mensajes de la solictud" style="width: 600px">
+		<table id="listMessages" class="grid" style="width: 480px;"></table>
+	</div>
 </html:form>
 </body>
 </html>

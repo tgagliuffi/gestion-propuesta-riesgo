@@ -137,17 +137,17 @@ function prioridadFormat(cellvalue, options, rowObject){
 	
 	var slctPrioridad = "<select name='arrayPrioridad'>";
 	if(cellvalue == '1'){
-		slctPrioridad += "<option selected='selected' value='1'>Alta</option>"+
-		"<option value='2'>Normal</option>"+			
-		"<option value='3'>Baja</option>";
+		slctPrioridad += "<option selected='selected' value='1'>ALTA</option>"+
+		"<option value='2'>NORMAL</option>"+			
+		"<option value='3'>BAJA</option>";
 	}else if(cellvalue == '2'){
-		slctPrioridad += "<option value='1'>Alta</option>"+
-		"<option selected='selected' value='2'>Normal</option>"+			
-		"<option value='3'>Baja</option>";
+		slctPrioridad += "<option value='1'>ALTA</option>"+
+		"<option selected='selected' value='2'>NORMAL</option>"+			
+		"<option value='3'>BAJA</option>";
 	}else if(cellvalue == '3'){
-		slctPrioridad += "<option value='1'>Alta</option>"+
-		"<option value='2'>Normal</option>"+			
-		"<option selected='selected' value='3'>Baja</option>";
+		slctPrioridad += "<option value='1'>ALTA</option>"+
+		"<option value='2'>NORMAL</option>"+			
+		"<option selected='selected' value='3'>BAJA</option>";
 	}
 	
 	slctPrioridad += "</select>";	

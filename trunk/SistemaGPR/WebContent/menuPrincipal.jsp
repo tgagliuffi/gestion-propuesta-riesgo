@@ -19,6 +19,9 @@
 <script src="<%=request.getContextPath()%>/js/jquery.ui.widget.js" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/js/jquery.ui.tabs.js" type="text/javascript"></script>
 <script type="text/javascript">
+var rutaContexto1 = location.pathname;
+var rutaContexto2 = "<%=request.getContextPath()%>";
+var rutaContexto  = rutaContexto1.substr(0, rutaContexto1.indexOf(rutaContexto2)) + rutaContexto2;
 $(function() {
 	$("#tabs").tabs({
 		ajaxOptions: {
@@ -35,6 +38,10 @@ String img = (String)request.getSession().getAttribute("USUARIO_IMG");
 String fecha = (String)request.getSession().getAttribute("FECHA_ACTUAL");
 List<Menu> getLstMenu =(List<Menu>)request.getAttribute("getLstMenu");
 %>
+function prueba(parametro){
+	formulario.action = rutaContexto +'/'+parametro;
+	formulario.submit();
+}
 </script>
 </head>
 <body>
@@ -68,7 +75,7 @@ List<Menu> getLstMenu =(List<Menu>)request.getAttribute("getLstMenu");
 	<div id="tabs">
 		<ul>		
 			<%for(int i=0;i<getLstMenu.size();i++){	%>
-				<li><a href="#tabs<%=i+1%>"><b><%=getLstMenu.get(i).getDescripcion()%></b></a></li>
+				<li><a href="#tabs<%=i+1%>" onclick="#tabs<%=i+1%>"><b><%=getLstMenu.get(i).getDescripcion()%></b></a></li>
 				<%}%>
 		</ul>
 		<%for(int i=0;i<getLstMenu.size();i++){
@@ -79,11 +86,11 @@ List<Menu> getLstMenu =(List<Menu>)request.getAttribute("getLstMenu");
 				}
 				%>			
 				<div id="tabs<%=i+1%>">
-					<iframe src="<%=url%>" name="<%=desIframe%>" width="100%" scrolling="auto" frameborder="0">
+					<iframe src="<%=url%>" name="<%=desIframe%>" width="100%" scrolling="auto" frameborder="0" >
 				      <p>Ocurrio un error no previsto, porfavor vuelva a intentarlo.</p>
 				    </iframe>
 				</div>
-			<%}%>
+		<%}%>
 	</div>
 </div>
 <%}%>

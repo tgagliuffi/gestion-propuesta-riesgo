@@ -54,7 +54,7 @@
 	       </td>
 	       <td valign="middle">       
 		   		<select id="bancaCliente" name="bancaCliente">
-					<option value="-1">TODOS</option>
+					<option value="-1">SELECCIONE</option>
 				</select>
 		   </td>
 		</tr>
