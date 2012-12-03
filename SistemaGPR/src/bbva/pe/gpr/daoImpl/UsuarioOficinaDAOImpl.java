@@ -16,18 +16,18 @@ public class UsuarioOficinaDAOImpl extends SqlMapClientDaoSupport implements Usu
 	
 	@SuppressWarnings("unchecked")
 	public List<UsuarioOficina> getLstOficinaAsignada(Usuario user) {
-		return (List<UsuarioOficina>)getSqlMapClientTemplate().queryForList("CARDEL_TGPR_USUARIO_OFICINA.getLstOficinaAsignada",user);
+		return (List<UsuarioOficina>)getSqlMapClientTemplate().queryForList("DELGPR_TGPR_USUARIO_OFICINA.getLstOficinaAsignada",user);
 	}
 
 	public void saveOficinaAsignada(UsuarioOficina oficinaAsignada) {
-	getSqlMapClientTemplate().insert("CARDEL_TGPR_USUARIO_OFICINA.getLstSaveAsignarOficina", oficinaAsignada); 
+	getSqlMapClientTemplate().insert("DELGPR_TGPR_USUARIO_OFICINA.getLstSaveAsignarOficina", oficinaAsignada); 
 	}
 	
 	public void deleteOficinaAsignada(String codOficina) {
-    getSqlMapClientTemplate().update("CARDEL_TGPR_USUARIO_OFICINA.getUpdateEstado", codOficina);		
+    getSqlMapClientTemplate().update("DELGPR_TGPR_USUARIO_OFICINA.getUpdateEstado", codOficina);		
 	}
 
 	public String getOficinaAsignadaExiste(UsuarioOficina oficinaAsignada) {
-		return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_USUARIO_OFICINA.getCountOficinaAsignada", oficinaAsignada).get(0).toString();
+		return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_USUARIO_OFICINA.getCountOficinaAsignada", oficinaAsignada).get(0).toString();
 	}
 }

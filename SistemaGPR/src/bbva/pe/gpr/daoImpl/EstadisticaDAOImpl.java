@@ -14,30 +14,30 @@ public class EstadisticaDAOImpl extends SqlMapClientDaoSupport  implements Estad
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
+	
 	public List<Estadistica> selectAsignacion(Estadistica filtro)
 			throws Exception {
-		return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_ESTADISTICAS.selectAsignacion", filtro);
+		return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_ESTADISTICAS.selectAsignacion", filtro);
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
+	
 	public List<Estadistica> selectAtencion(Estadistica filtro)
 			throws Exception {
-		return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_ESTADISTICAS.selectAtencion", filtro);
+		return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_ESTADISTICAS.selectAtencion", filtro);
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
+	
 	public List<Estadistica> selectCabeceraAsignacion(Estadistica filtro)
 			throws Exception {
-		return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_ESTADISTICAS.selectCabeceraAsignacion", filtro);
+		return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_ESTADISTICAS.selectCabeceraAsignacion", filtro);
 	}	
 
 	@SuppressWarnings("unchecked")
-	@Override
+	
 	public List<Estadistica> selectCabeceraAtencion(Estadistica filtro)
 			throws Exception {
-		return getSqlMapClientTemplate().queryForList("CARDEL_TGPR_ESTADISTICAS.selectCabeceraAtencion", filtro);
+		return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_ESTADISTICAS.selectCabeceraAtencion", filtro);
 	}
 }

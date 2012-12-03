@@ -8,7 +8,7 @@ import bbva.pe.gpr.dao.SolicitudRechazadaDAO;
 public class SolicitudRechazadaDAOImpl extends SqlMapClientDaoSupport implements SolicitudRechazadaDAO{
 
 	public void insertSolicitudRechazada(Solicitud solicitud) {
-      getSqlMapClientTemplate().insert("CARDEL_TGPR_SOLICITUD_RECHAZADA.getInsertSolicitudRechazada", solicitud);		
+      getSqlMapClientTemplate().insert("DELGPR_TGPR_SOLICITUD_RECHAZADA.getInsertSolicitudRechazada", solicitud);		
 	}
 
 }

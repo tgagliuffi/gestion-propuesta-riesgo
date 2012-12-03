@@ -17,40 +17,40 @@ public class SolicitudDetalleDAOImpl extends SqlMapClientDaoSupport implements S
     }
 
     public int deleteByPrimaryKey(SolicitudDetalleKey key) {
-        int rows = getSqlMapClientTemplate().delete("CARDEL_TGPR_SOLICITUD_DETALLES.ibatorgenerated_deleteByPrimaryKey", key);
+        int rows = getSqlMapClientTemplate().delete("DELGPR_TGPR_SOLICITUD_DETALLES.ibatorgenerated_deleteByPrimaryKey", key);
         return rows;
     }
 
     public void insert(SolicitudDetalle record) {
-        getSqlMapClientTemplate().insert("CARDEL_TGPR_SOLICITUD_DETALLES.ibatorgenerated_insert", record);
+        getSqlMapClientTemplate().insert("DELGPR_TGPR_SOLICITUD_DETALLES.ibatorgenerated_insert", record);
     }
 
     public void insertSelective(SolicitudDetalle record) {
-        getSqlMapClientTemplate().insert("CARDEL_TGPR_SOLICITUD_DETALLES.ibatorgenerated_insertSelective", record);
+        getSqlMapClientTemplate().insert("DELGPR_TGPR_SOLICITUD_DETALLES.ibatorgenerated_insertSelective", record);
     }
 
     public SolicitudDetalle selectByPrimaryKey(SolicitudDetalleKey key) {
-        SolicitudDetalle record = (SolicitudDetalle) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_SOLICITUD_DETALLES.ibatorgenerated_selectByPrimaryKey", key);
+        SolicitudDetalle record = (SolicitudDetalle) getSqlMapClientTemplate().queryForObject("DELGPR_TGPR_SOLICITUD_DETALLES.ibatorgenerated_selectByPrimaryKey", key);
         return record;
     }
 
     public int updateByPrimaryKeySelective(SolicitudDetalle record) {
-        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_SOLICITUD_DETALLES.ibatorgenerated_updateByPrimaryKeySelective", record);
+        int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_SOLICITUD_DETALLES.ibatorgenerated_updateByPrimaryKeySelective", record);
         return rows;
     }
 
     public int updateByPrimaryKey(SolicitudDetalle record) {
-        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_SOLICITUD_DETALLES.ibatorgenerated_updateByPrimaryKey", record);
+        int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_SOLICITUD_DETALLES.ibatorgenerated_updateByPrimaryKey", record);
         return rows;
     }
     @SuppressWarnings("unchecked")
   	public List<Solicitud> getLstSolicitudBandeja(Solicitud solicitudBean){
-      	return (List<Solicitud>) getSqlMapClientTemplate().queryForList("CARDEL_TGPR_SOLICITUDES.getLstSolicitud", solicitudBean);	
+      	return (List<Solicitud>) getSqlMapClientTemplate().queryForList("DELGPR_TGPR_SOLICITUDES.getLstSolicitud", solicitudBean);	
       }
 
 	@SuppressWarnings("unchecked")
 	public List<SolicitudDetalle> getListSolicitudDetalleForId(Solicitud idsolicitud) {
-		 return (List<SolicitudDetalle>) getSqlMapClientTemplate().queryForList("CARDEL_TGPR_SOLICITUD_DETALLES.getDetalleSolicitudForNroSolicitud",idsolicitud);
+		 return (List<SolicitudDetalle>) getSqlMapClientTemplate().queryForList("DELGPR_TGPR_SOLICITUD_DETALLES.getDetalleSolicitudForNroSolicitud",idsolicitud);
 	}
 
 }

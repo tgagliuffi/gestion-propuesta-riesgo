@@ -15,32 +15,32 @@ public class ConfiguracionDAOImpl extends SqlMapClientDaoSupport implements Conf
     public int deleteByPrimaryKey(BigDecimal codConfiguracion) {
         Configuracion key = new Configuracion();
         key.setCodConfiguracion(codConfiguracion);
-        int rows = getSqlMapClientTemplate().delete("CARDEL_TGPR_CONFIGURACIONES.ibatorgenerated_deleteByPrimaryKey", key);
+        int rows = getSqlMapClientTemplate().delete("DELGPR_TGPR_CONFIGURACIONES.ibatorgenerated_deleteByPrimaryKey", key);
         return rows;
     }
 
     public void insert(Configuracion record) {
-        getSqlMapClientTemplate().insert("CARDEL_TGPR_CONFIGURACIONES.ibatorgenerated_insert", record);
+        getSqlMapClientTemplate().insert("DELGPR_TGPR_CONFIGURACIONES.ibatorgenerated_insert", record);
     }
 
     public void insertSelective(Configuracion record) {
-        getSqlMapClientTemplate().insert("CARDEL_TGPR_CONFIGURACIONES.ibatorgenerated_insertSelective", record);
+        getSqlMapClientTemplate().insert("DELGPR_TGPR_CONFIGURACIONES.ibatorgenerated_insertSelective", record);
     }
 
     public Configuracion selectByPrimaryKey(BigDecimal codConfiguracion) {
         Configuracion key = new Configuracion();
         key.setCodConfiguracion(codConfiguracion);
-        Configuracion record = (Configuracion) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_CONFIGURACIONES.ibatorgenerated_selectByPrimaryKey", key);
+        Configuracion record = (Configuracion) getSqlMapClientTemplate().queryForObject("DELGPR_TGPR_CONFIGURACIONES.ibatorgenerated_selectByPrimaryKey", key);
         return record;
     }
 
     public int updateByPrimaryKeySelective(Configuracion record) {
-        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_CONFIGURACIONES.ibatorgenerated_updateByPrimaryKeySelective", record);
+        int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_CONFIGURACIONES.ibatorgenerated_updateByPrimaryKeySelective", record);
         return rows;
     }
 
     public int updateByPrimaryKey(Configuracion record) {
-        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_CONFIGURACIONES.ibatorgenerated_updateByPrimaryKey", record);
+        int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_CONFIGURACIONES.ibatorgenerated_updateByPrimaryKey", record);
         return rows;
     }
 }

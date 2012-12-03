@@ -21,42 +21,42 @@ public class RolDAOImpl extends SqlMapClientDaoSupport implements RolDAO {
     public int deleteByPrimaryKey(BigDecimal codRol) {
         Rol key = new Rol();
         key.setCodRol(codRol);
-        int rows = getSqlMapClientTemplate().delete("CARDEL_TGPR_ROLES.ibatorgenerated_deleteByPrimaryKey", key);
+        int rows = getSqlMapClientTemplate().delete("DELGPR_TGPR_ROLES.ibatorgenerated_deleteByPrimaryKey", key);
         return rows;
     }
 
     public void insert(Rol record) {
-        getSqlMapClientTemplate().insert("CARDEL_TGPR_ROLES.ibatorgenerated_insert", record);
+        getSqlMapClientTemplate().insert("DELGPR_TGPR_ROLES.ibatorgenerated_insert", record);
     }
 
     public void insertSelective(Rol record) {
-        getSqlMapClientTemplate().insert("CARDEL_TGPR_ROLES.ibatorgenerated_insertSelective", record);
+        getSqlMapClientTemplate().insert("DELGPR_TGPR_ROLES.ibatorgenerated_insertSelective", record);
     }
 
     public Rol selectByPrimaryKey(BigDecimal codRol) {
         Rol key = new Rol();
         key.setCodRol(codRol);
-        Rol record = (Rol) getSqlMapClientTemplate().queryForObject("CARDEL_TGPR_ROLES.ibatorgenerated_selectByPrimaryKey", key);
+        Rol record = (Rol) getSqlMapClientTemplate().queryForObject("DELGPR_TGPR_ROLES.ibatorgenerated_selectByPrimaryKey", key);
         return record;
     }
 
    public int updateByPrimaryKeySelective(Rol record) {
-        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_ROLES.ibatorgenerated_updateByPrimaryKeySelective", record);
+        int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_ROLES.ibatorgenerated_updateByPrimaryKeySelective", record);
         return rows;
     }
 
     public int updateByPrimaryKey(Rol record) {
-        int rows = getSqlMapClientTemplate().update("CARDEL_TGPR_ROLES.ibatorgenerated_updateByPrimaryKey", record);
+        int rows = getSqlMapClientTemplate().update("DELGPR_TGPR_ROLES.ibatorgenerated_updateByPrimaryKey", record);
         return rows;
     }
 
 	@SuppressWarnings("unchecked")
 	public List<Rol> getLstRolesByCriteria(Rol rolBean) {
-		return (List<Rol>)getSqlMapClientTemplate().queryForList("CARDEL_TGPR_ROLES.getLstRolesByCriteria", rolBean);
+		return (List<Rol>)getSqlMapClientTemplate().queryForList("DELGPR_TGPR_ROLES.getLstRolesByCriteria", rolBean);
 	}
 
 	public List<Rol> getLstRol() {
-		return (List<Rol>)getSqlMapClientTemplate().queryForList("CARDEL_TGPR_ROLES.getLstRoles");
+		return (List<Rol>)getSqlMapClientTemplate().queryForList("DELGPR_TGPR_ROLES.getLstRoles");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -73,12 +73,12 @@ public class RolDAOImpl extends SqlMapClientDaoSupport implements RolDAO {
             Rol  rolHdn= new Rol();
             rolHdn.setCodRol(new BigDecimal(codRolHdn));
             rolHdn.setEstado(Constant.ESTADO_ACTIVO);
-			List<Rol> listRol = getSqlMapClientTemplate().queryForList("CARDEL_TGPR_ROLES.getRoles",rolHdn);
+			List<Rol> listRol = getSqlMapClientTemplate().queryForList("DELGPR_TGPR_ROLES.getRoles",rolHdn);
 			if(!listRol.isEmpty()){
-			int rows=getSqlMapClientTemplate().update("CARDEL_TGPR_ROLES.ibatorgenerated_updateByPrimaryKey",rol);	
+			int rows=getSqlMapClientTemplate().update("DELGPR_TGPR_ROLES.ibatorgenerated_updateByPrimaryKey",rol);	
 			System.out.print(""+rows);
 			}else{
-				getSqlMapClientTemplate().insert("CARDEL_TGPR_ROLES.ibatorgenerated_insert",rol);
+				getSqlMapClientTemplate().insert("DELGPR_TGPR_ROLES.ibatorgenerated_insert",rol);
 			}
 		} catch (Exception e) {
 			
