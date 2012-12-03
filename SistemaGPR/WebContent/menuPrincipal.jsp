@@ -38,10 +38,7 @@ String img = (String)request.getSession().getAttribute("USUARIO_IMG");
 String fecha = (String)request.getSession().getAttribute("FECHA_ACTUAL");
 List<Menu> getLstMenu =(List<Menu>)request.getAttribute("getLstMenu");
 %>
-function prueba(parametro){
-	formulario.action = rutaContexto +'/'+parametro;
-	formulario.submit();
-}
+
 </script>
 </head>
 <body>
@@ -75,7 +72,7 @@ function prueba(parametro){
 	<div id="tabs">
 		<ul>		
 			<%for(int i=0;i<getLstMenu.size();i++){	%>
-				<li><a href="#tabs<%=i+1%>" onclick="#tabs<%=i+1%>"><b><%=getLstMenu.get(i).getDescripcion()%></b></a></li>
+				<li><a href="#tabs<%=i+1%>"><b><%=getLstMenu.get(i).getDescripcion()%></b></a></li>
 				<%}%>
 		</ul>
 		<%for(int i=0;i<getLstMenu.size();i++){
