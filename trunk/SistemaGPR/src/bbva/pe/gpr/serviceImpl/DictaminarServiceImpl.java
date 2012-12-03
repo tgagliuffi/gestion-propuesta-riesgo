@@ -93,6 +93,8 @@ public class DictaminarServiceImpl implements DictaminarService {
 
 		solicitudOperacionBean.setNroSolicitud(dictamenBean.getNroSolicitud());
 		solicitudOperacionBean.setEstado(new BigDecimal(1));
+		solicitudOperacionBean.setCodUsuario(dictamenBean.getCodUsuarioSession());
+		solicitudOperacionBean.setNomUsuario(dictamenBean.getNomUsuarioSession());
 		solicitudOperacionDAO.insert(solicitudOperacionBean);
 	}
 
@@ -103,6 +105,8 @@ public class DictaminarServiceImpl implements DictaminarService {
 		solicitudMensajeBean.setDesMensaje(dictamenBean.getStrMensaje());
 		solicitudMensajeBean.setEstado(new BigDecimal(1));
 		solicitudMensajeBean.setNroSolicitud(dictamenBean.getNroSolicitud());
+		solicitudMensajeBean.setCodUsuario(dictamenBean.getCodUsuarioSession());
+		solicitudMensajeBean.setNomUsuario(dictamenBean.getNomUsuarioSession());
 		return solicitudMensajeBean;
 	}
 

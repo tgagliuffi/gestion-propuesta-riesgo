@@ -26,7 +26,7 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 		this.estadisticaDAO = estadisticaDAO;
 	}
 
-	@Override
+	
 	public Map<String, Object> selectCabeceraAsignacion(Estadistica filtro) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> colModel = new HashMap<String, Object>();
@@ -74,7 +74,7 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 		return map;
 	}
 	
-	@Override
+	
 	public Map<String, Object> selectCabeceraAtencion(Estadistica filtro) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> colModel = new HashMap<String, Object>();
@@ -143,7 +143,7 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 		return map;
 	}
 	
-	@Override
+	
 	public List<Map<String, Object>> selectAsignacion(Estadistica filtro) {
 		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
 		List<Estadistica> listEstadistica;
@@ -209,7 +209,7 @@ public class EstadisticaServiceImpl implements EstadisticaService {
 		return result;
 	}
 
-	@Override
+	
 	public List<Map<String, Object>> selectAtencion(Estadistica filtro) {
 		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
 		List<Estadistica> listEstadistica;
