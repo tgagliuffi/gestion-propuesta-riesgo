@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="IIWX_LDAPPERU2" >
+  <resultMap id="ibatorgenerated_BaseResultMap" class="bbva.pe.gpr.bean.UsuarioLDAP2" >
+    <result column="CODUSU" property="codusu" jdbcType="VARCHAR" />
+    <result column="REGISTROU" property="registrou" jdbcType="VARCHAR" />
+    <result column="REGISTROP" property="registrop" jdbcType="VARCHAR" />
+    <result column="CODPAIS" property="codpais" jdbcType="VARCHAR" />
+    <result column="DESPAIS" property="despais" jdbcType="VARCHAR" />
+    <result column="CODEMP" property="codemp" jdbcType="VARCHAR" />
+    <result column="DESEMP" property="desemp" jdbcType="VARCHAR" />
+    <result column="NUMMAT" property="nummat" jdbcType="VARCHAR" />
+    <result column="NOMBRE" property="nombre" jdbcType="VARCHAR" />
+    <result column="APEPAT" property="apepat" jdbcType="VARCHAR" />
+    <result column="APEMAT" property="apemat" jdbcType="VARCHAR" />
+    <result column="SEXO" property="sexo" jdbcType="VARCHAR" />
+    <result column="FECNAC" property="fecnac" jdbcType="VARCHAR" />
+    <result column="TIPDOC" property="tipdoc" jdbcType="VARCHAR" />
+    <result column="NUMDOC" property="numdoc" jdbcType="VARCHAR" />
+    <result column="TELEFONO1" property="telefono1" jdbcType="VARCHAR" />
+    <result column="TELEFONO2" property="telefono2" jdbcType="VARCHAR" />
+    <result column="CORELEC" property="corelec" jdbcType="VARCHAR" />
+    <result column="CODCARGO" property="codcargo" jdbcType="VARCHAR" />
+    <result column="NOMCARGO" property="nomcargo" jdbcType="VARCHAR" />
+    <result column="CODEMPANT" property="codempant" jdbcType="VARCHAR" />
+    <result column="CODOFI" property="codofi" jdbcType="VARCHAR" />
+    <result column="DESOFI" property="desofi" jdbcType="VARCHAR" />
+    <result column="TIPOFI" property="tipofi" jdbcType="VARCHAR" />
+    <result column="GESPER" property="gesper" jdbcType="VARCHAR" />
+    <result column="FECING" property="fecing" jdbcType="VARCHAR" />
+    <result column="NROHIJOS" property="nrohijos" jdbcType="DECIMAL" />
+    <result column="CODGER" property="codger" jdbcType="VARCHAR" />
+    <result column="NOMGER" property="nomger" jdbcType="VARCHAR" />
+    <result column="TELOFI1" property="telofi1" jdbcType="VARCHAR" />
+    <result column="TELOFI2" property="telofi2" jdbcType="VARCHAR" />
+    <result column="CARBLAN" property="carblan" jdbcType="VARCHAR" />
+    <result column="PROINF" property="proinf" jdbcType="VARCHAR" />
+    <result column="CODUSUJEFE" property="codusujefe" jdbcType="VARCHAR" />
+    <result column="CODUNIORG" property="coduniorg" jdbcType="VARCHAR" />
+    <result column="DESUNIORG" property="desuniorg" jdbcType="VARCHAR" />
+    <result column="CODNIVEL1" property="codnivel1" jdbcType="VARCHAR" />
+    <result column="DESNIVEL1" property="desnivel1" jdbcType="VARCHAR" />
+    <result column="CODNIVEL2" property="codnivel2" jdbcType="VARCHAR" />
+    <result column="DESNIVEL2" property="desnivel2" jdbcType="VARCHAR" />
+    <result column="CODNIVEL3" property="codnivel3" jdbcType="VARCHAR" />
+    <result column="DESNIVEL3" property="desnivel3" jdbcType="VARCHAR" />
+    <result column="CODNIVEL4" property="codnivel4" jdbcType="VARCHAR" />
+    <result column="DESNIVEL4" property="desnivel4" jdbcType="VARCHAR" />
+    <result column="CODNIVEL5" property="codnivel5" jdbcType="VARCHAR" />
+    <result column="DESNIVEL5" property="desnivel5" jdbcType="VARCHAR" />
+    <result column="CODNIVEL6" property="codnivel6" jdbcType="VARCHAR" />
+    <result column="DESNIVEL6" property="desnivel6" jdbcType="VARCHAR" />
+    <result column="CODNIVEL7" property="codnivel7" jdbcType="VARCHAR" />
+    <result column="DESNIVEL7" property="desnivel7" jdbcType="VARCHAR" />
+    <result column="CODNIVEL8" property="codnivel8" jdbcType="VARCHAR" />
+    <result column="DESNIVEL8" property="desnivel8" jdbcType="VARCHAR" />
+    <result column="CODNIVEL9" property="codnivel9" jdbcType="VARCHAR" />
+    <result column="DESNIVEL9" property="desnivel9" jdbcType="VARCHAR" />
+    <result column="CODNIVEL10" property="codnivel10" jdbcType="VARCHAR" />
+    <result column="DESNIVEL10" property="desnivel10" jdbcType="VARCHAR" />
+    <result column="USOFUT1" property="usofut1" jdbcType="VARCHAR" />
+    <result column="USOFUT2" property="usofut2" jdbcType="VARCHAR" />
+    <result column="USOFUT3" property="usofut3" jdbcType="VARCHAR" />
+    <result column="USOFUT4" property="usofut4" jdbcType="VARCHAR" />
+    <result column="USOFUT5" property="usofut5" jdbcType="VARCHAR" />
+    <result column="USOFUT6" property="usofut6" jdbcType="VARCHAR" />
+    <result column="USOFUT7" property="usofut7" jdbcType="VARCHAR" />
+    <result column="USOFUT8" property="usofut8" jdbcType="VARCHAR" />
+    <result column="USOFUT9" property="usofut9" jdbcType="VARCHAR" />
+    <result column="USOFUT10" property="usofut10" jdbcType="VARCHAR" />
+    </resultMap> 
+  <select id="ibatorgenerated_selectByPrimaryKey" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.UsuarioLDAP2" >
+    select CODUSU, REGISTROU, REGISTROP, CODPAIS, DESPAIS, CODEMP, DESEMP, NUMMAT, NOMBRE, APEPAT,
+      APEMAT, SEXO, FECNAC, TIPDOC, NUMDOC, TELEFONO1, TELEFONO2, CORELEC, CODCARGO, NOMCARGO,
+      CODEMPANT, CODOFI, DESOFI, TIPOFI, GESPER, FECING, NROHIJOS, CODGER, NOMGER, TELOFI1, TELOFI2,
+      CARBLAN, PROINF, CODUSUJEFE, CODUNIORG, DESUNIORG, CODNIVEL1, DESNIVEL1, CODNIVEL2, DESNIVEL2,
+      CODNIVEL3, DESNIVEL3, CODNIVEL4, DESNIVEL4, CODNIVEL5, DESNIVEL5, CODNIVEL6, DESNIVEL6,
+      CODNIVEL7, DESNIVEL7, CODNIVEL8, DESNIVEL8, CODNIVEL9, DESNIVEL9, CODNIVEL10, DESNIVEL10,
+      USOFUT1, USOFUT2, USOFUT3, USOFUT4, USOFUT5, USOFUT6, USOFUT7, USOFUT8, USOFUT9, USOFUT10
+  
+    from IIWX.LDAPPERU2 L
+   
+    where CODUSU = UPPER(#codusu:VARCHAR#)
+  </select>
+  <delete id="ibatorgenerated_deleteByPrimaryKey" parameterClass="bbva.pe.gpr.bean.UsuarioLDAP2" >
+    delete from IIWX.LDAPPERU2
+    where CODUSU = #codusu:VARCHAR#
+  </delete>
+  <insert id="ibatorgenerated_insert" parameterClass="bbva.pe.gpr.bean.UsuarioLDAP2" >
+    insert into IIWX.LDAPPERU2 (CODUSU, REGISTROU, REGISTROP, CODPAIS, DESPAIS, CODEMP, DESEMP,
+      NUMMAT, NOMBRE, APEPAT, APEMAT, SEXO, FECNAC, TIPDOC, NUMDOC, TELEFONO1, TELEFONO2, CORELEC,
+      CODCARGO, NOMCARGO, CODEMPANT, CODOFI, DESOFI, TIPOFI, GESPER, FECING, NROHIJOS, CODGER,
+      NOMGER, TELOFI1, TELOFI2, CARBLAN, PROINF, CODUSUJEFE, CODUNIORG, DESUNIORG, CODNIVEL1,
+      DESNIVEL1, CODNIVEL2, DESNIVEL2, CODNIVEL3, DESNIVEL3, CODNIVEL4, DESNIVEL4, CODNIVEL5,
+      DESNIVEL5, CODNIVEL6, DESNIVEL6, CODNIVEL7, DESNIVEL7, CODNIVEL8, DESNIVEL8, CODNIVEL9,
+      DESNIVEL9, CODNIVEL10, DESNIVEL10, USOFUT1, USOFUT2, USOFUT3, USOFUT4, USOFUT5, USOFUT6,
+      USOFUT7, USOFUT8, USOFUT9, USOFUT10)
+    values (#codusu:VARCHAR#, #registrou:VARCHAR#, #registrop:VARCHAR#, #codpais:VARCHAR#,
+      #despais:VARCHAR#, #codemp:VARCHAR#, #desemp:VARCHAR#, #nummat:VARCHAR#, #nombre:VARCHAR#,
+      #apepat:VARCHAR#, #apemat:VARCHAR#, #sexo:VARCHAR#, #fecnac:VARCHAR#, #tipdoc:VARCHAR#,
+      #numdoc:VARCHAR#, #telefono1:VARCHAR#, #telefono2:VARCHAR#, #corelec:VARCHAR#,
+      #codcargo:VARCHAR#, #nomcargo:VARCHAR#, #codempant:VARCHAR#, #codofi:VARCHAR#,
+      #desofi:VARCHAR#, #tipofi:VARCHAR#, #gesper:VARCHAR#, #fecing:VARCHAR#, #nrohijos:DECIMAL#,
+      #codger:VARCHAR#, #nomger:VARCHAR#, #telofi1:VARCHAR#, #telofi2:VARCHAR#, #carblan:VARCHAR#,
+      #proinf:VARCHAR#, #codusujefe:VARCHAR#, #coduniorg:VARCHAR#, #desuniorg:VARCHAR#,
+      #codnivel1:VARCHAR#, #desnivel1:VARCHAR#, #codnivel2:VARCHAR#, #desnivel2:VARCHAR#,
+      #codnivel3:VARCHAR#, #desnivel3:VARCHAR#, #codnivel4:VARCHAR#, #desnivel4:VARCHAR#,
+      #codnivel5:VARCHAR#, #desnivel5:VARCHAR#, #codnivel6:VARCHAR#, #desnivel6:VARCHAR#,
+      #codnivel7:VARCHAR#, #desnivel7:VARCHAR#, #codnivel8:VARCHAR#, #desnivel8:VARCHAR#,
+      #codnivel9:VARCHAR#, #desnivel9:VARCHAR#, #codnivel10:VARCHAR#, #desnivel10:VARCHAR#,
+      #usofut1:VARCHAR#, #usofut2:VARCHAR#, #usofut3:VARCHAR#, #usofut4:VARCHAR#, #usofut5:VARCHAR#,
+      #usofut6:VARCHAR#, #usofut7:VARCHAR#, #usofut8:VARCHAR#, #usofut9:VARCHAR#,
+      #usofut10:VARCHAR#)
+  </insert>
+  <insert id="ibatorgenerated_insertSelective" parameterClass="bbva.pe.gpr.bean.UsuarioLDAP2" >
+    insert into IIWX.LDAPPERU2
+    <dynamic prepend="(" >
+      <isNotNull prepend="," property="codusu" >
+        CODUSU
+      </isNotNull>
+      <isNotNull prepend="," property="registrou" >
+        REGISTROU
+      </isNotNull>
+      <isNotNull prepend="," property="registrop" >
+        REGISTROP
+      </isNotNull>
+      <isNotNull prepend="," property="codpais" >
+        CODPAIS
+      </isNotNull>
+      <isNotNull prepend="," property="despais" >
+        DESPAIS
+      </isNotNull>
+      <isNotNull prepend="," property="codemp" >
+        CODEMP
+      </isNotNull>
+      <isNotNull prepend="," property="desemp" >
+        DESEMP
+      </isNotNull>
+      <isNotNull prepend="," property="nummat" >
+        NUMMAT
+      </isNotNull>
+      <isNotNull prepend="," property="nombre" >
+        NOMBRE
+      </isNotNull>
+      <isNotNull prepend="," property="apepat" >
+        APEPAT
+      </isNotNull>
+      <isNotNull prepend="," property="apemat" >
+        APEMAT
+      </isNotNull>
+      <isNotNull prepend="," property="sexo" >
+        SEXO
+      </isNotNull>
+      <isNotNull prepend="," property="fecnac" >
+        FECNAC
+      </isNotNull>
+      <isNotNull prepend="," property="tipdoc" >
+        TIPDOC
+      </isNotNull>
+      <isNotNull prepend="," property="numdoc" >
+        NUMDOC
+      </isNotNull>
+      <isNotNull prepend="," property="telefono1" >
+        TELEFONO1
+      </isNotNull>
+      <isNotNull prepend="," property="telefono2" >
+        TELEFONO2
+      </isNotNull>
+      <isNotNull prepend="," property="corelec" >
+        CORELEC
+      </isNotNull>
+      <isNotNull prepend="," property="codcargo" >
+        CODCARGO
+      </isNotNull>
+      <isNotNull prepend="," property="nomcargo" >
+        NOMCARGO
+      </isNotNull>
+      <isNotNull prepend="," property="codempant" >
+        CODEMPANT
+      </isNotNull>
+      <isNotNull prepend="," property="codofi" >
+        CODOFI
+      </isNotNull>
+      <isNotNull prepend="," property="desofi" >
+        DESOFI
+      </isNotNull>
+      <isNotNull prepend="," property="tipofi" >
+        TIPOFI
+      </isNotNull>
+      <isNotNull prepend="," property="gesper" >
+        GESPER
+      </isNotNull>
+      <isNotNull prepend="," property="fecing" >
+        FECING
+      </isNotNull>
+      <isNotNull prepend="," property="nrohijos" >
+        NROHIJOS
+      </isNotNull>
+      <isNotNull prepend="," property="codger" >
+        CODGER
+      </isNotNull>
+      <isNotNull prepend="," property="nomger" >
+        NOMGER
+      </isNotNull>
+      <isNotNull prepend="," property="telofi1" >
+        TELOFI1
+      </isNotNull>
+      <isNotNull prepend="," property="telofi2" >
+        TELOFI2
+      </isNotNull>
+      <isNotNull prepend="," property="carblan" >
+        CARBLAN
+      </isNotNull>
+      <isNotNull prepend="," property="proinf" >
+        PROINF
+      </isNotNull>
+      <isNotNull prepend="," property="codusujefe" >
+        CODUSUJEFE
+      </isNotNull>
+      <isNotNull prepend="," property="coduniorg" >
+        CODUNIORG
+      </isNotNull>
+      <isNotNull prepend="," property="desuniorg" >
+        DESUNIORG
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel1" >
+        CODNIVEL1
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel1" >
+        DESNIVEL1
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel2" >
+        CODNIVEL2
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel2" >
+        DESNIVEL2
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel3" >
+        CODNIVEL3
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel3" >
+        DESNIVEL3
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel4" >
+        CODNIVEL4
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel4" >
+        DESNIVEL4
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel5" >
+        CODNIVEL5
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel5" >
+        DESNIVEL5
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel6" >
+        CODNIVEL6
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel6" >
+        DESNIVEL6
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel7" >
+        CODNIVEL7
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel7" >
+        DESNIVEL7
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel8" >
+        CODNIVEL8
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel8" >
+        DESNIVEL8
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel9" >
+        CODNIVEL9
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel9" >
+        DESNIVEL9
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel10" >
+        CODNIVEL10
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel10" >
+        DESNIVEL10
+      </isNotNull>
+      <isNotNull prepend="," property="usofut1" >
+        USOFUT1
+      </isNotNull>
+      <isNotNull prepend="," property="usofut2" >
+        USOFUT2
+      </isNotNull>
+      <isNotNull prepend="," property="usofut3" >
+        USOFUT3
+      </isNotNull>
+      <isNotNull prepend="," property="usofut4" >
+        USOFUT4
+      </isNotNull>
+      <isNotNull prepend="," property="usofut5" >
+        USOFUT5
+      </isNotNull>
+      <isNotNull prepend="," property="usofut6" >
+        USOFUT6
+      </isNotNull>
+      <isNotNull prepend="," property="usofut7" >
+        USOFUT7
+      </isNotNull>
+      <isNotNull prepend="," property="usofut8" >
+        USOFUT8
+      </isNotNull>
+      <isNotNull prepend="," property="usofut9" >
+        USOFUT9
+      </isNotNull>
+      <isNotNull prepend="," property="usofut10" >
+        USOFUT10
+      </isNotNull>
+      )
+    </dynamic>
+    values
+    <dynamic prepend="(" >
+      <isNotNull prepend="," property="codusu" >
+        #codusu:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="registrou" >
+        #registrou:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="registrop" >
+        #registrop:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codpais" >
+        #codpais:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="despais" >
+        #despais:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codemp" >
+        #codemp:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desemp" >
+        #desemp:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="nummat" >
+        #nummat:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="nombre" >
+        #nombre:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="apepat" >
+        #apepat:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="apemat" >
+        #apemat:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="sexo" >
+        #sexo:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="fecnac" >
+        #fecnac:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="tipdoc" >
+        #tipdoc:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="numdoc" >
+        #numdoc:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="telefono1" >
+        #telefono1:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="telefono2" >
+        #telefono2:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="corelec" >
+        #corelec:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codcargo" >
+        #codcargo:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="nomcargo" >
+        #nomcargo:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codempant" >
+        #codempant:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codofi" >
+        #codofi:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desofi" >
+        #desofi:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="tipofi" >
+        #tipofi:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="gesper" >
+        #gesper:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="fecing" >
+        #fecing:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="nrohijos" >
+        #nrohijos:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="codger" >
+        #codger:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="nomger" >
+        #nomger:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="telofi1" >
+        #telofi1:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="telofi2" >
+        #telofi2:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="carblan" >
+        #carblan:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="proinf" >
+        #proinf:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codusujefe" >
+        #codusujefe:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="coduniorg" >
+        #coduniorg:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desuniorg" >
+        #desuniorg:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel1" >
+        #codnivel1:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel1" >
+        #desnivel1:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel2" >
+        #codnivel2:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel2" >
+        #desnivel2:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel3" >
+        #codnivel3:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel3" >
+        #desnivel3:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel4" >
+        #codnivel4:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel4" >
+        #desnivel4:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel5" >
+        #codnivel5:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel5" >
+        #desnivel5:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel6" >
+        #codnivel6:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel6" >
+        #desnivel6:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel7" >
+        #codnivel7:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel7" >
+        #desnivel7:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel8" >
+        #codnivel8:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel8" >
+        #desnivel8:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel9" >
+        #codnivel9:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel9" >
+        #desnivel9:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel10" >
+        #codnivel10:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel10" >
+        #desnivel10:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut1" >
+        #usofut1:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut2" >
+        #usofut2:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut3" >
+        #usofut3:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut4" >
+        #usofut4:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut5" >
+        #usofut5:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut6" >
+        #usofut6:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut7" >
+        #usofut7:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut8" >
+        #usofut8:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut9" >
+        #usofut9:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut10" >
+        #usofut10:VARCHAR#
+      </isNotNull>
+      )
+    </dynamic>
+  </insert>
+  <update id="ibatorgenerated_updateByPrimaryKeySelective" parameterClass="bbva.pe.gpr.bean.UsuarioLDAP2" >
+    update IIWX.LDAPPERU2
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="registrou" >
+        REGISTROU = #registrou:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="registrop" >
+        REGISTROP = #registrop:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codpais" >
+        CODPAIS = #codpais:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="despais" >
+        DESPAIS = #despais:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codemp" >
+        CODEMP = #codemp:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desemp" >
+        DESEMP = #desemp:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="nummat" >
+        NUMMAT = #nummat:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="nombre" >
+        NOMBRE = #nombre:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="apepat" >
+        APEPAT = #apepat:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="apemat" >
+        APEMAT = #apemat:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="sexo" >
+        SEXO = #sexo:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="fecnac" >
+        FECNAC = #fecnac:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="tipdoc" >
+        TIPDOC = #tipdoc:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="numdoc" >
+        NUMDOC = #numdoc:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="telefono1" >
+        TELEFONO1 = #telefono1:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="telefono2" >
+        TELEFONO2 = #telefono2:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="corelec" >
+        CORELEC = #corelec:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codcargo" >
+        CODCARGO = #codcargo:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="nomcargo" >
+        NOMCARGO = #nomcargo:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codempant" >
+        CODEMPANT = #codempant:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codofi" >
+        CODOFI = #codofi:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desofi" >
+        DESOFI = #desofi:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="tipofi" >
+        TIPOFI = #tipofi:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="gesper" >
+        GESPER = #gesper:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="fecing" >
+        FECING = #fecing:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="nrohijos" >
+        NROHIJOS = #nrohijos:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="codger" >
+        CODGER = #codger:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="nomger" >
+        NOMGER = #nomger:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="telofi1" >
+        TELOFI1 = #telofi1:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="telofi2" >
+        TELOFI2 = #telofi2:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="carblan" >
+        CARBLAN = #carblan:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="proinf" >
+        PROINF = #proinf:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codusujefe" >
+        CODUSUJEFE = #codusujefe:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="coduniorg" >
+        CODUNIORG = #coduniorg:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desuniorg" >
+        DESUNIORG = #desuniorg:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel1" >
+        CODNIVEL1 = #codnivel1:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel1" >
+        DESNIVEL1 = #desnivel1:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel2" >
+        CODNIVEL2 = #codnivel2:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel2" >
+        DESNIVEL2 = #desnivel2:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel3" >
+        CODNIVEL3 = #codnivel3:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel3" >
+        DESNIVEL3 = #desnivel3:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel4" >
+        CODNIVEL4 = #codnivel4:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel4" >
+        DESNIVEL4 = #desnivel4:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel5" >
+        CODNIVEL5 = #codnivel5:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel5" >
+        DESNIVEL5 = #desnivel5:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel6" >
+        CODNIVEL6 = #codnivel6:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel6" >
+        DESNIVEL6 = #desnivel6:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel7" >
+        CODNIVEL7 = #codnivel7:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel7" >
+        DESNIVEL7 = #desnivel7:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel8" >
+        CODNIVEL8 = #codnivel8:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel8" >
+        DESNIVEL8 = #desnivel8:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel9" >
+        CODNIVEL9 = #codnivel9:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel9" >
+        DESNIVEL9 = #desnivel9:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="codnivel10" >
+        CODNIVEL10 = #codnivel10:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="desnivel10" >
+        DESNIVEL10 = #desnivel10:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut1" >
+        USOFUT1 = #usofut1:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut2" >
+        USOFUT2 = #usofut2:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut3" >
+        USOFUT3 = #usofut3:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut4" >
+        USOFUT4 = #usofut4:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut5" >
+        USOFUT5 = #usofut5:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut6" >
+        USOFUT6 = #usofut6:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut7" >
+        USOFUT7 = #usofut7:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut8" >
+        USOFUT8 = #usofut8:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut9" >
+        USOFUT9 = #usofut9:VARCHAR#
+      </isNotNull>
+      <isNotNull prepend="," property="usofut10" >
+        USOFUT10 = #usofut10:VARCHAR#
+      </isNotNull>
+    </dynamic>
+    where CODUSU = #codusu:VARCHAR#
+  </update>
+  <update id="ibatorgenerated_updateByPrimaryKey" parameterClass="bbva.pe.gpr.bean.UsuarioLDAP2" >
+    update IIWX.LDAPPERU2
+    set REGISTROU = #registrou:VARCHAR#,
+      REGISTROP = #registrop:VARCHAR#,
+      CODPAIS = #codpais:VARCHAR#,
+      DESPAIS = #despais:VARCHAR#,
+      CODEMP = #codemp:VARCHAR#,
+      DESEMP = #desemp:VARCHAR#,
+      NUMMAT = #nummat:VARCHAR#,
+      NOMBRE = #nombre:VARCHAR#,
+      APEPAT = #apepat:VARCHAR#,
+      APEMAT = #apemat:VARCHAR#,
+      SEXO = #sexo:VARCHAR#,
+      FECNAC = #fecnac:VARCHAR#,
+      TIPDOC = #tipdoc:VARCHAR#,
+      NUMDOC = #numdoc:VARCHAR#,
+      TELEFONO1 = #telefono1:VARCHAR#,
+      TELEFONO2 = #telefono2:VARCHAR#,
+      CORELEC = #corelec:VARCHAR#,
+      CODCARGO = #codcargo:VARCHAR#,
+      NOMCARGO = #nomcargo:VARCHAR#,
+      CODEMPANT = #codempant:VARCHAR#,
+      CODOFI = #codofi:VARCHAR#,
+      DESOFI = #desofi:VARCHAR#,
+      TIPOFI = #tipofi:VARCHAR#,
+      GESPER = #gesper:VARCHAR#,
+      FECING = #fecing:VARCHAR#,
+      NROHIJOS = #nrohijos:DECIMAL#,
+      CODGER = #codger:VARCHAR#,
+      NOMGER = #nomger:VARCHAR#,
+      TELOFI1 = #telofi1:VARCHAR#,
+      TELOFI2 = #telofi2:VARCHAR#,
+      CARBLAN = #carblan:VARCHAR#,
+      PROINF = #proinf:VARCHAR#,
+      CODUSUJEFE = #codusujefe:VARCHAR#,
+      CODUNIORG = #coduniorg:VARCHAR#,
+      DESUNIORG = #desuniorg:VARCHAR#,
+      CODNIVEL1 = #codnivel1:VARCHAR#,
+      DESNIVEL1 = #desnivel1:VARCHAR#,
+      CODNIVEL2 = #codnivel2:VARCHAR#,
+      DESNIVEL2 = #desnivel2:VARCHAR#,
+      CODNIVEL3 = #codnivel3:VARCHAR#,
+      DESNIVEL3 = #desnivel3:VARCHAR#,
+      CODNIVEL4 = #codnivel4:VARCHAR#,
+      DESNIVEL4 = #desnivel4:VARCHAR#,
+      CODNIVEL5 = #codnivel5:VARCHAR#,
+      DESNIVEL5 = #desnivel5:VARCHAR#,
+      CODNIVEL6 = #codnivel6:VARCHAR#,
+      DESNIVEL6 = #desnivel6:VARCHAR#,
+      CODNIVEL7 = #codnivel7:VARCHAR#,
+      DESNIVEL7 = #desnivel7:VARCHAR#,
+      CODNIVEL8 = #codnivel8:VARCHAR#,
+      DESNIVEL8 = #desnivel8:VARCHAR#,
+      CODNIVEL9 = #codnivel9:VARCHAR#,
+      DESNIVEL9 = #desnivel9:VARCHAR#,
+      CODNIVEL10 = #codnivel10:VARCHAR#,
+      DESNIVEL10 = #desnivel10:VARCHAR#,
+      USOFUT1 = #usofut1:VARCHAR#,
+      USOFUT2 = #usofut2:VARCHAR#,
+      USOFUT3 = #usofut3:VARCHAR#,
+      USOFUT4 = #usofut4:VARCHAR#,
+      USOFUT5 = #usofut5:VARCHAR#,
+      USOFUT6 = #usofut6:VARCHAR#,
+      USOFUT7 = #usofut7:VARCHAR#,
+      USOFUT8 = #usofut8:VARCHAR#,
+      USOFUT9 = #usofut9:VARCHAR#,
+      USOFUT10 = #usofut10:VARCHAR#
+    where CODUSU = #codusu:VARCHAR#
+  </update>
+
+</sqlMap>
