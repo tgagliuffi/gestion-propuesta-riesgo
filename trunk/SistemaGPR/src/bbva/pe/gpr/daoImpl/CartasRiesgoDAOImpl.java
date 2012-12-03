@@ -12,7 +12,6 @@ import bbva.pe.gpr.bean.ProductoDelegacion;
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.Usuario;
 import bbva.pe.gpr.dao.CartasRiesgosDAO;
-import bbva.pe.gpr.util.Constant;
 
 public class CartasRiesgoDAOImpl extends SqlMapClientDaoSupport implements CartasRiesgosDAO {
 
