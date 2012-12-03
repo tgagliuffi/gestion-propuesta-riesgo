@@ -98,8 +98,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 		//TODO: VALIDAR MTO DELEGACION DE GERENTE OFICINA
 		if(getLstSolicitudDetalle.size()>0){
 			solicitudBean.setPrioridad(Constant.PRIORIDAD_NORMAL);
-			solicitudBean.setGrupoPersona(validaGrupoPersona(solicitudBean.getCodMultTipoPersona(), solicitudBean.getNumeroDocumento(), solicitudBean.getRating()));
-		nroSolicitud = solicitudesDAO.insert(solicitudBean);
+			nroSolicitud = solicitudesDAO.insert(solicitudBean);
 		//TODO: INSERTANDO CABECERA DE SOLICITUD
 
 		if(nroSolicitud !=null){
@@ -134,11 +133,12 @@ public class SolicitudServiceImpl implements SolicitudService{
 			solicitudOperacionBean.setDesOperacion(multDetalleBean.getStrValor2());	
 			solicitudOperacionBean.setNroSolicitud(solicitudBean.getNroSolicitud());
 			solicitudOperacionBean.setEstado(new BigDecimal(1));
+			solicitudOperacionBean.setCodUsuario(solicitudBean.getCodUsuarioSession());
+			solicitudOperacionBean.setNomUsuario(solicitudBean.getNomUsuarioSession());
 			solicitudOperacionDAO.insert(solicitudOperacionBean);
-		}
-		
-		
+		}	
 	}
+	
 	public int updateDictaminaEnOficina(Solicitud solicitudBean){
 		solicitudBean.setLugarDictamina(Constant.DICTAMINA_OFICINA);
 		if(solicitudesDAO.updateByPrimaryKeySelective(solicitudBean)>0){
@@ -146,6 +146,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 		}
 		return 0;
 	}
+	
 	public int asignacionAutomatica(Solicitud solicitudBean) throws Exception {
 
 		Banca bancaBean;
@@ -264,6 +265,8 @@ public class SolicitudServiceImpl implements SolicitudService{
 		solicitudMensajeBean.setDesMensaje(solicitudBean.getStrMensaje());
 		solicitudMensajeBean.setEstado( new BigDecimal(1));
 		solicitudMensajeBean.setNroSolicitud(solicitudBean.getNroSolicitud());
+		solicitudMensajeBean.setCodUsuario(solicitudBean.getCodUsuarioSession());
+		solicitudMensajeBean.setNomUsuario(solicitudBean.getNomUsuarioSession());
 		return solicitudMensajeBean;
 	}
 	
@@ -406,5 +409,9 @@ public class SolicitudServiceImpl implements SolicitudService{
 			 logger.error("", e);
 			 return new ArrayList<SolicitudOperacion>() ;
 		 }
+	 }
+	 
+	 public List<SolicitudMensaje> getListMessagesAjax(SolicitudMensaje record)throws Exception{
+		 return solicitudMensajeDAO.getListMessagesAjax(record);
 	 }
 }

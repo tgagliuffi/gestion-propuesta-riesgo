@@ -100,6 +100,8 @@ public class AnalisisServiceImpl implements AnalisiService {
 
 		solicitudOperacionBean.setNroSolicitud(analisisBean.getNroSolicitud());
 		solicitudOperacionBean.setEstado(new BigDecimal(1));
+		solicitudOperacionBean.setCodUsuario(analisisBean.getCodUsuarioSession());
+		solicitudOperacionBean.setNomUsuario(analisisBean.getNomUsuarioSession());
 		solicitudOperacionDAO.insert(solicitudOperacionBean);
 	}
 
@@ -110,6 +112,8 @@ public class AnalisisServiceImpl implements AnalisiService {
 		solicitudMensajeBean.setDesMensaje(analisisBean.getStrMensaje());
 		solicitudMensajeBean.setEstado(new BigDecimal(1));
 		solicitudMensajeBean.setNroSolicitud(analisisBean.getNroSolicitud());
+		solicitudMensajeBean.setCodUsuario(analisisBean.getCodUsuarioSession());
+		solicitudMensajeBean.setNomUsuario(analisisBean.getNomUsuarioSession());
 		return solicitudMensajeBean;
 	}
 

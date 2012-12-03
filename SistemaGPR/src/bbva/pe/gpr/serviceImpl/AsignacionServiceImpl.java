@@ -67,7 +67,7 @@ public class AsignacionServiceImpl  implements AsignacionService {
     	return result;
     }
     
-    public int asignarSolicitudMasiva(String arraySolitcitudes, String registro, String codUsuarioAsigno)throws Exception{
+    public int asignarSolicitudMasiva(String arraySolitcitudes, String registro, String codUsuarioAsigno, String nombre)throws Exception{
     	int result = 0; 
     	Asignacion asignacionBean = null;
     	Solicitud solicitudBean = null;
@@ -89,6 +89,8 @@ public class AsignacionServiceImpl  implements AsignacionService {
     		asignacionBean.setNroSolicitud(solicitudBean.getNroSolicitud());
     		asignacionBean.setPrioridad(solicitudBean.getPrioridad());
     		asignacionBean.setEstadoAsignacion(Constant.TABLA_ESTADOS_SOLCITUD+Constant.CHAR_GUION+Constant.ESTADO_SOLICITUD_ASIGNADO);
+    		asignacionBean.setCodUsuarioSession(codUsuarioAsigno);
+    		asignacionBean.setNomUsuarioSession(nombre);
     		//asignacionBean.setMtoDelegacionMax(mtoDelegacionMax)
     		if(asignacionDAO.insert(asignacionBean)!=null){
         		ingresaSolicitudOperacion(asignacionBean, Constant.TABLA_PROCESO, Constant.MULT_PROCESO_ASIGNAR);
@@ -115,6 +117,8 @@ public class AsignacionServiceImpl  implements AsignacionService {
 		
 		solicitudOperacionBean.setNroSolicitud(asignacionBean.getNroSolicitud());
 		solicitudOperacionBean.setEstado(new BigDecimal(1));
+		solicitudOperacionBean.setCodUsuario(asignacionBean.getCodUsuarioSession());
+		solicitudOperacionBean.setNomUsuario(asignacionBean.getNomUsuarioSession());
 		solicitudOperacionDAO.insert(solicitudOperacionBean);
 	}
 	
@@ -125,6 +129,8 @@ public class AsignacionServiceImpl  implements AsignacionService {
 		solicitudMensajeBean.setDesMensaje(asignacionBean.getStrMensaje());
 		solicitudMensajeBean.setEstado( new BigDecimal(1));
 		solicitudMensajeBean.setNroSolicitud(asignacionBean.getNroSolicitud());
+		solicitudMensajeBean.setCodUsuario(asignacionBean.getCodUsuarioSession());
+		solicitudMensajeBean.setNomUsuario(asignacionBean.getNomUsuarioSession());
 		return solicitudMensajeBean;
 	}
 
