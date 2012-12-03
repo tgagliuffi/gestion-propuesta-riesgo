@@ -246,7 +246,7 @@ var rutaContexto2 = "<%=request.getContextPath()%>";
 					</td>
 					<td align="left" valign="middle"><html:select
 							property="codBanca" styleClass="codBanca">
-							<html:option value="-1">TODOS</html:option>
+							<html:option value="-1">SELECCIONE</html:option>
 							<c:if test="${lstBancas != null}">
 								<c:forEach var="banca" items="${lstBancas}">
 									<html:option value="${banca.codBanca}">
@@ -292,7 +292,7 @@ var rutaContexto2 = "<%=request.getContextPath()%>";
 					</td>
 					<td align="left" valign="middle"><html:select
 							property="codEstadoMult" styleId="codEstadoMult">
-							<html:option value="-1">TODOS</html:option>
+							<html:option value="-1">SELECCIONE</html:option>
 							<c:if test="${lstEstados != null}">
 								<c:forEach var="estado" items="${lstEstados}">
 									<html:option
@@ -315,7 +315,7 @@ var rutaContexto2 = "<%=request.getContextPath()%>";
 
 					<td align="left" valign="middle"><font class="fontText">Rol</font>&nbsp;
 						<html:select property="codRol" styleClass="codRol">
-							<html:option value="-1">TODOS</html:option>
+							<html:option value="-1">SELECCIONE</html:option>
 							<c:if test="${lstRol != null}">
 								<c:forEach var="rol" items="${lstRol}">
 									<html:option value="${rol.codRol}">

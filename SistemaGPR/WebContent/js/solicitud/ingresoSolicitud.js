@@ -54,7 +54,6 @@ optionDialogVMP = {
 	        	$(this).dialog("close");
 	        },
 	        "Cancelar": function() {
-	        	cancelar();
 	        	$(this).dialog("close");
 	        }
 	    },
@@ -67,4 +66,5 @@ $(function(){
 	$("#valCondicionCliente").dialog(optionDialogVCC);
 	$("#valMontoPlazos").dialog(optionDialogVMP);
 });
+
 

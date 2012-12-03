@@ -212,7 +212,7 @@ function ingresoLetrasNumerosSinEspacio(e){
 function esLetrasNumerosSinEspacio(o){
 	var valid = '' + lLetrasSinEspacio + lNumeros + lExtraDecimales;
 		
-	for(i=0; i<o.length; i++){
+	for(var i=0; i<o.length; i++){
 		if(valid.indexOf(o.substring(i,i+1))<0)
 			return false;
 	}
@@ -228,7 +228,7 @@ function esLetras(o){
 }
 function esNumeros(o){
 	var valid = '' + lNumeros + lExtraDecimales;
-	for(i=0; i<o.length; i++){
+	for(var i=0; i<o.length; i++){
 		if(valid.indexOf(o.substring(i,i+1))<0)
 			return false;
 	}
@@ -238,7 +238,7 @@ function esLetrasNumeros(o){
 	
 	var valid = '' + lLetras + lNumeros;
 	
-	for(i=0; i<o.length; i++){
+	for(var i=0; i<o.length; i++){
 		if(valid.indexOf(o.substring(i,i+1))<0)
 			return false;
 	}
@@ -248,7 +248,7 @@ function esLetrasNumerosGuion(o){
 
 	var valid = '' + lLetras + lNumeros + lAdicional2;
 	
-	for(i=0; i<o.length; i++){
+	for(var i=0; i<o.length; i++){
 		if(valid.indexOf(o.substring(i,i+1))<0)
 			return false;
 	}
@@ -258,7 +258,7 @@ function esLetrasNumerosGuionMas(o){
 
 	var valid = '' + lLetras + lNumeros + lAdicional2 + lAdicional3;
 	
-	for(i=0; i<o.length; i++){
+	for(var i=0; i<o.length; i++){
 		if(valid.indexOf(o.substring(i,i+1))<0)
 			return false;
 	}
@@ -267,7 +267,7 @@ function esLetrasNumerosGuionMas(o){
 function esLetrasNumerosGuionMasPunto(o){
 
 	var valid = '' + lLetras + lNumeros + lAdicional2 + lAdicional3 + lAdicional1;
-	for(i=0; i<o.length; i++){
+	for(var i=0; i<o.length; i++){
 		if(valid.indexOf(o.substring(i,i+1))<0)
 			return false;
 	}
@@ -277,7 +277,7 @@ function esLetrasNumerosGuionPunto(o){
 
 	var valid = '' + lLetras + lNumeros + lAdicional2 + lAdicional1;
 	
-	for(i=0; i<o.length; i++){
+	for(var i=0; i<o.length; i++){
 		if(valid.indexOf(o.substring(i,i+1))<0)
 			return false;
 	}
@@ -286,7 +286,7 @@ function esLetrasNumerosGuionPunto(o){
 function esNumerosSinEspacio(o){
 
 	var valid = '' + lNumeros;
-	for(i=0; i<o.length; i++){
+	for(var i=0; i<o.length; i++){
 		if(valid.indexOf(o.substring(i,i+1))<0)
 			return false;
 	}
@@ -295,7 +295,7 @@ function esNumerosSinEspacio(o){
 function esNumeroRpm(o){
 
 	var valid = lRpm + lNumeros;
-	for(i=0; i<o.length; i++){
+	for(var i=0; i<o.length; i++){
 		if(valid.indexOf(o.substring(i,i+1))<0)
 			return false;
 	}
@@ -313,7 +313,7 @@ function esNumerosAsteriscoNumeralSinEspacio(o) {
 function esMantParametros(o){
 
 	var valid = '' + lLetras + lNumeros + lMantParametros;
-	for(i=0; i<o.length; i++){
+	for(var i=0; i<o.length; i++){
 		if(valid.indexOf(o.substring(i,i+1))<0)
 			return false;
 	}
@@ -321,7 +321,7 @@ function esMantParametros(o){
 }
 function trim(cadena)
 {
-            for(i=0; i<cadena.length; )
+            for(var i=0; i<cadena.length; )
             {
                     if(cadena.charAt(i)==" "){
                             cadena=cadena.substring(i+1, cadena.length);
@@ -548,13 +548,51 @@ $(document).ready(function(){
 	$(".cmd").button();
 });
 
-function format(input){alert();
-var num = input.value.replace(/\./g,'');
-	if(!isNaN(num)){
-		num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
-		num = num.split('').reverse().join('').replace(/^[\.]/,'');
-		input.value = num;
-	}else{ alert('Solo se permiten numeros');
-		input.value = input.value.replace(/[^\d\.]*/g,'');
+function format(text){
+	if( !text || text==''){
+	text='0';
+	}
+	while(text.match(/[,]/)){
+	text=text.replace(/[,]/,'');
+	}
+	var numberFormat='';
+	var textFormat=text.split('.');
+	var number=textFormat[0];
+	var r3=number.length%3;
+	for(var i=0;i<number.length;i++){
+	numberFormat+=number.charAt(i);
+	if(i!=(number.length-1) &&((i+1)-r3)%3==0){
+	numberFormat+=',';
+	}
+	}
+	if(textFormat.length>1){
+
+	//se formate los decimales
+	// caso mas 2 decimales se procede a redondeo
+	var redondeo = 0;
+	if (textFormat[1] != '' && textFormat[1].length == 1) {
+	numberFormat += '.' + textFormat[1] + '0';
+	} else if (textFormat[1] != '' && textFormat[1].length == 2) {
+	numberFormat += '.' + textFormat[1];
+	} else if (textFormat[1] != '' && textFormat[1].length > 2) {
+	redondeo = parseInt(textFormat[1].substring(1, 2));
+	if (parseInt(textFormat[1].substring(2, 3)) >= 5) {
+	redondeo += 1;
+	}
+	numberFormat += '.' + textFormat[1].substring(0, 1) + redondeo;
+	} else {
+	numberFormat += '.00';
+	}
+	} else {
+	numberFormat += '.00';
+	}
+	return numberFormat;
+}
+
+function blurChangeColor(ctrl){
+	if(ctrl.value!=''&& ctrl.value!='00.00'){
+		ctrl.style.backgroundColor = '#A9F5A9';
+	}else{
+		ctrl.style.backgroundColor = '#F2F5A9';
 	}
 }

@@ -53,7 +53,7 @@
 	       </td>
 	       <td valign="middle">       
 		   		<select id="bancaCliente" name="bancaCliente">
-					<option value="-1">TODOS</option>
+					<option value="-1">SELECCIONE</option>
 				</select>
 		   </td>
 		   <td valign="middle">
@@ -61,7 +61,7 @@
 	       </td>
 	       <td valign="middle">       
 		   		<select id="slctDictamen" name="slctDictamen">
-					<option value="-1">TODOS</option>
+					<option value="-1">SELECCIONE</option>
 					<option value="RIESGOS">RIESGOS</option>
 					<option value="OFICINA">OFICINA</option>
 				</select>
@@ -73,7 +73,7 @@
 	       </td>
 	       <td colspan="3" valign="middle">
 				<select id="codTerritorio" name="codTerritorio">
-					<option value="-1">TODOS</option>
+					<option value="-1">SELECCIONE</option>
 				</select>
 				<!-- input type="text" name="desTerritorio" class="cajaTexto" id="desTerritorio" size="78" maxlength="78" -->
 		   </td>
@@ -84,7 +84,7 @@
 	       </td>
 	       <td colspan="3" valign="middle">
 	       		<select id="codOficina" name="codOficina">
-	       			<option value="-1">TODOS</option>
+	       			<option value="-1">SELECCIONE</option>
 	       		</select>
 				<!-- input type="text" name="desOficina" class="cajaTexto" id="desOficina" size="78" maxlength="78" -->
 		   </td>

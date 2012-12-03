@@ -67,6 +67,7 @@
 		<convert converter="bean" match="bbva.pe.gpr.bean.Rol"/>
 		<convert converter="bean" match="bbva.pe.gpr.bean.Estadistica"/>
 		<convert converter="bean" match="bbva.pe.gpr.bean.SolicitudOperacion"/>
+		<convert converter="bean" match="bbva.pe.gpr.bean.SolicitudMensaje"/>
   	<!-- Definición de Beans -->
 	</allow>
 </dwr>

@@ -316,7 +316,7 @@ optionDialog = {
 		<td valign="middle">
 			<font class="fontText">Cargo</font>&nbsp;
 			 <html:select property="codRol" styleClass="codRol" onchange="consultarEvaluador();">
-				<html:option value="-1" >TODOS</html:option>
+				<html:option value="-1" >SELECCIONE</html:option>
 				<c:if test="${lstRol != null}">
 					<c:forEach var="rol" items="${lstRol}">
 						<html:option value="${rol.codRol}">
