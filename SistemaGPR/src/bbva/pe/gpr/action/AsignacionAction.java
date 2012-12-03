@@ -115,11 +115,12 @@ public class AsignacionAction extends DispatchAction {
 	
 	public ActionForward grabarAsignaciones(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		AsignacionForm asignacionForm = (AsignacionForm)form;
-		IILDPeUsuario bean = (IILDPeUsuario)request.getSession().getAttribute("USUARIO_SESION");
-		String codUsuarioAsigno = bean.getUID();
+		IILDPeUsuario usuarioSesion = (IILDPeUsuario)request.getSession().getAttribute("USUARIO_SESION");
+		String codUsuarioAsigno = usuarioSesion.getUID();
 		String indMensaje=null;
 		String strMensaje=null;
-		if(asignacionService.asignarSolicitudMasiva(asignacionForm.getHdnArreglo(), asignacionForm.getHdnRegistro(), codUsuarioAsigno)>0){
+		String nombre = usuarioSesion.getNombre()+ Constant.ESPACIO + usuarioSesion.getApellido1() + Constant.ESPACIO + usuarioSesion.getApellido2();
+		if(asignacionService.asignarSolicitudMasiva(asignacionForm.getHdnArreglo(), asignacionForm.getHdnRegistro(), codUsuarioAsigno, nombre)>0){
 			indMensaje = Constant.MSJ_OK;
 			strMensaje = "Se registro exitosamente las asignaciones";
 		}else{
