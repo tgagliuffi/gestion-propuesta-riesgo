@@ -32,6 +32,7 @@ public class Constant {
 	public static final String TABLA_SCORING = "T019";
 	
 	public static final String VALOR_NO_ENCONTRADO = "VALOR NO ENCONTRADO";
+	public static final String SELECCIONE = "[   SELECCIONE   ]";
 
 	public static final String USUARIO_APP = "USUARIO";
 	public static final int DICTAMINA_OFICINA = 1;
