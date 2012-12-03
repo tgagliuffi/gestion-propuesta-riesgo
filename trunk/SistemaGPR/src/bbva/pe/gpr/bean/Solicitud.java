@@ -1,19 +1,21 @@
 package bbva.pe.gpr.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-public class Solicitud {
-    
-    private Long nroSolicitud;
+public class Solicitud implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Long nroSolicitud;
     private Date fechaIngreso;
     private String strFechaIngreso;
     private String codCentral;
     private String desMultTipoPersona;
     private String desSolicitante;
     private String desMultMoneda;
-    private String mtoSolicitud;
+    private BigDecimal mtoSolicitud;
     private BigDecimal riesgoActual;
     private BigDecimal riesgoTotal;
     private String oficinaAltaCod;
@@ -74,6 +76,10 @@ public class Solicitud {
     private String desBanca;
     private String codSubanca;
     private BigDecimal codBanca;
+    
+    private String codUsuarioSession;
+    private String nomUsuarioSession;
+    
 	public Long getNroSolicitud() {
 		return nroSolicitud;
 	}
@@ -116,10 +122,10 @@ public class Solicitud {
 	public void setDesMultMoneda(String desMultMoneda) {
 		this.desMultMoneda = desMultMoneda;
 	}
-	public String getMtoSolicitud() {
+	public BigDecimal getMtoSolicitud() {
 		return mtoSolicitud;
 	}
-	public void setMtoSolicitud(String mtoSolicitud) {
+	public void setMtoSolicitud(BigDecimal mtoSolicitud) {
 		this.mtoSolicitud = mtoSolicitud;
 	}
 	public BigDecimal getRiesgoActual() {
@@ -446,4 +452,17 @@ public class Solicitud {
 	public void setCodBanca(BigDecimal codBanca) {
 		this.codBanca = codBanca;
 	}
+	public String getCodUsuarioSession() {
+		return codUsuarioSession;
+	}
+	public void setCodUsuarioSession(String codUsuarioSession) {
+		this.codUsuarioSession = codUsuarioSession;
+	}
+	public String getNomUsuarioSession() {
+		return nomUsuarioSession;
+	}
+	public void setNomUsuarioSession(String nomUsuarioSession) {
+		this.nomUsuarioSession = nomUsuarioSession;
+	}
+	
 }

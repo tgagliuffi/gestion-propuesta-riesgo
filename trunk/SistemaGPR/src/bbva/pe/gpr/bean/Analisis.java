@@ -13,6 +13,8 @@ public class Analisis extends AnalisisKey {
 	private String strMensaje;
 	private String desMutlProceso;
 	private String desMultMotivo;
+	private String codUsuarioSession;
+    private String nomUsuarioSession;
 	
 	
 	public String getCodMutlProceso() {
@@ -75,4 +77,17 @@ public class Analisis extends AnalisisKey {
 	public void setDesMultMotivo(String desMultMotivo) {
 		this.desMultMotivo = desMultMotivo;
 	}
+	public String getCodUsuarioSession() {
+		return codUsuarioSession;
+	}
+	public void setCodUsuarioSession(String codUsuarioSession) {
+		this.codUsuarioSession = codUsuarioSession;
+	}
+	public String getNomUsuarioSession() {
+		return nomUsuarioSession;
+	}
+	public void setNomUsuarioSession(String nomUsuarioSession) {
+		this.nomUsuarioSession = nomUsuarioSession;
+	}
+	
 }

@@ -1,8 +1,11 @@
 package bbva.pe.gpr.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Rol {
+public class Rol implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private BigDecimal codRolHdn;
     private BigDecimal codRol;
 	private String descripcion;

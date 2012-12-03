@@ -26,6 +26,8 @@ public class Dictamen extends DictamenKey {
 	private String garantias;
 	private String condicionantes;
 	private String listaDocumentos;
+	private String codUsuarioSession;
+    private String nomUsuarioSession;
 
 	public String getCodMultNivel() {
 		return codMultNivel;
@@ -164,6 +166,21 @@ public class Dictamen extends DictamenKey {
 	}
 	public void setListaDocumentos(String listaDocumentos) {
 		this.listaDocumentos = listaDocumentos;
+	}
+	public String getCodUsuarioSession() {
+		return codUsuarioSession;
+	}
+	public void setCodUsuarioSession(String codUsuarioSession) {
+		this.codUsuarioSession = codUsuarioSession;
+	}
+	public String getNomUsuarioSession() {
+		return nomUsuarioSession;
+	}
+	public void setNomUsuarioSession(String nomUsuarioSession) {
+		this.nomUsuarioSession = nomUsuarioSession;
+	}
+	public String getPlazoVencimiento() {
+		return plazoVencimiento;
 	}
 	
 }
