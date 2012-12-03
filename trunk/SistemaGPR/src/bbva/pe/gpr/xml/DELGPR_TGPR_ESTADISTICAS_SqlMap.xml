@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DELGPR_TGPR_ESTADISTICAS" >
+	<resultMap id="mapAsignacion" class="bbva.pe.gpr.bean.Estadistica" >
+		<result column="COD_BANCA" property="codBanca" jdbcType="DECIMAL" />
+		<result column="DES_BANCA" property="desBanca" jdbcType="VARCHAR" />
+		<result column="DES_ESTADO_SOLICITUD" property="desEstadoSolicitud" jdbcType="VARCHAR" />
+		<result column="NRO_SOLICITUDES" property="nroSolicitudes" jdbcType="DECIMAL" />
+		<result column="ANULADAS" property="anuladas" jdbcType="DECIMAL" />
+		<result column="PRIORIZADAS" property="priorizadas" jdbcType="DECIMAL" />
+		<result column="FUERA_DE_RANGO" property="fueraDeRango" jdbcType="DECIMAL" />
+	</resultMap>
+	<resultMap id="mapAtencion" class="bbva.pe.gpr.bean.Estadistica" >
+		<result column="COD_BANCA" property="codBanca" jdbcType="DECIMAL" />
+		<result column="DES_BANCA" property="desBanca" jdbcType="VARCHAR" />
+		<result column="DES_OFICINA" property="desOficina" jdbcType="VARCHAR" />
+		<result column="DES_TERRITORIO" property="desTerritorio" jdbcType="VARCHAR" />
+		<result column="PREFIJO_INGRESO" property="orgDictamen" jdbcType="VARCHAR" />
+		<result column="DES_ESTADO_SOLICITUD" property="desEstadoSolicitud" jdbcType="VARCHAR" />
+		<result column="NRO_SOLICITUDES" property="nroSolicitudes" jdbcType="DECIMAL" />
+		<result column="ANULADAS" property="anuladas" jdbcType="DECIMAL" />
+		<result column="PRIORIZADAS" property="priorizadas" jdbcType="DECIMAL" />
+	</resultMap>
+	<select id="selectAsignacion" resultMap="mapAsignacion" parameterClass="bbva.pe.gpr.bean.Estadistica" >
+		<![CDATA[
+			SELECT COD_BANCA, DES_BANCA, DES_ESTADO_SOLICITUD
+			  , SUM(DECODE(ESTADO, 1, 1, 0)) NRO_SOLICITUDES
+			  , SUM(DECODE(ESTADO, 1, 0, 1)) ANULADAS
+			  , SUM(DECODE(PRIORIDAD, 'ALTA', DECODE(ESTADO, 1, 0, 1), 'BAJA', DECODE(ESTADO, 1, 0, 1), 0)) PRIORIZADAS
+			  , 0 FUERA_DE_RANGO
+			FROM DELGPR.VDELGPR_STATUS_SOLICITUD
+			WHERE
+			  (#codBanca:DECIMAL# IS NULL OR #codBanca:DECIMAL# = -1 OR COD_BANCA = #codBanca:DECIMAL#) AND 
+			  (FECHA_INGRESO >= #fechaInicio:DATE# AND FECHA_INGRESO <= #fechaFin:DATE#)
+			GROUP BY COD_BANCA, DES_BANCA, DES_ESTADO_SOLICITUD
+			ORDER BY COD_BANCA, DES_BANCA, DES_ESTADO_SOLICITUD
+		]]>
+	</select>
+	<select id="selectAtencion" resultMap="mapAtencion" parameterClass="bbva.pe.gpr.bean.Estadistica" >
+		<![CDATA[
+			SELECT A.COD_BANCA, A.DES_BANCA
+			  , A.DES_OFICINA
+			  , A.PREFIJO_INGRESO
+			  , A.DES_TERRITORIO
+			  , NVL(C.STR_VALOR, 'PENDIENTE') DES_ESTADO_SOLICITUD
+			  , SUM(DECODE(ESTADO, 1, 1, 0)) NRO_SOLICITUDES
+			  , SUM(DECODE(ESTADO, 1, 0, 1)) ANULADAS
+			  , SUM(DECODE(PRIORIDAD, 'ALTA', DECODE(ESTADO, 1, 1, 0), 'BAJA', DECODE(ESTADO, 1, 1, 0), 0)) PRIORIZADAS
+			FROM DELGPR.VDELGPR_STATUS_SOLICITUD A
+			     LEFT JOIN DELGPR.TGPR_DICTAMENES B ON A.NRO_SOLICITUD=B.NRO_SOLICITUD AND B.ESTADO=1
+			     LEFT JOIN DELGPR.TGPR_MULTITABLA_DETALLE C ON B.COD_MULT_DICTAMEN=C.COD_ELEMENTO AND C.COD_MULTITABLA='T014'
+			WHERE
+				(#codBanca:DECIMAL# IS NULL OR #codBanca:DECIMAL# = -1 OR COD_BANCA = #codBanca:DECIMAL#) AND
+				(#codOficina:VARCHAR# IS NULL OR #codOficina:VARCHAR# = '-1' OR COD_OFICINA = #codOficina:VARCHAR#) AND
+				(#codTerritorio:DECIMAL# IS NULL OR #codTerritorio:DECIMAL# = -1 OR COD_TERRITORIO = #codTerritorio:DECIMAL#) AND
+				(#orgDictamen:VARCHAR# IS NULL OR #orgDictamen:VARCHAR# = '-1' OR PREFIJO_INGRESO = #orgDictamen:VARCHAR#) AND
+				(FECHA_INGRESO >= #fechaInicio:DATE# AND FECHA_INGRESO <= #fechaFin:DATE#)
+			GROUP BY A.COD_BANCA, A.DES_BANCA, C.STR_VALOR
+			       , A.COD_OFICINA, A.DES_OFICINA
+			       , A.COD_TERRITORIO, A.DES_TERRITORIO
+			       , A.DES_ESTADO_SOLICITUD, A.PREFIJO_INGRESO
+			ORDER BY A.COD_BANCA, A.COD_TERRITORIO, A.COD_OFICINA, C.STR_VALOR
+		]]>
+	</select>
+	<select id="selectCabeceraAsignacion" resultClass="bbva.pe.gpr.bean.Estadistica" parameterClass="bbva.pe.gpr.bean.Estadistica" >
+		<![CDATA[
+			SELECT DES_ESTADO_SOLICITUD as desEstadoSolicitud
+			FROM ( 
+			  SELECT DES_ESTADO_SOLICITUD 
+			  FROM DELGPR.VDELGPR_STATUS_SOLICITUD
+			  WHERE 
+			  	(#codBanca:DECIMAL# IS NULL OR #codBanca:DECIMAL# = -1 OR COD_BANCA = #codBanca:DECIMAL#) AND
+			  	(FECHA_INGRESO >= #fechaInicio:DATE# AND FECHA_INGRESO <= #fechaFin:DATE#)
+			  GROUP BY DES_ESTADO_SOLICITUD
+			  ORDER BY DES_ESTADO_SOLICITUD
+			) A
+			UNION ALL SELECT 'ANULADAS' FROM SYS.DUAL
+			UNION ALL SELECT 'PRIORIZADAS' FROM SYS.DUAL
+			UNION ALL SELECT 'FUERA DE RANGO' FROM SYS.DUAL
+		]]>
+	</select>
+	<select id="selectCabeceraAtencion" resultClass="bbva.pe.gpr.bean.Estadistica" parameterClass="bbva.pe.gpr.bean.Estadistica" >
+		<![CDATA[
+			SELECT DES_ESTADO_SOLICITUD as desEstadoSolicitud
+			FROM ( 
+				SELECT NVL(C.STR_VALOR, 'PENDIENTE') DES_ESTADO_SOLICITUD
+				FROM DELGPR.VDELGPR_STATUS_SOLICITUD A
+				     LEFT JOIN DELGPR.TGPR_DICTAMENES B ON A.NRO_SOLICITUD=B.NRO_SOLICITUD AND B.ESTADO=1
+				     LEFT JOIN DELGPR.TGPR_MULTITABLA_DETALLE C ON B.COD_MULT_DICTAMEN=C.COD_ELEMENTO AND C.COD_MULTITABLA='T014'
+				WHERE
+					(#codBanca:DECIMAL# IS NULL OR #codBanca:DECIMAL# = -1 OR COD_BANCA = #codBanca:DECIMAL#) AND
+					(#codOficina:VARCHAR# IS NULL OR #codOficina:VARCHAR# = '-1' OR COD_OFICINA = #codOficina:VARCHAR#) AND
+					(#codTerritorio:DECIMAL# IS NULL OR #codTerritorio:DECIMAL# = -1 OR COD_TERRITORIO = #codTerritorio:DECIMAL#) AND
+					(#orgDictamen:VARCHAR# IS NULL OR #orgDictamen:VARCHAR# = '-1' OR PREFIJO_INGRESO = #orgDictamen:VARCHAR#) AND
+					(FECHA_INGRESO >= #fechaInicio:DATE# AND FECHA_INGRESO <= #fechaFin:DATE#)
+				GROUP BY NVL(C.STR_VALOR, 'PENDIENTE')
+				ORDER BY NVL(C.STR_VALOR, 'PENDIENTE')
+			) A
+			UNION ALL SELECT 'ANULADAS' FROM SYS.DUAL
+			UNION ALL SELECT 'PRIORIZADAS' FROM SYS.DUAL
+		]]>
+	</select>
+</sqlMap>

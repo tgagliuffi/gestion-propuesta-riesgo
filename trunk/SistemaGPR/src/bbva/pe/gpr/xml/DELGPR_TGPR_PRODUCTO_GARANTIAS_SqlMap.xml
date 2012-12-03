@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DELGPR_TGPR_PRODUCTO_GARANTIAS" >
+  <resultMap id="ibatorgenerated_BaseResultMap" class="bbva.pe.gpr.bean.ProductoGarantia" >
+    <result column="COD_GARANTIA" property="codGarantia" jdbcType="DECIMAL" />
+    <result column="COD_PROD_GARANTIA" property="codProdGarantia" jdbcType="DECIMAL" />
+    <result column="ESTADO" property="estado" jdbcType="DECIMAL" />
+    <result column="COD_PRODUCTO" property="codProducto" jdbcType="DECIMAL" />
+  </resultMap>
+  <select id="ibatorgenerated_selectByPrimaryKey" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.ProductoGarantiaKey" >
+    select COD_GARANTIA, COD_PROD_GARANTIA, ESTADO, COD_PRODUCTO
+    from DELGPR.TGPR_PRODUCTO_GARANTIAS
+    where COD_GARANTIA = #codGarantia:DECIMAL#
+      and COD_PROD_GARANTIA = #codProdGarantia:DECIMAL#
+  </select>
+  <delete id="ibatorgenerated_deleteByPrimaryKey" parameterClass="bbva.pe.gpr.bean.ProductoGarantiaKey" >
+    delete from DELGPR.TGPR_PRODUCTO_GARANTIAS
+    where COD_GARANTIA = #codGarantia:DECIMAL#
+      and COD_PROD_GARANTIA = #codProdGarantia:DECIMAL#
+  </delete>
+  <insert id="ibatorgenerated_insert" parameterClass="bbva.pe.gpr.bean.ProductoGarantia" >
+    insert into DELGPR.TGPR_PRODUCTO_GARANTIAS (COD_GARANTIA, COD_PROD_GARANTIA, ESTADO,
+      COD_PRODUCTO)
+    values (#codGarantia:DECIMAL#, #codProdGarantia:DECIMAL#, #estado:DECIMAL#,
+      #codProducto:DECIMAL#)
+  </insert>
+  <insert id="ibatorgenerated_insertSelective" parameterClass="bbva.pe.gpr.bean.ProductoGarantia" >
+    insert into DELGPR.TGPR_PRODUCTO_GARANTIAS
+    <dynamic prepend="(" >
+      <isNotNull prepend="," property="codGarantia" >
+        COD_GARANTIA
+      </isNotNull>
+      <isNotNull prepend="," property="codProdGarantia" >
+        COD_PROD_GARANTIA
+      </isNotNull>
+      <isNotNull prepend="," property="estado" >
+        ESTADO
+      </isNotNull>
+      <isNotNull prepend="," property="codProducto" >
+        COD_PRODUCTO
+      </isNotNull>
+      )
+    </dynamic>
+    values
+    <dynamic prepend="(" >
+      <isNotNull prepend="," property="codGarantia" >
+        #codGarantia:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="codProdGarantia" >
+        #codProdGarantia:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="estado" >
+        #estado:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="codProducto" >
+        #codProducto:DECIMAL#
+      </isNotNull>
+      )
+    </dynamic>
+  </insert>
+  <update id="ibatorgenerated_updateByPrimaryKeySelective" parameterClass="bbva.pe.gpr.bean.ProductoGarantia" >
+    update DELGPR.TGPR_PRODUCTO_GARANTIAS
+    <dynamic prepend="set" >
+      <isNotNull prepend="," property="estado" >
+        ESTADO = #estado:DECIMAL#
+      </isNotNull>
+      <isNotNull prepend="," property="codProducto" >
+        COD_PRODUCTO = #codProducto:DECIMAL#
+      </isNotNull>
+    </dynamic>
+    where COD_GARANTIA = #codGarantia:DECIMAL#
+      and COD_PROD_GARANTIA = #codProdGarantia:DECIMAL#
+  </update>
+  <update id="ibatorgenerated_updateByPrimaryKey" parameterClass="bbva.pe.gpr.bean.ProductoGarantia" >
+    update DELGPR.TGPR_PRODUCTO_GARANTIAS
+    set ESTADO = #estado:DECIMAL#,
+      COD_PRODUCTO = #codProducto:DECIMAL#
+    where COD_GARANTIA = #codGarantia:DECIMAL#
+      and COD_PROD_GARANTIA = #codProdGarantia:DECIMAL#
+  </update>
+
+ 
+</sqlMap>
