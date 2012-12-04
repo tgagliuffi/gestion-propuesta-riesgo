@@ -688,4 +688,8 @@ public class IngresoSolicitudAction extends DispatchAction {
 		 
 	}
 	
+	public int validaCodPreEvaluador(String value){
+		return 0;
+	}
+	
 }

@@ -113,7 +113,8 @@ var myDataModel = [
                    { name : 'codProdBase',			index : 'codProdBase', 			width : 92,					editable:true, 	edittype:'text', 	formatoptions: { disabled: false }, editoptions: {size:12, maxlength: 5, readonly: 'readonly'}, editrules: {required: true}, align : 'center'},
                    { name : 'contratoVinculado',	index : 'contratoVinculado',	width : 230,		 		editable:true,	edittype:'custom',  editoptions: {custom_element: contratoVincElementCustom, custom_value: genericComboValueCustom}, editrules:   {required: true}, align : 'center', formatter: contratoVincFormat, unformat: genericUnFormat},
                    { name : 'scoring',				index : 'scoring', 				width : 90,  				editable:true,	edittype:'text', 	editoptions: {size:10, maxlength: 40, readonly: 'readonly'}, editrules: {required: true}, align : 'center'},
-                   { name : 'codPreEvaluador',		index : 'codPreEvaluador', 		width : 140, 				editable:true,	edittype:'text', 	editoptions: {style: 'background-color: #F2F5A9', size:15, maxlength: 20, dataEvents: [{ type: 'blur',     fn: function (){ blurChangeColor(this);}}]}, align : 'center'},
+                   { name : 'codPreEvaluador',		index : 'codPreEvaluador', 		width : 140, 				editable:true,	edittype:'text', 	editoptions: {style: 'background-color: #F2F5A9', size:15, maxlength: 20, dataEvents: [{ type: 'blur',     fn: function (){ blurChangeColor(this);}}, 
+                	   																																																					   { type: 'change',   fn: function (){ changeCodPreEvaludador(this.value);}}]}, align : 'center'},
                    { name : 'desCampania',			index : 'desCampania', 			width : 180, 				editable:true,	edittype:'custom', 	editoptions: {custom_element: campaniaElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: campaniaFormat, unformat: genericUnFormat},
                    { name : 'desTipo',				index : 'desTipo', 				width : 180, 				editable:true,	edittype:'custom', 	editoptions: {custom_element: tipoElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: tipoFormat, unformat: genericUnFormat},
                    { name : 'mtoProducto',			index : 'mtoProducto', 			width : 140, 				editable:true,	edittype:'text', 	editoptions: {size:14, maxlength: 18, style: 'text-align: right; background-color: #F2F5A9', dataEvents: [ { type: 'change',   fn: function (){ getMonto(this.value, 1);}}, 
@@ -154,6 +155,19 @@ function setEventsValidationContrato(){
     jQuery("select[name=contratoVinculado]").bind("change",function (evnt){
     	getScoringElementText(this);
     });
+}
+function changeCodPreEvaludador(param){
+   if(param!=''){
+	  IngresoSolicitudAction.validaCodPreEvaluador(param, function(msg){
+		  if(msg==0){
+			  alert('¡Código Prevaluador incorrecto!');
+			  if(document.getElementsByName('codPreEvaluador').length>0){
+				  document.getElementsByName('codPreEvaluador')[0].value = '';
+				  document.getElementsByName('codPreEvaluador')[0].focus();
+			  }
+		  }
+	 });
+   }
 }
 
 function changeContratoByProduct(obj){
