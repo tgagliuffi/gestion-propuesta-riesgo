@@ -1,7 +1,8 @@
 package bbva.pe.gpr.bean;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
+
 
 public class Asignacion extends AsignacionKey{
 	private String nombre;
