@@ -590,7 +590,7 @@ function format(text){
 }
 
 function blurChangeColor(ctrl){
-	if(ctrl.value!=''&& ctrl.value!='00.00'){
+	if(ctrl.value!=''&& ctrl.value!='00.00' && ctrl.value!='0'){
 		ctrl.style.backgroundColor = '#A9F5A9';
 	}else{
 		ctrl.style.backgroundColor = '#F2F5A9';

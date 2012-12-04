@@ -164,6 +164,7 @@ function changeCodPreEvaludador(param){
 			  if(document.getElementsByName('codPreEvaluador').length>0){
 				  document.getElementsByName('codPreEvaluador')[0].value = '';
 				  document.getElementsByName('codPreEvaluador')[0].focus();
+				  document.getElementsByName('codPreEvaluador')[0].style.backgroundColor = '#F2F5A9';
 			  }
 		  }
 	 });
