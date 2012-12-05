@@ -215,8 +215,6 @@ buscarSolicitud = function(){
 		
 	
 	DictamenAction.buscarSolicitud(parameters, function(data){	
-		// debugger;
-		console.log(data);
 		
 		if(data.status) {
 			
@@ -319,16 +317,13 @@ optionDialog = {
     modal: true,
     buttons: {
         "Aceptar": function() {
-        	console.log($(this).attr("id"));
         	$(this).dialog("close");
         },
         "Cancelar": function() {
-        	console.log($(this).attr("id"));
         	$(this).dialog("close");
         }
     },
     close: function() {
-    	console.log($(this).attr("id"));
     }
 }; 
 
@@ -556,9 +551,9 @@ $(document).ready(function(){
 	});
 	DictamenAction.cargarComboCondicionesScoring(function(data){
 		options = "";
-		console.log(data);
+		
 		$.each(data, function(i , columns){ 
-			console.log(columns);
+			
 		    options +='<tr><td><input type="checkbox" value="' + columns.codElemento + '" id="_' + columns.codElemento + '" onchange="changeCondicionesScoring(this);">&nbsp;&nbsp;' + columns.strValor + "</td></td>";
 		});
 		$("#listCondiciones").html(options);

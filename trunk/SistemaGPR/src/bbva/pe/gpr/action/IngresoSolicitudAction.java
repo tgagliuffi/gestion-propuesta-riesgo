@@ -101,61 +101,65 @@ public class IngresoSolicitudAction extends DispatchAction {
 		String strMensaje = null;
 		IILDPeUsuario usuarioSesion = (IILDPeUsuario)request.getSession(true).getAttribute("USUARIO_SESION");
 		
-		solicitudBean.setCodUsuarioSession(usuarioSesion.getUID());
-		solicitudBean.setNomUsuarioSession(usuarioSesion.getNombre()+ Constant.ESPACIO +  
-										   usuarioSesion.getApellido1() + Constant.ESPACIO +
-										   usuarioSesion.getApellido2());
-		solicitudBean.setCodCentral(solicitudForm.getHdnCodCentral());
-		solicitudBean.setNumeroDocumento(solicitudForm.getNumeroDocumento());
-		solicitudBean.setDesSolicitante(solicitudForm.getDesSolicitante());								
-		solicitudBean.setCodOficina(solicitudForm.getCodOficina());
-		solicitudBean.setDesOficina(solicitudForm.getDesOficina());								
-		solicitudBean.setGestorCod(solicitudForm.getGestorCod());
-		solicitudBean.setGestorNom(solicitudForm.getGestorNom());								
-		solicitudBean.setEmpleadorCod(solicitudForm.getEmpleadorCod());
-		solicitudBean.setEmpleadorNom(solicitudForm.getEmpleadorNom());				
-		solicitudBean.setGerenciaTerritorialCod(solicitudForm.getGerenciaTerritorialCod());
-		solicitudBean.setGerenciaTerritorialNom(solicitudForm.getGerenciaTerritorialNom());
-		solicitudBean.setDeudaDirecta(new BigDecimal(solicitudForm.getDeudaDirecta()));
-		solicitudBean.setDeudaIndirecta(new BigDecimal(solicitudForm.getDeudaIndirecta()));
-		solicitudBean.setCastigo(new BigDecimal(solicitudForm.getCastigo()));
-		solicitudBean.setDeudaSistemaFinanciero(new BigDecimal(solicitudForm.getDeudaSistemaFinanciero()));
-		solicitudBean.setScorating(solicitudForm.getScorating());
-		solicitudBean.setRating(solicitudForm.getRating());
-		solicitudBean.setReelevancia(solicitudForm.getReelevancia());
-		solicitudBean.setClasificacion(solicitudForm.getClasificacion());	
-		solicitudBean.setOficinaAltaCod(solicitudForm.getOficinaAltaCod());
-		solicitudBean.setOficinaAltaNom(solicitudForm.getOficinaAltaNom());
-		solicitudBean.setEjecutivoCtaCod(solicitudForm.getEjecutivoCtaCod());				
-		solicitudBean.setEjecutivoCtaNom(solicitudForm.getEjecutivoCtaNom());
-		solicitudBean.setCodMultTipoPersona(solicitudForm.getCodMultTipoPersona());
 		
-		solicitudBean.setRiesgoActual(new BigDecimal(solicitudForm.getRiesgoActual()));
-		solicitudBean.setRiesgoGrupal(new BigDecimal(solicitudForm.getRiesgoGrupal()));
-		solicitudBean.setFechaIngreso(new Date());	
-		solicitudBean.setCodSubanca(solicitudForm.getSubBanca());
-		solicitudBean.setCodBanca(new BigDecimal(solicitudForm.getCodBanca()));
 		
-		solicitudBean.setCodMultMoneda(solicitudForm.getCodMultMoneda());
-		solicitudForm.setFlagPopUP(Constant.STR_VACIO);
-		MultitablaDetalle multDetalleMoneda = catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_MONEDA, solicitudForm.getCodMultMoneda());
-		solicitudBean.setDesMultMoneda((multDetalleMoneda!=null?multDetalleMoneda.getStrValor():Constant.VALOR_NO_ENCONTRADO));				
-		solicitudBean.setCodMultMoneda(multDetalleMoneda.getCodMultitabla()!=null?multDetalleMoneda.getCodMultitabla()+Constant.CHAR_GUION+multDetalleMoneda.getCodElemento():null);
-		IILDPeUsuario usuarioSession;
-		usuarioSession = (IILDPeUsuario)request.getSession(true).getAttribute("USUARIO_SESION");
 		List<SolicitudDetalle> lstSolicitudDetalle = (List<SolicitudDetalle>)request.getSession().getAttribute("lstDetalleProdSession");
-		Long nroSolicitud= new Long(0);
-		solicitudBean.setPrefijoIngreso(catalogoService.getUsuarioTipo(usuarioSession.getUID())=="1"?"OFICINA":"RIESGOS");
-		solicitudBean.setGrupoPersona(solicitudService.validaGrupoPersona(solicitudBean.getCodMultTipoPersona(), solicitudBean.getNumeroDocumento(), solicitudBean.getRating()));
-		solicitudBean.setMtoSolicitud(solicitudForm.getMtoTotal()!=null?new BigDecimal(solicitudForm.getMtoTotal()):new BigDecimal(0));
-		solicitudBean.setRiesgoTotal((solicitudBean.getRiesgoActual()!=null?solicitudBean.getRiesgoActual():new BigDecimal(0)).add(solicitudBean.getMtoSolicitud()!=null?solicitudBean.getMtoSolicitud():new BigDecimal(0)));
-		solicitudBean.setStrMensaje(solicitudForm.getHdnStrMensaje());
+		
 		try {
 			if(lstSolicitudDetalle==null){
 				indMensaje = Constant.MSJ_ALERT;
-				strMensaje = "Debe debe guardar por lo menos un producto.";	
+				strMensaje = "Debe cargar datos del cliente y guardar por lo menos un producto.";	
 		
 			}else{
+				solicitudBean.setCodUsuarioSession(usuarioSesion.getUID());
+				solicitudBean.setNomUsuarioSession(usuarioSesion.getNombre()+ Constant.ESPACIO +  
+												   usuarioSesion.getApellido1() + Constant.ESPACIO +
+												   usuarioSesion.getApellido2());
+				solicitudBean.setCodCentral(solicitudForm.getHdnCodCentral());
+				solicitudBean.setNumeroDocumento(solicitudForm.getNumeroDocumento());
+				solicitudBean.setDesSolicitante(solicitudForm.getDesSolicitante());								
+				solicitudBean.setCodOficina(solicitudForm.getCodOficina());
+				solicitudBean.setDesOficina(solicitudForm.getDesOficina());								
+				solicitudBean.setGestorCod(solicitudForm.getGestorCod());
+				solicitudBean.setGestorNom(solicitudForm.getGestorNom());								
+				solicitudBean.setEmpleadorCod(solicitudForm.getEmpleadorCod());
+				solicitudBean.setEmpleadorNom(solicitudForm.getEmpleadorNom());				
+				solicitudBean.setGerenciaTerritorialCod(solicitudForm.getGerenciaTerritorialCod());
+				solicitudBean.setGerenciaTerritorialNom(solicitudForm.getGerenciaTerritorialNom());
+				solicitudBean.setDeudaDirecta(new BigDecimal(solicitudForm.getDeudaDirecta()));
+				solicitudBean.setDeudaIndirecta(new BigDecimal(solicitudForm.getDeudaIndirecta()));
+				solicitudBean.setCastigo(new BigDecimal(solicitudForm.getCastigo()));
+				solicitudBean.setDeudaSistemaFinanciero(new BigDecimal(solicitudForm.getDeudaSistemaFinanciero()));
+				solicitudBean.setScorating(solicitudForm.getScorating());
+				solicitudBean.setRating(solicitudForm.getRating());
+				solicitudBean.setReelevancia(solicitudForm.getReelevancia());
+				solicitudBean.setClasificacion(solicitudForm.getClasificacion());	
+				solicitudBean.setOficinaAltaCod(solicitudForm.getOficinaAltaCod());
+				solicitudBean.setOficinaAltaNom(solicitudForm.getOficinaAltaNom());
+				solicitudBean.setEjecutivoCtaCod(solicitudForm.getEjecutivoCtaCod());				
+				solicitudBean.setEjecutivoCtaNom(solicitudForm.getEjecutivoCtaNom());
+				solicitudBean.setCodMultTipoPersona(solicitudForm.getCodMultTipoPersona());
+				
+				solicitudBean.setRiesgoActual(new BigDecimal(solicitudForm.getRiesgoActual()));
+				solicitudBean.setRiesgoGrupal(new BigDecimal(solicitudForm.getRiesgoGrupal()));
+				solicitudBean.setFechaIngreso(new Date());	
+				solicitudBean.setCodSubanca(solicitudForm.getSubBanca());
+				solicitudBean.setCodBanca(new BigDecimal(solicitudForm.getCodBanca()));
+				
+				solicitudBean.setCodMultMoneda(solicitudForm.getCodMultMoneda());
+				solicitudForm.setFlagPopUP(Constant.STR_VACIO);
+				MultitablaDetalle multDetalleMoneda = catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_MONEDA, solicitudForm.getCodMultMoneda());
+				solicitudBean.setDesMultMoneda((multDetalleMoneda!=null?multDetalleMoneda.getStrValor():Constant.VALOR_NO_ENCONTRADO));				
+				solicitudBean.setCodMultMoneda(multDetalleMoneda.getCodMultitabla()!=null?multDetalleMoneda.getCodMultitabla()+Constant.CHAR_GUION+multDetalleMoneda.getCodElemento():null);
+				IILDPeUsuario usuarioSession;
+				usuarioSession = (IILDPeUsuario)request.getSession(true).getAttribute("USUARIO_SESION");
+				Long nroSolicitud= new Long(0);
+				solicitudBean.setPrefijoIngreso(catalogoService.getUsuarioTipo(usuarioSession.getUID())=="1"?"OFICINA":"RIESGOS");
+				solicitudBean.setGrupoPersona(solicitudService.validaGrupoPersona(solicitudBean.getCodMultTipoPersona(), solicitudBean.getNumeroDocumento(), solicitudBean.getRating()));
+				solicitudBean.setMtoSolicitud(solicitudForm.getMtoTotal()!=null?new BigDecimal(solicitudForm.getMtoTotal()):new BigDecimal(0));
+				solicitudBean.setRiesgoTotal((solicitudBean.getRiesgoActual()!=null?solicitudBean.getRiesgoActual():new BigDecimal(0)).add(solicitudBean.getMtoSolicitud()!=null?solicitudBean.getMtoSolicitud():new BigDecimal(0)));
+				solicitudBean.setStrMensaje(solicitudForm.getHdnStrMensaje());
+				
 				MultitablaDetalle multitablaDetalleBean = null;
 				multitablaDetalleBean = catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_ESTADOS_SOLCITUD, Constant.ESTADO_SOLICITUD_PENDIENTE);
 				
