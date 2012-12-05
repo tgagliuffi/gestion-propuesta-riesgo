@@ -156,20 +156,6 @@ function setEventsValidationContrato(){
     	getScoringElementText(this);
     });
 }
-function changeCodPreEvaludador(param){
-   if(param!=''){
-	  IngresoSolicitudAction.validaCodPreEvaluador(param, function(msg){
-		  if(msg==0){
-			  alert('¡Código Prevaluador incorrecto!');
-			  if(document.getElementsByName('codPreEvaluador').length>0){
-				  document.getElementsByName('codPreEvaluador')[0].value = '';
-				  document.getElementsByName('codPreEvaluador')[0].focus();
-				  document.getElementsByName('codPreEvaluador')[0].style.backgroundColor = '#F2F5A9';
-			  }
-		  }
-	 });
-   }
-}
 
 function changeContratoByProduct(obj){
 	var indice = obj.id.split("desProducto");
@@ -289,7 +275,7 @@ function getMonto(value, call){
 		if(document.getElementsByName('mtoTotal').length>0)
 		{pMtoTotalProd = document.getElementsByName('mtoTotal')[0].value;}
 
-if(call==1){
+	if(call==1){
 		IngresoSolicitudAction.changeMtoTotalRowAjax(value, pMtoGarantia, function(msg){
 			document.getElementsByName("mtoTotalRow")[0].value = msg;
 			pMtoTotalProd=msg;
@@ -323,6 +309,8 @@ if(call==1){
 		IngresoSolicitudAction.changeRiesgoTotalAjax(pdeudaDirecta, pdeudaIndirecta, pdeudaCastigo, pdeudaSisFinanciero, pOtroRiesgo, value, pMtoTotalProd, function(msg){
 			document.getElementsByName("riesgoTotal")[0].value = msg;
 		});	
+	}if(call==4){
+		
 	}
 
 }
@@ -588,6 +576,10 @@ function addProducto(){
 
 function deleteProducto(){
 	var selecciones = buscarSelecciones("listProducts");
+
+	var pOtroRiesgo = "00.00";
+	var pMtoTotalProd = "00.00";
+		
 	if (selecciones.length == 0){
 		alert('No ha seleccionado ningún elemento para la eliminación.');
 	}else{
@@ -603,6 +595,12 @@ function deleteProducto(){
 				}
 				
 				consultarProductos(paramDelete, msg);
+				IngresoSolicitudAction.changeMtoTotalAjax(pMtoTotalProd, function(msg){
+					document.getElementsByName("mtoTotal")[0].value = msg;
+				});
+				IngresoSolicitudAction.changeOtroRiesgoAjax(pOtroRiesgo, function(msg){
+					document.getElementsByName("otroRiesgo")[0].value = msg;
+				});	
 			});			
 		}
 	}
@@ -651,7 +649,7 @@ function loadInfoClient(){
 
 function guardarSolicitud(){
 	 var formulario = document.getElementById('formSolicitudIngreso');
-		formulario.action = rutaContexto+'/ingresoSolicitud.do?method=insertSolicitud';;
+		formulario.action = rutaContexto+'/ingresoSolicitud.do?method=insertSolicitud';
 		formulario.submit();
 		consultarProductos('','');
 	

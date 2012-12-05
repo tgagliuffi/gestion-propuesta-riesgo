@@ -1,6 +1,6 @@
 function loadInfoClient(){
 	var formulario = document.getElementById('formSolicitudIngreso');
-	formulario.action = rutaContexto+'/ingresoSolicitud.do?method=init&param=continuar';;
+	formulario.action = rutaContexto+'/ingresoSolicitud.do?method=init&param=continuar';
 	formulario.submit();
 }
 
@@ -66,5 +66,20 @@ $(function(){
 	$("#valCondicionCliente").dialog(optionDialogVCC);
 	$("#valMontoPlazos").dialog(optionDialogVMP);
 });
+
+function changeCodPreEvaludador(param){
+	   if(param!=''){
+		  IngresoSolicitudAction.validaCodPreEvaluador(param, function(msg){
+			  if(msg==0){
+				  alert('¡Código Prevaluador incorrecto!');
+				  if(document.getElementsByName('codPreEvaluador').length>0){
+					  document.getElementsByName('codPreEvaluador')[0].value = '';
+					  document.getElementsByName('codPreEvaluador')[0].focus();
+					  document.getElementsByName('codPreEvaluador')[0].style.backgroundColor = '#F2F5A9';
+				  }
+			  }
+		 });
+	   }
+	}
 
 
