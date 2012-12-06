@@ -211,8 +211,7 @@
     WHERE A.NRO_SOLICITUD = S.NRO_SOLICITUD  
         AND  A.NRO_SOLICITUD = SD.NRO_SOLICITUD AND  S.NRO_SOLICITUD = SD.NRO_SOLICITUD
         AND  ( #estadoAsignacion:VARCHAR# IS NULL OR #estadoAsignacion:VARCHAR# = '' OR A.ESTADO_ASIGNACION = UPPER(#estadoAsignacion:VARCHAR#))
-        AND  ( (#fechaIngresoIni:DATE# IS NULL OR #FechaIngresoFin:DATE# IS NULL) OR 
-        	   (A.FECHA_ASIGNACION BETWEEN #fechaIngresoIni:DATE# AND #FechaIngresoFin:DATE# )) 
+        AND  ( (#fechaIngresoIni:DATE# IS NULL OR #FechaIngresoFin:DATE# IS NULL) OR ((TO_DATE(TO_CHAR(A.FECHA_ASIGNACION,'DD/MM/YYYY'),'DD/MM/YYYY')) BETWEEN #fechaIngresoIni:DATE# AND #FechaIngresoFin:DATE# )) 
 	    AND  ( #codCentral:VARCHAR# IS NULL OR #codCentral:VARCHAR# = '' OR S.COD_CENTRAL = UPPER(#codCentral:VARCHAR#)) 
 	    AND  ( #nroSolicitud:DECIMAL# IS NULL OR #nroSolicitud:DECIMAL# = -1 OR S.NRO_SOLICITUD = #nroSolicitud:DECIMAL#)
 	    AND  ( #codUsuario:VARCHAR# IS NULL OR #codUsuario:VARCHAR# = '' OR A.COD_USUARIO=#codUsuario:VARCHAR#)

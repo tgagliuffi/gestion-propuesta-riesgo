@@ -300,9 +300,9 @@ function regresarBusquedaSolicitud(){
 			        <td valign="middle">
 			        
 			        	<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-						<input type="text" name="otroRiesgo" class="cajaTexto" id="otroRiesgo" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.otroRiesgo}' readonly="readonly"style="text-align: right;">
+						<input type="text" name="otroRiesgo" class="cajaTexto" id="otroRiesgo" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${Solicitud.otroRiesgo}' readonly="readonly"style="text-align: right;">
 						<%}else{%>
-						<input type="text" name="otroRiesgo" class="cajaTexto" id="otroRiesgo" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.otroRiesgo}' onblur="calcularRiesgoActual(this);" style="text-align: right;">
+						<input type="text" name="otroRiesgo" class="cajaTexto" id="otroRiesgo" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${Solicitud.otroRiesgo}' onblur="calcularRiesgoActual(this);" style="text-align: right;">
 						<%}%>        
 						
 					</td>
@@ -311,9 +311,9 @@ function regresarBusquedaSolicitud(){
 					<td valign="middle"><font class="fontText">Riesgo Grupal</font></td>
 					<td valign="middle">
 						<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-						<input type="text" name="riesgoGrupal" class="cajaTexto" id="riesgoGrupal" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.riesgoGrupal}'  readonly="readonly" style="text-align: right;">
+						<input type="text" name="riesgoGrupal" class="cajaTexto" id="riesgoGrupal" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${Solicitud.riesgoGrupal}'  readonly="readonly" style="text-align: right;">
 						<%}else{%>
-						<input type="text" name="riesgoGrupal" class="cajaTexto" id="riesgoGrupal" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.riesgoGrupal}' readonly="readonly" style="text-align: right;">
+						<input type="text" name="riesgoGrupal" class="cajaTexto" id="riesgoGrupal" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${Solicitud.riesgoGrupal}' readonly="readonly" style="text-align: right;">
 						<%}%>
 					</td>
 				</tr>
@@ -321,9 +321,9 @@ function regresarBusquedaSolicitud(){
 					<td valign="middle"><font class="fontText">Riesgo Actual</font></td>
 					<td valign="middle">
 						<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-						<input type="text" name="riesgoActual" class="cajaTexto" id="riesgoActual" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.riesgoActual}' readonly="readonly" style="text-align: right;">
+						<input type="text" name="riesgoActual" class="cajaTexto" id="riesgoActual" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${Solicitud.riesgoActual}' readonly="readonly" style="text-align: right;">
 						<%}else{%>
-						<input type="text" name="riesgoActual" class="cajaTexto" id="riesgoActual" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${solicitudForm.riesgoActual}' style="text-align: right;">
+						<input type="text" name="riesgoActual" class="cajaTexto" id="riesgoActual" size="19" maxlength="19" onkeypress="ingresoNumeros(event);" value='${Solicitud.riesgoActual}' style="text-align: right;">
 						<%}%>
 					</td>
 				</tr>
@@ -333,7 +333,7 @@ function regresarBusquedaSolicitud(){
 						<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
 						<input type="text" name="riesgoTotal" class="cajaTexto" id="riesgoTotal" size="19" maxlength="19"  onkeypress="ingresoNumeros(event);" readonly="readonly" style="text-align: right;">
 						<%}else{%>
-						<input type="text" name="riesgoTotal" class="cajaTexto" id="riesgoTotal" size="19" maxlength="19"  value='${solicitudForm.riesgoTotal}'  onkeypress="ingresoNumeros(event);" readonly="readonly" style="text-align: right;">
+						<input type="text" name="riesgoTotal" class="cajaTexto" id="riesgoTotal" size="19" maxlength="19"  value='${Solicitud.riesgoTotal}'  onkeypress="ingresoNumeros(event);" readonly="readonly" style="text-align: right;">
 						<%}%>
 			       </td>
 			    </tr>
