@@ -7,7 +7,7 @@
     <result column="COD_BANCA" property="codBanca" jdbcType="DECIMAL" />
     <result column="COD_PRODUCTO_BASE" property="codProductoBase" jdbcType="DECIMAL" />
     <result column="FECHA_CREACION" property="fechaCreacion" jdbcType="TIMESTAMP" />
-    <result column="VIGENCIA" property="vigencia" jdbcType="TIMESTAMP" />
+    <result column="VIGENCIA" property="vigencia" jdbcType="VARCHAR" />
     <result column="ESTADO" property="estado" jdbcType="DECIMAL" />
   </resultMap>
   <resultMap id="resultMapCampania" class="bbva.pe.gpr.bean.Campania" >
@@ -32,7 +32,7 @@
     insert into DELGPR.TGPR_PRODUCTOS (COD_PRODUCTO, DESCRIPCION, COD_BANCA, COD_PRODUCTO_BASE,
       FECHA_CREACION, VIGENCIA, ESTADO)
     values (#codProducto:DECIMAL#, #descripcion:VARCHAR#, #codBanca:DECIMAL#,
-      #codProductoBase:DECIMAL#, #fechaCreacion:TIMESTAMP#, #vigencia:TIMESTAMP#, #estado:DECIMAL#)
+      #codProductoBase:DECIMAL#, #fechaCreacion:TIMESTAMP#, #vigencia:VARCHAR#, #estado:DECIMAL#)
   </insert>
   <insert id="ibatorgenerated_insertSelective" parameterClass="bbva.pe.gpr.bean.Producto" >
     insert into DELGPR.TGPR_PRODUCTOS
@@ -78,7 +78,7 @@
         #fechaCreacion:TIMESTAMP#
       </isNotNull>
       <isNotNull prepend="," property="vigencia" >
-        #vigencia:TIMESTAMP#
+        #vigencia:VARCHAR#
       </isNotNull>
       <isNotNull prepend="," property="estado" >
         #estado:DECIMAL#
@@ -102,7 +102,7 @@
         FECHA_CREACION = #fechaCreacion:TIMESTAMP#
       </isNotNull>
       <isNotNull prepend="," property="vigencia" >
-        VIGENCIA = #vigencia:TIMESTAMP#
+        VIGENCIA = #vigencia:VARCHARP#
       </isNotNull>
       <isNotNull prepend="," property="estado" >
         ESTADO = #estado:DECIMAL#
@@ -116,7 +116,7 @@
       COD_BANCA = #codBanca:DECIMAL#,
       COD_PRODUCTO_BASE = #codProductoBase:DECIMAL#,
       FECHA_CREACION = #fechaCreacion:TIMESTAMP#,
-      VIGENCIA = #vigencia:TIMESTAMP#,
+      VIGENCIA = #vigencia:VARCHAR#,
       ESTADO = #estado:DECIMAL#
     where COD_PRODUCTO = #codProducto:DECIMAL#
   </update>

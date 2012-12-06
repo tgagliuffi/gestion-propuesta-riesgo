@@ -55,9 +55,9 @@ var myDataModel = [ {name : 'nroSolicitud',				width : VAL_WIDTH.SMALL, hidden :
                     {name : 'riesgoTotal',				index : 'riesgoTotal', 			width : VAL_WIDTH.XLSMALL		, sortable:false},
                     {name : 'prioridad',			index : 'prioridad', 			width : VAL_WIDTH.XLSMALL,  formatter: prioridadFormat, sortable: false},
                     //{name : 'fueraRango',			index : 'fueraRango', 			width : VAL_WIDTH.XLSMALL	},
-                    {name : 'estado',			index : 'estado', 			width : VAL_WIDTH.XLSMALL,  	formatter: estadoFormat, sortable: false, align:'center'},
-                    {name : 'nroSolicitud',			index : 'hdnCodigo', 			width : VAL_WIDTH.XLSMALL,  	formatter: btnOpcionFormatEdit, sortable: false, align:'center'},                                        
-                    {name : 'nroSolicitud',			index : 'hdnCodigo', 			width : VAL_WIDTH.XLSMALL,  	formatter: btnOpcionFormatAnular, sortable: false, align:'center'}                                        
+                    {name : 'estado',			index : 'estado', 			width : VAL_WIDTH.XLSMALL,  	formatter: estadoFormat, 					sortable: false, align:'center'},
+                    {name : 'nroSolicitud',			index : 'hdnCodigo', 			width : VAL_WIDTH.XLSMALL,  	formatter: btnOpcionFormatEdit, 	sortable: false, align:'center'},                                        
+                    {name : 'nroSolicitud',			index : 'hdnCodigo', 			width : VAL_WIDTH.XLSMALL,  	formatter: btnOpcionFormatAnular, 	sortable: false, align:'center'}                                        
                     
                     ];
                    

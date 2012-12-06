@@ -76,6 +76,7 @@ public class Solicitud implements Serializable {
     private String desBanca;
     private String codSubanca;
     private BigDecimal codBanca;
+    private String descripcionSubanca;
     
     private String codUsuarioSession;
     private String nomUsuarioSession;
@@ -463,6 +464,12 @@ public class Solicitud implements Serializable {
 	}
 	public void setNomUsuarioSession(String nomUsuarioSession) {
 		this.nomUsuarioSession = nomUsuarioSession;
+	}
+	public String getDescripcionSubanca() {
+		return descripcionSubanca;
+	}
+	public void setDescripcionSubanca(String descripcionSubanca) {
+		this.descripcionSubanca = descripcionSubanca;
 	}
 	
 }

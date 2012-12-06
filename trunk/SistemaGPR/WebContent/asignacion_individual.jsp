@@ -259,16 +259,13 @@ optionDialog = {
 	        	var formulario = document.getElementById('asigacionForm');
 	        	var text = $('#textGarantia').val();
 	        	formulario.strMensajePopUP.value=text;
-	        	console.log($(this).attr("id"));
 	        	$(this).dialog("close");
 	        },
 	        "Cancelar": function() {
-	        	console.log($(this).attr("id"));
 	        	$(this).dialog("close");
 	        }
 	    },
 	    close: function() {
-	    	console.log($(this).attr("id"));
 	    }
 	}; 
 		

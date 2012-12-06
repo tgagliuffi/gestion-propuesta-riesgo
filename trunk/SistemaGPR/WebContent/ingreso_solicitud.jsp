@@ -51,16 +51,13 @@ optionDialog = {
     buttons: {
         "Aceptar": function() {
         	document.getElementById('hdnStrMensaje').value=$('#strMensaje').val();
-        	console.log($(this).attr("id"));
         	$(this).dialog("close");
         },
         "Cancelar": function() {
-        	console.log($(this).attr("id"));
         	$(this).dialog("close");
         }
     },
     close: function() {
-    	console.log($(this).attr("id"));
     }
 }; 
 	
@@ -121,7 +118,7 @@ var myDataModel = [
                                           			                       			            				              	                 	                                                                                                           { type: 'keypress', fn: function (){ ingresoNumeros(event);}}, 	
                                           			                       			            				              	                 	                                                                                                  		   { type: 'blur',     fn: function (){ blurChangeColor(this);format(this.value);}}]}, editrules: {required: true, number: true, minValue: 0}, align : 'right'},
                    { name : 'plazo',			    index : 'plazo', 				width : 90, 				editable:true,	edittype:'text', 	editoptions: {size:12, maxlength: 15, style: 'text-align: right; background-color: #F2F5A9', dataEvents: [ { type: 'keypress', fn: function (){ ingresoNumeros(event);}},
-                                    			                     				            				              	                 	                                                                                                           { type: 'blur',     fn: function (){ format(this.value);}}]}, editrules: {required: true, integer: true, minValue: 0, maxValue: 999999}, align : 'right'},
+                                    			                     				            				              	                 	                                                                                                           { type: 'blur',     fn: function (){ blurChangeColor(this);}}]}, editrules: {required: true, integer: true, minValue: 0, maxValue: 999999}, align : 'right'},
                    { name : 'mtoGarantia',			index : 'mtoGarantia', 			width : 140, 				editable:true,	edittype:'text', 	editoptions: {style: 'text-align: right; text-align: right; background-color: #F2F5A9', size:14, maxlength: 19, dataEvents: [{ type: 'change', fn: function (){ getMonto(this.value, 2);}},
                                           			                       			             				              	                 	                                                                                                                             { type: 'keypress', fn: function (){ ingresoNumeros(event);}},
                                           			                       			             				              	                 	                                                                                                                    		 { type: 'blur',     fn: function (){ blurChangeColor(this);}}]}, align : 'right'},
@@ -204,10 +201,10 @@ function contratoVincElementCustom(valElement, options) {
 		  
 		  return document.createElement("select");  
 	  }else{
-		  var valReal = valElement.split("<input");
+		  //var valReal = valElement.split("<input");
 		  var el = document.createElement("input");
 		  el.type="text";
-		  el.value = valReal[0];
+		  el.value = '';
 		  return el;
 	  }
 }
@@ -215,7 +212,11 @@ function contratoVincElementCustom(valElement, options) {
 function getProductoBaseElementText(obj){
 	var codProducto = obj.value;
 	 IngresoSolicitudAction.getProductoBaseAjax(codProducto,  function(msg){
-		document.getElementsByName("codProdBase")[0].value = msg;
+		if(msg==0){
+			document.getElementsByName("codProdBase")[0].value = "";
+		}else{
+			document.getElementsByName("codProdBase")[0].value = msg;	
+		}
 	});
 	 
 }
@@ -517,24 +518,18 @@ function mostrarTablaDetalle(data){
 }
 
 function addProducto(){
-
 	var codBanca = document.getElementById("codBanca");
 	var codMultMoneda = document.getElementById("codMultMoneda");
 	var codSubBanca =  document.getElementById("subBanca");
-	debugger;
-
 
 	if(codBanca.value == '-1'){
-		alert("Debe seleccionar una banca para poder agregar un producto.");
-		
+		alert("Debe seleccionar una banca para poder agregar un producto.");		
 	}else{
 		if(codSubBanca.value == '-1' || codSubBanca.value == 'null'){
-			alert("Debe seleccionar una subBanca para poder agregar un producto.");
-			
+			alert("Debe seleccionar una subBanca para poder agregar un producto.");			
 		}else{
 			if(codMultMoneda.value == '-1'){
-				alert("Debe seleccionar una moneda para poder agregar un producto.");
-				
+				alert("Debe seleccionar una moneda para poder agregar un producto.");				
 			}else{
 				IngresoSolicitudAction.setIndice(function(msg){
 					document.getElementsByName("indice")[0].value  = msg;
@@ -729,25 +724,27 @@ function limpiaForm(miForm) {
 	  
 }
 function update(parametro){
-var formulario = document.getElementById('formSolicitudIngreso');
-var nroSolicitud = formulario.mantener.value;
-	if(parametro == 'priorizar'){
-		var var_prioridad =formulario.prioridad.value;
-		jQuery("#listProductsDetalle").GridUnload();
-		SolicitudMantenimientoAction.priorizarSolicitud(nroSolicitud,var_prioridad,  function(data){
-			mostrarTablaDetalle(data);
-		});
-	}else{
-		var flag = formulario.chkAnular.checked;
-		if(flag==true)
-		if(confirm("¿Seguro que desea anular la solicitud?")){
+	var formulario = document.getElementById('formSolicitudIngreso');
+	var nroSolicitud = formulario.mantener.value;
+		if(parametro == 'priorizar'){
+			var var_prioridad =formulario.prioridad.value;
 			jQuery("#listProductsDetalle").GridUnload();
-			SolicitudMantenimientoAction.anularSolicitud(nroSolicitud, function(data){
-				mostrarTablaDetalle(data);
+			SolicitudMantenimientoAction.priorizarSolicitud(nroSolicitud,var_prioridad,  function(msg){
+				consultarDetalle();
+				alert(msg);
 			});
+		}else{
+			var flag = formulario.chkAnular.checked;
+			if(flag==true)
+			if(confirm("¿Seguro que desea anular la solicitud?")){
+				jQuery("#listProductsDetalle").GridUnload();
+				SolicitudMantenimientoAction.anularSolicitud(nroSolicitud, function(msg){
+					mostrarTablaDetalle(data);
+					consultarDetalle();
+				});
+			}
+		
 		}
-	
-	}
 }
 
 function changeBancSubBanca(codBanca, codSubBanca){
@@ -797,7 +794,7 @@ function setSubBanca(){
 	<%if(asigPrioridadIndividual != null){%>
 	<br/>
 	<input type="button" class="buttonGPR"  name="btnRegresar" id="btnRegresar" onclick="backAsignacionPrioridad();" value="Regresar">&nbsp;
-	<input type="button" class="buttonGPR"  name="btnPriorizar" id="btnPriorizar"   value="Asiganar Prioridad" onclick="update('priorizar');">
+	<input type="button" class="buttonGPR"  name="btnPriorizar" id="btnPriorizar"   value="Asignar Prioridad" onclick="update('priorizar');">
 	<br/>
 	<%}%>
 	<%if(asigAnulacionIndividual != null){%>
@@ -848,9 +845,12 @@ function setSubBanca(){
 			<%if(asigPrioridadIndividual != null){%>
 				<font class="fontText">Prioridad</font>&nbsp;
 				<select id="prioridad" name="prioridad">
-					<option value="1">ALTA</option>			
-					<option value="2">NORMAL</option> <!-- frk: valor seleccionado por defecto -->
-					<option value="3">BAJA</option>
+						<logic:equal name="Solicitud" property="prioridad" value="1"><option selected value="1">ALTA</option></logic:equal>
+						<logic:notEqual   name="Solicitud" property="prioridad" value="1"><option value="1">ALTA</option></logic:notEqual>
+						<logic:equal   name="Solicitud" property="prioridad" value="2"><option selected value="2">NORMAL</option></logic:equal>
+						<logic:notEqual   name="Solicitud" property="prioridad" value="2"><option value="2">NORMAL</option></logic:notEqual>
+						<logic:equal   name="Solicitud" property="prioridad" value="3"><option selected value="3">BAJA</option></logic:equal>
+						<logic:notEqual  name="Solicitud" property="prioridad" value="3"><option value="3">BAJA</option></logic:notEqual>
 				</select>
 			<%}%>
 			
@@ -1280,9 +1280,12 @@ function setSubBanca(){
 	
 	</tr>
 	<tr>
-		<td colspan="5"><input type="button" class="buttonGPR"  name="btnGuardar" id="btnGuardar" onclick="guardarSolicitud();" value="Guardar Solicitud">&nbsp;
-		<input type="button" class="buttonGPR"  name="btnReset" id="btnReset" onclick='limpiaForm($("#formSolicitudIngreso"));' value="Limpiar Solicitud">&nbsp;
-		<input type="button"   id="btnCondiciones"  class="buttonGPR" value="Añadir Observacion" onclick="llamarPopup();">&nbsp;
+		<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
+		<%}else{%>
+			<td colspan="5"><input type="button" class="buttonGPR"  name="btnGuardar" id="btnGuardar" onclick="guardarSolicitud();" value="Guardar Solicitud">&nbsp;
+			<input type="button" class="buttonGPR"  name="btnReset" id="btnReset" onclick='limpiaForm($("#formSolicitudIngreso"));' value="Limpiar Solicitud">&nbsp;
+			<input type="button"   id="btnCondiciones"  class="buttonGPR" value="Añadir Observacion" onclick="llamarPopup();">&nbsp;
+		<%}%>
 		<div id="dialog-form" title="Agregar Observacion" style="width: 400px">
 		<form>
 	        <center>

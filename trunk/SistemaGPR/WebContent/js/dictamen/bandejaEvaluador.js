@@ -59,7 +59,6 @@ atenderSolicitud = function(rowid, iRow, iCol, e){
 };
 
 buscarSolicitud = function(){
-	debugger;
 	if($("#id_usuario").val() == "-1" || $("#monto_delegacion").val() == "-1") {
 		alert($("#error").val());
 		return;

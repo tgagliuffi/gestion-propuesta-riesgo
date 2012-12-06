@@ -54,5 +54,9 @@ public class UtilDate {
 		}
 		
 		return str;
-}
+	}
+	
+	public static String utilDateJquery(String input) {
+		return input.substring(3, 5)+"/"+input.substring(0, 2)+"/"+input.substring(6, 10);
+	}
 }

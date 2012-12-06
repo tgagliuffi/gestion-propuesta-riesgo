@@ -17,6 +17,7 @@ import bbva.pe.gpr.dao.SolicitudesDAO;
 import bbva.pe.gpr.dao.UsuarioDAO;
 import bbva.pe.gpr.service.AsignacionService;
 import bbva.pe.gpr.util.Constant;
+import bbva.pe.gpr.util.UtilDate;
 
 
 public class AsignacionServiceImpl  implements AsignacionService {
@@ -135,6 +136,11 @@ public class AsignacionServiceImpl  implements AsignacionService {
 	}
 
 	public List<Asignacion> getLstAsignaciones(Asignacion record)throws Exception{
+		if(record.getFechaIngresoIni()!=null){
+			record.setFechaIngresoIni(UtilDate.stringToUtilDate(UtilDate.utilDateJquery(UtilDate.utilDateToString(record.getFechaIngresoIni(), null)), null));
+		}if(record.getFechaIngresoFin()!=null){
+			record.setFechaIngresoFin(UtilDate.stringToUtilDate(UtilDate.utilDateJquery(UtilDate.utilDateToString(record.getFechaIngresoFin(), null)), null)) ;
+		}
 		return asignacionDAO.getLstAsignaciones(record);
 	}
   

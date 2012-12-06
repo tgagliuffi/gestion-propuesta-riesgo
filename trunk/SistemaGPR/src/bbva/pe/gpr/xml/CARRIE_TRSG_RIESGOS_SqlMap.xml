@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
 <sqlMap namespace="DELGPR_TGPR_RIESGOS" >
+        
+      <resultMap id="resultProductoDelegacion" class="bbva.pe.gpr.bean.ProductoDelegacion"  >
+	  <result property="codProducto" column="ID_PRODUCTO" jdbcType="NUMBER"  />
+	  <result property="montoProducto" column="LIMITE_PROD" jdbcType="NUMBER"  />
+      </resultMap>
+        
+      <parameterMap id="reportParametersRepAlertEveActSinConf" class="java.util.Map">
+	  <parameter property="cCursor" jdbcType="ORACLECURSOR" javaType="java.sql.ResultSet" mode="OUT" resultMap="resultProductoDelegacion"/>
+	  <parameter property="codUsuario"  jdbcType="VARCHAR" javaType="java.lang.String" mode="IN" />
+      </parameterMap>
 
-	<select id="getMontoSinRating" resultClass="string" parameterClass="bbva.pe.gpr.bean.Solicitud">
-  	select carrie.fn_rsg_montomaximo_x_usuario(#gestorCod:VARCHAR#, #grupoPersona:VARCHAR#) as mtoMaxDelegacion from dual
+	<procedure id="getLstProductoPersonaNatural"  parameterMap="reportParametersRepAlertEveActSinConf" >
+	<![CDATA[ 
+	{ ? = call carrie.carriersgpkg.fn_rsg_limite_prod_x_userio(?) }
+	  ]]> 
+	</procedure>
+
+	<select id="getMontoSinRating" resultClass="bbva.pe.gpr.bean.Usuario" parameterClass="bbva.pe.gpr.bean.Solicitud">
+  	select carrie.carriersgpkg.fn_rsg_montomaximo_x_usuario(#gestorCod:VARCHAR#, #grupoPersona:VARCHAR#) as mtoMaxDelegacion from dual
 	</select>
 
-	<select id="getMontoRating" resultClass="string" parameterClass="bbva.pe.gpr.bean.Solicitud">
-  	select carrie.carriersgpkg.FN_RSG_MONTO_X_ESCALAUSERIO(#gestorCod:VARCHAR#, #grupoPersona:VARCHAR#) from dual
+	<select id="getMontoRating" resultClass="bbva.pe.gpr.bean.Usuario" parameterClass="bbva.pe.gpr.bean.Solicitud">
+  	select carrie.cardelrsgpkg.FN_RSG_MONTO_X_ESCALAUSERIO(#gestorCod:VARCHAR#, #grupoPersona:VARCHAR#)  as mtoMaxDelegacion from dual
 	</select>
 	
-	<select id="getLstProductoPersonaNatural" resultClass="bbva.pe.gpr.bean.ProductoDelegacion" parameterClass="bbva.pe.gpr.bean.Solicitud">
-  	select carrie.carriersgpkg.fn_rsg_limite_prod_x_userio(#gestorCod:VARCHAR#, #grupoPersona:VARCHAR#)as mtoMaxDelegacion  from dual
-	</select>
-
-	<select id="getMontoDelegacionUsuario" resultClass="string" parameterClass="bbva.pe.gpr.bean.Solicitud">
+	<select id="getMontoDelegacionUsuario" resultClass="bbva.pe.gpr.bean.Usuario" parameterClass="bbva.pe.gpr.bean.Solicitud">
   	select carrie.carriersgpkg.fn_rsg_montomaximo_x_usuario(#gestorCod:VARCHAR#, #grupoPersona:VARCHAR#) as mtoMaxDelegacion from dual
 	</select>
 <!-- 	de la tabla cardel y darles permisos -->
@@ -29,4 +41,4 @@
 		FROM 	CARRIE.TRSG_GERENTE 
 		WHERE   COD_REGISTRO=#value#
 	 </select>
-</sqlMap>
+	</sqlMap>
