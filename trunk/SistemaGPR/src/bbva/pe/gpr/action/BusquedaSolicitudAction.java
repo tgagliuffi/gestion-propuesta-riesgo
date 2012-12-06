@@ -23,6 +23,7 @@ import org.apache.struts.actions.DownloadAction.StreamInfo;
 
 import bbva.pe.gpr.bean.Asignacion;
 import bbva.pe.gpr.bean.Banca;
+import bbva.pe.gpr.bean.BancaSub;
 import bbva.pe.gpr.bean.Rol;
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.SolicitudDetalle;
@@ -91,18 +92,18 @@ public class BusquedaSolicitudAction extends DispatchAction {
 	
 	public List<Solicitud> consultarSolicitudAjax(String codBanca, String codOficina, String desOficina, String codCentral, String nroSolicitud, 
 									   String fechaIngresoIni, String fechaIngresoFin, String codEstadoMult, 
-									   String codRol, String regEvaluador, String apeEvaluador) throws Exception {
+									   String codRol, String regEvaluador, String apeEvaluador, String subBanca) throws Exception {
 		
 		Solicitud solicitudBean = new Solicitud();
 		solicitudBean.setAsignacionBean(new Asignacion());
 		if(codBanca != null  && !codBanca.equalsIgnoreCase(Constant.STR_VACIO) && !codBanca.equalsIgnoreCase("-1")){
-			solicitudBean.setCodSubanca(codBanca);
+			solicitudBean.setCodBanca(new BigDecimal(codBanca));
 		}if(codOficina!=null && !codOficina.equalsIgnoreCase(Constant.STR_VACIO)){
 			solicitudBean.setCodOficina(codOficina);
 		}if(desOficina!=null && !desOficina.equalsIgnoreCase(Constant.STR_VACIO) ){
 			solicitudBean.setDesOficina(Constant.CHAR_PORCENTAJE+desOficina+Constant.CHAR_PORCENTAJE);
 		}if(codCentral!=null && !codCentral.equalsIgnoreCase(Constant.STR_VACIO)){
-			solicitudBean.setCodCentral(Constant.CHAR_PORCENTAJE+codCentral+Constant.CHAR_PORCENTAJE);
+			solicitudBean.setCodCentral(codCentral);
 		}if(nroSolicitud!=null && !nroSolicitud.equalsIgnoreCase(Constant.STR_VACIO)){
 			solicitudBean.setNroSolicitud(new Long(nroSolicitud));
 		}if(fechaIngresoIni!=null && !fechaIngresoIni.equalsIgnoreCase(Constant.STR_VACIO)){
@@ -117,6 +118,8 @@ public class BusquedaSolicitudAction extends DispatchAction {
 			solicitudBean.getAsignacionBean().setCodUsuario(regEvaluador);
 		}if(apeEvaluador!=null && !apeEvaluador.equalsIgnoreCase(Constant.STR_VACIO)){
 			solicitudBean.getAsignacionBean().setNombre(Constant.CHAR_PORCENTAJE+apeEvaluador+Constant.CHAR_PORCENTAJE);
+		}if(subBanca!=null && !subBanca.equalsIgnoreCase(Constant.STR_VACIO) && !subBanca.equalsIgnoreCase("-1")){
+			solicitudBean.setCodSubanca(subBanca);
 		}
 
 	   try {
@@ -267,5 +270,23 @@ public class BusquedaSolicitudAction extends DispatchAction {
 			logger.error("BusquedaSolicitudAction.listMessagesAjax " +e);
 			return new  ArrayList<SolicitudMensaje>();
 		}
+	}
+	
+	public List<BancaSub> getLstSubBanca(String codBanca){
+		BancaSub bancaSubBean = new BancaSub();
+		bancaSubBean.setCodBanca(new BigDecimal(codBanca));
+		List<BancaSub> lstSubBanca =  new ArrayList<BancaSub>();
+		try {
+			BancaSub subanca = new BancaSub();
+			subanca.setCodBanca(new BigDecimal(-1));
+			subanca.setDescripcion(Constant.SELECCIONE);
+			lstSubBanca.add(subanca);
+			for (BancaSub bancaSub : catalogoService.getLstSubBanca(bancaSubBean)) {
+				lstSubBanca.add(bancaSub);
+			}		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lstSubBanca;
 	}
 }

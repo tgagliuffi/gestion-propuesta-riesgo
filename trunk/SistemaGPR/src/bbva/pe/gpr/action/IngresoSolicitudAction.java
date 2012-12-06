@@ -586,10 +586,14 @@ public class IngresoSolicitudAction extends DispatchAction {
 		Producto productoBean = new Producto();
 		try {
 			productoBean = catalogoService.selectProductoByPrimaryKey(codProducto);
+			if(productoBean!=null){
+				if(productoBean.getCodProductoBase()!=null){
+				return productoBean.getCodProductoBase();}
+			}
 		} catch (Exception e) {
 			logger.error(e);
 		}
-		return productoBean.getCodProductoBase();
+		return new BigDecimal(0);
 	}
 	
 	public String changeMtoTotalRowAjax(String value, String pMtoGarantia){
