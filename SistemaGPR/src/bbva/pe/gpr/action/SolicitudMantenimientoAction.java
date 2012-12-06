@@ -150,32 +150,28 @@ public class SolicitudMantenimientoAction extends DispatchAction
 			List<SolicitudDetalle> lstSolicitudDetalle = solicitudService.getListSolicitudDetalleForId(solicitudBean);
 			return lstSolicitudDetalle;
 		}catch (Exception e) {
-			logger.error("BusquedaSolicitudAction.consultarSolicitudAjax " +e);
+			logger.error("BusquedaSolicitudAction.consultarSolicitudDetalleAjax " +e);
 			return new  ArrayList<SolicitudDetalle>();
 		}
 	}
 	
 	public String priorizarSolicitud(String nroSolicitud, String value) throws Exception 
 	{
-	 HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+		String  strMensaje;	
+	 
 		try {
-			String indMensaje, strMensaje;	
+			
 			if(solicitudService.asignarPrioridadSolicitud(nroSolicitud, value)>0){
-				indMensaje = Constant.MSJ_OK;
-				strMensaje = "Se ha actualizado exitosamente el registro.";
-				
+				strMensaje = "Se actualizo exitosamente el registro.";
 			}else{
-				indMensaje = Constant.MSJ_ERROR;
 				strMensaje = "Sucedio un error en la actualización.";
-				
 			}
-			request.setAttribute("indMensaje", indMensaje);
-			request.setAttribute("strMensaje", strMensaje);
+			
 		}catch (Exception e) {
-			logger.error("BusquedaSolicitudAction.consultarSolicitudAjax " +e);
+			logger.error("BusquedaSolicitudAction.priorizarSolicitud " +e);
 			return null;
 		}
-		return value;
+		return strMensaje;
 	}
 	
 	public String anularSolicitud(String nroSolicitud, String value) throws Exception 
