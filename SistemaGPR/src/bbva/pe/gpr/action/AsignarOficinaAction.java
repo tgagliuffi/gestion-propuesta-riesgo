@@ -14,7 +14,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import bbva.pe.gpr.bean.Banca;
+import bbva.pe.gpr.bean.BancaSub;
 import bbva.pe.gpr.bean.Oficina;
 import bbva.pe.gpr.bean.Rol;
 import bbva.pe.gpr.bean.Territorio;
@@ -34,12 +34,12 @@ public class AsignarOficinaAction extends DispatchAction {
 	}
 	
 	public ActionForward listarAsignarOficina(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Banca banca = new Banca();
+		BancaSub bancaSub = new BancaSub();
 		Rol rolBean = new Rol();
-		banca.setEstado(Constant.ESTADO_ACTIVO);
+		bancaSub.setEstado(Constant.ESTADO_ACTIVO);
 		rolBean.setEstado(Constant.ESTADO_ACTIVO);
 		try {
-		request.setAttribute("getLstBanca", catalogoService.getLstBancaByCriteria(banca));
+		request.setAttribute("lstBancaSub", catalogoService.getLstSubBanca(bancaSub));
 		request.setAttribute("getLstRoles", catalogoService.getLstRolesByCriteria(rolBean));
 		}catch (Exception e) {
 			System.out.print("Error " + e.getLocalizedMessage());
