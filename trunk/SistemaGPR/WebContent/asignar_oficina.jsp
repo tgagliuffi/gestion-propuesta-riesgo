@@ -30,7 +30,7 @@
 	<script type='text/javascript' src='<%= request.getContextPath()%>/dwr/util.js'></script>
 	<script src="<%=request.getContextPath()%>/js/script.js" type="text/javascript"></script>
 <%
-List<Banca> getLstBanca = (List<Banca>)request.getAttribute("getLstBanca");
+List<BancaSub> getLstBancaSub = (List<BancaSub>)request.getAttribute("lstBancaSub");
 List<Rol> getLstRoles = (List<Rol>)request.getAttribute("getLstRoles");
 %>
 <script type="text/javascript">
@@ -138,15 +138,14 @@ function limpiarUsuario(){
       <td align="left" valign="middle">       
 	   	<html:select property="bancaUsuario" styleId="bancaUsuario">
 	 	     <html:option value="">--Seleccionar--</html:option>
-				 <% if(getLstBanca!=null){   
-				 for(int i=0; i<getLstBanca.size();i++){ %>
-		     <html:option value="<%=getLstBanca.get(i).getCodBanca().toString()%>"><%=getLstBanca.get(i).getNombre()%></html:option>
+				 <% if(getLstBancaSub!=null){   
+				 for(int i=0; i<getLstBancaSub.size();i++){ %>
+		     <html:option value="<%=getLstBancaSub.get(i).getCodSubanca().toString()%>"><%=getLstBancaSub.get(i).getDescripcion()%></html:option>
   		   		<%}
 				 }
   		   		%>
 		</html:select>
-	   </td>
-	   <td align="left" valign="middle">
+	    <td align="left" valign="middle">
        		<font class="fontText"><b>Roles</b></font>
        </td>
        <td align="left" valign="middle">       

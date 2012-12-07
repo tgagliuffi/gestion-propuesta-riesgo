@@ -25,7 +25,7 @@ public class Usuario {
 	private BigDecimal mtoSinRating;
 	
 	private String codigoUsuarioSession;
-	
+	private String codSuBanca;
 	
 	public Long getIdUsuario() {
 		return idUsuario;
@@ -128,6 +128,12 @@ public class Usuario {
 	}
 	public void setCodigoUsuarioSession(String codigoUsuarioSession) {
 		this.codigoUsuarioSession = codigoUsuarioSession;
+	}
+	public String getCodSuBanca() {
+		return codSuBanca;
+	}
+	public void setCodSuBanca(String codSuBanca) {
+		this.codSuBanca = codSuBanca;
 	}
 	
 }

@@ -61,8 +61,8 @@
 	    WHERE
 			( #codigoUsuario:VARCHAR# IS NULL OR #codigoUsuario:VARCHAR#='' OR U.CODIGO_USUARIO like UPPER(#codigoUsuario:VARCHAR#) ) AND
 			( #nombres:VARCHAR# IS NULL OR #nombres:VARCHAR#='' OR U.NOMBRES like UPPER(#nombres:VARCHAR#)) AND
-			( #codUsuarioCreacion:VARCHAR# IS NULL OR #codUsuarioCreacion:VARCHAR#='' OR BS.z like UPPER(#codUsuarioCreacion:VARCHAR#)) AND
-			( #idUsuario:VARCHAR# IS NULL OR #idUsuario:VARCHAR#='' OR UR.COD_ROL like UPPER(#idUsuario:VARCHAR#)) AND
+			( #codSuBanca:VARCHAR# IS NULL OR #codSuBanca:VARCHAR#='' OR US.COD_SUBANCA like UPPER(#codSuBanca:VARCHAR#)) AND
+		
 			( #estado:DECIMAL# IS NULL OR U.ESTADO=#estado:DECIMAL#)
 	
 	</select>
