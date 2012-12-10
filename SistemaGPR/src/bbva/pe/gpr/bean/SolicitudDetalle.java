@@ -1,9 +1,11 @@
 package bbva.pe.gpr.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class SolicitudDetalle extends SolicitudDetalleKey {
+public class SolicitudDetalle extends SolicitudDetalleKey implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private int indice;
 	private BigDecimal codProducto;
 	private String desProducto;

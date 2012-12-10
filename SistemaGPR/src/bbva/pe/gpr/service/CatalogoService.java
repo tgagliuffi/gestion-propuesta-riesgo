@@ -36,6 +36,7 @@ public interface CatalogoService {
 	  int updateBancaByPrimaryKeySelective(Banca record)throws Exception ;
 	  List<Banca> getLstBancaByCriteria(Banca record)throws Exception ;
 	  List<BancaSub> getLstSubBanca(BancaSub bancaSub)throws Exception;
+	  List<BancaSub> getLstSubBancaPorBanca(BancaSub bancaSub)throws Exception;
 	  
   /*#####################################################################################################
    * 
@@ -163,8 +164,8 @@ public interface CatalogoService {
 	   * 	
 	   *                         TGPR_USUARIO_SUBBANCA
 *##################################################################################################### */
-	  public UsuarioSubanca selectByPrimaryKey(UsuarioSubancaKey key);
-	  public BancaSub selectByPrimaryKeyBancaSub(String codSubbanca);
+	  public UsuarioSubanca selectByUsuarioSubancaPrimaryKey(UsuarioSubancaKey key);
+	  public BancaSub selectByBancaSubPrimaryKey(String codSubbanca);
 	  public void insert(UsuarioSubanca record);
 	  public void saveRolFunciones(FuncionRol record);
 	  public String rolFuncionExistente(FuncionRol record);

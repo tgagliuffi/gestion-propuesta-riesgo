@@ -170,7 +170,7 @@
       #clasificacion:VARCHAR#, #reelevancia:VARCHAR#, #deudaDirecta:VARCHAR#,
       #deudaIndirecta:VARCHAR#, #castigo:VARCHAR#, #deudaSistemaFinanciero:VARCHAR#,
       #riesgoGrupal:VARCHAR#, #riesgoActual:VARCHAR#, #riesgoTotal:VARCHAR#,
-      #prefijoIngreso:VARCHAR#, 1, #lugarDictamina:VARCHAR#, #prioridad:VARCHAR#,
+      #prefijoIngreso:VARCHAR#, #estado:DECIMAL#, #lugarDictamina:VARCHAR#, #prioridad:VARCHAR#,
       #scorating:VARCHAR#, #scoring:VARCHAR#, #estadoSolicitud:VARCHAR#, #listaDocumentos:VARCHAR#, #revisadoSubGerente:DECIMAL#, #grupoPersona:VARCHAR#)
        
   </insert>

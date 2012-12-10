@@ -211,13 +211,13 @@
 								<font class="fontText" size="3" color="#000080"><b>Dictamen</b></font>
 							</td>
 							<td align="left" valign="middle">
-								<select id="slctDictamen" name="slctDictamen" id="slctDictamen" />
+								<select id="slctDictamen" name="slctDictamen" id="slctDictamen" ></select>
 							</td>
 							<td valign="middle">
 								<font class="fontText" size="3" color="#000080"><b>Nivel Aprobación</b></font>
 							</td>
 							<td valign="middle">
-								<select id="slctNivAprob" name="slctNivAprob" id="slctNivAprob" />
+								<select id="slctNivAprob" name="slctNivAprob" id="slctNivAprob" ></select>
 							</td>
                             <td></td>
                             <td></td>

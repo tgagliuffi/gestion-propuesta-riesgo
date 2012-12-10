@@ -15,4 +15,5 @@ public interface BancaDAO {
 	int updateByPrimaryKey(Banca record);
 	List<Banca> getLstBancaByCriteria(Banca record)throws Exception ;
 	List<BancaSub> getLstSubBanca(BancaSub bancaSub);
+	List<BancaSub> getLstSubBancaPorBanca(BancaSub bancaSub);
 }

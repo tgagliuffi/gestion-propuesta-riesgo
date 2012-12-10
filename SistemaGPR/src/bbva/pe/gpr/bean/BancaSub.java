@@ -8,6 +8,7 @@ public class BancaSub {
     private String detalle;
     private BigDecimal estado;
     private BigDecimal codBanca;
+    private String codUsuario;
     
 	public String getCodSubanca() {
 		return codSubanca;
@@ -39,6 +40,10 @@ public class BancaSub {
 	public void setCodBanca(BigDecimal codBanca) {
 		this.codBanca = codBanca;
 	}
-	
-    
+	public String getCodUsuario() {
+		return codUsuario;
+	}
+	public void setCodUsuario(String codUsuario) {
+		this.codUsuario = codUsuario;
+	}
 }
