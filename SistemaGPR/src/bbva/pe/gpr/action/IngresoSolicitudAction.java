@@ -151,9 +151,11 @@ public class IngresoSolicitudAction extends DispatchAction {
 				MultitablaDetalle multDetalleMoneda = catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_MONEDA, solicitudForm.getCodMultMoneda());
 				solicitudBean.setDesMultMoneda((multDetalleMoneda!=null?multDetalleMoneda.getStrValor():Constant.VALOR_NO_ENCONTRADO));				
 				solicitudBean.setCodMultMoneda(multDetalleMoneda.getCodMultitabla()!=null?multDetalleMoneda.getCodMultitabla()+Constant.CHAR_GUION+multDetalleMoneda.getCodElemento():null);
+				
 				IILDPeUsuario usuarioSession;
 				usuarioSession = (IILDPeUsuario)request.getSession(true).getAttribute("USUARIO_SESION");
 				Long nroSolicitud= new Long(0);
+				
 				solicitudBean.setPrefijoIngreso(catalogoService.getUsuarioTipo(usuarioSession.getUID())=="1"?"OFICINA":"RIESGOS");
 				solicitudBean.setGrupoPersona(solicitudService.validaGrupoPersona(solicitudBean.getCodMultTipoPersona(), solicitudBean.getNumeroDocumento(), solicitudBean.getRating()));
 				solicitudBean.setMtoSolicitud(solicitudForm.getMtoTotal()!=null?new BigDecimal(solicitudForm.getMtoTotal()):new BigDecimal(0));

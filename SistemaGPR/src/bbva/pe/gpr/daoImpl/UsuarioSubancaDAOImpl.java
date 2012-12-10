@@ -45,7 +45,7 @@ public class UsuarioSubancaDAOImpl extends SqlMapClientDaoSupport implements Usu
     }
 
 	@SuppressWarnings("unchecked")
-	public List<BancaSub> getLstCodSubancasPorUsuario(BancaSub subanca)throws Exception {
-		return (List<BancaSub>)getSqlMapClientTemplate().queryForList("DELGPR_TGPR_USUARIO_SUBANCAS.getLstCodSubancasPorUsuario", subanca);
+	public List<BancaSub> getLstSubBancaPorUsuario(BancaSub subanca)throws Exception {
+		return (List<BancaSub>)getSqlMapClientTemplate().queryForList("DELGPR_TGPR_USUARIO_SUBANCAS.getSubBancaPorUsuario", subanca);
 	}
 }
