@@ -467,9 +467,9 @@ public class UsuarioAction  extends DispatchAction{
 		UsuarioSubanca usuarioSubanca= new UsuarioSubanca();
         usuarioSubanca.setCodSubanca(codSubBanca);
         usuarioSubanca.setCodUsuario(codRegistro);
-        UsuarioSubanca userSubBanca=catalogoService.selectByPrimaryKey(usuarioSubanca);
+        UsuarioSubanca userSubBanca=catalogoService.selectByUsuarioSubancaPrimaryKey(usuarioSubanca);
         if(userSubBanca==null){
-			BancaSub getSubBanca=catalogoService.selectByPrimaryKeyBancaSub(codSubBanca);
+			BancaSub getSubBanca=catalogoService.selectByBancaSubPrimaryKey(codSubBanca);
 	        if(getSubBanca!=null){
 	    		usuarioRol.setDescripcion(getSubBanca.getCodSubanca());
 	        }else{

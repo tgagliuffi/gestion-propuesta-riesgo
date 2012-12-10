@@ -19,6 +19,8 @@ import com.grupobbva.bc.per.tele.ldap.serializable.IILDPeUsuario;
 import bbva.pe.gpr.bean.Rol;
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.Usuario;
+import bbva.pe.gpr.bean.UsuarioSubanca;
+import bbva.pe.gpr.bean.UsuarioSubancaKey;
 import bbva.pe.gpr.context.Context;
 import bbva.pe.gpr.form.AsignacionForm;
 import bbva.pe.gpr.service.AsignacionService;
@@ -55,12 +57,19 @@ public class AsignacionAction extends DispatchAction {
 		try {
 			HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
 			IILDPeUsuario bean = (IILDPeUsuario)request.getSession().getAttribute("USUARIO_SESION");
-			Usuario usuario = new Usuario();
-			usuario.setCodigoUsuarioSession(bean.getUID());
-			usuario.setCodRol(new BigDecimal(codRol));
-			return catalogoService.getLstUsuariosRiesgo(usuario);
+			UsuarioSubancaKey usuarioSubancaKey = new UsuarioSubancaKey();
+			usuarioSubancaKey.setCodUsuario(bean.getUID());
+			UsuarioSubanca usuarioSubanca = catalogoService.selectByUsuarioSubancaPrimaryKey(usuarioSubancaKey);
+			if(usuarioSubanca!=null){
+				Usuario usuario = new Usuario();
+				usuario.setCodigoUsuarioSession(bean.getUID());
+				usuario.setCodRol(new BigDecimal(codRol));
+				usuario.setCodSuBanca(usuarioSubanca.getCodSubanca());
+				return catalogoService.getLstUsuariosRiesgo(usuario);
+			}
+			
 		} catch (Exception e) {
-			logger.error("Exception AsignacionAction.consultarUsuarioEvaludores: " + e.getMessage());
+			logger.error("Exception AsignacionAction.consultarUsuarioAjax: " + e.getMessage());
 		}
 		return  new ArrayList<Usuario>();
 	}

@@ -40,7 +40,6 @@ import bbva.pe.gpr.util.UtilDate;
 
 public class BusquedaSolicitudAction extends DispatchAction {
 	private static Logger logger = Logger.getLogger(BusquedaSolicitudAction.class);
-	
 	SolicitudService solicitudService;
 	CatalogoService catalogoService;
 	SeguridadService seguridadService;
@@ -281,7 +280,7 @@ public class BusquedaSolicitudAction extends DispatchAction {
 			subanca.setCodBanca(new BigDecimal(-1));
 			subanca.setDescripcion(Constant.SELECCIONE);
 			lstSubBanca.add(subanca);
-			for (BancaSub bancaSub : catalogoService.getLstSubBanca(bancaSubBean)) {
+			for (BancaSub bancaSub : catalogoService.getLstSubBancaPorBanca(bancaSubBean)) {
 				lstSubBanca.add(bancaSub);
 			}		
 		} catch (Exception e) {

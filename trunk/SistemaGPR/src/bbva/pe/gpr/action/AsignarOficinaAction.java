@@ -39,6 +39,7 @@ public class AsignarOficinaAction extends DispatchAction {
 		bancaSub.setEstado(Constant.ESTADO_ACTIVO);
 		rolBean.setEstado(Constant.ESTADO_ACTIVO);
 		try {
+			//TODO:CAMBIAR
 		request.setAttribute("lstBancaSub", catalogoService.getLstSubBanca(bancaSub));
 		request.setAttribute("getLstRoles", catalogoService.getLstRolesByCriteria(rolBean));
 		}catch (Exception e) {

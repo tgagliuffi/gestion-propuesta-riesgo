@@ -113,7 +113,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 			ingresaSolicitudOperacion(solicitudBean, Constant.TABLA_PROCESO, Constant.MULT_PROCESO_INGRESO);
 			
 			//TODO INSERTANDO MENSAJE
-			if(solicitudBean.getStrMensaje()!=null){
+			if(solicitudBean.getStrMensaje()!=null && !solicitudBean.getStrMensaje().equals("")){
 				solicitudMensajeDAO.insert(seteaMensajeBean(solicitudBean));	
 			}
 		}

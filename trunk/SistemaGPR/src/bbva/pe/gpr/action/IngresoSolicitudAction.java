@@ -169,7 +169,10 @@ public class IngresoSolicitudAction extends DispatchAction {
 														 Constant.CHAR_GUION+
 														 Constant.ESTADO_SOLICITUD_PENDIENTE);
 				}
+				
+				solicitudBean.setEstado(Constant.ESTADO_ACTIVO);
 				nroSolicitud = solicitudService.registraSolicitud(solicitudBean, lstSolicitudDetalle);
+				
 				if(nroSolicitud != new Long(0)){
 					
 						if(solicitudService.asignacionAutomatica(solicitudBean) != 0){
@@ -195,6 +198,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 				}
 			}else if(solicitudForm.getCondicion().equals("R")){
 				solicitudBean.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD+Constant.CHAR_GUION+Constant.ESTADO_SOLICITUD_RECHAZADO);
+				solicitudBean.setEstado(Constant.ESTADO_INACTIVO);
 				nroSolicitud = solicitudService.registraSolicitud(solicitudBean, lstSolicitudDetalle);
 				catalogoService.insertSolicitudRechazada(solicitudBean);
 				solicitudForm = (SolicitudForm)form;	
@@ -205,22 +209,24 @@ public class IngresoSolicitudAction extends DispatchAction {
 			
 				
 			}else{
-				solicitudBean.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD+
-						 Constant.CHAR_GUION+Constant.ESTADO_SOLICITUD_PENDIENTE);
+				solicitudBean.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD + Constant.CHAR_GUION + Constant.ESTADO_SOLICITUD_PENDIENTE);
+				
 				if(validacionService.metodoEncapsuladoIngresoSolicitud(solicitudBean, lstSolicitudDetalle,usuarioSession.getUID())==1){
 							if(controlService.validacionMontosPlazos(solicitudBean, usuarioSession.getUID())==1){
-							nroSolicitud = solicitudService.registraSolicitud(solicitudBean, lstSolicitudDetalle);
-									if(solicitudService.updateDictaminaEnOficina(solicitudBean)>0){
+								solicitudBean.setEstado(Constant.ESTADO_ACTIVO);
+								nroSolicitud = solicitudService.registraSolicitud(solicitudBean, lstSolicitudDetalle);
+								
+								if(solicitudService.updateDictaminaEnOficina(solicitudBean)>0){
 										indMensaje = Constant.MSJ_ALERT;
 										strMensaje = "Se ha ingresado la solicitud " + nroSolicitud + ". Requiere asignación en oficina";
 										solicitudForm = (SolicitudForm)form;	
 										solicitudForm.reset(mapping, request);
 										request.getSession().removeAttribute("lstDetalleProdSession");
-									}else{
+								}else{
 										
 										indMensaje = Constant.MSJ_ERROR;
 										strMensaje = "Sucedio un error en el momento de asignar la solicitud " + nroSolicitud + ". a oficina";	
-									}
+								}
 							}else{
 								solicitudForm.setFlagPopUP("envioRiesgos");
 								if(request.getSession().getAttribute("lstDetalleProdSession")!=null){
@@ -229,17 +235,19 @@ public class IngresoSolicitudAction extends DispatchAction {
 								}
 							}
 				}else{
-					solicitudForm.setFlagPopUP("envioRiesgos");
-						if(request.getSession().getAttribute("lstDetalleProdSession")!=null){
-							List<SolicitudDetalle> lstDetalleProdSession = (List<SolicitudDetalle>)request.getSession().getAttribute("lstDetalleProdSession");
-							request.getSession().setAttribute("lstDetalleProdSession", lstDetalleProdSession);
-					}
+							solicitudForm.setFlagPopUP("envioRiesgos");
+								if(request.getSession().getAttribute("lstDetalleProdSession")!=null){
+									List<SolicitudDetalle> lstDetalleProdSession = (List<SolicitudDetalle>)request.getSession().getAttribute("lstDetalleProdSession");
+									request.getSession().setAttribute("lstDetalleProdSession", lstDetalleProdSession);
+								}
 				}
 			}
 			
 		 }	
-			request.setAttribute("indMensaje", indMensaje);
-			request.setAttribute("strMensaje", strMensaje);
+		
+		request.setAttribute("indMensaje", indMensaje);
+		request.setAttribute("strMensaje", strMensaje);
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Exception IngresoSolicitudAction.insertSolicitud: " + e.getMessage());
@@ -351,7 +359,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 			subanca.setCodBanca(new BigDecimal(-1));
 			subanca.setDescripcion(Constant.SELECCIONE);
 			lstSubBanca.add(subanca);
-			for (BancaSub bancaSub : catalogoService.getLstSubBanca(bancaSubBean)) {
+			for (BancaSub bancaSub : catalogoService.getLstSubBancaPorBanca(bancaSubBean)) {
 				lstSubBanca.add(bancaSub);
 			}		
 		} catch (Exception e) {
@@ -439,8 +447,10 @@ public class IngresoSolicitudAction extends DispatchAction {
 		solicitudDetalleBean.setCodProdBase(solicitudForm.getDesProducto().split(Constant.CHAR_CONCAT)[0]);
 		solicitudDetalleBean.setContratoVinculado(solicitudForm.getContratoVinculado().split(Constant.CHAR_CONCAT)[1]);
 		solicitudDetalleBean.setCodPrevaluador(solicitudForm.getCodPreEvaluador());
-		solicitudDetalleBean.setCodCampania(solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[0]!=null?new BigDecimal(solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[0]):null);
-		solicitudDetalleBean.setDesCampania(solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[1]!=null?solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[1]:null);
+		if(solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[0]!=null){
+		solicitudDetalleBean.setCodCampania(new BigDecimal(solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[0]).compareTo(new BigDecimal(-1))==0?null:new BigDecimal(solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[0]));	
+		}
+		solicitudDetalleBean.setDesCampania(solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[1]!=null || solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[0].equals("-1")?"":solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[1]);
 		solicitudDetalleBean.setTipo(Constant.TABLA_TIPOS+solicitudForm.getDesTipo().split(Constant.CHAR_CONCAT)[0]);
 		solicitudDetalleBean.setDesTipo(Constant.TABLA_TIPOS+solicitudForm.getDesTipo().split(Constant.CHAR_CONCAT)[1]);
 		solicitudDetalleBean.setMtoProducto(new BigDecimal(solicitudForm.getMtoProducto()));

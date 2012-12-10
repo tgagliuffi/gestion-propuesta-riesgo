@@ -223,6 +223,10 @@ public class CatalogoServiceImpl implements CatalogoService{
 		  bancaSub.setEstado(Constant.ESTADO_ACTIVO);
 		  return bancaDAO.getLstSubBanca(bancaSub);
 	  }
+	  public List<BancaSub> getLstSubBancaPorBanca(BancaSub bancaSub) throws Exception {
+		  bancaSub.setEstado(Constant.ESTADO_ACTIVO);
+		  return bancaDAO.getLstSubBancaPorBanca(bancaSub);
+	  }
 	  
   /*#####################################################################################################
    * 
@@ -462,20 +466,20 @@ public class CatalogoServiceImpl implements CatalogoService{
 //	public String getValidarUsuario(String codUsuario) {
 //		return gerenteOficinaDAO.getValidarUsuario(codUsuario);
 //	}
-	 /*#####################################################################################################
-	   *  
-	   *                TGPR_SOLICITUD_RECHAZADA
-	   * 
-	   *##################################################################################################### */
+ /*#####################################################################################################
+   *  
+   *                TGPR_SOLICITUD_RECHAZADA
+   * 
+   *##################################################################################################### */
 
 	public void insertSolicitudRechazada(Solicitud solicitud) {
 	 	solicitudRechazadaDAO.insertSolicitudRechazada(solicitud);
 	}
-	 /*#####################################################################################################
-	   *  
-	   *                TGPR_FUNCIONES
-	   * 
-	   *##################################################################################################### */
+ /*#####################################################################################################
+   *  
+   *                TGPR_FUNCIONES
+   * 
+   *##################################################################################################### */
 	 public  List<Funcion> getLstFuncionByCriteria(Funcion funcionBean) throws Exception{ 
 		 return funcionDAO.getLstFuncionByCriteria(funcionBean);
 	 }
@@ -488,11 +492,11 @@ public class CatalogoServiceImpl implements CatalogoService{
 		return gerenteOficinaDAO.getJefeInmediatoRiesgo(codUsuario);
 	}
 
-	public UsuarioSubanca selectByPrimaryKey(UsuarioSubancaKey key) {
+	public UsuarioSubanca selectByUsuarioSubancaPrimaryKey(UsuarioSubancaKey key) {
 		return usuarioSubancaDAO.selectByPrimaryKey(key);
 	}
 
-	public BancaSub selectByPrimaryKeyBancaSub(String codSubbanca) {
+	public BancaSub selectByBancaSubPrimaryKey(String codSubbanca) {
 		return bancaSubDAO.selectByPrimaryKey(codSubbanca);
 	}
 
@@ -527,4 +531,5 @@ public class CatalogoServiceImpl implements CatalogoService{
 		}
 			return "1";
 	}
+	
 }
