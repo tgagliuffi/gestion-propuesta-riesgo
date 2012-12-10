@@ -65,4 +65,9 @@
     where COD_SUBANCA = #codSubanca:VARCHAR#
       and COD_USUARIO = #codUsuario:VARCHAR#
   </update>
+   <select id="getSubBancaPorUsuario" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.UsuarioSubancaKey" >
+    select COD_SUBANCA, COD_USUARIO, ESTADO
+    from DELGPR.TGPR_USUARIO_SUBANCAS
+    where  COD_USUARIO = #codUsuario:VARCHAR#
+  </select>
 </sqlMap>
