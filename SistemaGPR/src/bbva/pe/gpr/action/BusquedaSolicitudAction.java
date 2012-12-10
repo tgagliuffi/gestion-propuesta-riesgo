@@ -117,7 +117,7 @@ public class BusquedaSolicitudAction extends DispatchAction {
 			solicitudBean.getAsignacionBean().setCodUsuario(regEvaluador);
 		}if(apeEvaluador!=null && !apeEvaluador.equalsIgnoreCase(Constant.STR_VACIO)){
 			solicitudBean.getAsignacionBean().setNombre(Constant.CHAR_PORCENTAJE+apeEvaluador+Constant.CHAR_PORCENTAJE);
-		}if(subBanca!=null && !subBanca.equalsIgnoreCase(Constant.STR_VACIO) && !subBanca.equalsIgnoreCase("-1")){
+		}if(subBanca!=null && !subBanca.equalsIgnoreCase(Constant.STR_VACIO) && !subBanca.equalsIgnoreCase("-1") && !subBanca.equalsIgnoreCase("null")){
 			solicitudBean.setCodSubanca(subBanca);
 		}
 

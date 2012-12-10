@@ -626,8 +626,8 @@
     	AND S.OFICINA_ALTA_COD = O.COD_OFICINA
     	AND S.ESTADO = 1 AND
 		( #nroSolicitud:DECIMAL# IS NULL OR #nroSolicitud:DECIMAL# = -1 OR S.NRO_SOLICITUD = #nroSolicitud:DECIMAL#) AND
-	    ( #codSubanca:VARCHAR# IS NULL OR #codSubanca:VARCHAR# = '-1' OR  S.COD_SUBANCA = #codSubanca:VARCHAR#) AND
 	    ( #codBanca:DECIMAL# IS NULL OR #codBanca:DECIMAL# = -1 OR  SB.COD_BANCA = #codBanca:DECIMAL#) AND
+	    ( #codSubanca:VARCHAR# IS NULL OR #codSubanca:VARCHAR# = '-1' OR  S.COD_SUBANCA = #codSubanca:VARCHAR#) AND
 	    ( #codCentral:VARCHAR# IS NULL OR #codCentral:VARCHAR# = '' OR S.COD_CENTRAL = UPPER(#codCentral:VARCHAR#)) AND
 	    ( #oficinaAltaCod:VARCHAR# IS NULL OR #oficinaAltaCod:VARCHAR# = '-1' OR S.OFICINA_ALTA_COD = UPPER(#oficinaAltaCod:VARCHAR#)) AND
 	    ( #oficinaAltaNom:VARCHAR# IS NULL OR #oficinaAltaNom:VARCHAR# = ''  OR S.OFICINA_ALTA_NOM LIKE UPPER(#oficinaAltaNom:VARCHAR#)) AND
