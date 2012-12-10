@@ -13,5 +13,5 @@ public interface UsuarioSubancaDAO {
     UsuarioSubanca selectByPrimaryKey(UsuarioSubancaKey key);
     int updateByPrimaryKeySelective(UsuarioSubanca record);
     int updateByPrimaryKey(UsuarioSubanca record);
-    List<BancaSub> getLstCodSubancasPorUsuario(BancaSub subanca) throws Exception;
+    List<BancaSub> getLstSubBancaPorUsuario(BancaSub subanca) throws Exception;
 }

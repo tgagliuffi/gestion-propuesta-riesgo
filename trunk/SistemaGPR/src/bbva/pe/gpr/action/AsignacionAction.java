@@ -14,13 +14,9 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.directwebremoting.WebContextFactory;
 
-import com.grupobbva.bc.per.tele.ldap.serializable.IILDPeUsuario;
-
 import bbva.pe.gpr.bean.Rol;
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.Usuario;
-import bbva.pe.gpr.bean.UsuarioSubanca;
-import bbva.pe.gpr.bean.UsuarioSubancaKey;
 import bbva.pe.gpr.context.Context;
 import bbva.pe.gpr.form.AsignacionForm;
 import bbva.pe.gpr.service.AsignacionService;
@@ -29,6 +25,8 @@ import bbva.pe.gpr.service.SeguridadService;
 import bbva.pe.gpr.service.SolicitudService;
 import bbva.pe.gpr.util.Constant;
 import bbva.pe.gpr.util.UtilDate;
+
+import com.grupobbva.bc.per.tele.ldap.serializable.IILDPeUsuario;
 
 public class AsignacionAction extends DispatchAction {
 	private static Logger logger = Logger.getLogger(AsignacionAction.class);
@@ -57,16 +55,10 @@ public class AsignacionAction extends DispatchAction {
 		try {
 			HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
 			IILDPeUsuario bean = (IILDPeUsuario)request.getSession().getAttribute("USUARIO_SESION");
-			UsuarioSubancaKey usuarioSubancaKey = new UsuarioSubancaKey();
-			usuarioSubancaKey.setCodUsuario(bean.getUID());
-			UsuarioSubanca usuarioSubanca = catalogoService.selectByUsuarioSubancaPrimaryKey(usuarioSubancaKey);
-			if(usuarioSubanca!=null){
-				Usuario usuario = new Usuario();
-				usuario.setCodigoUsuarioSession(bean.getUID());
-				usuario.setCodRol(new BigDecimal(codRol));
-				usuario.setCodSuBanca(usuarioSubanca.getCodSubanca());
-				return catalogoService.getLstUsuariosRiesgo(usuario);
-			}
+			Usuario usuario = new Usuario();
+			usuario.setCodigoUsuarioSession(bean.getUID());
+			usuario.setCodRol(new BigDecimal(codRol));
+			return catalogoService.getLstUsuariosRiesgo(usuario);
 			
 		} catch (Exception e) {
 			logger.error("Exception AsignacionAction.consultarUsuarioAjax: " + e.getMessage());
