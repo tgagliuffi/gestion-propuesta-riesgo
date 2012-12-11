@@ -275,13 +275,13 @@ function procesarAnulacion()
 			<font class="fontText">Código Central</font>
 		</td>
 		<td valign="middle">
-			<input type="text" name="codigoCentral" class="cajaTexto" id="codigoCentral" size="10" maxlength="8">
+			<input type="text" name="codigoCentral" class="cajaTexto" id="codigoCentral" size="10" maxlength="8" onkeypress="ingresoNumeros(event);">
 		</td>
 		<td valign="middle">
 			<font class="fontText">Número Solicitud</font>
 		</td>
 		<td valign="middle">
-			<input type="text" name="numSolicitud" class="cajaTexto" id="numSolicitud" size="10" maxlength="8">
+			<input type="text" name="numSolicitud" class="cajaTexto" id="numSolicitud" size="10" maxlength="8" onkeypress="ingresoNumeros(event);">
 		</td>
 	</tr>
 	<tr>

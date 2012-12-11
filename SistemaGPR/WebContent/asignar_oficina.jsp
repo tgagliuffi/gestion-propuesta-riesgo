@@ -130,7 +130,7 @@ function limpiarUsuario(){
        		<font class="fontText"><b>Registro</b></font>
        </td>
        <td align="left" valign="middle">       
-	   		<html:text property="codUsuario" styleId="codUsuario" style="width: 150px" maxlength="8" onkeypress="ingresoNumeros(event);"/>				
+	   		<html:text property="codUsuario" styleId="codUsuario" style="width: 150px" maxlength="8" onkeypress="ingresoRegistroEmpleado(event);"/>				
 	   </td>
 	  <td align="left" valign="middle">
        		<font class="fontText"><b>SubBanca</b></font>

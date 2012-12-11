@@ -11,7 +11,7 @@ public class AplicativoPersonasServiceImpl implements AplicativoPersonasService{
 	public Solicitud  invokeClient(String codCentral){
 		Solicitud solicitudBean = new Solicitud();
 		
-		if(codCentral.substring(0, 1).equalsIgnoreCase("4")){
+		if(codCentral.substring(0, 1).equalsIgnoreCase("1")){
 			solicitudBean.setCodCentral(codCentral);
 			solicitudBean.setDesSolicitante("PERSONA " + codCentral);
 			solicitudBean.setCodMultTipoPersona("NATURAL");

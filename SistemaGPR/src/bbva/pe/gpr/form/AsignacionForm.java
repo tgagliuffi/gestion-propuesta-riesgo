@@ -14,6 +14,7 @@ public class AsignacionForm extends ActionForm {
 	private String fechaIngresoIni;
 	private String fechaIngresoFin;
 	private String fechaVencimiento;
+	private String codCargo;
 	
 
 	public String getCodRol() {
@@ -87,7 +88,13 @@ public class AsignacionForm extends ActionForm {
 	public void setFechaVencimiento(String fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
-	
-	
-       
+
+	public String getCodCargo() {
+		return codCargo;
+	}
+
+	public void setCodCargo(String codCargo) {
+		this.codCargo = codCargo;
+	}
+	       
 }
