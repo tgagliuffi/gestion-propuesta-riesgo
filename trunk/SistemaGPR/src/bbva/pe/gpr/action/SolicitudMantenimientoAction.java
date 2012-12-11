@@ -14,7 +14,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-import org.directwebremoting.WebContextFactory;
 
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.SolicitudDetalle;
@@ -155,44 +154,35 @@ public class SolicitudMantenimientoAction extends DispatchAction
 		}
 	}
 	
-	public String priorizarSolicitud(String nroSolicitud, String value) throws Exception 
-	{
-		String  strMensaje;	
-	 
+	public String priorizarSolicitud(String nroSolicitud, String value) throws Exception {
+	String  strMensaje;	
 		try {
-			
-			if(solicitudService.asignarPrioridadSolicitud(nroSolicitud, value)>0){
-				strMensaje = "Se actualizo exitosamente el registro.";
-			}else{
-				strMensaje = "Sucedio un error en la actualización.";
-			}
-			
+				if(solicitudService.asignarPrioridadSolicitud(nroSolicitud, value)>0){
+					strMensaje = "Se actualizo exitosamente el registro.";
+				}else{
+					strMensaje = "Sucedio un error en la actualización.";
+				}
 		}catch (Exception e) {
-			logger.error("BusquedaSolicitudAction.priorizarSolicitud " +e);
-			return null;
-		}
-		return strMensaje;
+				logger.error("BusquedaSolicitudAction.priorizarSolicitud " +e);
+				return null;
+		}return strMensaje;
 	}
 	
-	public String anularSolicitud(String nroSolicitud, String value) throws Exception 
-	{  HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
-		try {
-			String indMensaje, strMensaje;			
-				if(solicitudService.anularSolicitud(nroSolicitud)>0){
-					indMensaje = Constant.MSJ_ALERT;
-					strMensaje = "Se ha actualizado exitosamente el registro.";
-				
-				}else{
-					indMensaje = Constant.MSJ_ERROR;
-					strMensaje = "Se ha ingresado la solicitud " + nroSolicitud + ". Requiere asignación en oficina";
-				
-				}
-				request.setAttribute("indMensaje", indMensaje);
-				request.setAttribute("strMensaje", strMensaje);
+	public String anularSolicitud(String nroSolicitud, String value) throws Exception {  
+	String strMensaje = "";	
+	try {				
+		if(solicitudService.anularSolicitud(nroSolicitud)>0){
+			strMensaje = "Se ha actualizado exitosamente el registro.";
+			return strMensaje;	
+		}else{
+			strMensaje = "Sucedio un error en la anulación";
+			return strMensaje;
+		}
+			
 		}catch (Exception e) {
-			logger.error("BusquedaSolicitudAction.consultarSolicitudAjax " +e);
-			return  null;
-		}return null;
+			logger.error("BusquedaSolicitudAction.consultarSolicitudAjax " +e);		
+		}
+		return strMensaje;
 	}
 	
 }

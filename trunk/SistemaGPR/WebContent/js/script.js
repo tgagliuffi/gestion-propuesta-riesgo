@@ -596,3 +596,19 @@ function blurChangeColor(ctrl){
 		ctrl.style.backgroundColor = '#F2F5A9';
 	}
 }
+
+function ingresoRegistroEmpleado(e){
+	var key;
+	var valid = '' + lNumeros + 'Pp';
+		
+	if(e.which){
+		key = String.fromCharCode(e.which);
+		if (valid.indexOf("" + key) == -1)
+			e.preventDefault();
+	}
+	else if(e.keyCode){
+		key = String.fromCharCode(e.keyCode);
+		if (valid.indexOf("" + key) == -1)
+			e.keyCode = 0;
+	}
+}

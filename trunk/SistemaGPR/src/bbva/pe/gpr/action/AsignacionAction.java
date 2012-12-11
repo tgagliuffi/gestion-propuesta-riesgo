@@ -47,7 +47,7 @@ public class AsignacionAction extends DispatchAction {
 	public ActionForward init(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Rol rolBean = new Rol();
 		rolBean.setEstado(Constant.ESTADO_ACTIVO);		
-		request.getSession().setAttribute("lstRol", seguridadService.getLstRolesByCriteria(rolBean));
+		request.getSession().setAttribute("lstCargos", catalogoService.getLstMultitablaDetalle("T020"));
 		return mapping.findForward("success");		
 	}
 	

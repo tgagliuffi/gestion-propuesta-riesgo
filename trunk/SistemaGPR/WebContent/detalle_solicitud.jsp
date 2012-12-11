@@ -87,7 +87,7 @@ function mostrarTabla(data){
 		caption		: "Listado de Productos",
 		data 	 	: data,
 		datatype 	: "local",
-		height   	: "100%",
+		height   	: 200,
 		width 	 	: 1250,
 		colNames 	: myColSolicituDetalle,
 		colModel 	: myDataModelSolicitudDetalle,
@@ -216,11 +216,11 @@ function regresarBusquedaSolicitud(){
 	</table>
 	</div>
 	
-	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1260px;margin: 3px;margin-top: 10px;">
+	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1260px;margin: 3px;margin-top: 10px; height: 200px;">
 	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
 	<label>Datos drl Producto</label></div>
 	
-	<table id="listProducts" class="grid" style="width: 1240px;margin: 5px;"></table>
+	<table id="listProducts" class="grid" style="width: 1240px; margin: 5px;"></table>
 
 	</div>
 	

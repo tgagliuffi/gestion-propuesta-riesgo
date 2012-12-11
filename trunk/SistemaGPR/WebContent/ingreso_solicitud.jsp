@@ -735,13 +735,18 @@ function update(parametro){
 			});
 		}else{
 			var flag = formulario.chkAnular.checked;
-			if(flag==true)
+			if(flag==true){
 			if(confirm("¿Seguro que desea anular la solicitud?")){
 				jQuery("#listProductsDetalle").GridUnload();
 				SolicitudMantenimientoAction.anularSolicitud(nroSolicitud, function(msg){
-					mostrarTablaDetalle(data);
 					consultarDetalle();
+					formulario.btnAnular.disabled = true;
+					alert(msg);
+					
 				});
+			}
+			}else{
+				alert('Debe seleccionar check antes de Anular.');
 			}
 		
 		}
@@ -788,7 +793,7 @@ function setSubBanca(){
 	<input type="hidden" id="hdnSubBanca" name="hdnSubBanca" value='${solicitudForm.hdnSubBanca}'></input>
 	<input type="hidden" id="hdnBanca" name="hdnBanca" value='${solicitudForm.hdnBanca}'></input>
 	<input type="hidden" id="hdnStrMensaje" name="hdnStrMensaje" value='${solicitudForm.hdnStrMensaje}'></input>
-	
+	<input type="hidden" id="reelevancia" name="reelevancia" value='${solicitudForm.reelevancia}'></input>
 	<input type="hidden" id="condicion" name=condicion value=''></input>	
 	
 	<%if(asigPrioridadIndividual != null){%>

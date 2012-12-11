@@ -153,9 +153,9 @@ function consultarSolicitud(objeto){
 
 function consultarEvaluador(){	
 	var formulario = document.getElementById('asigacionForm');
-	var codRol = formulario.codRol.value;
+	var codCargo = formulario.codCargo.value;
 	jQuery("#listEvaluador").GridUnload();
-	AsignacionAction.consultarUsuarioAjax(codRol, function(data){
+	AsignacionAction.consultarUsuarioAjax(codCargo, function(data){
 		mostrarTablaEvaluador(data);		
 	});
 }
@@ -310,19 +310,19 @@ optionDialog = {
 	<label>Usuarios</label></div>
 	<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" style="padding-top: 5px;">
 	<tr>
-		<td valign="middle">
-			<font class="fontText">Cargo</font>&nbsp;
-			 <html:select property="codRol" styleClass="codRol" onchange="consultarEvaluador();">
-				<html:option value="-1" >SELECCIONE</html:option>
-				<c:if test="${lstRol != null}">
-					<c:forEach var="rol" items="${lstRol}">
-						<html:option value="${rol.codRol}">
-							<c:out value="${rol.descripcion}" />
+		 <td align="left" valign="middle">
+			<font class="fontText">Cargo *</font>&nbsp;       
+	   		<html:select property="codCargo" styleId="codCargo">
+				<html:option value="-1" >[   SELECCIONE   ]</html:option>
+				<c:if test="${lstCargos != null}">
+					<c:forEach var="cargo" items="${lstCargos}">
+						<html:option value="${cargo.codElemento}">
+							<c:out value="${cargo.strValor}" />
 						</html:option>
 					</c:forEach>
 				</c:if>
 			</html:select>
-		</td>
+       </td>
 	</tr>
 	</table>
 	

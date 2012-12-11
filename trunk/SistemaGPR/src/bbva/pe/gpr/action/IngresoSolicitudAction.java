@@ -170,7 +170,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 						solicitudBean.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD+
 														 Constant.CHAR_GUION+
 														 Constant.ESTADO_SOLICITUD_PENDIENTE);
-				}
+					}
 				
 				solicitudBean.setEstado(Constant.ESTADO_ACTIVO);
 				nroSolicitud = solicitudService.registraSolicitud(solicitudBean, lstSolicitudDetalle);
@@ -306,7 +306,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 				solicitudForm.setScorating(solicitudBean.getScorating());
 				solicitudForm.setRating(solicitudBean.getRating());
 				if(solicitudBean.getReelevancia()!=null){
-					solicitudBean.setReelevancia(solicitudBean.getReelevancia());
+					solicitudForm.setReelevancia(solicitudBean.getReelevancia());
 					solicitudForm.setRelevPublica1(solicitudBean.getReelevancia().length()>=3?(catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_RELEVANCIA_PUBLICA, solicitudBean.getReelevancia().substring(0, 3))!=null?catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_RELEVANCIA_PUBLICA, solicitudBean.getReelevancia().substring(0, 3)).getStrValor():Constant.STR_VACIO):Constant.STR_VACIO);
 					solicitudForm.setRelevPublica2(solicitudBean.getReelevancia().length()>=6?(catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_RELEVANCIA_PUBLICA, solicitudBean.getReelevancia().substring(3, 6))!=null?catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_RELEVANCIA_PUBLICA, solicitudBean.getReelevancia().substring(03, 6)).getStrValor():Constant.STR_VACIO):Constant.STR_VACIO);
 					solicitudForm.setRelevPublica3(solicitudBean.getReelevancia().length()>=9?(catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_RELEVANCIA_PUBLICA, solicitudBean.getReelevancia().substring(6, 9))!=null?catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_RELEVANCIA_PUBLICA, solicitudBean.getReelevancia().substring(6, 9)).getStrValor():Constant.STR_VACIO):Constant.STR_VACIO);
