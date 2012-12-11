@@ -24,35 +24,29 @@
 <script src="<%=request.getContextPath()%>/js/util.gpr.js"
 	type="text/javascript"></script>
 
-<script type='text/javascript'
-	src='<%=request.getContextPath()%>/dwr/engine.js'></script>
-<script type='text/javascript'
-	src='<%=request.getContextPath()%>/dwr/util.js'></script>
-<script type="text/javascript"
-	src='<%=request.getContextPath()%>/dwr/interface/BusquedaSolicitudAction.js'></script>
+<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/engine.js'></script>
+<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/util.js'></script>
+<script type="text/javascript" src='<%= request.getContextPath()%>/dwr/interface/JDate.js'></script>
+<script type="text/javascript" src='<%=request.getContextPath()%>/dwr/interface/BusquedaSolicitudAction.js'></script>
 
 <!-- frk: incluir estos archivos cuando se quiera implementar el componente calendario y demas funciones jquery -->
-<script src="<%=request.getContextPath()%>/js/jquery-1.7.1.js"
-	type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/jquery-ui.js"
-	type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/jquery-1.7.1.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/jquery-ui.js"    type="text/javascript"></script>
 
-<script src="<%=request.getContextPath()%>/js/util/gridUtil.js"
-	type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/i18n/grid.locale-es.js"
-	type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js"
-	type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/util/formatters.js"
-	type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/script.js"
-	type="text/javascript"></script>
-<script src="<%=request.getContextPath()%>/js/util.gpr.js"
-	type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/util/gridUtil.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/i18n/grid.locale-es.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/jquery.jqGrid.src.js"	type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/util/formatters.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/script.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/js/util.gpr.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 var rutaContexto1 = location.pathname;
 var rutaContexto2 = "<%=request.getContextPath()%>";
+$(function() {
+    $( "#fechaIngresoIni").datepicker({dateFormat: 'dd/mm/yy'});
+    $( "#fechaIngresoFin").datepicker({dateFormat: 'dd/mm/yy'});
+});
 
 	var rutaContexto = rutaContexto1.substr(0, rutaContexto1
 			.indexOf(rutaContexto2))

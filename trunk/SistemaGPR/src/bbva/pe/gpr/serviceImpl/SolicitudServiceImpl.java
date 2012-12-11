@@ -27,6 +27,7 @@ import bbva.pe.gpr.dao.SolicitudesDAO;
 import bbva.pe.gpr.dao.UsuarioDAO;
 import bbva.pe.gpr.service.SolicitudService;
 import bbva.pe.gpr.util.Constant;
+import bbva.pe.gpr.util.UtilDate;
 import bbva.pe.gpr.util.UtilGpr;
 
 import com.grupobbva.bc.per.tele.ldap.comunes.IILDPeExcepcion;
