@@ -447,7 +447,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 		solicitudDetalleBean.setCodProducto(new BigDecimal(solicitudForm.getDesProducto().split(Constant.CHAR_CONCAT)[0]));
 		solicitudDetalleBean.setDesProducto(solicitudForm.getDesProducto().split(Constant.CHAR_CONCAT)[1]);
 		solicitudDetalleBean.setCodProdBase(solicitudForm.getDesProducto().split(Constant.CHAR_CONCAT)[0]);
-		solicitudDetalleBean.setContratoVinculado(solicitudForm.getContratoVinculado().split(Constant.CHAR_CONCAT)[1]);
+		solicitudDetalleBean.setContratoVinculado(solicitudForm.getContratoVinculado()!=null && !solicitudForm.getContratoVinculado().equals("|")?solicitudForm.getContratoVinculado().split(Constant.CHAR_CONCAT)[1]:null);
 		solicitudDetalleBean.setCodPrevaluador(solicitudForm.getCodPreEvaluador());
 		if(solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[0]!=null){
 		solicitudDetalleBean.setCodCampania(new BigDecimal(solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[0]).compareTo(new BigDecimal(-1))==0?null:new BigDecimal(solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[0]));	
