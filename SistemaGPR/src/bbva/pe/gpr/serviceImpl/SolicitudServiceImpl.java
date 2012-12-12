@@ -22,7 +22,7 @@ import bbva.pe.gpr.dao.MultitablaDetalleDAO;
 import bbva.pe.gpr.dao.SolicitudDetalleDAO;
 import bbva.pe.gpr.dao.SolicitudMensajeDAO;
 import bbva.pe.gpr.dao.SolicitudOperacionDAO;
-import bbva.pe.gpr.dao.SolicitudesDAO;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+import bbva.pe.gpr.dao.SolicitudesDAO;
 import bbva.pe.gpr.dao.UsuarioDAO;
 import bbva.pe.gpr.service.SolicitudService;
 import bbva.pe.gpr.util.Constant;
@@ -107,6 +107,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 				SolicitudDetalle solicitudDetalleBean =  getLstSolicitudDetalle.get(i);
 				//TODO: SETEANDO NROSOLICITUD
 				solicitudDetalleBean.setNroSolicitud(nroSolicitud);
+				solicitudDetalleBean.setCodCentral(solicitudBean.getCodCentral());
 				solicitudDetalleDAO.insert(solicitudDetalleBean);
 			}
 			ingresaSolicitudOperacion(solicitudBean, Constant.TABLA_PROCESO, Constant.MULT_PROCESO_INGRESO);
@@ -156,13 +157,11 @@ public class SolicitudServiceImpl implements SolicitudService{
 			Asignacion asignacionBean = new Asignacion();
 			if(bancaBean.getFlagAsignacion().compareTo(new BigDecimal(1))==0){
 				//retorn usuario con menor carga
-				
 				codUsuario = asignacionDAO.obtenerUsuarioPorBalance(solicitudBean.getCodBanca(), new BigDecimal(1));
 				
 				if(codUsuario.equals("0")){
 					return -1;
 				}else {
-					
 					solicitudBean.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD+Constant.CHAR_GUION+Constant.ESTADO_SOLICITUD_ASIGNADO);
 				}
 				usuarioBean = usuarioDAO.selectByPrimaryKey(codUsuario);			
@@ -191,7 +190,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 		return 0;
 	}
 	
-	public List<Solicitud> getLstSolicitudBandeja(Solicitud solicitudBean){
+	public List<Solicitud> getLstSolicitudBandeja(Solicitud solicitudBean){		
 		return solicitudesDAO.getLstSolicitudBandeja(solicitudBean);
 	}
 	

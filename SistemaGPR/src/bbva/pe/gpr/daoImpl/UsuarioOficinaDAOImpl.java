@@ -30,4 +30,9 @@ public class UsuarioOficinaDAOImpl extends SqlMapClientDaoSupport implements Usu
 	public String getOficinaAsignadaExiste(UsuarioOficina oficinaAsignada) {
 		return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_USUARIO_OFICINA.getCountOficinaAsignada", oficinaAsignada).get(0).toString();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<UsuarioOficina> getLstOficinasByUsuario(UsuarioOficina oficinaAsignada) {
+		return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_USUARIO_OFICINA.getLstOficinasByCriteria", oficinaAsignada);
+	}
 }

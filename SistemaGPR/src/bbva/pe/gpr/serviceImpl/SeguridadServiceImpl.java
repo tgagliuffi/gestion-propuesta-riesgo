@@ -117,7 +117,6 @@ public class SeguridadServiceImpl implements SeguridadService {
 	public void saveUsuarioRol(String codUsuario, String codRoles)
 			throws Exception {
 		UsuarioRol usuarioRol = new UsuarioRol();
-		int valor=0;
 		String[] valores = codRoles.split(",");
 		for (String idRoles : valores) {
 			if (!idRoles.equals("")) {

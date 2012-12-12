@@ -119,10 +119,10 @@
     ( #codBanca:DECIMAL# IS NULL OR #codBanca:DECIMAL#=-1 OR COD_BANCA = #codBanca:DECIMAL#) AND
     ( #estado:DECIMAL# IS NULL OR #estado:DECIMAL#=-1 OR ESTADO = #estado:DECIMAL#)
   </select>
-  <select id="getLstSubBancaPorBanca" resultMap="baseResultMapSubBancas" parameterClass="bbva.pe.gpr.bean.BancaSub" >
+  <select id="getSubancaPorBanca" resultMap="baseResultMapSubBancas" parameterClass="bbva.pe.gpr.bean.BancaSub" >
    select COD_SUBANCA, DESCRIPCION, DETALLE, ESTADO, COD_BANCA
     from DELGPR.TGPR_BANCA_SUB
     where
-     COD_BANCA = #codBanca:DECIMAL#
+     COD_BANCA = #codBanca:DECIMAL# AND ESTADO = 1
   </select>
 </sqlMap>

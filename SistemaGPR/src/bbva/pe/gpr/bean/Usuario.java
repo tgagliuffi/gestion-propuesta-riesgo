@@ -27,6 +27,10 @@ public class Usuario {
 	private String codigoUsuarioSession;
 	private String codSuBanca;
 	
+	private String codCargoGPR;
+    private String desCargoGPR;
+    private BigDecimal codBanca;
+    
 	public Long getIdUsuario() {
 		return idUsuario;
 	}
@@ -134,6 +138,24 @@ public class Usuario {
 	}
 	public void setCodSuBanca(String codSuBanca) {
 		this.codSuBanca = codSuBanca;
+	}
+	public String getCodCargoGPR() {
+		return codCargoGPR;
+	}
+	public void setCodCargoGPR(String codCargoGPR) {
+		this.codCargoGPR = codCargoGPR;
+	}
+	public String getDesCargoGPR() {
+		return desCargoGPR;
+	}
+	public void setDesCargoGPR(String desCargoGPR) {
+		this.desCargoGPR = desCargoGPR;
+	}
+	public BigDecimal getCodBanca() {
+		return codBanca;
+	}
+	public void setCodBanca(BigDecimal codBanca) {
+		this.codBanca = codBanca;
 	}
 	
 }

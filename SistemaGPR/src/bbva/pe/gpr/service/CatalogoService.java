@@ -169,4 +169,5 @@ public interface CatalogoService {
 	  public void insert(UsuarioSubanca record);
 	  public void saveRolFunciones(FuncionRol record);
 	  public String rolFuncionExistente(FuncionRol record);
+	  UsuarioSubanca getSubancaPorUsuario(BancaSub record)throws Exception;
 }

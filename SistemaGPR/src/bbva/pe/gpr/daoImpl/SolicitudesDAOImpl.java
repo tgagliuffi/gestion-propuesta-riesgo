@@ -57,5 +57,5 @@ public class SolicitudesDAOImpl extends SqlMapClientDaoSupport implements Solici
 	public List<Solicitud> getLstSolicitudes(Solicitud solicitudBean){
     	return (List<Solicitud>) getSqlMapClientTemplate().queryForList("DELGPR_TGPR_SOLICITUDES.getLstSolicitudByCriteria", solicitudBean);	
     }
-
+    
 }
