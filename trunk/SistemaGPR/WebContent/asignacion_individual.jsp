@@ -53,14 +53,14 @@ var myColNamesEval  = ['','Registro', 'Nombres', 'Cargo', 'Cantidad', 'Mto PerNa
 var myDataModelEval = [ 
                   
 					{name : 'codigoUsuario',		index : 'codigoUsuario',  			width : VAL_WIDTH.VSMALL,    formatter:formatoRadio ,align:'center'},
-                    {name : 'codigoUsuario',		index : 'codigoUsuario', 			width : VAL_WIDTH.SMALL		},
-                    {name : 'nombres',				index : 'nombres',					width : VAL_WIDTH.SMALL		},
-                    {name : 'concatRoles',			index : 'concatRoles', 				width : VAL_WIDTH.SMALL		},
-                    {name : 'cantidad',				index : 'cantidad', 				width : VAL_WIDTH.XLSMALL	},
+                    {name : 'codigoUsuario',		index : 'codigoUsuario', 			width : VAL_WIDTH.SMALL,		align:'center'},
+                    {name : 'nombres',				index : 'nombres',					width : 180		},
+                    {name : 'desCargoGPR',			index : 'desCargoGPR', 				width : VAL_WIDTH.SMALL, 	align:'center'},
+                    {name : 'cantidad',				index : 'cantidad', 				width : VAL_WIDTH.XLSMALL,	align:'center'},
                     {name : 'mtoMaxPerNatual',		index : 'mtoMaxPerNatual', 			width : VAL_WIDTH.SMALL,	formatter:formartMonto, align:'right'},
                     {name : 'mtoMaxRating',			index : 'mtoMaxRating', 			width : VAL_WIDTH.SMALL, 	formatter:formartMonto, align:'right'},
                     {name : 'mtoSinRating',			index : 'mtoSinRating', 			width : VAL_WIDTH.SMALL,	formatter:formartMonto, align:'right'},
-                    {name : 'dependiente',			index : 'dependiente', 				width : VAL_WIDTH.XLSMALL	}
+                    {name : 'dependiente',			index : 'dependiente', 				width : VAL_WIDTH.XLSMALL,	align:'center'}
                    ];
                    
 var myColNamesSol  = ['','Nro Solicitud', 'Fecha Ingreso', 'Codigo Central', 'Tipo Persona', 'Cliente', 'Moneda', 
@@ -172,6 +172,7 @@ function mostrarTablaEvaluador(data){
 		datatype 	: "local",
 		height   	: "100%",
 		weight 	 	: 1000,
+		width 		: 1200,
 		colNames 	: myColNamesEval,
 		colModel 	: myDataModelEval,
 		rowList 	: [5,10,15,20,25],
@@ -312,7 +313,7 @@ optionDialog = {
 	<tr>
 		 <td align="left" valign="middle">
 			<font class="fontText">Cargo *</font>&nbsp;       
-	   		<html:select property="codCargo" styleId="codCargo">
+	   		<html:select property="codCargo" styleId="codCargo" onchange="consultarEvaluador();">
 				<html:option value="-1" >[   SELECCIONE   ]</html:option>
 				<c:if test="${lstCargos != null}">
 					<c:forEach var="cargo" items="${lstCargos}">

@@ -92,9 +92,4 @@
       COD_BANCA = #codBanca:DECIMAL#
     where COD_SUBANCA = #codSubanca:VARCHAR#
   </update>
-<select id="getLstCodSubancasPorUsuario" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.BancaSub" >
-  	select COD_SUBANCA
-    from DELGPR.TGPR_USUARIO_SUBANCAS
-    where COD_USUARIO = #codUsuario:VARCHAR#
-  </select>
 </sqlMap>

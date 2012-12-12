@@ -35,6 +35,7 @@ public class Asignacion extends AsignacionKey{
     private String nomUsuarioSession;
     
     private String codCargo;
+    private String desCargo;
 	
 	public String getUsuarioAsignado() {
 		return usuarioAsignado;
@@ -179,6 +180,12 @@ public class Asignacion extends AsignacionKey{
 	}
 	public void setCodCargo(String codCargo) {
 		this.codCargo = codCargo;
+	}
+	public String getDesCargo() {
+		return desCargo;
+	}
+	public void setDesCargo(String desCargo) {
+		this.desCargo = desCargo;
 	}
 	
 }

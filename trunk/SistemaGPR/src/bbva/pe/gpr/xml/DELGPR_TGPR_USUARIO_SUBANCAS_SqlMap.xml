@@ -6,6 +6,12 @@
     <result column="COD_USUARIO" property="codUsuario" jdbcType="VARCHAR" />
     <result column="ESTADO" property="estado" jdbcType="DECIMAL" />
   </resultMap>
+   <resultMap id="ibatorgenerated_BaseResultMap" class="bbva.pe.gpr.bean.UsuarioSubanca" >
+    <result column="COD_SUBANCA" property="codSubanca" jdbcType="VARCHAR" />
+    <result column="COD_USUARIO" property="codUsuario" jdbcType="VARCHAR" />
+    <result column="ESTADO" property="estado" jdbcType="DECIMAL" />
+    <result column="COD_BANCA" property="codBanca" jdbcType="DECIMAL" />
+  </resultMap>
   <select id="ibatorgenerated_selectByPrimaryKey" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.UsuarioSubancaKey" >
     select COD_SUBANCA, COD_USUARIO, ESTADO
     from DELGPR.TGPR_USUARIO_SUBANCAS
@@ -65,9 +71,12 @@
     where COD_SUBANCA = #codSubanca:VARCHAR#
       and COD_USUARIO = #codUsuario:VARCHAR#
   </update>
-   <select id="getSubBancaPorUsuario" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.UsuarioSubancaKey" >
-    select COD_SUBANCA, COD_USUARIO, ESTADO
-    from DELGPR.TGPR_USUARIO_SUBANCAS
-    where  COD_USUARIO = #codUsuario:VARCHAR#
+  <select id="getSubBancaPorUsuario" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.BancaSub" >
+     select UB.COD_SUBANCA, UB.COD_USUARIO, UB.ESTADO, B.COD_BANCA
+    	from DELGPR.TGPR_USUARIO_SUBANCAS UB, DELGPR.TGPR_BANCA_SUB BS, DELGPR.TGPR_BANCAS B
+    	WHERE 
+    	UB.COD_SUBANCA = BS.COD_SUBANCA AND
+    	BS.COD_BANCA = B.COD_BANCA AND
+    	UB.COD_USUARIO = #codUsuario:VARCHAR# AND ROWNUM = 1
   </select>
 </sqlMap>

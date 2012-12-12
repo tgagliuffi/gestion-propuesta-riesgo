@@ -177,13 +177,14 @@ public class IngresoSolicitudAction extends DispatchAction {
 				
 				if(nroSolicitud != new Long(0)){
 					
-						if(solicitudService.asignacionAutomatica(solicitudBean) != 0){
+						if(solicitudService.asignacionAutomatica(solicitudBean) == 1){
 							solicitudForm = (SolicitudForm)form;	
 							solicitudForm.reset(mapping, request);
 							request.getSession().removeAttribute("lstDetalleProdSession");
 							indMensaje = Constant.MSJ_ALERT;
 							strMensaje = "Se ha ingresado la solicitud " + nroSolicitud + ". La cúal fue enviada a riesgos.";	
 						}else{
+							//-1: no sé encontro usuarios para asignacion, 0:no se encontro banca, 
 							solicitudForm = (SolicitudForm)form;	
 							solicitudForm.reset(mapping, request);
 							request.getSession().removeAttribute("lstDetalleProdSession");

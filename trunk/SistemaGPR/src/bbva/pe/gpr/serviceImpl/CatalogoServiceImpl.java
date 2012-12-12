@@ -511,8 +511,14 @@ public class CatalogoServiceImpl implements CatalogoService{
 	public String getUsuarioTipo(String codUsuario) throws Exception{
 		return gerenteOficinaDAO.getUsuarioTipo(codUsuario);
 	}
+	
+	public UsuarioSubanca getSubancaPorUsuario(BancaSub record)throws Exception{
+		return usuarioSubancaDAO.getSubBancaPorUsuario(record); 
+	}
 
-	public String getTipoPersona(String codUsuario) throws Exception {
+	public String getTipoPersona(String codUsuario) throws Exception {{
+		
+	}
 		return getUsuarioTipo(codUsuario);
 	}
 

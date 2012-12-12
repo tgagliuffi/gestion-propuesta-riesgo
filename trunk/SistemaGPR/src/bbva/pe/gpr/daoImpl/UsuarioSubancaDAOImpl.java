@@ -1,14 +1,12 @@
 package bbva.pe.gpr.daoImpl;
 
 
-import java.util.List;
+import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import bbva.pe.gpr.bean.BancaSub;
 import bbva.pe.gpr.bean.UsuarioSubanca;
 import bbva.pe.gpr.bean.UsuarioSubancaKey;
 import bbva.pe.gpr.dao.UsuarioSubancaDAO;
-
-import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 public class UsuarioSubancaDAOImpl extends SqlMapClientDaoSupport implements UsuarioSubancaDAO {
 
@@ -44,8 +42,7 @@ public class UsuarioSubancaDAOImpl extends SqlMapClientDaoSupport implements Usu
         return rows;
     }
 
-	@SuppressWarnings("unchecked")
-	public List<BancaSub> getLstSubBancaPorUsuario(BancaSub subanca)throws Exception {
-		return (List<BancaSub>)getSqlMapClientTemplate().queryForList("DELGPR_TGPR_USUARIO_SUBANCAS.getSubBancaPorUsuario", subanca);
+	public UsuarioSubanca getSubBancaPorUsuario(BancaSub subanca)throws Exception {
+		return (UsuarioSubanca)getSqlMapClientTemplate().queryForObject("DELGPR_TGPR_USUARIO_SUBANCAS.getSubBancaPorUsuario", subanca);
 	}
 }

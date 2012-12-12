@@ -1,6 +1,5 @@
 package bbva.pe.gpr.action;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +13,11 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.directwebremoting.WebContextFactory;
 
+import bbva.pe.gpr.bean.BancaSub;
 import bbva.pe.gpr.bean.Rol;
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.Usuario;
+import bbva.pe.gpr.bean.UsuarioSubanca;
 import bbva.pe.gpr.context.Context;
 import bbva.pe.gpr.form.AsignacionForm;
 import bbva.pe.gpr.service.AsignacionService;
@@ -51,13 +52,22 @@ public class AsignacionAction extends DispatchAction {
 		return mapping.findForward("success");		
 	}
 	
-	public List<Usuario> consultarUsuarioAjax(String codRol){	
+	public List<Usuario> consultarUsuarioAjax(String codCargo){	
 		try {
 			HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
-			IILDPeUsuario bean = (IILDPeUsuario)request.getSession().getAttribute("USUARIO_SESION");
+			IILDPeUsuario usuarioSesion = (IILDPeUsuario)request.getSession().getAttribute("USUARIO_SESION");
+			BancaSub subBancaBean = new BancaSub();
 			Usuario usuario = new Usuario();
-			usuario.setCodigoUsuarioSession(bean.getUID());
-			usuario.setCodRol(new BigDecimal(codRol));
+			
+			subBancaBean.setCodUsuario(usuarioSesion.getUID());
+			UsuarioSubanca record = catalogoService.getSubancaPorUsuario(subBancaBean);
+			if(subBancaBean!=null){
+				usuario.setCodBanca(record.getCodBanca());
+			}
+			usuario.setCodigoUsuarioSession(usuarioSesion.getUID());
+			if(!codCargo.equals(Constant.RESET_COMBO)){
+				usuario.setCodCargoGPR(Constant.TABLA_CARGO_GPR+Constant.CHAR_GUION+codCargo);
+			}
 			return catalogoService.getLstUsuariosRiesgo(usuario);
 			
 		} catch (Exception e) {
@@ -68,7 +78,7 @@ public class AsignacionAction extends DispatchAction {
 	
 	public List<Solicitud> consultarSolicitudAjax(String codCentral, String nroSolicitud, 
 			   String fechaIngresoIni, String fechaIngresoFin, String fechaVencimiento, String usuario) throws Exception {
-
+		HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
 		Solicitud solicitudBean = new Solicitud();
 		if(codCentral!=null && !codCentral.equalsIgnoreCase(Constant.STR_VACIO)){
 		solicitudBean.setCodCentral(Constant.CHAR_PORCENTAJE+codCentral+Constant.CHAR_PORCENTAJE);
@@ -80,8 +90,14 @@ public class AsignacionAction extends DispatchAction {
 		solicitudBean.setFechaIngresoFin(UtilDate.stringToUtilDate(fechaIngresoFin, null));
 		}
 		solicitudBean.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD+Constant.CHAR_GUION+Constant.ESTADO_SOLICITUD_PENDIENTE);
+		IILDPeUsuario usuarioSesion = (IILDPeUsuario)request.getSession().getAttribute("USUARIO_SESION");
+		BancaSub subBancaBean = new BancaSub();
+		subBancaBean.setCodUsuario(usuarioSesion.getUID());
+		UsuarioSubanca bean= catalogoService.getSubancaPorUsuario(subBancaBean);
+		if(bean!=null){
+			solicitudBean.setCodBanca(bean.getCodBanca());
+		}
 		
-
 		try {
 		List<Solicitud> lstSolicitud=solicitudService.getLstSolicitudes(solicitudBean);
 		if(usuario.equals(Constant.STR_VACIO)){

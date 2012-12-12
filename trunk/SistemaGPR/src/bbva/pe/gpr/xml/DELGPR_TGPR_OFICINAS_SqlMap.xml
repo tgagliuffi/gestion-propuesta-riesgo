@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
 <sqlMap namespace="DELGPR_TGPR_OFICINAS" >
   <resultMap id="ibatorgenerated_BaseResultMap" class="bbva.pe.gpr.bean.Oficina" >
-    <result column="COD_OFICINA" property="codOficina" jdbcType="DECIMAL" />
+    <result column="COD_OFICINA" property="codOficina" jdbcType="VARCHAR" />
     <result column="COD_TERRITORIO" property="codTerritorio" jdbcType="DECIMAL" />
     <result column="NOMBRE" property="nombre" jdbcType="VARCHAR" />
     <result column="ESTADO" property="estado" jdbcType="DECIMAL" />
@@ -19,7 +19,7 @@
   </delete>
   <insert id="ibatorgenerated_insert" parameterClass="bbva.pe.gpr.bean.Oficina" >
     insert into DELGPR.TGPR_OFICINAS (COD_OFICINA, COD_TERRITORIO, NOMBRE, ESTADO, DIRECCION)
-    values (#codOficina:DECIMAL#, #codTerritorio:DECIMAL#, #nombre:VARCHAR#, #estado:DECIMAL#,
+    values (#codOficina:VARCHAR#, #codTerritorio:DECIMAL#, #nombre:VARCHAR#, #estado:DECIMAL#,
       #direccion:VARCHAR#)
   </insert>
   <insert id="ibatorgenerated_insertSelective" parameterClass="bbva.pe.gpr.bean.Oficina" >
@@ -45,7 +45,7 @@
     values
     <dynamic prepend="(" >
       <isNotNull prepend="," property="codOficina" >
-        #codOficina:DECIMAL#
+        #codOficina:VARCHAR#
       </isNotNull>
       <isNotNull prepend="," property="codTerritorio" >
         #codTerritorio:DECIMAL#
@@ -78,7 +78,7 @@
         DIRECCION = #direccion:VARCHAR#
       </isNotNull>
     </dynamic>
-    where COD_OFICINA = #codOficina:DECIMAL#
+    where COD_OFICINA = #codOficina:VARCHAR#
   </update>
   <update id="ibatorgenerated_updateByPrimaryKey" parameterClass="bbva.pe.gpr.bean.Oficina" >
     update DELGPR.TGPR_OFICINAS
@@ -86,15 +86,13 @@
       NOMBRE = #nombre:VARCHAR#,
       ESTADO = #estado:DECIMAL#,
       DIRECCION = #direccion:VARCHAR#
-    where COD_OFICINA = #codOficina:DECIMAL#
+    where COD_OFICINA = #codOficina:VARCHAR#
   </update>  
-  
-    <select id="getLstOficinasByCriteria" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.Oficina">
+  <select id="getLstOficinasByCriteria" resultMap="ibatorgenerated_BaseResultMap" parameterClass="bbva.pe.gpr.bean.Oficina">
   		SELECT *
   		FROM DELGPR.TGPR_OFICINAS
   		where 
 	    ( #codTerritorio:DECIMAL# IS NULL OR #codTerritorio:DECIMAL#=-1 OR COD_TERRITORIO = #codTerritorio:DECIMAL#) AND
 	    ( #estado:DECIMAL# IS NULL  OR ESTADO = #estado:DECIMAL#)
-	  </select> 
-  
+  </select>
 </sqlMap>
