@@ -118,7 +118,7 @@
             AND USB.ESTADO = 1 
             AND U.ESTADO = '1' 
             AND (#codCargoGPR:VARCHAR# IS NULL OR #codCargoGPR:VARCHAR#='' OR U.COD_CARGO_GPR like UPPER(#codCargoGPR:VARCHAR#))
-            AND U.CODIGO_USUARIO = #codigoUsuarioSession:VARCHAR# 
+          
             GROUP BY 
             U.CODIGO_USUARIO,
             U.NOMBRES, U.COD_CARGO_GPR, B.COD_BANCA

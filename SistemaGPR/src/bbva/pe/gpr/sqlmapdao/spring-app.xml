@@ -184,6 +184,7 @@
 			<constructor-arg index="5" ref="bancaDAO"></constructor-arg>
 			<constructor-arg index="6" ref="asignacionDAO"></constructor-arg>
 			<constructor-arg index="7" ref="multitablaDetalleDAO"></constructor-arg>
+			<constructor-arg index="8" ref="usuarioOficinaDAO"></constructor-arg>
 	</bean>
 	<bean id="asignacionServiceImpl" class="bbva.pe.gpr.serviceImpl.AsignacionServiceImpl">
 			<constructor-arg index="0" ref="asignacionDAO"></constructor-arg>

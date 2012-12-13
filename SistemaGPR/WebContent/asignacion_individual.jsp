@@ -51,9 +51,8 @@ $(function() {
 
 var myColNamesEval  = ['','Registro', 'Nombres', 'Cargo', 'Cantidad', 'Mto PerNatural','Mto Rating','Mto Sin Rating', 'Dependiente'];
 var myDataModelEval = [ 
-                  
-					{name : 'codigoUsuario',		index : 'codigoUsuario',  			width : VAL_WIDTH.VSMALL,    formatter:formatoRadio ,align:'center'},
-                    {name : 'codigoUsuario',		index : 'codigoUsuario', 			width : VAL_WIDTH.SMALL,		align:'center'},
+                  	{name : 'codigoUsuario',		index : 'codigoUsuario',  			width : VAL_WIDTH.VSMALL,   formatter:formatoRadio, align:'center'},
+                    {name : 'codigoUsuario',		index : 'codigoUsuario', 			width : VAL_WIDTH.SMALL,	align:'center'},
                     {name : 'nombres',				index : 'nombres',					width : 180		},
                     {name : 'desCargoGPR',			index : 'desCargoGPR', 				width : VAL_WIDTH.SMALL, 	align:'center'},
                     {name : 'cantidad',				index : 'cantidad', 				width : VAL_WIDTH.XLSMALL,	align:'center'},
@@ -81,6 +80,15 @@ var myDataModelSol =
                     {name : 'estado',					index : 'estado', 				width : VAL_WIDTH.XLSMALL,  	formatter: estadoFormat, sortable: false, align:'center'}
                
  ];
+ 
+function getListOficina(param){
+	alert();
+	jQuery("#listSolicitud").GridUnload();
+	AsignacionAction.consultarSolicitudPorUsuarioAjax(param, function(dataTable){
+		mostrarTablaSolicitud(dataTable);
+	});	
+			
+}
 
 function formartMonto(cellvalue, options, rowObject){
 	if(cellvalue=='-1'){
@@ -98,6 +106,10 @@ function formatoRadio(cellvalue, options, rowObject){
 function mostrarMensaje(valor){	
 	var formulario = document.getElementById('asigacionForm');
 	formulario.hdnRegistro.value= valor;
+	jQuery("#listSolicitud").GridUnload();
+	AsignacionAction.consultarSolicitudPorUsuarioAjax(valor, function(dataTable){
+		mostrarTablaSolicitud(dataTable);
+	});	
 }
 
 function estadoFormat(cellvalue, options, rowObject)
@@ -147,8 +159,7 @@ function consultarSolicitud(objeto){
 	jQuery("#listSolicitud").GridUnload();
 	AsignacionAction.consultarSolicitudAjax(codCentral,nroSolicitud,fechaIngresoIni,fechaIngresoFin, fechaVencimiento, objeto, function(dataTable){
 		mostrarTablaSolicitud(dataTable);
-	});
-			
+	});			
 }
 
 function consultarEvaluador(){	

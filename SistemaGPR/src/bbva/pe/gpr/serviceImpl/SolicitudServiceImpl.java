@@ -16,6 +16,7 @@ import bbva.pe.gpr.bean.SolicitudDetalle;
 import bbva.pe.gpr.bean.SolicitudMensaje;
 import bbva.pe.gpr.bean.SolicitudOperacion;
 import bbva.pe.gpr.bean.Usuario;
+import bbva.pe.gpr.bean.UsuarioOficina;
 import bbva.pe.gpr.dao.AsignacionDAO;
 import bbva.pe.gpr.dao.BancaDAO;
 import bbva.pe.gpr.dao.MultitablaDetalleDAO;
@@ -24,6 +25,7 @@ import bbva.pe.gpr.dao.SolicitudMensajeDAO;
 import bbva.pe.gpr.dao.SolicitudOperacionDAO;
 import bbva.pe.gpr.dao.SolicitudesDAO;
 import bbva.pe.gpr.dao.UsuarioDAO;
+import bbva.pe.gpr.dao.UsuarioOficinaDAO;
 import bbva.pe.gpr.service.SolicitudService;
 import bbva.pe.gpr.util.Constant;
 import bbva.pe.gpr.util.UtilGpr;
@@ -43,6 +45,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 	private BancaDAO bancaDAO;
 	private AsignacionDAO asignacionDAO;
 	private MultitablaDetalleDAO multitablaDetalleDAO;
+	private UsuarioOficinaDAO usuarioOficinaDAO;
 	
 	public SolicitudServiceImpl(
 			SolicitudesDAO solicitudesDAO,
@@ -52,7 +55,8 @@ public class SolicitudServiceImpl implements SolicitudService{
 			UsuarioDAO usuarioDAO,
 			BancaDAO bancaDAO,
 			AsignacionDAO asignacionDAO,
-			MultitablaDetalleDAO multitablaDetalleDAO
+			MultitablaDetalleDAO multitablaDetalleDAO,
+			UsuarioOficinaDAO usuarioOficinaDAO
 			) {
 		super();
 		this.solicitudesDAO=solicitudesDAO;
@@ -63,8 +67,9 @@ public class SolicitudServiceImpl implements SolicitudService{
 		this.usuarioDAO=usuarioDAO;
 		this.asignacionDAO=asignacionDAO;
 		this.multitablaDetalleDAO=multitablaDetalleDAO;
-		// TODO Auto-generated constructor stub
+		this.usuarioOficinaDAO=usuarioOficinaDAO;
 	}
+	
 	public String validaGrupoPersona(String tipoPersona, String numDocumento, String rating){
 		String rpta=Constant.STR_VACIO;
 		if(tipoPersona.equals(Constant.TABLA_NATURALEZA+Constant.CHAR_GUION+Constant.PERSONA_JURIDICA)){
@@ -269,12 +274,42 @@ public class SolicitudServiceImpl implements SolicitudService{
 	}
 	
 	public List<Solicitud> getLstSolicitudes(Solicitud solicitudBean) throws Exception{
+		if(solicitudBean.getUsuarioAsignacion()!=null){
+			ArrayList<String> inOficinas = getLstOficinasByUsuario(solicitudBean.getUsuarioAsignacion());
+			if(inOficinas!=null){
+				solicitudBean.setStrLstOficinas(inOficinas);
+			}else{
+				return new  ArrayList<Solicitud>();
+			}
+		}
 		return solicitudesDAO.getLstSolicitudes(solicitudBean);
+	}
+	
+	public ArrayList<String> getLstOficinasByUsuario(String codUsuario) throws Exception{
+		UsuarioOficina usuarioOficinaBean = new UsuarioOficina();
+		String strOficinas = Constant.STR_VACIO;
+		usuarioOficinaBean.setCod_usuario(codUsuario);
+		usuarioOficinaBean.setEstado(Constant.ESTADO_ACTIVO);
+		List<UsuarioOficina> lstUsuarioOficina = usuarioOficinaDAO.getLstOficinasByUsuario(usuarioOficinaBean);
+		List<String> list = null;
+		if(lstUsuarioOficina != null){
+			list = new ArrayList<String>();
+			for (UsuarioOficina usuarioOficina : lstUsuarioOficina) {
+				list.add(usuarioOficina.getCod_oficina());
+			}
+			if(!strOficinas.equals(Constant.STR_VACIO)){
+				strOficinas =  strOficinas.substring(0, strOficinas.length()-1);
+			}
+			
+		}
+		
+		return (ArrayList<String>) list;
 	}
 	
 	public List<SolicitudDetalle> getListSolicitudDetalleForId(Solicitud idsolicitud) throws Exception {
 		return solicitudDetalleDAO.getListSolicitudDetalleForId(idsolicitud);
 	}
+	
 	public String changeMtoTotalRowAjax(String value, String pMtoGarantia, HttpServletRequest oRequest)throws Exception{
 		BigDecimal bigValue = new BigDecimal(0);
 		BigDecimal bigMtoGarantia = new BigDecimal(0);

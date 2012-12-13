@@ -454,8 +454,10 @@ public class IngresoSolicitudAction extends DispatchAction {
 		solicitudDetalleBean.setCodCampania(new BigDecimal(solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[0]).compareTo(new BigDecimal(-1))==0?null:new BigDecimal(solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[0]));	
 		}
 		solicitudDetalleBean.setDesCampania(solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[1]!=null || solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[0].equals("-1")?"":solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[1]);
-		solicitudDetalleBean.setTipo(Constant.TABLA_TIPOS+solicitudForm.getDesTipo().split(Constant.CHAR_CONCAT)[0]);
-		solicitudDetalleBean.setDesTipo(Constant.TABLA_TIPOS+solicitudForm.getDesTipo().split(Constant.CHAR_CONCAT)[1]);
+		
+		solicitudDetalleBean.setTipo(solicitudForm.getDesTipo().split(Constant.CHAR_CONCAT)[0].equals(Constant.RESET_COMBO)?null:Constant.TABLA_TIPOS+solicitudForm.getDesTipo().split(Constant.CHAR_CONCAT)[0]);
+		solicitudDetalleBean.setDesTipo(solicitudDetalleBean.getTipo()!=null?Constant.TABLA_TIPOS+solicitudForm.getDesTipo().split(Constant.CHAR_CONCAT)[1]:null);
+		
 		solicitudDetalleBean.setMtoProducto(new BigDecimal(solicitudForm.getMtoProducto()));
 		solicitudDetalleBean.setPlazo(Integer.parseInt(solicitudForm.getPlazo()));
 		solicitudDetalleBean.setMtoGarantia(new BigDecimal(solicitudForm.getMtoGarantia().split(Constant.CHAR_CONCAT)[0]));
@@ -677,6 +679,13 @@ public class IngresoSolicitudAction extends DispatchAction {
 		 }
 	}
 	
+	public List<SolicitudDetalle> removeListProduct(){
+		 HttpServletRequest oRequest = WebContextFactory.get().getHttpServletRequest();
+		 if(oRequest.getSession().getAttribute("lstDetalleProdSession")!=null){
+			 oRequest.getSession().removeAttribute("lstDetalleProdSession");
+		 }
+		 return new ArrayList<SolicitudDetalle>();
+	}
 
 	@SuppressWarnings("unchecked")
 	public String setIndice(){

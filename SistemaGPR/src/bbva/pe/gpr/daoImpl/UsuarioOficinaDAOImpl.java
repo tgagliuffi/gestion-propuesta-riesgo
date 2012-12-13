@@ -32,7 +32,7 @@ public class UsuarioOficinaDAOImpl extends SqlMapClientDaoSupport implements Usu
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<UsuarioOficina> getLstOficinasByUsuario(UsuarioOficina oficinaAsignada) {
-		return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_USUARIO_OFICINA.getLstOficinasByCriteria", oficinaAsignada);
+	public List<UsuarioOficina> getLstOficinasByUsuario(UsuarioOficina oficinaAsignada)throws Exception {
+		return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_USUARIO_OFICINA.getLstOficinasByUsuario", oficinaAsignada);
 	}
 }

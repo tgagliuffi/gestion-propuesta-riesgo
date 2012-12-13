@@ -61,6 +61,6 @@ public class BancaDAOImpl extends SqlMapClientDaoSupport implements BancaDAO {
     
     @SuppressWarnings("unchecked")
 	public List<BancaSub> getLstSubBancaPorBanca(BancaSub bancaSub){
-    	return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_BANCAS.getLstSubBancaPorBanca", bancaSub); 	
+    	return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_BANCAS.getSubancaPorBanca", bancaSub); 	
     }
 }
