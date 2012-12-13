@@ -601,10 +601,12 @@ function deleteProducto(){
 	}
 }
 
-function changeBankListProducts(obj){
+function changeSubanca(obj){
 	var formulario = document.getElementById('formSolicitudIngreso');
 	formulario.hdnSubBanca.value = obj.value;
-	var codBanca = formulario.codBanca.value;
+}
+function changeBankListProducts(obj){
+	var codBanca = obj.value;
 	if(valBancaGeneric == ''){
 		valBancaGeneric = codBanca;
 	}else if(valBancaGeneric != codBanca){
@@ -614,10 +616,11 @@ function changeBankListProducts(obj){
 	  	if(filas.length > 1){
 	  		var ans = confirm('Se cambio la banca seleccionada, se eliminarán los registros agregados. ¿Esta seguro que desea continuar?');
 			if(ans){
-				//frk: aca se limpia la grilla para volver añadir los 
-				//registros relacionados a la nueva banca en seleccion
 				valBancaGeneric = obj.value;
-				consultarProductos('','');
+				jQuery("#listProducts").GridUnload();
+				IngresoSolicitudAction.removerListaAjax(function(data){
+					mostrarTabla(data);
+				});
 			}else{
 				obj.value = valBancaGeneric;
 				
@@ -752,8 +755,7 @@ function update(parametro){
 		}
 }
 
-function changeBancSubBanca(codBanca, codSubBanca){
-	
+function changeBancSubBanca(codBanca, codSubBanca){	
 	var formulario = document.getElementById('formSolicitudIngreso');
 	formulario.hdnBanca.value = codBanca;
 	 IngresoSolicitudAction.getLstSubBanca(codBanca, function(data) {
@@ -769,7 +771,7 @@ function setValueComboBox(value){
 	 $("#subBanca").val(value);
 }
 function setSubBanca(){
-	
+	debugger;
 	var formulario = document.getElementById('formSolicitudIngreso');
 	if(formulario.hdnBanca.value!='-1' && formulario.hdnBanca.value!=''){
 		var banca = formulario.hdnBanca.value;
@@ -1038,7 +1040,7 @@ function setSubBanca(){
 	<tr>
        <td align="left" valign="middle">
        <font class="fontText">Banca *</font>&nbsp;
-       <html:select property="codBanca" styleId="codBanca" onchange="changeBancSubBanca(this.value, null);">
+       <html:select property="codBanca" styleId="codBanca" onchange="changeBancSubBanca(this.value, null);changeBankListProducts(this);">
 				<html:option value="-1" >[   SELECCIONE   ]</html:option>
 				<c:if test="${lstBancas != null}">
 					<c:forEach var="banca" items="${lstBancas}">
@@ -1051,7 +1053,7 @@ function setSubBanca(){
 	   </td>
 	    <td align="left" valign="middle">
        <font class="fontText">Sub Banca *</font>&nbsp;
-       <html:select property="subBanca" styleId="subBanca" onchange="changeBankListProducts(this);">
+       <html:select property="subBanca" styleId="subBanca" onchange="changeSubanca(this);">
 				<html:option value="-1" >[   SELECCIONE   ]</html:option>
 			</html:select>
 	   </td>

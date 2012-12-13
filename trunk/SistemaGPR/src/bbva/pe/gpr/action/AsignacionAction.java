@@ -149,5 +149,30 @@ public class AsignacionAction extends DispatchAction {
 		return mapping.findForward("success");
 				
 	}
+	
+	public List<Solicitud> consultarSolicitudPorUsuarioAjax(String codUsuarioAsignacion) throws Exception {
+		HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+		Solicitud solicitudBean = new Solicitud();
+		solicitudBean.setEstadoSolicitud(Constant.TABLA_ESTADOS_SOLCITUD+Constant.CHAR_GUION+Constant.ESTADO_SOLICITUD_PENDIENTE);
+		
+		IILDPeUsuario usuarioSesion = (IILDPeUsuario)request.getSession().getAttribute("USUARIO_SESION");
+		
+		BancaSub subBancaBean = new BancaSub();
+		subBancaBean.setCodUsuario(usuarioSesion.getUID());
+		UsuarioSubanca bean= catalogoService.getSubancaPorUsuario(subBancaBean);
+		
+		if(bean!=null){
+			solicitudBean.setCodBanca(bean.getCodBanca());
+		}
+		solicitudBean.setUsuarioAsignacion(codUsuarioAsignacion);
+		try {
+			List<Solicitud> lstSolicitud=solicitudService.getLstSolicitudes(solicitudBean);
+			return lstSolicitud;
+		} catch (Exception e) {
+			logger.error("BusquedaSolicitudAction.consultarSolicitudAjax " +e);
+		}
+		return new  ArrayList<Solicitud>();
+	}
+	
 
 }

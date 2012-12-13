@@ -46,7 +46,17 @@ public class LogConfiguratorListener implements ServletContextListener {
 		prop.setProperty("log4j.appender.LOGFILE.append", "true");
 		prop.setProperty("log4j.appender.LOGFILE.layout", "org.apache.log4j.PatternLayout");
 		prop.setProperty("log4j.appender.LOGFILE.layout.ConversionPattern", "[%d{yyyy-MM-dd HH:mm:ss}] - [%5p] (%C{1}.%M:%L) - %m%n");
-	
+		
+		prop.setProperty("log4j.logger","com.ibatis = DEBUG");
+		prop.setProperty("log4j.logger","com.ibatis.común.jdbc.SimpleDataSource = DEBUG");
+		prop.setProperty("log4j.logger","com.ibatis.común.jdbc.ScriptRunner = DEBUG");
+		prop.setProperty("log4j.logger","com.ibatis.SQL Map.motor.impl.SQL MapClientDelegate = DEBUG");
+				    
+		prop.setProperty("log4j.logger","com.ibatis = DEBUG");
+		prop.setProperty("log4j.logger","java.sql.Conexión = DEBUG");
+		prop.setProperty("log4j.logger","java.sql.Declaración = DEBUG");
+		prop.setProperty("log4j.logger","java.sql.PreparedStatement = DEBUG");
+		prop.setProperty("log4j.logger","java.sql.ResultSet = DEBUG");
 		PropertyConfigurator.configure(prop);
 	
 		System.out.println("Log configurated!");

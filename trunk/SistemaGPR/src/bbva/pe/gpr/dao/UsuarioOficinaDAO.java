@@ -11,4 +11,5 @@ public interface UsuarioOficinaDAO {
 	void saveOficinaAsignada(UsuarioOficina oficinaAsignada);
 	void deleteOficinaAsignada(String codOficina);
 	String getOficinaAsignadaExiste(UsuarioOficina oficinaAsignada );
+	List<UsuarioOficina> getLstOficinasByUsuario(UsuarioOficina oficinaAsignada) throws Exception;
 }
