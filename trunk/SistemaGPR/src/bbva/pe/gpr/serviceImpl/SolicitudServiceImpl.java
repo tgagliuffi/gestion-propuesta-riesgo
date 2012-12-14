@@ -275,7 +275,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 	
 	public List<Solicitud> getLstSolicitudes(Solicitud solicitudBean) throws Exception{
 		if(solicitudBean.getUsuarioAsignacion()!=null){
-			ArrayList<String> inOficinas = getLstOficinasByUsuario(solicitudBean.getUsuarioAsignacion());
+			List<String> inOficinas = getLstOficinasByUsuario(solicitudBean.getUsuarioAsignacion());
 			if(inOficinas!=null){
 				solicitudBean.setStrLstOficinas(inOficinas);
 			}else{
@@ -285,7 +285,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 		return solicitudesDAO.getLstSolicitudes(solicitudBean);
 	}
 	
-	public ArrayList<String> getLstOficinasByUsuario(String codUsuario) throws Exception{
+	public List<String> getLstOficinasByUsuario(String codUsuario) throws Exception{
 		UsuarioOficina usuarioOficinaBean = new UsuarioOficina();
 		String strOficinas = Constant.STR_VACIO;
 		usuarioOficinaBean.setCod_usuario(codUsuario);

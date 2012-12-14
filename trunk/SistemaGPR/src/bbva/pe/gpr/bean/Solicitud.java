@@ -2,7 +2,6 @@ package bbva.pe.gpr.bean;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -81,7 +80,7 @@ public class Solicitud implements Serializable {
     
     private String codUsuarioSession;
     private String nomUsuarioSession;
-    private ArrayList<String> strLstOficinas;
+    private List<String> strLstOficinas;
     private String usuarioAsignacion; 
     
 	public Long getNroSolicitud() {
@@ -477,10 +476,10 @@ public class Solicitud implements Serializable {
 	public String getUsuarioAsignacion() {
 		return usuarioAsignacion;
 	}
-	public ArrayList<String> getStrLstOficinas() {
+	public List<String> getStrLstOficinas() {
 		return strLstOficinas;
 	}
-	public void setStrLstOficinas(ArrayList<String> strLstOficinas) {
+	public void setStrLstOficinas(List<String> strLstOficinas) {
 		this.strLstOficinas = strLstOficinas;
 	}
 	public void setUsuarioAsignacion(String usuarioAsignacion) {
