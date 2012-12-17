@@ -33,4 +33,12 @@ public class GerenteOficinaDAOImpl extends SqlMapClientDaoSupport implements
 		if(record==null){ return "";}else
 	    return record.getCodigoUsuario();	
 	    }
+	
+	public String getCargoChekSolicitud(String codUsuario) throws Exception{
+		if(!getSqlMapClientTemplate().queryForList("DELGPR_TGPR_RIESGOS.getCargoChekSolicitud", codUsuario).isEmpty()){
+			return getSqlMapClientTemplate().queryForList("DELGPR_TGPR_RIESGOS.getJefeInmediatoRiesgo", codUsuario).get(0).toString();
+		}else{
+			return "";
+		}
+	}
 }

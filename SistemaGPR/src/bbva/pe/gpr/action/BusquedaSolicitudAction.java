@@ -20,6 +20,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.actions.DownloadAction.StreamInfo;
+import org.directwebremoting.WebContextFactory;
+
+import com.grupobbva.bc.per.tele.ldap.serializable.IILDPeUsuario;
 
 import bbva.pe.gpr.bean.Asignacion;
 import bbva.pe.gpr.bean.Banca;
@@ -81,6 +84,12 @@ public class BusquedaSolicitudAction extends DispatchAction {
 					solicitudBean.setRelevPublica4(solicitudBean.getReelevancia().length()>=12?(catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_RELEVANCIA_PUBLICA, solicitudBean.getReelevancia().substring(9, 12))!=null?catalogoService.selectMultitablaDTByPrimaryKey(Constant.TABLA_RELEVANCIA_PUBLICA, solicitudBean.getReelevancia().substring(9, 12)).getStrValor():Constant.STR_VACIO):Constant.STR_VACIO);
 				
 				}request.setAttribute("Solicitud", solicitudBean);
+				if(request.getParameter("flag")!=null){
+					String flag = request.getParameter("flag").toString();
+					if(flag.equals("1")){
+						request.setAttribute("flagChkSubGerente", true);
+					}
+				}
 			}
 			
 		}catch (Exception e) {
@@ -287,5 +296,46 @@ public class BusquedaSolicitudAction extends DispatchAction {
 			e.printStackTrace();
 		}
 		return lstSubBanca;
+	}
+	
+	public String updateChkSubGerente(String nroSolicitud) throws Exception {  
+		 HttpServletRequest oRequest = WebContextFactory.get().getHttpServletRequest();
+		 IILDPeUsuario usuarioSesion = (IILDPeUsuario)oRequest.getSession().getAttribute("USUARIO_SESION");
+		String strMensaje = "";	
+		try {
+			if(!catalogoService.getCargoChekSolicitud(usuarioSesion.getUID()).equals(Constant.STR_VACIO)){
+				if(solicitudService.updateChkSubGerente(nroSolicitud)>0){
+					strMensaje = "Se ha actualizado exitosamente el registro.";
+					return strMensaje;	
+				}else{
+					strMensaje = "Sucedio un error en la anulación";
+					return strMensaje;
+				}
+			}else{
+				strMensaje = "Usuario sin privilegios para realizar esta acción.";
+				return strMensaje;	
+			}
+			
+				
+			}catch (Exception e) {
+				logger.error("BusquedaSolicitudAction.updateChkSubGerente " +e);		
+			}
+			return strMensaje;
+	}
+	
+	public String getEstadoCheckSolicitud(String nroSolicitud) throws Exception {  
+		try {
+			Solicitud solicitudBean = solicitudService.getSolicitudByNro(new Long(nroSolicitud));
+			if(solicitudBean!=null){
+				if(solicitudBean.getRevisadoSubGerente().compareTo(new BigDecimal(0))==0){
+					return "0";
+				}else{
+					return "1";
+				}
+			}
+		}catch (Exception e) {
+				logger.error("BusquedaSolicitudAction.getEstadoCheckSolicitud " +e);		
+			}
+			return  "0";
 	}
 }

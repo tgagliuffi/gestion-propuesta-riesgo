@@ -8,7 +8,7 @@ public interface SolicitudesDAO {
 		int deleteByPrimaryKey(Long nroSolicitud);
 		Long insert(Solicitud record);
 		Long insertSelective(Solicitud record);
-		Solicitud selectByPrimaryKey(Long nroSolicitud);
+		Solicitud selectByPrimaryKey(Long nroSolicitud) throws Exception;
 		int updateByPrimaryKeySelective(Solicitud record);
 		int updateByPrimaryKey(Solicitud record);
 		List<Solicitud> getLstSolicitudBandeja(Solicitud solicitudBean);

@@ -24,6 +24,7 @@ import bbva.pe.gpr.bean.Campania;
 import bbva.pe.gpr.bean.Contrato;
 import bbva.pe.gpr.bean.MultitablaDetalle;
 import bbva.pe.gpr.bean.Producto;
+import bbva.pe.gpr.bean.ProductoBase;
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.SolicitudDetalle;
 import bbva.pe.gpr.context.Context;
@@ -447,7 +448,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 		SolicitudForm solicitudForm =(SolicitudForm)form;
 		solicitudDetalleBean.setCodProducto(new BigDecimal(solicitudForm.getDesProducto().split(Constant.CHAR_CONCAT)[0]));
 		solicitudDetalleBean.setDesProducto(solicitudForm.getDesProducto().split(Constant.CHAR_CONCAT)[1]);
-		solicitudDetalleBean.setCodProdBase(solicitudForm.getDesProducto().split(Constant.CHAR_CONCAT)[0]);
+		solicitudDetalleBean.setReferenciaProdBase(solicitudForm.getCodProdBase().split(Constant.CHAR_CONCAT)[0]);
 		solicitudDetalleBean.setContratoVinculado(solicitudForm.getContratoVinculado()!=null && !solicitudForm.getContratoVinculado().equals("|")?solicitudForm.getContratoVinculado().split(Constant.CHAR_CONCAT)[1]:null);
 		solicitudDetalleBean.setCodPrevaluador(solicitudForm.getCodPreEvaluador());
 		if(solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[0]!=null){
@@ -597,18 +598,20 @@ public class IngresoSolicitudAction extends DispatchAction {
 		return lstTipo;
 	}
 
-	public BigDecimal getProductoBaseAjax(BigDecimal codProducto){
+	public String getProductoBaseAjax(BigDecimal codProducto){
 		Producto productoBean = new Producto();
 		try {
 			productoBean = catalogoService.selectProductoByPrimaryKey(codProducto);
 			if(productoBean!=null){
 				if(productoBean.getCodProductoBase()!=null){
-				return productoBean.getCodProductoBase();}
+					ProductoBase productoBaseBean = catalogoService.selectProductoBasePrimaryKey(productoBean.getCodProductoBase());
+				//En lugar del producto Base se obtendra el campo referencia
+				return productoBaseBean.getReferencia();}
 			}
 		} catch (Exception e) {
 			logger.error(e);
 		}
-		return new BigDecimal(0);
+		return "";
 	}
 	
 	public String changeMtoTotalRowAjax(String value, String pMtoGarantia){
