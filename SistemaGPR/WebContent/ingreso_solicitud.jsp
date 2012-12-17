@@ -62,18 +62,17 @@ optionDialog = {
 }; 
 	
 $(function() {
-	
 	$("#tabsPrincipal").tabs();
     $("#fechaIngreso").datepicker({dateFormat: 'dd/mm/yy'});
     $("#dialog-form").dialog(optionDialog);
 });
+
 function ocultarElementByID(id,tiempo){
 	setTimeout("document.getElementById('"+id+"')!=null?document.getElementById('"+id+"').style.display='none':document.getElementById('"+id+"');", tiempo);
 }
 	ocultarElementByID('divError',4000);
 	ocultarElementByID('divAlerta',10000);
 	ocultarElementByID('divExito',10000);
-
 
 <%
 //frk: Parametros con los cuales identificaremos que acción se esta realizando
@@ -99,30 +98,30 @@ $(document).keyup(function(e) {
 		  deleteTblRowAdded('listProducts');
 	  }
 	});
-var myColNames  = ['','','','','', 'Descripción Producto', 'Producto Base','Contrato Vinculado', 'Scoring',  'Cod. Pre Evaluador', 'Campaña', 'Tipo', 'Mto Solicitado', 'Plazo (Meses)', 'Mto Garantizado', 'Total'];
+var myColNames  = ['','','','','', 'Descripción Producto','','Contrato Vinculado', 'Scoring',  'Cod. Pre Evaluador', 'Campaña', 'Tipo', 'Mto Solicitado', 'Plazo (Meses)', 'Mto Garantizado', 'Total'];
 var myDataModel = [
                    { name : 'codProducto',			index : 'codProducto', 			editable:true,	editrules: {edithidden:true, required:true}, hidden:true},
                    { name : 'indice',				index : 'indice', 				editable:true,  hidden:true},
-                   { name : 'valBanca',				index : 'valBanca', 			width : 140, 				editable:true,	editrules: {edithidden:true}, hidden:true},
-                   { name : 'valMoneda',			index : 'valMoneda', 			width : 140, 				editable:true,	editrules: {edithidden:true}, hidden:true},
-                   { name : 'valMontoTotal',		index : 'valMontoTotal', 		width : 140, 				editable:true,	editrules: {edithidden:true}, hidden:true},
-                   { name : 'desProducto',			index : 'desProducto', 			width : 210, 				editable:true,	edittype:'custom', 	editoptions: {custom_element: desProductoElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: desProductoFormat, unformat: genericUnFormat},                 
-                   { name : 'codProdBase',			index : 'codProdBase', 			width : 92,					editable:true, 	edittype:'text', 	formatoptions: { disabled: false }, editoptions: {size:12, maxlength: 5, readonly: 'readonly'}, editrules: {required: true}, align : 'center'},
-                   { name : 'contratoVinculado',	index : 'contratoVinculado',	width : 230,		 		editable:true,	edittype:'custom',  editoptions: {custom_element: contratoVincElementCustom, custom_value: genericComboValueCustom}, editrules:   {required: true}, align : 'center', formatter: contratoVincFormat, unformat: genericUnFormat},
-                   { name : 'scoring',				index : 'scoring', 				width : 90,  				editable:true,	edittype:'text', 	editoptions: {size:10, maxlength: 40, readonly: 'readonly'}, align : 'center'},
-                   { name : 'codPreEvaluador',		index : 'codPreEvaluador', 		width : 140, 				editable:true,	edittype:'text', 	editoptions: {style: 'background-color: #F2F5A9', size:15, maxlength: 20, dataEvents: [{ type: 'blur',     fn: function (){ blurChangeColor(this);}}, 
+                   { name : 'valBanca',				index : 'valBanca', 			width : 140, 	editable:true,	editrules: {edithidden:true}, hidden:true},
+                   { name : 'valMoneda',			index : 'valMoneda', 			width : 140, 	editable:true,	editrules: {edithidden:true}, hidden:true},
+                   { name : 'valMontoTotal',		index : 'valMontoTotal', 		width : 140, 	editable:true,	editrules: {edithidden:true}, hidden:true},
+                   { name : 'desProducto',			index : 'desProducto', 			width : 210, 	editable:true,	edittype:'custom', 	editoptions: {custom_element: desProductoElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: desProductoFormat, unformat: genericUnFormat},                 
+                   { name : 'codProdBase',			index : 'codProdBase', 			editable:true,	hidden:true},
+                   { name : 'contratoVinculado',	index : 'contratoVinculado',	width : 230,	editable:true,	edittype:'custom',  editoptions: {custom_element: contratoVincElementCustom, custom_value: genericComboValueCustom}, editrules:   {required: true}, align : 'center', formatter: contratoVincFormat, unformat: genericUnFormat},
+                   { name : 'scoring',				index : 'scoring', 				width : 90,  	editable:true,	edittype:'text', 	editoptions: {size:10, maxlength: 40, readonly: 'readonly'}, align : 'center'},
+                   { name : 'codPreEvaluador',		index : 'codPreEvaluador', 		width : 140, 	editable:true,	edittype:'text', 	editoptions: {style: 'background-color: #F2F5A9', size:15, maxlength: 20, dataEvents: [{ type: 'blur',     fn: function (){ blurChangeColor(this);}}, 
                 	   																																																					   { type: 'change',   fn: function (){ changeCodPreEvaludador(this.value);}}]}, align : 'center'},
-                   { name : 'desCampania',			index : 'desCampania', 			width : 180, 				editable:true,	edittype:'custom', 	editoptions: {custom_element: campaniaElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: campaniaFormat, unformat: genericUnFormat},
-                   { name : 'desTipo',				index : 'desTipo', 				width : 180, 				editable:true,	edittype:'custom', 	editoptions: {custom_element: tipoElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: tipoFormat, unformat: genericUnFormat},
-                   { name : 'mtoProducto',			index : 'mtoProducto', 			width : 140, 				editable:true,	edittype:'text', 	editoptions: {size:14, maxlength: 18, style: 'text-align: right; background-color: #F2F5A9', dataEvents: [ { type: 'change',   fn: function (){ getMonto(this.value, 1);}}, 
+                   { name : 'desCampania',			index : 'desCampania', 			width : 180, 	editable:true,	edittype:'custom', 	editoptions: {custom_element: campaniaElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: campaniaFormat, unformat: genericUnFormat},
+                   { name : 'desTipo',				index : 'desTipo', 				width : 180, 	editable:true,	edittype:'custom', 	editoptions: {custom_element: tipoElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: tipoFormat, unformat: genericUnFormat},
+                   { name : 'mtoProducto',			index : 'mtoProducto', 			width : 140, 	editable:true,	edittype:'text', 	editoptions: {size:14, maxlength: 18, style: 'text-align: right; background-color: #F2F5A9', dataEvents: [ { type: 'change',   fn: function (){ getMonto(this.value, 1);}}, 
                                           			                       			            				              	                 	                                                                                                           { type: 'keypress', fn: function (){ ingresoNumeros(event);}}, 	
                                           			                       			            				              	                 	                                                                                                  		   { type: 'blur',     fn: function (){ blurChangeColor(this);format(this.value);}}]}, editrules: {required: true, number: true, minValue: 0}, align : 'right'},
-                   { name : 'plazo',			    index : 'plazo', 				width : 90, 				editable:true,	edittype:'text', 	editoptions: {size:12, maxlength: 15, style: 'text-align: right; background-color: #F2F5A9', dataEvents: [ { type: 'keypress', fn: function (){ ingresoNumeros(event);}},
+                   { name : 'plazo',			    index : 'plazo', 				width : 90, 	editable:true,	edittype:'text', 	editoptions: {size:12, maxlength: 15, style: 'text-align: right; background-color: #F2F5A9', dataEvents: [ { type: 'keypress', fn: function (){ ingresoNumeros(event);}},
                                     			                     				            				              	                 	                                                                                                           { type: 'blur',     fn: function (){ blurChangeColor(this);}}]}, editrules: {required: true, integer: true, minValue: 0, maxValue: 999999}, align : 'right'},
-                   { name : 'mtoGarantia',			index : 'mtoGarantia', 			width : 140, 				editable:true,	edittype:'text', 	editoptions: {style: 'text-align: right; text-align: right; background-color: #F2F5A9', size:14, maxlength: 19, dataEvents: [{ type: 'change', fn: function (){ getMonto(this.value, 2);}},
+                   { name : 'mtoGarantia',			index : 'mtoGarantia', 			width : 140, 	editable:true,	edittype:'text', 	editoptions: {style: 'text-align: right; text-align: right; background-color: #F2F5A9', size:14, maxlength: 19, dataEvents: [{ type: 'change', fn: function (){ getMonto(this.value, 2);}},
                                           			                       			             				              	                 	                                                                                                                             { type: 'keypress', fn: function (){ ingresoNumeros(event);}},
                                           			                       			             				              	                 	                                                                                                                    		 { type: 'blur',     fn: function (){ blurChangeColor(this);}}]}, align : 'right'},
-                   { name : 'mtoTotalRow',			index : 'mtoTotalRow', 			width : 90, 				editable:true,	edittype:'text', 	editoptions: {style: 'text-align: right; text-align: right', size:14, maxlength: 19, readonly: 'readonly'}, 	editrules: {required: true, number: true, minValue: 0}, align : 'right'}
+                   { name : 'mtoTotalRow',			index : 'mtoTotalRow', 			width : 90, 	editable:true,	edittype:'text', 	editoptions: {style: 'text-align: right; text-align: right', size:14, maxlength: 19, readonly: 'readonly'}, 	editrules: {required: true, number: true, minValue: 0}, align : 'right'}
                              
                    ];
 var myColSolicituDetalle  = [ 'Descripción Producto', 'Producto Base','Contrato Vinculado', 'Scoring',  'Cod. Pre Evaluador', 'Campaña', 'Tipo', 'Monto Solicitado', 'Plazo (Meses)', 'Monto Garantizado', 'Total'];
@@ -462,7 +461,7 @@ function mostrarTabla(data){
 		caption		: "Listado de Productos",
 		data 	 	: data,
 		datatype 	: "local",
-		height   	: "100%",
+		height   	: 120,
 		weight 	 	: 1000,
 		colNames 	: myColNames,
 		colModel 	: myDataModel,
@@ -771,7 +770,6 @@ function setValueComboBox(value){
 	 $("#subBanca").val(value);
 }
 function setSubBanca(){
-	debugger;
 	var formulario = document.getElementById('formSolicitudIngreso');
 	if(formulario.hdnBanca.value!='-1' && formulario.hdnBanca.value!=''){
 		var banca = formulario.hdnBanca.value;
@@ -796,7 +794,8 @@ function setSubBanca(){
 	<input type="hidden" id="hdnBanca" name="hdnBanca" value='${solicitudForm.hdnBanca}'></input>
 	<input type="hidden" id="hdnStrMensaje" name="hdnStrMensaje" value='${solicitudForm.hdnStrMensaje}'></input>
 	<input type="hidden" id="reelevancia" name="reelevancia" value='${solicitudForm.reelevancia}'></input>
-	<input type="hidden" id="condicion" name=condicion value=''></input>	
+	<input type="hidden" id="condicion" name="condicion" value=''></input>
+	<input type="hidden" id="referencia" name="referencia" value=''></input>	
 	
 	<%if(asigPrioridadIndividual != null){%>
 	<br/>
