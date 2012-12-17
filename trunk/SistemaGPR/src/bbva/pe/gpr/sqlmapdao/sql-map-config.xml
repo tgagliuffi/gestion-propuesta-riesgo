@@ -18,6 +18,7 @@
 		<sqlMap resource="bbva/pe/gpr/xml/DELGPR_TGPR_OFICINAS_SqlMap.xml"/>
 		<sqlMap resource="bbva/pe/gpr/xml/DELGPR_TGPR_USUARIO_ROLES_SqlMap.xml"/> 
 		<sqlMap resource="bbva/pe/gpr/xml/DELGPR_TGPR_PRODUCTOS_SqlMap.xml"/>
+		<sqlMap resource="bbva/pe/gpr/xml/DELGPR_TGPR_PRODUCTO_BASES_SqlMap.xml"/>
 		<sqlMap resource="bbva/pe/gpr/xml/DELGPR_TGPR_ROLES_SqlMap.xml"/>
 		<sqlMap resource="bbva/pe/gpr/xml/DELGPR_TGPR_SOLICITUDES_SqlMap.xml"/>
 		<sqlMap resource="bbva/pe/gpr/xml/DELGPR_TGPR_SOLICITUD_OPERACIONES_SqlMap.xml"/>
