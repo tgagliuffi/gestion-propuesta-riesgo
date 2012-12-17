@@ -11,6 +11,7 @@ public class Constant {
 	public static final String MULT_PROCESO_DICTAMINAR = "4";
 	public static final String MULT_PROCESO_PRIORIZAR = "5";
 	public static final String MULT_PROCESO_ANULAR = "6";
+	public static final String MULT_PROCESO_REVISADO = "7";
 	
 	public static final BigDecimal ESTADO_ACTIVO = new BigDecimal(1);
 	public static final BigDecimal ESTADO_INACTIVO = new BigDecimal(0);
