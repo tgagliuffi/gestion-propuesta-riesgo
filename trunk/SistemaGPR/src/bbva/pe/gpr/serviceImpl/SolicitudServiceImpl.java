@@ -447,4 +447,26 @@ public class SolicitudServiceImpl implements SolicitudService{
 	 public List<SolicitudMensaje> getListMessagesAjax(SolicitudMensaje record)throws Exception{
 		 return solicitudMensajeDAO.getListMessagesAjax(record);
 	 }
+	 
+	 public int updateChkSubGerente(String nroSolicitud) throws Exception{
+			int result = 0; 	
+			Solicitud solicitudBean = new Solicitud();
+			solicitudBean.setNroSolicitud(new Long(nroSolicitud));
+			solicitudBean.setRevisadoSubGerente(new BigDecimal(1));
+			if(solicitudesDAO.updateByPrimaryKeySelective(solicitudBean)>0){
+				//TODO: INSERTANDO OPERACION
+				ingresaSolicitudOperacion(solicitudBean, Constant.TABLA_PROCESO, Constant.MULT_PROCESO_REVISADO);
+				//TODO INSERTANDO MENSAJE
+				if(solicitudBean.getStrMensaje()!=null){
+					solicitudMensajeDAO.insert(seteaMensajeBean(solicitudBean));	
+				}
+				
+				result = 1;
+			}
+			return result;
+	}
+	 
+	public Solicitud getSolicitudByNro(Long nroSolicitud)throws Exception{
+		return solicitudesDAO.selectByPrimaryKey(nroSolicitud);
+	}
 }

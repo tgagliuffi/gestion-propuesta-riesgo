@@ -13,6 +13,7 @@ import bbva.pe.gpr.bean.Multitabla;
 import bbva.pe.gpr.bean.MultitablaDetalle;
 import bbva.pe.gpr.bean.MultitablaDetalleKey;
 import bbva.pe.gpr.bean.Oficina;
+import bbva.pe.gpr.bean.ProductoBase;
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.UsuarioOficina;
 import bbva.pe.gpr.bean.Producto;
@@ -146,6 +147,7 @@ public interface CatalogoService {
 	  String getJefeInmediatoOficina(String codUsuario)throws Exception;
 	  String getJefeInmediatoRiesgo(String codUsuario)throws Exception;
 	  String getUsuarioTipo(String codUsuario)throws Exception;
+	  String getCargoChekSolicitud(String codUsuario)throws Exception;
    /*#####################################################################################################
 	   * 
 	   * 	
@@ -159,15 +161,23 @@ public interface CatalogoService {
 	*##################################################################################################### */
 	  public  List<Funcion> getLstFuncionByCriteria(Funcion funcionBean)throws Exception;
 	  List<Funcion> getLstRolesFuncion(String codRol)throws Exception;
-		/*#####################################################################################################
-	   * 
-	   * 	
-	   *                         TGPR_USUARIO_SUBBANCA
-*##################################################################################################### */
+  /*#####################################################################################################
+   * 
+   * 	
+   *                         TGPR_USUARIO_SUBBANCA
+   *##################################################################################################### */
 	  public UsuarioSubanca selectByUsuarioSubancaPrimaryKey(UsuarioSubancaKey key);
 	  public BancaSub selectByBancaSubPrimaryKey(String codSubbanca);
 	  public void insert(UsuarioSubanca record);
 	  public void saveRolFunciones(FuncionRol record);
 	  public String rolFuncionExistente(FuncionRol record);
 	  UsuarioSubanca getSubancaPorUsuario(BancaSub record)throws Exception;
+	  
+  /*#####################################################################################################
+   * 
+   * 										TGPR_PRODUCTO_BASE
+   *                         
+   *##################################################################################################### */
+		
+	  ProductoBase selectProductoBasePrimaryKey(BigDecimal codProductoBase)throws Exception;
 }

@@ -62,5 +62,8 @@ public interface SolicitudService{
 	
 	 List<SolicitudMensaje> getListMessagesAjax(SolicitudMensaje record) throws Exception;
 	 
+	 int updateChkSubGerente(String nroSolicitud) throws Exception;
+	 
+	 Solicitud getSolicitudByNro(Long nroSolicitud)throws Exception;
 
 }

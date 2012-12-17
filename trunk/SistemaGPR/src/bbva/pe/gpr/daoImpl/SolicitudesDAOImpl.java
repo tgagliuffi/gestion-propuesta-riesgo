@@ -31,7 +31,7 @@ public class SolicitudesDAOImpl extends SqlMapClientDaoSupport implements Solici
     	return rst.getNroSolicitud();
     }
 
-    public Solicitud selectByPrimaryKey(Long nroSolicitud) {
+    public Solicitud selectByPrimaryKey(Long nroSolicitud) throws Exception{
         Solicitud key = new Solicitud();
         key.setNroSolicitud(nroSolicitud);
         Solicitud record = (Solicitud) getSqlMapClientTemplate().queryForObject("DELGPR_TGPR_SOLICITUDES.ibatorgenerated_selectByPrimaryKey", key);

@@ -185,4 +185,21 @@ public class SolicitudMantenimientoAction extends DispatchAction
 		return strMensaje;
 	}
 	
+	public String updateChkSubGerente(String nroSolicitud) throws Exception {  
+		String strMensaje = "";	
+		try {				
+			if(solicitudService.updateChkSubGerente(nroSolicitud)>0){
+				strMensaje = "Se ha actualizado exitosamente el registro.";
+				return strMensaje;	
+			}else{
+				strMensaje = "Sucedio un error en la anulación";
+				return strMensaje;
+			}
+				
+			}catch (Exception e) {
+				logger.error("BusquedaSolicitudAction.updateChkSubGerente " +e);		
+			}
+			return strMensaje;
+		}
+	
 }

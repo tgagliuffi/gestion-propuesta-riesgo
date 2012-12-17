@@ -13,6 +13,7 @@ import bbva.pe.gpr.bean.Multitabla;
 import bbva.pe.gpr.bean.MultitablaDetalle;
 import bbva.pe.gpr.bean.MultitablaDetalleKey;
 import bbva.pe.gpr.bean.Oficina;
+import bbva.pe.gpr.bean.ProductoBase;
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.UsuarioOficina;
 import bbva.pe.gpr.bean.Producto;
@@ -28,6 +29,7 @@ import bbva.pe.gpr.dao.FuncionRolDAO;
 import bbva.pe.gpr.dao.GerenteOficinaDAO;
 import bbva.pe.gpr.dao.MultitablaDAO;
 import bbva.pe.gpr.dao.MultitablaDetalleDAO;
+import bbva.pe.gpr.dao.ProductoBaseDAO;
 import bbva.pe.gpr.dao.SolicitudRechazadaDAO;
 import bbva.pe.gpr.dao.UsuarioOficinaDAO;
 import bbva.pe.gpr.dao.OficinaDAO;
@@ -55,7 +57,8 @@ public class CatalogoServiceImpl implements CatalogoService{
       private FuncionDAO funcionDAO; 
       private UsuarioSubancaDAO usuarioSubancaDAO;
       private BancaSubDAO bancaSubDAO; 
-      private FuncionRolDAO funcionRolDAO; 
+      private FuncionRolDAO funcionRolDAO;
+      private ProductoBaseDAO productoBaseDAO; 
 
 	public CatalogoServiceImpl(
 			  BancaDAO bancaDAO,
@@ -72,7 +75,8 @@ public class CatalogoServiceImpl implements CatalogoService{
 			  FuncionDAO funcionDAO,
 			  UsuarioSubancaDAO usuarioSubancaDAO,
 			  BancaSubDAO bancaSubDAO,
-			  FuncionRolDAO funcionRolDAO
+			  FuncionRolDAO funcionRolDAO,
+			  ProductoBaseDAO productoBaseDAO
 			  ) {
 		  super();
 		  this.bancaDAO=bancaDAO;
@@ -90,116 +94,111 @@ public class CatalogoServiceImpl implements CatalogoService{
 		  this.usuarioSubancaDAO=usuarioSubancaDAO;
 		  this.bancaSubDAO=bancaSubDAO;
 		  this.funcionRolDAO=funcionRolDAO;
+		  this.productoBaseDAO=productoBaseDAO;
 	  }
 
 	public BancaDAO getBancaDAO(){return bancaDAO;}
 	public void setBancaDAO(BancaDAO bancaDAO){this.bancaDAO = bancaDAO;}
 	public ProductoDAO getProductoDAO(){return productoDAO;}
 	public void setProductoDAO(ProductoDAO productoDAO){this.productoDAO = productoDAO;}
-	public OficinaDAO getOficinaDAO() {return oficinaDAO;
-		}
-	
-		public void setOficinaDAO(OficinaDAO oficinaDAO) {
-			this.oficinaDAO = oficinaDAO;
-		}
-	
-		public TerritorioDAO getTerritorioDAO() {
+	public OficinaDAO getOficinaDAO() {return oficinaDAO;}
+	public void setOficinaDAO(OficinaDAO oficinaDAO) {this.oficinaDAO = oficinaDAO;}
+	public TerritorioDAO getTerritorioDAO() {
 			return territorioDAO;
 		}
-	
-		public void setTerritorioDAO(TerritorioDAO territorioDAO) {
+	public void setTerritorioDAO(TerritorioDAO territorioDAO) {
 			this.territorioDAO = territorioDAO;
 		}
-	
-		public MultitablaDAO getMultitablaDAO() {
+	public MultitablaDAO getMultitablaDAO() {
 			return multitablaDAO;
 		}
-	
-		public void setMultitablaDAO(MultitablaDAO multitablaDAO) {
+	public void setMultitablaDAO(MultitablaDAO multitablaDAO) {
 			this.multitablaDAO = multitablaDAO;
 		}
-	
-		public MultitablaDetalleDAO getMultitablaDetalleDAO() {
+	public MultitablaDetalleDAO getMultitablaDetalleDAO() {
 			return multitablaDetalleDAO;
 		}
-	
-		public void setMultitablaDetalleDAO(MultitablaDetalleDAO multitablaDetalleDAO) {
+	public void setMultitablaDetalleDAO(MultitablaDetalleDAO multitablaDetalleDAO) {
 			this.multitablaDetalleDAO = multitablaDetalleDAO;
 		}
-	
-		public UsuarioDAO getUsuarioDAO() {
+	public UsuarioDAO getUsuarioDAO() {
 			return usuarioDAO;
 		}
-	
-		public void setUsuarioDAO(UsuarioDAO usuarioDAO) {
+	public void setUsuarioDAO(UsuarioDAO usuarioDAO) {
 			this.usuarioDAO = usuarioDAO;
 		}
-		public RolDAO getRolDAO() {
+	public RolDAO getRolDAO() {
 			return rolDAO;
 		}
-		public void setRolDAO(RolDAO rolDAO) {
+	public void setRolDAO(RolDAO rolDAO) {
 			this.rolDAO = rolDAO;
 		}
 		
-		public UsuarioOficinaDAO getUsuarioOficinaDAO() {
+	public UsuarioOficinaDAO getUsuarioOficinaDAO() {
 			return usuarioOficinaDAO;
 		}
 
-		public void setUsuarioOficinaDAO(UsuarioOficinaDAO usuarioOficinaDAO) {
+	public void setUsuarioOficinaDAO(UsuarioOficinaDAO usuarioOficinaDAO) {
 			this.usuarioOficinaDAO = usuarioOficinaDAO;
 		}
-		public GerenteOficinaDAO getGerenteOficinaDAO() {
+	public GerenteOficinaDAO getGerenteOficinaDAO() {
 			return gerenteOficinaDAO;
 		}
 
-		public void setGerenteOficinaDAO(GerenteOficinaDAO gerenteOficinaDAO) {
+	public void setGerenteOficinaDAO(GerenteOficinaDAO gerenteOficinaDAO) {
 			this.gerenteOficinaDAO = gerenteOficinaDAO;
 		}
 		
-		public SolicitudRechazadaDAO getSolicitudRechazadaDAO() {
+	public SolicitudRechazadaDAO getSolicitudRechazadaDAO() {
 			return solicitudRechazadaDAO;
 		}
 		
-		public void setSolicitudRechazadaDAO(SolicitudRechazadaDAO solicitudRechazadaDAO) {
+	public void setSolicitudRechazadaDAO(SolicitudRechazadaDAO solicitudRechazadaDAO) {
 			this.solicitudRechazadaDAO = solicitudRechazadaDAO;
 		}
-		public FuncionDAO getFuncionDAO() {
+	public FuncionDAO getFuncionDAO() {
 			return funcionDAO;
 		}
 
-		public void setFuncionDAO(FuncionDAO funcionDAO) {
+	public void setFuncionDAO(FuncionDAO funcionDAO) {
 			this.funcionDAO = funcionDAO;
 		}
 
-		public UsuarioSubancaDAO getUsuarioSubancaDAO() {
+	public UsuarioSubancaDAO getUsuarioSubancaDAO() {
 			return usuarioSubancaDAO;
 		}
 
-		public void setUsuarioSubancaDAO(UsuarioSubancaDAO usuarioSubancaDAO) {
+	public void setUsuarioSubancaDAO(UsuarioSubancaDAO usuarioSubancaDAO) {
 			this.usuarioSubancaDAO = usuarioSubancaDAO;
 		}
-	      public BancaSubDAO getBancaSubDAO() {
+	public BancaSubDAO getBancaSubDAO() {
 	  		return bancaSubDAO;
 	  	}
-
-	  	public void setBancaSubDAO(BancaSubDAO bancaSubDAO) {
+	public void setBancaSubDAO(BancaSubDAO bancaSubDAO) {
 	  		this.bancaSubDAO = bancaSubDAO;
 	  	}
-		public FuncionRolDAO getFuncionRolDAO() {
+	public FuncionRolDAO getFuncionRolDAO() {
 			return funcionRolDAO;
 		}
 
-		public void setFuncionRolDAO(FuncionRolDAO funcionRolDAO) {
+	public void setFuncionRolDAO(FuncionRolDAO funcionRolDAO) {
 			this.funcionRolDAO = funcionRolDAO;
 		}
+		
+	public ProductoBaseDAO getProductoBaseDAO() {
+			return productoBaseDAO;
+		}
+	public void setProductoBaseDAO(ProductoBaseDAO productoBaseDAO) {
+			this.productoBaseDAO = productoBaseDAO;
+		}
 
-	/*#####################################################################################################
+ /*#####################################################################################################
    * 
    * 										TGRP_BANCA
    * 
-   *##################################################################################################### */
+  *##################################################################################################### */
 
-	  public int deleteBancaByPrimaryKey(BigDecimal codBanca) throws Exception {
+	public int deleteBancaByPrimaryKey(BigDecimal codBanca) throws Exception {
 	      return bancaDAO.deleteByPrimaryKey(codBanca);
 	  }
 	   	    
@@ -491,7 +490,11 @@ public class CatalogoServiceImpl implements CatalogoService{
 	public String getJefeInmediatoRiesgo(String codUsuario)throws Exception {
 		return gerenteOficinaDAO.getJefeInmediatoRiesgo(codUsuario);
 	}
-
+	
+	public String getCargoChekSolicitud(String codUsuario)throws Exception{
+		return gerenteOficinaDAO.getCargoChekSolicitud(codUsuario);
+	}
+	
 	public UsuarioSubanca selectByUsuarioSubancaPrimaryKey(UsuarioSubancaKey key) {
 		return usuarioSubancaDAO.selectByPrimaryKey(key);
 	}
@@ -535,5 +538,13 @@ public class CatalogoServiceImpl implements CatalogoService{
 		}
 			return "1";
 	}
+ /*#####################################################################################################
+   *  
+   *                				TGPR_PRODUCTO_BASE
+   * 
+   *##################################################################################################### */
 	
+	public ProductoBase selectProductoBasePrimaryKey(BigDecimal codProductoBase)throws Exception {
+		return productoBaseDAO.selectByPrimaryKey(codProductoBase);
+	}
 }

@@ -30,6 +30,8 @@ public class SolicitudDetalle extends SolicitudDetalleKey implements Serializabl
 	private BigDecimal codGarantia;
 	private BigDecimal mtoTotalRow;
 	
+	private String referenciaProdBase;
+	
 	public int getIndice() {
 		return indice;
 	}
@@ -149,6 +151,12 @@ public class SolicitudDetalle extends SolicitudDetalleKey implements Serializabl
 	}
 	public void setMtoTotalRow(BigDecimal mtoTotalRow) {
 		this.mtoTotalRow = mtoTotalRow;
+	}
+	public String getReferenciaProdBase() {
+		return referenciaProdBase;
+	}
+	public void setReferenciaProdBase(String referenciaProdBase) {
+		this.referenciaProdBase = referenciaProdBase;
 	}
 	
 	
