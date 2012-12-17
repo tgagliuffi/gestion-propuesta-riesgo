@@ -87,7 +87,7 @@ function mostrarTabla(data){
 		caption		: "Listado de Productos",
 		data 	 	: data,
 		datatype 	: "local",
-		height   	: 200,
+		height   	: 140,
 		width 	 	: 1250,
 		colNames 	: myColSolicituDetalle,
 		colModel 	: myDataModelSolicitudDetalle,
@@ -111,11 +111,40 @@ function regresarBusquedaSolicitud(){
 	formulario.submit();
 }
 
+function updateChkSubGerente(){
+	var formulario = document.getElementById('formSolicitudIngreso');
+	var flag = formulario.chkSubGerente.checked;
+	var nroSolicitud = formulario.hndNroSolicitud.value;
+	if(flag==true){
+		if(confirm("¿Seguro que desea dar check a la solicitud.")){
+			jQuery("#listProducts").GridUnload();
+			BusquedaSolicitudAction.updateChkSubGerente(nroSolicitud, function(msg){
+				consultarUsuario();
+				formulario.chkSubGerente.disabled = true;
+				alert(msg);
+				
+			});
+		}else{
+			 formulario.chkSubGerente.checked = false;
+		}
+	}
+}
+
+function init(){
+	var formulario = document.getElementById('formSolicitudIngreso');
+	var nroSolicitud = formulario.hndNroSolicitud.value;
+	BusquedaSolicitudAction.getEstadoCheckSolicitud(nroSolicitud, function(msg){
+		formulario.chkSubGerente.disabled = true;	
+	});
+
+}
+
 </script>
 	
 </head>
-<body onload="consultarUsuario();listarOperaciones();listarMensajes();">
+<body onload="consultarUsuario();listarOperaciones();listarMensajes();init();">
 <html:form method="post" action="ingresoSolicitud.do?method=init" styleId="formSolicitudIngreso">
+<input type="hidden" id="hndNroSolicitud" name="hndNroSolicitud" value='${Solicitud.nroSolicitud}'></input>
 	<br/>
 	<a href="javascript:regresarBusquedaSolicitud();" class="buttonGPR">REGRESAR</a>
 	<br/>
@@ -125,7 +154,15 @@ function regresarBusquedaSolicitud(){
 		<td>
 			<font class="fontText">Código Central</font>&nbsp;
 			<input value="${Solicitud.codCentral}" class="cajaTexto" size="10" readonly="readonly"/>			
-		</td>		
+		</td>
+		<logic:present name="flagChkSubGerente">
+				<c:if test="${flagChkSubGerente==true}"> 
+		<td>
+				<font class="fontText">Revisado por SubGerente</font>&nbsp;
+				<input type="checkbox" name="chkSubGerente" id="chkSubGerente" onclick="updateChkSubGerente();">
+		</td>
+		</c:if>
+		</logic:present>
 	</tr>
 	</table>
 	<br/>
