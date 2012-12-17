@@ -52,10 +52,19 @@ $(function() {
 			.indexOf(rutaContexto2))
 			+ rutaContexto2;
 
-	var myColNames = [ 'Nro Solicitud', 'Fecha Ingreso', 'Cod Central',
-			'Tipo Persona', 'Cliente', 'Moneda', 'Mto Solicitud',
-			'Riesgo Actual', 'Riesgo Total', 'Banca',  'Sub Banca', 'Cod oficina',
-			'Nombre Oficina', 'Estado Solicitud', 'E. Actual', 'Detalle' ];
+	var myColNames = [ 'Nro Solicitud', 
+	                   'Fecha Ingreso', 
+	                   'Cod Central',
+					   'Tipo Persona', 
+					   'Cliente', 
+					   'Moneda', 
+					   'Mto Solicitud',
+					   'Riesgo Actual', 
+					   'Riesgo Total', 
+					   //'Banca',  
+					   //'Sub Banca', 
+					   'Cod oficina',
+					   'Nombre Oficina', 'Estado Solicitud', 'E. Actual', 'Detalle', 'Check SubGerente' ];
 
 	var myDataModel = [ {name : 'nroSolicitud', 		index : 'nroSolicitud', 		width : 214, 	sortable : false}, 
 	                    {name : 'strFechaIngreso',		index : 'strFechaIngreso',		width : 230,	sortable : false}, 
@@ -66,14 +75,14 @@ $(function() {
 	                    {name : 'mtoSolicitud',			index : 'mtoSolicitud',			width : 320,	sortable : false,	align : 'right'}, 
 	                    {name : 'riesgoActual',			index : 'riesgoActual',			width : 240,	sortable : false,	align : 'right'}, 
 	                    {name : 'riesgoTotal',			index : 'riesgoTotal',			width : 240,	sortable : false,	align : 'right'}, 
-	                    {name : 'desBanca',				index : 'desBanca',				width : 320,	sortable : false}, 
-	                    {name : 'descripcionSubanca',	index :'descripcionSubanca',	width : 320,	sortable : false}, 
+	                    //{name : 'desBanca',				index : 'desBanca',				width : 320,	sortable : false}, 
+	                    //{name : 'descripcionSubanca',	index :'descripcionSubanca',	width : 320,	sortable : false}, 
 	                    {name : 'oficinaAltaCod',		index : 'oficinaAltaCod',		width : 200,	sortable : false}, 
 	                    {name : 'oficinaAltaNom',		index : 'oficinaAltaNom',		width : 500,	sortable : false}, 
 	                    {name : 'estadoSolicitud',		index : 'estadoSolicitud',		width : 260,	sortable : false,	align : 'center'}, 
 	                    {name : 'estado',				index : 'estado',				width : 140,	formatter : estadoFormat,		sortable : false,align : 'center'}, 
-	                    {name : 'nroSolicitud',			index : 'hdnCodigo',			width : 220,	formatter : btnOpcionFormat,	sortable : false,align : 'center'}];
-
+	                    {name : 'nroSolicitud',			index : 'hdnCodigo',			width : 220,	formatter : btnOpcionFormat,	sortable : false,align : 'center'},
+						{name : 'nroSolicitud',			index : 'hdnCodigo',			width : 220,	formatter : btnOpcionFormatchkSubGerente,	sortable : false,align : 'center'}];
 	function estadoFormat(cellvalue, options, rowObject) {
 		if (cellvalue == '1')
 			return "<img src='imagenes/boton_verde.png' border='0' height='18'/><input type='hidden' id='hidEstado_" + rowObject['nroSolicitud'] + "' value='" + cellvalue + "'/>";
@@ -142,13 +151,25 @@ $(function() {
 				+ cellvalue
 				+ ");'><img src='imagenes/OpmDetalle.png' border='0' height='18'></a>";
 	}
+	
+	function btnOpcionFormatchkSubGerente(cellvalue, options, rowObject) {
+		return "<a title='Detalle Consulta' href='javascript:chkSubGerente("
+				+ cellvalue
+				+ ");'><img src='imagenes/1.png' border='0' height='18'></a>";
+	}
 
 	function showDetalle(codigo) {
 		window.open(
-				'busquedaSolicitudAction.do?method=detalleSolicitud&codigoSolicitud='
+				'busquedaSolicitudAction.do?method=detalleSolicitud&flag=2&codigoSolicitud='
 						+ codigo, '_self');
 	}
 
+	function chkSubGerente(codigo) {
+		window.open(
+				'busquedaSolicitudAction.do?method=detalleSolicitud&flag=1&codigoSolicitud='
+						+ codigo, '_self');
+	}
+	
 	function expotar() {
 		var formulario = document.getElementById('solicitudForm');
 		formulario.action = rutaContexto
