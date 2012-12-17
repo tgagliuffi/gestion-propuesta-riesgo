@@ -41,4 +41,10 @@
 		FROM 	CARRIE.TRSG_GERENTE 
 		WHERE   COD_REGISTRO=#value#
 	 </select>
+	 <select id="getCargoChekSolicitud" resultClass="string" parameterClass="string">
+		SELECT  cargo 
+		FROM 	CARRIE.TRSG_GERENTE G
+		WHERE   G.COD_REGISTRO=#value# and 
+		 EXISTS (SELECT STR_VALOR  FROM DELGPR.TGPR_MULTITABLA_DETALLE WHERE COD_MULTITABLA = 'T021' AND G.CARGO = STR_VALOR)
+	 </select>
 	</sqlMap>

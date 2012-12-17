@@ -42,10 +42,10 @@
   <insert id="ibatorgenerated_insert" parameterClass="bbva.pe.gpr.bean.SolicitudDetalle" >
    insert into DELGPR.TGPR_SOLICITUD_DETALLES (COD_DT_SOLICITUD, NRO_SOLICITUD, COD_PRODUCTO,
      CONTRATO_VINCULADO, COD_PREVALUADOR, COD_CAMPANIA, MTO_PRODUCTO,
-     PLAZO, MTO_GARANTIA, ESTADO, COD_CENTRAL, SCORING)
+     PLAZO, MTO_GARANTIA, ESTADO, COD_CENTRAL, SCORING, REFERENCIA_PROD_BASE)
    values (DELGPR.SQ_TDELGPR_SOLICITUD_DETALLE.NEXTVAL, #nroSolicitud:DECIMAL#, #codProducto:DECIMAL#,
      #contratoVinculado:VARCHAR#, #codPrevaluador:VARCHAR#, #codCampania:DECIMAL#,
-    #mtoProducto:DECIMAL#, #plazo:DECIMAL#, #mtoGarantia:DECIMAL#, 1, #codCentral:VARCHAR#, #scoring:VARCHAR#)
+    #mtoProducto:DECIMAL#, #plazo:DECIMAL#, #mtoGarantia:DECIMAL#, 1, #codCentral:VARCHAR#, #scoring:VARCHAR#, #referenciaProdBase:VARCHAR#)
  </insert>
   <insert id="ibatorgenerated_insertSelective" parameterClass="bbva.pe.gpr.bean.SolicitudDetalle" >
     insert into DELGPR.TGPR_SOLICITUD_DETALLES
