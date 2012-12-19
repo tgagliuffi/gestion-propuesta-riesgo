@@ -82,6 +82,7 @@ public class Solicitud implements Serializable {
     private String nomUsuarioSession;
     private List<String> strLstOficinas;
     private String usuarioAsignacion; 
+    private String desGarantia;
     
 	public Long getNroSolicitud() {
 		return nroSolicitud;
@@ -484,6 +485,12 @@ public class Solicitud implements Serializable {
 	}
 	public void setUsuarioAsignacion(String usuarioAsignacion) {
 		this.usuarioAsignacion = usuarioAsignacion;
+	}
+	public String getDesGarantia() {
+		return desGarantia;
+	}
+	public void setDesGarantia(String desGarantia) {
+		this.desGarantia = desGarantia;
 	}
 	
 }

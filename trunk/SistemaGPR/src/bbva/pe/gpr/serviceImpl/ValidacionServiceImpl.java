@@ -408,4 +408,8 @@ public class ValidacionServiceImpl implements ValidacionService {
 		cartasDelegaciones.setPlazos(147850);
 		return cartasDelegaciones;
 	}
+	public Garantia getProductoGarantia(String codProducto)throws Exception{
+		Garantia garantia=garantiaDAO.getProductoGarantia(codProducto);
+		return garantia;
+	}
 }

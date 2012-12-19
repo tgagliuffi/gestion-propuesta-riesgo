@@ -7,12 +7,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class UtilDate {
-
-	private final static String FORMAT = "dd/MM/yyyy";
-
 	
 	public static String fechaActual(){
-	 	SimpleDateFormat formato = new SimpleDateFormat(FORMAT);
+	 	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 	 	Calendar c1 = Calendar.getInstance(); 
 	 	return formato.format(c1.getTime());
 	 }
@@ -59,4 +56,5 @@ public class UtilDate {
 	public static String utilDateJquery(String input) {
 		return input.substring(3, 5)+"/"+input.substring(0, 2)+"/"+input.substring(6, 10);
 	}
+
 }
