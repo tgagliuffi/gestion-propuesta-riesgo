@@ -2,6 +2,7 @@ package bbva.pe.gpr.service;
 
 import java.util.List;
 
+import bbva.pe.gpr.bean.Garantia;
 import bbva.pe.gpr.bean.Solicitud;
 import bbva.pe.gpr.bean.SolicitudDetalle;
 
@@ -22,5 +23,5 @@ public interface ValidacionService {
 	public int oficinaPersonaNaturalIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle,String codUsuario) throws Exception;
 	public int metodoEncapsulado(Solicitud solicitud,String codUsuario) throws Exception;
 	public int metodoEncapsuladoIngresoSolicitud(Solicitud solicitud,List<SolicitudDetalle> solicitudDetalle,String codUsuario) throws Exception;
-	
+	Garantia getProductoGarantia(String codProducto)throws Exception;
 }

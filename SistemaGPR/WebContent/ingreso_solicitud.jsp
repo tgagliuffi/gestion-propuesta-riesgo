@@ -98,7 +98,7 @@ $(document).keyup(function(e) {
 		  deleteTblRowAdded('listProducts');
 	  }
 	});
-var myColNames  = ['','','','','', 'Descripción Producto','','Contrato Vinculado', 'Scoring',  'Cod. Pre Evaluador', 'Campaña', 'Tipo', 'Mto Solicitado', 'Plazo (Meses)', 'Mto Garantizado', 'Total'];
+var myColNames  = ['','','','','', 'Descripción Producto','','Garantía','Contrato Vinculado', 'Scoring',  'Cod. Pre Evaluador', 'Campaña', 'Tipo', 'Mto Solicitado', 'Plazo (Meses)', 'Mto Garantizado', 'Total'];
 var myDataModel = [
                    { name : 'codProducto',			index : 'codProducto', 			editable:true,	editrules: {edithidden:true, required:true}, hidden:true},
                    { name : 'indice',				index : 'indice', 				editable:true,  hidden:true},
@@ -107,7 +107,8 @@ var myDataModel = [
                    { name : 'valMontoTotal',		index : 'valMontoTotal', 		width : 140, 	editable:true,	editrules: {edithidden:true}, hidden:true},
                    { name : 'desProducto',			index : 'desProducto', 			width : 210, 	editable:true,	edittype:'custom', 	editoptions: {custom_element: desProductoElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: desProductoFormat, unformat: genericUnFormat},                 
                    { name : 'codProdBase',			index : 'codProdBase', 			editable:true,	hidden:true},
-                   { name : 'contratoVinculado',	index : 'contratoVinculado',	width : 230,	editable:true,	edittype:'custom',  editoptions: {custom_element: contratoVincElementCustom, custom_value: genericComboValueCustom}, editrules:   {required: true}, align : 'center', formatter: contratoVincFormat, unformat: genericUnFormat},
+                   { name : 'desGarantia',			index : 'desGarantia', 			width : 200,  	editable:true,	edittype:'text', 	editoptions: {size:25, maxlength: 40, readonly: 'readonly'}, align : 'center'},
+                   { name : 'contratoVinculado',	index : 'contratoVinculado',	width : 210,	editable:true,	edittype:'custom',  editoptions: {size:18, custom_element: contratoVincElementCustom, custom_value: genericComboValueCustom}, editrules:   {required: true}, align : 'center', formatter: contratoVincFormat, unformat: genericUnFormat},
                    { name : 'scoring',				index : 'scoring', 				width : 90,  	editable:true,	edittype:'text', 	editoptions: {size:10, maxlength: 40, readonly: 'readonly'}, align : 'center'},
                    { name : 'codPreEvaluador',		index : 'codPreEvaluador', 		width : 140, 	editable:true,	edittype:'text', 	editoptions: {style: 'background-color: #F2F5A9', size:15, maxlength: 20, dataEvents: [{ type: 'blur',     fn: function (){ blurChangeColor(this);}}, 
                 	   																																																					   { type: 'change',   fn: function (){ changeCodPreEvaludador(this.value);}}]}, align : 'center'},
@@ -139,11 +140,17 @@ var myDataModelSolicitudDetalle = [ {name : 'desProducto',      	index : 'desPro
                                     {name : 'mtoTotalRow',      	index : 'mtoTotalRow',       	width : 60       ,sortable:false, editoptions: {style: 'text-align: right'}}
                         ];
 
+function changeDesGarantiaByProducto(param){
+	IngresoSolicitudAction.getGarantiaByProductoAjax(param.value, function(msg){
+		document.getElementsByName("desGarantia")[0].value = msg;		
+	 });
+}
 function setEventsValidationProducto(){
     jQuery("select[name=desProducto]").bind("change",function (evnt){
     	getProductoBaseElementText(this);
     	document.getElementsByName("scoring")[0].value = '';
-    	changeContratoByProduct(this);    	
+    	changeContratoByProduct(this);    
+    	changeDesGarantiaByProducto(this);
     });
 }
 

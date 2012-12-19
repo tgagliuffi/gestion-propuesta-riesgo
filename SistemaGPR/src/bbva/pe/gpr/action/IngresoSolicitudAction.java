@@ -22,6 +22,7 @@ import bbva.pe.gpr.bean.Banca;
 import bbva.pe.gpr.bean.BancaSub;
 import bbva.pe.gpr.bean.Campania;
 import bbva.pe.gpr.bean.Contrato;
+import bbva.pe.gpr.bean.Garantia;
 import bbva.pe.gpr.bean.MultitablaDetalle;
 import bbva.pe.gpr.bean.Producto;
 import bbva.pe.gpr.bean.ProductoBase;
@@ -723,6 +724,19 @@ public class IngresoSolicitudAction extends DispatchAction {
 	
 	public int validaCodPreEvaluador(String value){
 		return 0;
+	}
+	
+	public String  getGarantiaByProductoAjax(String codProducto){
+		Garantia garantiaBean = null;
+		try {
+			garantiaBean = validacionService.getProductoGarantia(codProducto);
+		} catch (Exception e) {
+			logger.info("Exception IngresoSolicitudAction.getGarantiaByProductoAjax: " + e.getMessage());
+		}
+		if(garantiaBean!=null){
+			return garantiaBean.getNombre();
+		}
+		return "";
 	}
 	
 }
