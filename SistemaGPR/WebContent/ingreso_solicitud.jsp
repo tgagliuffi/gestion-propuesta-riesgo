@@ -98,7 +98,7 @@ $(document).keyup(function(e) {
 		  deleteTblRowAdded('listProducts');
 	  }
 	});
-var myColNames  = ['','','','','', 'Descripción Producto','','Garantía','Contrato Vinculado', 'Scoring',  'Cod. Pre Evaluador', 'Campaña', 'Tipo', 'Mto Solicitado', 'Plazo (Meses)', 'Mto Garantizado', 'Total'];
+var myColNames  = ['','','','','', 'Descripción Producto','','Garantía','Contrato Vinculado', 'Scoring',  'Cod. Pre Evaluador', 'Campaña', 'Tipo', 'Mto Solicitado', 'Plazo (Meses)', 'Mto Garantizado', ''];
 var myDataModel = [
                    { name : 'codProducto',			index : 'codProducto', 			editable:true,	editrules: {edithidden:true, required:true}, hidden:true},
                    { name : 'indice',				index : 'indice', 				editable:true,  hidden:true},
@@ -111,18 +111,21 @@ var myDataModel = [
                    { name : 'contratoVinculado',	index : 'contratoVinculado',	width : 210,	editable:true,	edittype:'custom',  editoptions: {size:18, custom_element: contratoVincElementCustom, custom_value: genericComboValueCustom}, editrules:   {required: true}, align : 'center', formatter: contratoVincFormat, unformat: genericUnFormat},
                    { name : 'scoring',				index : 'scoring', 				width : 90,  	editable:true,	edittype:'text', 	editoptions: {size:10, maxlength: 40, readonly: 'readonly'}, align : 'center'},
                    { name : 'codPreEvaluador',		index : 'codPreEvaluador', 		width : 140, 	editable:true,	edittype:'text', 	editoptions: {style: 'background-color: #F2F5A9', size:15, maxlength: 20, dataEvents: [{ type: 'blur',     fn: function (){ blurChangeColor(this);}}, 
-                	   																																																					   { type: 'change',   fn: function (){ changeCodPreEvaludador(this.value);}}]}, align : 'center'},
+                	   																																																		   { type: 'change',   fn: function (){ changeCodPreEvaludador(this.value);}},
+                   																																																			   { type: 'keyup',   fn: function (){ changeCodPreEvaludador(this.value);}}]}, align : 'center'},
                    { name : 'desCampania',			index : 'desCampania', 			width : 180, 	editable:true,	edittype:'custom', 	editoptions: {custom_element: campaniaElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: campaniaFormat, unformat: genericUnFormat},
                    { name : 'desTipo',				index : 'desTipo', 				width : 180, 	editable:true,	edittype:'custom', 	editoptions: {custom_element: tipoElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: tipoFormat, unformat: genericUnFormat},
-                   { name : 'mtoProducto',			index : 'mtoProducto', 			width : 140, 	editable:true,	edittype:'text', 	editoptions: {size:14, maxlength: 18, style: 'text-align: right; background-color: #F2F5A9', dataEvents: [ { type: 'change',   fn: function (){ getMonto(this.value, 1);}}, 
+                   { name : 'mtoProducto',			index : 'mtoProducto', 			width : 140, 	editable:true,	edittype:'text', 	editoptions: {size:14, maxlength: 18, style: 'text-align: right; background-color: #F2F5A9',  dataEvents: [ { type: 'change',   fn: function (){ getMonto(this.value, 1);}}, 
                                           			                       			            				              	                 	                                                                                                           { type: 'keypress', fn: function (){ ingresoNumeros(event);}}, 	
-                                          			                       			            				              	                 	                                                                                                  		   { type: 'blur',     fn: function (){ blurChangeColor(this);format(this.value);}}]}, editrules: {required: true, number: true, minValue: 0}, align : 'right'},
-                   { name : 'plazo',			    index : 'plazo', 				width : 90, 	editable:true,	edittype:'text', 	editoptions: {size:12, maxlength: 15, style: 'text-align: right; background-color: #F2F5A9', dataEvents: [ { type: 'keypress', fn: function (){ ingresoNumeros(event);}},
-                                    			                     				            				              	                 	                                                                                                           { type: 'blur',     fn: function (){ blurChangeColor(this);}}]}, editrules: {required: true, integer: true, minValue: 0, maxValue: 999999}, align : 'right'},
+                                          			                       			            				              	                 	                                                                                                  		   { type: 'blur',     fn: function (){ blurChangeColor(this);}}
+                                          			                       			            				              	                 	                                                                                                           ]},   editrules: {required: true, minValue: 1}, align : 'right'},
+                   { name : 'plazo',			    index : 'plazo', 				width : 90, 	editable:true,	edittype:'text', 	editoptions: {size:9, maxlength: 15, style: 'text-align: right; background-color: #F2F5A9', dataEvents: [ { type: 'keypress', fn: function (){ ingresoNumeros(event);}},
+                                    			                     				            				              	                 	                                                                                                           { type: 'blur',     fn: function (){ blurChangeColor(this);}}
+                                    			                     				            				              	                 	                                                                                                       	   ]}, editrules: {required: true, integer: true, minValue: 1, maxValue: 90}, align : 'right'},
                    { name : 'mtoGarantia',			index : 'mtoGarantia', 			width : 140, 	editable:true,	edittype:'text', 	editoptions: {style: 'text-align: right; text-align: right; background-color: #F2F5A9', size:14, maxlength: 19, dataEvents: [{ type: 'change', fn: function (){ getMonto(this.value, 2);}},
                                           			                       			             				              	                 	                                                                                                                             { type: 'keypress', fn: function (){ ingresoNumeros(event);}},
                                           			                       			             				              	                 	                                                                                                                    		 { type: 'blur',     fn: function (){ blurChangeColor(this);}}]}, align : 'right'},
-                   { name : 'mtoTotalRow',			index : 'mtoTotalRow', 			width : 90, 	editable:true,	edittype:'text', 	editoptions: {style: 'text-align: right; text-align: right', size:14, maxlength: 19, readonly: 'readonly'}, 	editrules: {required: true, number: true, minValue: 0}, align : 'right'}
+                   { name : 'mtoTotalRow',			index : 'mtoTotalRow', 			width : 90, 	hidden:true, editable:true,	edittype:'text', 	editoptions: {style: 'text-align: right; text-align: right', size:14, maxlength: 19, readonly: 'readonly'},align : 'right'}
                              
                    ];
 var myColSolicituDetalle  = [ 'Descripción Producto', 'Producto Base','Contrato Vinculado', 'Scoring',  'Cod. Pre Evaluador', 'Campaña', 'Tipo', 'Monto Solicitado', 'Plazo (Meses)', 'Monto Garantizado', 'Total'];
@@ -242,8 +245,42 @@ function consultarProductos(operation, message){
 		}
 	});
 }
+function mtoMayorCero(objeto){
+	var numero=parseFloat(objeto.value);
+	 if(objeto.value != ''){
+		 if(isNaN(numero)){
+		    alert('Ingrese número correcto');
+		    return false;
+		  }else{
+		    if(numero == 0){
+	    		 alert('Ingrese valor superior a Cero.');
+	    		 objeto.focus();
+	    		 return false;
+		    }
+		  }
+	 }
+}
 
-
+function formato_numero(numero, decimales, separador_decimal, separador_miles){ // v2007-08-06
+	 numero=parseFloat(numero);
+    if(isNaN(numero)){
+        return "";
+    }
+    if(decimales!==undefined){
+        // Redondeamos
+        numero=numero.toFixed(decimales);
+    }
+    // Convertimos el punto en separador_decimal
+    numero=numero.toString().replace(".", separador_decimal!==undefined ? separador_decimal : ",");
+    if(separador_miles){
+        // Añadimos los separadores de miles
+        var miles=new RegExp("(-?[0-9]+)([0-9]{3})");
+        while(miles.test(numero)) {
+            numero=numero.replace(miles, "$1" + separador_miles + "$2");
+        }
+    }
+   return numero;
+}
 function getMonto(value, call){
 	var pdeudaDirecta = "00.00";  
 		if(document.getElementsByName('deudaDirecta').length>0)
@@ -284,37 +321,38 @@ function getMonto(value, call){
 
 	if(call==1){
 		IngresoSolicitudAction.changeMtoTotalRowAjax(value, pMtoGarantia, function(msg){
-			document.getElementsByName("mtoTotalRow")[0].value = msg;
+			document.getElementsByName("mtoTotalRow")[0].value = formato_numero(msg, 2, '.', ',');
 			pMtoTotalProd=msg;
 			IngresoSolicitudAction.changeMtoTotalAjax(value, function(msg){
-				document.getElementsByName("mtoTotal")[0].value = msg;
+				document.getElementsByName("mtoTotal")[0].value = formato_numero(msg, 2, '.', ',');
 			});
 			IngresoSolicitudAction.changeRiesgoTotalAjax(pdeudaDirecta, pdeudaIndirecta, pdeudaCastigo, pdeudaSisFinanciero, pOtroRiesgo, pRiesgoGrupal, pMtoTotalProd, function(msg){
-				document.getElementsByName("riesgoTotal")[0].value = msg;
+				document.getElementsByName("riesgoTotal")[0].value = formato_numero(msg, 2, '.', ',');
 			});		
 		});
+		//document.getElementsByName("mtoProducto")[0].value = formato_numero(pMtoProducto, 2, '.', ',');
 		
 	}if(call==2){
 		IngresoSolicitudAction.changeMtoTotalRowAjax(value, pMtoProducto, function(msg){
-			document.getElementsByName("mtoTotalRow")[0].value = msg;
+			document.getElementsByName("mtoTotalRow")[0].value = formato_numero(msg, 2, '.', ',');
 		});
 		IngresoSolicitudAction.changeOtroRiesgoAjax(value, function(msg){
-			document.getElementsByName("otroRiesgo")[0].value = msg;
+			document.getElementsByName("otroRiesgo")[0].value = formato_numero(msg, 2, '.', ',');
 			pOtroRiesgo=msg;
 			IngresoSolicitudAction.changeRiesgoActualAjax(pdeudaDirecta, pdeudaIndirecta, pdeudaCastigo, pdeudaSisFinanciero, pOtroRiesgo, pRiesgoGrupal,  function(msg){
-				document.getElementsByName("riesgoActual")[0].value = msg;
+				document.getElementsByName("riesgoActual")[0].value = formato_numero(msg, 2, '.', ',');
 			});	
 			IngresoSolicitudAction.changeRiesgoTotalAjax(pdeudaDirecta, pdeudaIndirecta, pdeudaCastigo, pdeudaSisFinanciero, pOtroRiesgo, pRiesgoGrupal, pMtoTotalProd, function(msg){
-				document.getElementsByName("riesgoTotal")[0].value = msg;
+				document.getElementsByName("riesgoTotal")[0].value = formato_numero(msg, 2, '.', ',');
 			});	
 		});
 		
 	}if(call==3){
 			IngresoSolicitudAction.changeRiesgoActualAjax(pdeudaDirecta, pdeudaIndirecta, pdeudaCastigo, pdeudaSisFinanciero, pOtroRiesgo, value,  function(msg){
-				document.getElementsByName("riesgoActual")[0].value = msg;
+				document.getElementsByName("riesgoActual")[0].value = formato_numero(msg, 2, '.', ',');
 		});	
 		IngresoSolicitudAction.changeRiesgoTotalAjax(pdeudaDirecta, pdeudaIndirecta, pdeudaCastigo, pdeudaSisFinanciero, pOtroRiesgo, value, pMtoTotalProd, function(msg){
-			document.getElementsByName("riesgoTotal")[0].value = msg;
+			document.getElementsByName("riesgoTotal")[0].value = formato_numero(msg, 2, '.', ',');
 		});	
 	}if(call==4){
 		
@@ -473,7 +511,7 @@ function mostrarTabla(data){
 		colNames 	: myColNames,
 		colModel 	: myDataModel,
 		rowList 	: [5,10,15,20,25],
-		width 		: 1280,
+		width 		: 1260,
 		rowNum 		: 15, 
 		scrollOffset: 0,
 		viewrecords : true,
@@ -674,6 +712,30 @@ function init(){
 		consultarDetalle();
 	}
 	setSubBanca();
+
+		if(document.getElementsByName('deudaDirecta').length>0)
+		{document.getElementsByName('deudaDirecta')[0].value = formato_numero(document.getElementsByName('deudaDirecta')[0].value, 2, '.', ',');}
+	
+		if(document.getElementsByName('deudaIndirecta').length>0)
+		{document.getElementsByName('deudaIndirecta')[0].value = formato_numero(document.getElementsByName('deudaIndirecta')[0].value, 2, '.', ',');}
+	
+		if( document.getElementsByName('castigo').length>0)
+		{document.getElementsByName('castigo')[0].value = formato_numero(document.getElementsByName('deudaDirecta')[0].value, 2, '.', ',');}
+	
+		if(document.getElementsByName('deudaSistemaFinanciero').length>0)
+		{document.getElementsByName('deudaSistemaFinanciero')[0].value = formato_numero(document.getElementsByName('deudaSistemaFinanciero')[0].value, 2, '.', ',');}
+	
+		if(document.getElementsByName('riesgoGrupal').length>0)
+		{document.getElementsByName('riesgoGrupal')[0].value = formato_numero(document.getElementsByName('riesgoGrupal')[0].value, 2, '.', ',');}
+	
+		if(document.getElementsByName('otroRiesgo').length>0){
+		pOtroRiesgo = document.getElementsByName('otroRiesgo')[0].value = formato_numero(document.getElementsByName('otroRiesgo')[0].value, 2, '.', ',');}
+	
+		if(document.getElementsByName('riesgoTotal').length>0)
+		{document.getElementsByName('riesgoTotal')[0].value = formato_numero(document.getElementsByName('riesgoTotal')[0].value, 2, '.', ',');}
+		
+		if(document.getElementsByName('riesgoActual').length>0)
+		{document.getElementsByName('riesgoActual')[0].value = formato_numero(document.getElementsByName('riesgoActual')[0].value, 2, '.', ',');}
 
 }
 function mostrarPopUp(){
@@ -1032,21 +1094,21 @@ function setSubBanca(){
 	</table>
 	</div>
 	<%if(asigPrioridadIndividual != null || asigAnulacionIndividual != null){%>
-			<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1280px;margin: 3px;">
+			<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1260px;margin: 3px;">
 			<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
 			<label>Datos drl Producto</label></div>
 				<table id="listProductsDetalle" class="grid" width="1300px;">
 				</table>
 			</div>
 	<%}else{%>
-	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1280px;margin: 3px;margin-top: 10px;">
+	<div class="ui-widget ui-widget-content ui-corner-all" style="width: 1260px;margin: 3px;margin-top: 10px;">
 	<div class="ui-widget ui-state-default ui-corner-top" style="height: 20px;line-height: 20px;">
 	<label>Datos drl Producto</label></div>
-	<table style="width: 1280px;">	
+	<table style="width: 1260px;">	
 	<tr>
        <td align="left" valign="middle">
        <font class="fontText">Banca *</font>&nbsp;
-       <html:select property="codBanca" styleId="codBanca" onchange="changeBancSubBanca(this.value, null);changeBankListProducts(this);">
+       <html:select property="codBanca" styleId="codBanca" onchange="changeBankListProducts(this);changeBancSubBanca(this.value, null);">
 				<html:option value="-1" >[   SELECCIONE   ]</html:option>
 				<c:if test="${lstBancas != null}">
 					<c:forEach var="banca" items="${lstBancas}">

@@ -128,10 +128,10 @@ public class IngresoSolicitudAction extends DispatchAction {
 				solicitudBean.setEmpleadorNom(solicitudForm.getEmpleadorNom());				
 				solicitudBean.setGerenciaTerritorialCod(solicitudForm.getGerenciaTerritorialCod());
 				solicitudBean.setGerenciaTerritorialNom(solicitudForm.getGerenciaTerritorialNom());
-				solicitudBean.setDeudaDirecta(new BigDecimal(solicitudForm.getDeudaDirecta()));
-				solicitudBean.setDeudaIndirecta(new BigDecimal(solicitudForm.getDeudaIndirecta()));
-				solicitudBean.setCastigo(new BigDecimal(solicitudForm.getCastigo()));
-				solicitudBean.setDeudaSistemaFinanciero(new BigDecimal(solicitudForm.getDeudaSistemaFinanciero()));
+				solicitudBean.setDeudaDirecta(solicitudForm.getDeudaDirecta()!=null?new BigDecimal(solicitudForm.getDeudaDirecta().replace(",", "")):null);
+				solicitudBean.setDeudaIndirecta(solicitudForm.getDeudaIndirecta()!=null?new BigDecimal(solicitudForm.getDeudaIndirecta().replace(",", "")):null);
+				solicitudBean.setCastigo(solicitudForm.getCastigo()!=null?new BigDecimal(solicitudForm.getCastigo().replace(",", "")):null);
+				solicitudBean.setDeudaSistemaFinanciero(solicitudForm.getDeudaSistemaFinanciero()!=null?new BigDecimal(solicitudForm.getDeudaSistemaFinanciero().replace(",", "")):null);
 				solicitudBean.setScorating(solicitudForm.getScorating());
 				solicitudBean.setRating(solicitudForm.getRating());
 				solicitudBean.setReelevancia(solicitudForm.getReelevancia());
@@ -142,8 +142,8 @@ public class IngresoSolicitudAction extends DispatchAction {
 				solicitudBean.setEjecutivoCtaNom(solicitudForm.getEjecutivoCtaNom());
 				solicitudBean.setCodMultTipoPersona(solicitudForm.getCodMultTipoPersona());
 				
-				solicitudBean.setRiesgoActual(new BigDecimal(solicitudForm.getRiesgoActual()));
-				solicitudBean.setRiesgoGrupal(new BigDecimal(solicitudForm.getRiesgoGrupal()));
+				solicitudBean.setRiesgoActual(solicitudForm.getRiesgoActual()!=null?new BigDecimal(solicitudForm.getRiesgoActual().replace(",", "")):null);
+				solicitudBean.setRiesgoGrupal(solicitudForm.getRiesgoGrupal()!=null?new BigDecimal(solicitudForm.getRiesgoGrupal().replace(",", "")):null);
 				solicitudBean.setFechaIngreso(new Date());	
 				solicitudBean.setCodSubanca(solicitudForm.getSubBanca());
 				solicitudBean.setCodBanca(new BigDecimal(solicitudForm.getCodBanca()));
@@ -160,7 +160,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 				
 				solicitudBean.setPrefijoIngreso(catalogoService.getUsuarioTipo(usuarioSession.getUID())=="1"?"OFICINA":"RIESGOS");
 				solicitudBean.setGrupoPersona(solicitudService.validaGrupoPersona(solicitudBean.getCodMultTipoPersona(), solicitudBean.getNumeroDocumento(), solicitudBean.getRating()));
-				solicitudBean.setMtoSolicitud(solicitudForm.getMtoTotal()!=null?new BigDecimal(solicitudForm.getMtoTotal()):new BigDecimal(0));
+				solicitudBean.setMtoSolicitud(solicitudForm.getMtoTotal()!=null?new BigDecimal(solicitudForm.getMtoTotal().replace(",", "")):new BigDecimal(0));
 				solicitudBean.setRiesgoTotal((solicitudBean.getRiesgoActual()!=null?solicitudBean.getRiesgoActual():new BigDecimal(0)).add(solicitudBean.getMtoSolicitud()!=null?solicitudBean.getMtoSolicitud():new BigDecimal(0)));
 				solicitudBean.setStrMensaje(solicitudForm.getHdnStrMensaje());
 				
@@ -457,15 +457,15 @@ public class IngresoSolicitudAction extends DispatchAction {
 		}
 		solicitudDetalleBean.setDesCampania(solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[1]!=null || solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[0].equals("-1")?"":solicitudForm.getDesCampania().split(Constant.CHAR_CONCAT)[1]);
 		
-		solicitudDetalleBean.setTipo(solicitudForm.getDesTipo().split(Constant.CHAR_CONCAT)[0].equals(Constant.RESET_COMBO)?null:Constant.TABLA_TIPOS+solicitudForm.getDesTipo().split(Constant.CHAR_CONCAT)[0]);
-		solicitudDetalleBean.setDesTipo(solicitudDetalleBean.getTipo()!=null?Constant.TABLA_TIPOS+solicitudForm.getDesTipo().split(Constant.CHAR_CONCAT)[1]:null);
+		solicitudDetalleBean.setTipo(solicitudForm.getDesTipo().split(Constant.CHAR_CONCAT)[0].equals(Constant.RESET_COMBO)?null:Constant.TABLA_TIPOS+Constant.CHAR_GUION+solicitudForm.getDesTipo().split(Constant.CHAR_CONCAT)[0]);
+		solicitudDetalleBean.setDesTipo(solicitudDetalleBean.getTipo()!=null?solicitudForm.getDesTipo().split(Constant.CHAR_CONCAT)[1]:null);
 		
-		solicitudDetalleBean.setMtoProducto(new BigDecimal(solicitudForm.getMtoProducto()));
+		solicitudDetalleBean.setMtoProducto(new BigDecimal(solicitudForm.getMtoProducto().replace(",", "")));
 		solicitudDetalleBean.setPlazo(Integer.parseInt(solicitudForm.getPlazo()));
 		solicitudDetalleBean.setMtoGarantia(new BigDecimal(solicitudForm.getMtoGarantia().split(Constant.CHAR_CONCAT)[0]));
 		solicitudDetalleBean.setScoring(solicitudForm.getScoring());
 		solicitudDetalleBean.setCodPrevaluador(solicitudForm.getCodPreEvaluador());
-		solicitudDetalleBean.setMtoTotalRow(new BigDecimal(solicitudForm.getMtoTotalRow()));
+		solicitudDetalleBean.setMtoTotalRow(solicitudForm.getMtoTotalRow()!=null?new BigDecimal(solicitudForm.getMtoTotalRow().replace(",", "")):null);
 		solicitudDetalleBean.setIndice(Integer.parseInt(solicitudForm.getIndice()));
 		
 		if(request.getSession().getAttribute("lstDetalleProdSession")!=null){
