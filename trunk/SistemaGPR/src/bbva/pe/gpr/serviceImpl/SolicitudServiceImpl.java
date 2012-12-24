@@ -315,9 +315,9 @@ public class SolicitudServiceImpl implements SolicitudService{
 		BigDecimal bigMtoGarantia = new BigDecimal(0);
 		BigDecimal bigMtoTotalRow = new BigDecimal(0);
 		if(value!=null && !value.equals(Constant.STR_VACIO)){
-			bigValue = new BigDecimal(value);
-		}if(pMtoGarantia!=null && !pMtoGarantia.equals(Constant.STR_VACIO)){
-			bigMtoGarantia = new BigDecimal(pMtoGarantia);
+			bigValue = new BigDecimal(value.replace(",", ""));
+		}if(pMtoGarantia!=null && !pMtoGarantia.replace(",", "").equals(Constant.STR_VACIO)){
+			bigMtoGarantia = new BigDecimal(pMtoGarantia.replace(",", ""));
 		}
 		bigMtoTotalRow = bigValue.add(bigMtoGarantia);
 		return UtilGpr.roundUp(bigMtoTotalRow.toString(), 2);
@@ -336,7 +336,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 				
 			}
 		}
-		bigMtoTotalProd=bigMtoTotalProd.add(new BigDecimal(value));
+		bigMtoTotalProd=bigMtoTotalProd.add(new BigDecimal(value.replace(",", "")));
 		rpta = UtilGpr.roundUp(bigMtoTotalProd.toString(), 2);
 		
 		return rpta;
@@ -350,20 +350,20 @@ public class SolicitudServiceImpl implements SolicitudService{
 										String pMtoTotalProd,
 										HttpServletRequest oRequest)throws Exception{
 		BigDecimal bigRiesgoTotal = new BigDecimal(0);
-		if(pdeudaDirecta!=null && !pdeudaDirecta.equals(Constant.STR_VACIO)){
-			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pdeudaDirecta));
-		}if(pdeudaIndirecta!=null && !pdeudaIndirecta.equals(Constant.STR_VACIO)){
-			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pdeudaIndirecta));
-		}if(pdeudaCastigo!=null && !pdeudaCastigo.equals(Constant.STR_VACIO)){
-			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pdeudaCastigo));
-		}if(pdeudaSisFinanciero!=null && ! pdeudaSisFinanciero.equals(Constant.STR_VACIO)){
-			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pdeudaSisFinanciero));
-		}if(pOtroRiesgo!=null && ! pOtroRiesgo.equals(Constant.STR_VACIO)){
-			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pOtroRiesgo));
-		}if(pRiesgoGrupal!=null && ! pRiesgoGrupal.equals(Constant.STR_VACIO)){
-			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pRiesgoGrupal));
-		}if(pMtoTotalProd!=null && ! pMtoTotalProd.equals(Constant.STR_VACIO)){
-			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pMtoTotalProd));
+		if(pdeudaDirecta!=null && !pdeudaDirecta.replace(",", "").equals(Constant.STR_VACIO)){
+			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pdeudaDirecta.replace(",", "")));
+		}if(pdeudaIndirecta!=null && !pdeudaIndirecta.replace(",", "").equals(Constant.STR_VACIO)){
+			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pdeudaIndirecta.replace(",", "")));
+		}if(pdeudaCastigo!=null && !pdeudaCastigo.replace(",", "").equals(Constant.STR_VACIO)){
+			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pdeudaCastigo.replace(",", "")));
+		}if(pdeudaSisFinanciero!=null && ! pdeudaSisFinanciero.replace(",", "").equals(Constant.STR_VACIO)){
+			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pdeudaSisFinanciero.replace(",", "")));
+		}if(pOtroRiesgo!=null && ! pOtroRiesgo.replace(",", "").equals(Constant.STR_VACIO)){
+			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pOtroRiesgo.replace(",", "")));
+		}if(pRiesgoGrupal!=null && ! pRiesgoGrupal.replace(",", "").equals(Constant.STR_VACIO)){
+			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pRiesgoGrupal.replace(",", "")));
+		}if(pMtoTotalProd!=null && ! pMtoTotalProd.replace(",", "").equals(Constant.STR_VACIO)){
+			bigRiesgoTotal = bigRiesgoTotal.add(new BigDecimal(pMtoTotalProd.replace(",", "")));
 		}			
 		 return UtilGpr.roundUp(bigRiesgoTotal.toString(), 2);
 	}		
@@ -379,7 +379,7 @@ public class SolicitudServiceImpl implements SolicitudService{
 				}
 			}
 			if(value!=null && ! value.equals(Constant.STR_VACIO)){
-				bigOtroRiesgo=bigOtroRiesgo.add(new BigDecimal(value));
+				bigOtroRiesgo=bigOtroRiesgo.add(new BigDecimal(value.replace(",", "")));
 			}		 
 			return UtilGpr.roundUp(bigOtroRiesgo.toString(), 2);
 	}
@@ -392,18 +392,18 @@ public class SolicitudServiceImpl implements SolicitudService{
 										  String value, 
 										  HttpServletRequest oRequest)throws Exception{
 		BigDecimal bigRiesgoActual = new BigDecimal(0);
-		if(pdeudaDirecta!=null && !pdeudaDirecta.equals(Constant.STR_VACIO)){
-			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(pdeudaDirecta));
-		}if(pdeudaIndirecta!=null && !pdeudaIndirecta.equals(Constant.STR_VACIO)){
-			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(pdeudaIndirecta));
-		}if(pdeudaCastigo!=null && !pdeudaCastigo.equals(Constant.STR_VACIO)){
-			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(pdeudaCastigo));
-		}if(pdeudaSisFinanciero!=null && ! pdeudaSisFinanciero.equals(Constant.STR_VACIO)){
-			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(pdeudaSisFinanciero));
-		}if(pOtroRiesgo!=null && ! pOtroRiesgo.equals(Constant.STR_VACIO)){
-			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(pOtroRiesgo));
-		}if(value!=null && ! value.equals(Constant.STR_VACIO)){
-			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(value));
+		if(pdeudaDirecta!=null && !pdeudaDirecta.replace(",", "").equals(Constant.STR_VACIO)){
+			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(pdeudaDirecta.replace(",", "")));
+		}if(pdeudaIndirecta!=null && !pdeudaIndirecta.replace(",", "").equals(Constant.STR_VACIO)){
+			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(pdeudaIndirecta.replace(",", "")));
+		}if(pdeudaCastigo!=null && !pdeudaCastigo.replace(",", "").equals(Constant.STR_VACIO)){
+			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(pdeudaCastigo.replace(",", "")));
+		}if(pdeudaSisFinanciero!=null && ! pdeudaSisFinanciero.replace(",", "").equals(Constant.STR_VACIO)){
+			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(pdeudaSisFinanciero.replace(",", "")));
+		}if(pOtroRiesgo!=null && ! pOtroRiesgo.replace(",", "").equals(Constant.STR_VACIO)){
+			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(pOtroRiesgo.replace(",", "")));
+		}if(value!=null && ! value.replace(",", "").equals(Constant.STR_VACIO)){
+			bigRiesgoActual = bigRiesgoActual.add(new BigDecimal(value.replace(",", "")));
 		}			
 		 return UtilGpr.roundUp(bigRiesgoActual.toString(), 2);
 	}
