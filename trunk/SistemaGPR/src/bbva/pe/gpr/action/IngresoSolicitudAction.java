@@ -518,7 +518,7 @@ public class IngresoSolicitudAction extends DispatchAction {
 		List<Contrato> lstContrato = new ArrayList<Contrato>();
 		
 		contratoBean.setIndxContrato(-1);
-		contratoBean.setCodContrato("-- Selecione Contrato --");
+		contratoBean.setCodContrato(Constant.SELECCIONE);
 		lstContrato.add(contratoBean);
 		
 		//frk: Pasar la logica de negocio al service
@@ -557,11 +557,6 @@ public class IngresoSolicitudAction extends DispatchAction {
 				contratoBean.setCodContrato("101001428767890643"+i);
 				lstContrato.add(contratoBean);
 			}
-		}else{
-			lstContrato = new ArrayList<Contrato>();
-			contratoBean.setIndxContrato(-1);
-			contratoBean.setCodContrato("-- No se Encontro Contratos --");
-			lstContrato.add(contratoBean);
 		}
 		
 		return lstContrato;
@@ -738,5 +733,4 @@ public class IngresoSolicitudAction extends DispatchAction {
 		}
 		return "";
 	}
-	
 }

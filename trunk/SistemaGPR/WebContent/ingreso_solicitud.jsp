@@ -105,12 +105,12 @@ var myDataModel = [
                    { name : 'valBanca',				index : 'valBanca', 			width : 140, 	editable:true,	editrules: {edithidden:true}, hidden:true},
                    { name : 'valMoneda',			index : 'valMoneda', 			width : 140, 	editable:true,	editrules: {edithidden:true}, hidden:true},
                    { name : 'valMontoTotal',		index : 'valMontoTotal', 		width : 140, 	editable:true,	editrules: {edithidden:true}, hidden:true},
-                   { name : 'desProducto',			index : 'desProducto', 			width : 210, 	editable:true,	edittype:'custom', 	editoptions: {custom_element: desProductoElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: desProductoFormat, unformat: genericUnFormat},                 
+                   { name : 'desProducto',			index : 'desProducto', 			width : 200, 	editable:true,	edittype:'custom', 	editoptions: {size:22, custom_element: desProductoElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: desProductoFormat, unformat: genericUnFormat},                 
                    { name : 'codProdBase',			index : 'codProdBase', 			editable:true,	hidden:true},
-                   { name : 'desGarantia',			index : 'desGarantia', 			width : 200,  	editable:true,	edittype:'text', 	editoptions: {size:25, maxlength: 40, readonly: 'readonly'}, align : 'center'},
-                   { name : 'contratoVinculado',	index : 'contratoVinculado',	width : 210,	editable:true,	edittype:'custom',  editoptions: {size:18, custom_element: contratoVincElementCustom, custom_value: genericComboValueCustom}, editrules:   {required: true}, align : 'center', formatter: contratoVincFormat, unformat: genericUnFormat},
+                   { name : 'desGarantia',			index : 'desGarantia', 			width : 180,  	editable:true,	edittype:'text', 	editoptions: {size:22, maxlength: 40, readonly: 'readonly'}, align : 'center'},
+                   { name : 'contratoVinculado',	index : 'contratoVinculado',	width : 200,	editable:true,	edittype:'custom',  editoptions: {size:18, custom_element: contratoVincElementCustom, custom_value: genericComboValueCustom}, editrules:   {required: true}, align : 'center', formatter: contratoVincFormat, unformat: genericUnFormat},
                    { name : 'scoring',				index : 'scoring', 				width : 90,  	editable:true,	edittype:'text', 	editoptions: {size:10, maxlength: 40, readonly: 'readonly'}, align : 'center'},
-                   { name : 'codPreEvaluador',		index : 'codPreEvaluador', 		width : 140, 	editable:true,	edittype:'text', 	editoptions: {style: 'background-color: #F2F5A9', size:15, maxlength: 20, dataEvents: [{ type: 'blur',     fn: function (){ blurChangeColor(this);}}, 
+                   { name : 'codPreEvaluador',		index : 'codPreEvaluador', 		width : 120, 	editable:true,	edittype:'text', 	editoptions: {style: 'background-color: #F2F5A9', size:13, maxlength: 20, dataEvents: [{ type: 'blur',     fn: function (){ blurChangeColor(this);}}, 
                 	   																																																		   { type: 'change',   fn: function (){ changeCodPreEvaludador(this.value);}},
                    																																																			   { type: 'keyup',   fn: function (){ changeCodPreEvaludador(this.value);}}]}, align : 'center'},
                    { name : 'desCampania',			index : 'desCampania', 			width : 180, 	editable:true,	edittype:'custom', 	editoptions: {custom_element: campaniaElementCustom, custom_value: genericComboValueCustom}, editrules: {required: true}, align : 'center', formatter: campaniaFormat, unformat: genericUnFormat},
@@ -196,7 +196,7 @@ function tipoElementCustom(valElement, options){
 		dwr.util.addOptions(options.id, data,'codElemento','strValor');
 		setElementSelected(dwr.util.byId(options.id), valElement);
 	});
-	return document.createElement("select");
+	return document.createElement("select");	
 }
 
 function contratoVincElementCustom(valElement, options) {
@@ -361,9 +361,8 @@ function getMonto(value, call){
 }
 
 function mostrarTabla(data){
-
 	var idTableForm = 'listProducts';
-	$('body').append('<div id="paginador_'+idTableForm+'" class="grid"></div>'); 
+	
 	jQuery("#"+idTableForm).jqGrid(
 	{
 		beforeSelectRow: function(){},
@@ -558,56 +557,63 @@ function mostrarTablaDetalle(data){
            function (data) {}
 	});
 	$("#listProductsDetalle").closest(".ui-jqgrid-bdiv").attr("style",
-			$("#listProductsDetalle").closest(".ui-jqgrid-bdiv").attr("style") + " overflow-y: scroll; ");
+			$("#listProductsDetalle").closest(".ui-jqgrid-bdiv").attr("style") + " overflow-y: s|ll; ");
 }
 
 function addProducto(){
 	var codBanca = document.getElementById("codBanca");
 	var codMultMoneda = document.getElementById("codMultMoneda");
 	var codSubBanca =  document.getElementById("subBanca");
+	
+	
+	var subProductoChequeo = document.getElementsByName("desProducto");
 
-	if(codBanca.value == '-1'){
-		alert("Debe seleccionar una banca para poder agregar un producto.");		
-	}else{
-		if(codSubBanca.value == '-1' || codSubBanca.value == 'null'){
-			alert("Debe seleccionar una subBanca para poder agregar un producto.");			
+	if(subProductoChequeo.length==1) {
+		alert("Estas tratando de agregar algo mientras editas");
+	} else {
+		if(codBanca.value == '-1'){
+			alert("Debe seleccionar una banca para poder agregar un producto.");		
 		}else{
-			if(codMultMoneda.value == '-1'){
-				alert("Debe seleccionar una moneda para poder agregar un producto.");				
+			if(codSubBanca.value == '-1' || codSubBanca.value == 'null'){
+				alert("Debe seleccionar una subBanca para poder agregar un producto.");			
 			}else{
-				IngresoSolicitudAction.setIndice(function(msg){
-					document.getElementsByName("indice")[0].value  = msg;
-				});
-				var rowid = "-1";
-				var mydataadd = 
-					  [{
-						
-						codProducto			: rowid,
-		                desProducto 		: "",
-		                codProdBase			: "",
-		                contratoVinculado 	: "-1",
-		                scoring				: "",			
-						codPreEvaluador 	: "",
-						campania  			: "",
-						tipo    			: "",
-						mtoProducto  		: "00.00",
-						plazo  				: "",
-						mtoGarantia  		: "00.00",
-						mtoTotalRow			: "00.00"
-			  }];	
+				if(codMultMoneda.value == '-1'){
+					alert("Debe seleccionar una moneda para poder agregar un producto.");				
+				}else{
+					IngresoSolicitudAction.setIndice(function(msg){
+						document.getElementsByName("indice")[0].value  = msg;
+					});
 				
-				if(lastSelProducto != ''){
-					jQuery('#listProducts').restoreRow(lastSelProducto,true);
+					var rowid = "-1";
+					var mydataadd = 
+						  [{
+							
+							codProducto			: rowid,
+			                desProducto 		: "",
+			                codProdBase			: "",
+			                contratoVinculado 	: "-1",
+			                scoring				: "",			
+							codPreEvaluador 	: "",
+							campania  			: "",
+							tipo    			: "",
+							mtoProducto  		: "00.00",
+							plazo  				: "",
+							mtoGarantia  		: "00.00",
+							mtoTotalRow			: "00.00"
+				  }];	
+					
+					if(lastSelProducto != ''){
+						jQuery('#listProducts').restoreRow(lastSelProducto,true);
+					}
+					lastSelProducto = '';
+					var subProducto = document.getElementsByName("desProducto");
+					
+					if(subProducto.length == 0){
+						valBancaGeneric = codBanca.value;
+						jQuery("#listProducts").addRowData(rowid, mydataadd, 'first');
+					}		
+				
 				}
-				
-				lastSelProducto = '';
-				
-				var subProducto = $("#undefined_desProducto");
-				if(subProducto.length == 0){
-					valBancaGeneric = codBanca.value;
-					jQuery("#listProducts").addRowData(rowid, mydataadd, 'first');
-				}		
-			
 			}
 		}
 	}

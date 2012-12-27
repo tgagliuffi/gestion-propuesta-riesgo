@@ -40,8 +40,8 @@ function genericComboValueCustom(elem, operation, value) {
 ////////////////////////////////////////////////////////
 
 function tipoFormat(cellvalue, options, rowObject){
-	if(cellvalue == null || cellvalue == undefined || cellvalue == 'null' || cellvalue == ''){
-		return "&nbsp;<input type='hidden' name='arrayTipo' value='"+cellvalue+"' />";
+	if(cellvalue == null || cellvalue == undefined || cellvalue == 'null' || cellvalue == '' || cellvalue == '-1|[   SELECCIONE   ]'){
+		return "&nbsp;<input type='hidden' name='arrayTipo' value='' />";
 	}else{
 		
 		//frk: spliteamos la cadena concatenada del 
@@ -73,8 +73,8 @@ function desProductoFormat(cellvalue, options, rowObject){
 }
 
 function contratoVincFormat(cellvalue, options, rowObject){
-	if(cellvalue == null || cellvalue == undefined || cellvalue == 'null' || cellvalue == ''){
-		return "&nbsp;<input type='hidden' name='arrayContratoVinc' value='"+cellvalue+"' />";
+	if(cellvalue == null || cellvalue == undefined || cellvalue == 'null' || cellvalue == '' || cellvalue == '-1|[   SELECCIONE   ]'){
+		return "&nbsp;<input type='hidden' name='arrayContratoVinc' value='' />";
 	}else{
 		//frk: spliteamos la cadena concatenada del 
 		//combo para obtener el texto y el valor
@@ -89,8 +89,8 @@ function contratoVincFormat(cellvalue, options, rowObject){
 }
 
 function campaniaFormat(cellvalue, options, rowObject){
-	if(cellvalue == null || cellvalue == undefined || cellvalue == 'null' || cellvalue == ''){
-		return "&nbsp;<input type='hidden' name='arrayCampaign' value='"+cellvalue+"' />";
+	if(cellvalue == null || cellvalue == undefined || cellvalue == 'null' || cellvalue == '' || cellvalue == '-1|[   SELECCIONE   ]'){
+		return "&nbsp;<input type='hidden' name='arrayCampaign' value='' />";
 	}else{
 		//frk: spliteamos la cadena concatenada del 
 		//combo para obtener el texto y el valor
